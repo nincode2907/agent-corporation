@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    container_name: agent-corporation-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Chạy scripts/bootstrap_local.py trước}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Chạy scripts/bootstrap_local.py trước}
+      POSTGRES_DB: ${POSTGRES_DB:?Chạy scripts/bootstrap_local.py trước}
+    ports:
+      - "127.0.0.1:15510:5432"
+    volumes:
+      - agent_corporation_postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: "no"
+
+volumes:
+  agent_corporation_postgres:

@@ -92,7 +92,11 @@ def build():
         required = {"Phạm vi", "Có gì mới", "Demo", "Nghiệm thu", "Bàn giao", "Giới hạn", "Bằng chứng cần có", "Nhật ký triển khai"}
         if not required.issubset(fields):
             raise ValueError(f"Thiếu field Phase {ident}: {required - set(fields)}")
-        phases.append({"id": ident, "title": title, "milestone": meta["Mốc"], "status": meta["Trạng thái"], "deps": meta["Phụ thuộc"], "goal": meta["Mục tiêu"], "scope": fields["Phạm vi"].splitlines(), "new": fields["Có gì mới"].splitlines(), "checks": fields["Nghiệm thu"].splitlines(), "demo": fields["Demo"], "delivery": fields["Bàn giao"], "limit": fields["Giới hạn"], "evidence": fields["Bằng chứng cần có"], "history": fields["Nhật ký triển khai"]})
+        links = [{"label": label, "href": href} for label, href in re.findall(r"^- \[([^]]+)\]\(([^)]+)\)$", fields.get("Tài liệu liên quan", ""), re.M)]
+        for link in links:
+            if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", link["href"]) or not (SOURCE.parent / link["href"].split("#")[0]).is_file():
+                raise ValueError(f"Tài liệu Phase {ident} không hợp lệ: {link['href']}")
+        phases.append({"id": ident, "title": title, "milestone": meta["Mốc"], "status": meta["Trạng thái"], "deps": meta["Phụ thuộc"], "goal": meta["Mục tiêu"], "scope": fields["Phạm vi"].splitlines(), "new": fields["Có gì mới"].splitlines(), "checks": fields["Nghiệm thu"].splitlines(), "demo": fields["Demo"], "delivery": fields["Bàn giao"], "limit": fields["Giới hạn"], "evidence": fields["Bằng chứng cần có"], "history": fields["Nhật ký triển khai"], "links": links})
     if [p["id"] for p in phases] != [f"{i:02}" for i in range(24)]:
         raise ValueError("Kế hoạch cần phase 00–23, duy nhất và đúng thứ tự")
     raw_milestones = re.findall(r"^\| ([A-E]) \| ([^|]+) \| ([^|]+) \|$", section(source, 2), re.M)

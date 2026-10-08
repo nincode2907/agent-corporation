@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: đã lập kế hoạch; **0/24 phase sản phẩm hoàn tất**. Chưa triển khai frontend, backend, agent runtime hay inference.
+> Trạng thái: **Phase 00–01 Hoàn tất; Phase 02 Chờ nghiệm thu; 2/24 phase hoàn tất**. Phase 02 dựng khung giao diện local; chưa có runtime agent, chưa gọi inference.
 
 ## 1. Hướng đi đã chọn
 
@@ -43,12 +43,12 @@ Xây nền tảng hoàn chỉnh trước, kiểm thử bằng công ty demo và 
 6. Plan và Decision Summary là nội dung tường minh; không phụ thuộc suy nghĩ nội bộ nguyên văn. Prompt/tool/output lưu theo ACL, retention và redaction policy.
 7. Run completed khác task accepted. Nghiệm thu cần artifact/test/review/human decision. Replay chỉ đọc, không gọi lại tool.
 8. Pause/resume theo bước/checkpoint; không hứa tiếp tục từ giữa token. Retry side effect phải biết outcome hoặc có idempotency receipt.
-9. Không có inference tự động khi mở trang, seed demo hay chạy health check. Test thật cần hạn mức được cấp; model fallback phải được Chủ tịch cho phép trước.
+9. Không có inference tự động khi mở trang, seed demo hay chạy health check. Test thật cần grant riêng gắn phase/test_batch_id/mục đích/phạm vi/hạn mức/expiry; không kế thừa qua đợt test hoặc phase. Model fallback phải được Chủ tịch cho phép trước.
 10. Mọi màn hình người dùng tiếng Việt, `lang=vi`, favicon; trạng thái idle/offline dựa trên runtime thật.
 
 ## 4. Kiến trúc đề xuất và Codex local
 
-Đây là lựa chọn đề xuất để chốt ở Phase 00, chưa phải code đã tồn tại: React + TypeScript frontend; Python + FastAPI + Pydantic modular monolith; PostgreSQL; queue/scheduler bền vững trong nền backend. Compose cho hạ tầng local. Tránh thêm Redis/LangGraph/Temporal/Langfuse/LiteLLM trước khi có nhu cầu và evidence; không dùng thêm framework để lặp lại orchestration của Codex.
+Baseline đã chọn trong đặc tả Phase 00, đã được Chủ tịch nghiệm thu, chưa có code: React + TypeScript + Vite frontend; Python + FastAPI + Pydantic modular monolith; PostgreSQL + SQLAlchemy/Alembic; queue/scheduler bền vững trong nền backend. Compose cho hạ tầng local. Tránh thêm Redis/LangGraph/Temporal/Langfuse/LiteLLM trước khi có nhu cầu và evidence; không dùng thêm framework để lặp lại orchestration của Codex.
 
 ```text
 Chủ tịch / giao diện React
@@ -109,13 +109,13 @@ Khảo sát tại `/Users/buivannin/Desktop/workspace/personal/agent-corporation
 
 ### Quyết định còn mở
 
-Stack ở trên là đề xuất, Phase 00 chốt trước scaffold. Cần chốt profile/model, auth gateway/provider, capability sandbox thực tế, budget test và các giới hạn tài nguyên cụ thể trước lượt chạy thật. Chọn service-to-port mapping, binding/proxy access và kiểm tra route ở Phase 01 sau reserve. Ngưỡng hiệu năng/retention/backup đặt mục tiêu đề xuất ở release gate, chốt trong spec và đo bằng môi trường máy thật; không có lịch/ngân sách dollar ước đoán.
+Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu tại `docs/product-spec.md`; D01–D08 và O01–O07 có owner/deadline/deny behavior. Phase 00 được nghiệm thu về đặc tả/baseline; Phase 01 đã được Chủ tịch duyệt ngày 08/10/2026. Các quyết định nghiệm thu không tự cấp quyền runtime hay inference. Profile/model entitlement, auth gateway nếu enabled, sandbox/isolation và grant test phải được xác minh/cấp riêng trước lượt chạy thật (hiện grant = 0). Service-to-port mapping, binding/proxy access và route được kiểm tra theo Phase 01. Ngưỡng hiệu năng/retention/backup đặt mục tiêu đề xuất ở release gate, chốt trong spec và đo bằng môi trường máy thật; không có lịch/ngân sách dollar ước đoán.
 
 ## 6. Cách theo dõi và yêu cầu triển khai
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Toàn bộ phase hiện Chưa triển khai; phần tài liệu lập kế hoạch xong không đồng nghĩa Phase 00 đã nghiệm thu.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00–01 đã được nghiệm thu; Phase 02 đang Chờ nghiệm thu theo lượt triển khai được giao; Phase 03–23 Chưa triển khai. Inference grant = 0.
 
 Checklist/ghi chú cá nhân trên HTML lưu trong localStorage nếu browser cho phép; không sửa Markdown, không giao task cho Codex và không gọi backend. Có thể xuất JSON để giữ ghi chú rồi gửi cùng phản hồi nghiệm thu. File HTML khác path/browser có thể có bộ ghi chú khác; xuất trước khi đổi nơi lưu. Nếu storage bị chặn, UI báo chưa lưu bền vững; nội dung vẫn xuất được trong phiên hiện tại. Khi kế hoạch/checklist đổi phiên bản, xuất ghi chú cũ trước và kiểm tra lại tiêu chí.
 
@@ -128,7 +128,7 @@ Sau mỗi phase: cập nhật trạng thái, ngày, phạm vi thực tế, phầ
 ### Phase 00 — Chốt đặc tả V1
 
 - Mốc: A
-- Trạng thái: Chưa triển khai
+- Trạng thái: Hoàn tất
 - Phụ thuộc: Không có
 - Mục tiêu: Biến hai bản ý tưởng thành hợp đồng sản phẩm có thể nghiệm thu.
 
@@ -140,12 +140,12 @@ Sau mỗi phase: cập nhật trạng thái, ngày, phạm vi thực tế, phầ
 
 #### Có gì mới
 
-- Bộ đặc tả màn hình, luồng và dữ liệu V1.
-- Danh mục quyết định đã chốt và còn mở, mỗi mục có người quyết định.
+- Đã bàn giao đặc tả V1: 14 màn hình, 26 yêu cầu truy ra phase, 8 luồng và hợp đồng Work Order/task/run/30 event types; bản 1.1 làm rõ lifetime accepted-task cost và period operating cost.
+- Đã soạn ADR D01–D08 và O01–O07 có owner/deadline; HTML mô phỏng 7 bước, CG01 contingency, IG03/08/12/16/20; grant riêng theo đợt/phase, hiện vẫn 0.
 
 #### Demo
 
-Đi qua tình huống giao việc → đề xuất → duyệt → thực thi → review → nghiệm thu bằng sơ đồ, chưa gọi model.
+Mở docs/product-spec.html, chọn từng bước trong demo đặc tả F01: Work Order → plan → approval → worker/tools → review → bàn giao → Chủ tịch nghiệm thu. Đây là mô phỏng logic bằng dữ liệu đặc tả, chưa gọi model/tool.
 
 #### Nghiệm thu
 
@@ -155,7 +155,7 @@ Sau mỗi phase: cập nhật trạng thái, ngày, phạm vi thực tế, phầ
 
 #### Bàn giao
 
-docs/product-spec.md + .html; docs/decisions/ cho quyết định đã chốt.
+Đã bàn giao docs/product-spec.md + .html, docs/decisions/0001-v1-foundation.md + .html, docs/evidence/phase-00.md; scripts/render_phase00.py và scripts/validate_phase00.py chỉ phục vụ tài liệu.
 
 #### Giới hạn
 
@@ -163,16 +163,25 @@ Không tạo UI sản phẩm, không gọi inference.
 
 #### Bằng chứng cần có
 
-Hồ sơ quyết định, sơ đồ luồng, ma trận yêu cầu → phase.
+Evidence tại docs/evidence/phase-00.md: dependency Không có; 26 requirements/14 screens/8 flows/30 events/R1–R8; gateway source hashes + GET health 200; checks tài liệu/links/examples/MD–HTML/syntax/phạm vi. Không có runtime/E2E tests hay inference.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Bản 1.1 đã đáp ứng bốn điều chỉnh review: lifetime cost theo cohort accepted tách period cost; CG01 decision gate; IG03/08/12/16/20; grants riêng từng phase/test batch không kế thừa. Validation tài liệu/định nghĩa/references/JSON/links/MD–HTML/syntax/phạm vi đạt. Theo chỉ dẫn Chủ tịch, Phase 00 Hoàn tất về đặc tả/baseline. Không cấp grant, không gọi model, không bắt đầu Phase 01.
+
+Lịch sử bàn giao bản 1.0 (trước nghiệm thu): 08/10/2026 — Đã triển khai phần đặc tả của Phase 00. Chọn baseline React/TS/Vite + FastAPI/Pydantic + PostgreSQL/SQLAlchemy/Alembic; PG jobs/state/events/outbox; gateway HTTP stateless; Owner local, scope/RLS và grants mặc định đóng. Bản bàn giao có phạm vi/screens/flows/state/events/authority/resource limits/traceability/release criteria. Validation tài liệu được ghi trong evidence. Trạng thái Chờ nghiệm thu; chưa có quyết định của Chủ tịch, chưa cấp grant test, chưa triển khai Phase 01. Không commit/push hoặc thay gateway/Dev Hub. Review Chủ tịch yêu cầu bốn làm rõ trong bản 1.1; kiểm tra nhất quán trước chốt nghiệm thu, không đổi baseline hoặc triển khai phase tiếp.
+
+#### Tài liệu liên quan
+
+- [Đặc tả V1 trực quan](product-spec.html)
+- [Nguồn đặc tả Markdown](product-spec.md)
+- [Quyết định kiến trúc](decisions/0001-v1-foundation.html)
+- [Bằng chứng Phase 00](evidence/phase-00.md)
 
 ### Phase 01 — Dựng nền phát triển local
 
 - Mốc: A
-- Trạng thái: Chưa triển khai
+- Trạng thái: Hoàn tất
 - Phụ thuộc: 00
 - Mục tiêu: Có một môi trường phát triển khởi động và kiểm tra được.
 
@@ -211,12 +220,18 @@ Log khởi động, health responses, lệnh kiểm tra và registry diff.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Đã tạo Vite/React/TypeScript frontend, FastAPI/Pydantic API, Compose PostgreSQL 18.6, secret local mode 0600, liveness/readiness, health page tiếng Việt và migration Alembic baseline không có domain tables. Dev Hub reserve `agent-corporation`, block `15500–15599`: web `127.0.0.1:15500`, API `127.0.0.1:15501`, PostgreSQL `127.0.0.1:15510 → 5432`; proxy route tắt vì ingress chung publish wildcard. Dependency pins ở package-lock/uv.lock/image digest. Log, migration, API tests, build, HTTP/browser và database-down evidence tại [Phase 01](evidence/phase-01.md). Chủ tịch duyệt Phase 01 ngày 08/10/2026; chưa seed dữ liệu, worker/agent, domain schema hoặc inference; grant = 0.
+
+#### Tài liệu liên quan
+
+- [Hướng dẫn chạy local](../README.md)
+- [Bằng chứng Phase 01](evidence/phase-01.md)
+Runtime local sau khi khởi động: web `127.0.0.1:15500`, API `127.0.0.1:15501`.
 
 ### Phase 02 — Khung giao diện Chủ tịch
 
 - Mốc: A
-- Trạng thái: Chưa triển khai
+- Trạng thái: Chờ nghiệm thu
 - Phụ thuộc: 01
 - Mục tiêu: Có không gian điều hành 2D nhất quán và dễ dùng.
 
@@ -229,11 +244,11 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 #### Có gì mới
 
 - Điều hướng các khu vực sản phẩm bằng giao diện tiếng Việt.
-- Nhìn thấy trạng thái trống đúng, mọi preview đều ghi rõ dữ liệu mẫu.
+- Nhìn thấy trạng thái trống đúng; mọi preview ghi rõ chưa có dữ liệu và không tạo fixture.
 
 #### Demo
 
-Đi từ dashboard vào task và inspector shell ở desktop/mobile; xem khi API lỗi.
+Đi từ dashboard vào task và inspector shell ở desktop/mobile; xem khi API lỗi. Dùng CSS breakpoint 390 px để xác minh không tràn ngang.
 
 #### Nghiệm thu
 
@@ -255,7 +270,12 @@ Chưa có agent đang hoạt động; không dựng hoạt cảnh giả.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Hoàn tất phạm vi UI shell S01–S14 sau khi dependency Phase 00–01 đạt và Chủ tịch duyệt Phase 01. Web build/lint, desktop navigation, mode Owner, trạng thái API lỗi/phục hồi, S13 và S14 đã được kiểm tra. CSS breakpoint 390 px đã có nhưng chưa xác minh trực tiếp viewport sau khi browser control bị người dùng lấy lại; xem giới hạn trong [bằng chứng Phase 02](evidence/phase-02.md). Bàn giao **Chờ nghiệm thu**. Phase 03 chưa bắt đầu; inference grant = 0, không có model request.
+
+#### Tài liệu liên quan
+
+- [Bằng chứng Phase 02](evidence/phase-02.md)
+- Runtime local đã kiểm tra: `http://127.0.0.1:15500/`.
 
 ### Phase 03 — Dữ liệu và bằng chứng bền vững
 
@@ -1183,18 +1203,34 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 
 ## 8. Release gate V1
 
-Các ngưỡng dưới đây là mục tiêu đề xuất để chốt ở Phase 00; hiện chưa đo và chưa đạt.
+Các ngưỡng dưới đây là baseline đặc tả Phase 00 đã được Chủ tịch nghiệm thu; hiện chưa đo và chưa đạt. Chi tiết tải test/denominator/ràng buộc tại docs/product-spec.md, mục 13.
 
 | Gate | Điều kiện đo / nghiệm thu |
 | --- | --- |
 | R1 — Công việc thật | Ít nhất 3 kịch bản sandbox: thành công, reviewer yêu cầu sửa, approval bị từ chối; goal → artifact → review → human acceptance có trace đầy đủ |
-| R2 — Quan sát | Inspector/replay dùng event thật; reconnect không mất/nhân đôi event đã lưu; p95 lưu event → UI ≤ 2 giây trong tải test đã ghi rõ |
+| R2 — Quan sát | Inspector/replay dùng event thật; reconnect không mất/nhân đôi event đã lưu; p95 commit-confirmed → DOM render ≤ 2 giây với fixture 20 hồ sơ/10.000 events, ≥200 phép đo và môi trường ghi rõ |
 | R3 — Quyền | 0 bypass thành công trong suite owner-only/cross-company/stale approval/tool escape/secret leak; approval gắn đúng payload/version |
 | R4 — Ngân sách | Ledger reconciliation không đếm trùng; unknown/estimate rõ; 0 lượt dispatch mới sau hết reservation/hạn mức; không cam kết USD hard cap khi thiếu pricing |
 | R5 — Sự cố | Kill worker/restart/offline/loop/interrupt thử thực tế; checkpoint hồi phục, không lặp side effect chưa xác định; stop giữ qua restart |
 | R6 — Tách môi trường | Reset/demo/benchmark/real isolation suite đạt; real chưa có công ty người dùng cho tới quyết định release |
 | R7 — Khôi phục | Restore database + artifacts + config refs vào môi trường sạch; counts/checksums/liên kết history khớp; có migration drill |
 | R8 — Trải nghiệm và bàn giao | Cài/chạy theo docs trên môi trường kiểm tra; UI tiếng Việt/focus/mobile 390 px; mục tiêu 20 agent hiển thị + 10.000 event replay có pagination; 0 blocker/nghiêm trọng chưa xử lý; Chủ tịch chấp nhận |
+
+### Checkpoint tích hợp trước tiếp bước
+
+Chi tiết tại Product Spec V1 mục 13; đây là điều kiện kiểm chứng các phần đã triển khai, không thêm feature. Gate có report/config/version/batch/grant/evidence và PASS/FAIL; FAIL giữ Bị chặn, không thay run thật bằng mock. PASS không cấp quyền bắt đầu phase tiếp. Hiện mọi IG **Chưa thực hiện**; Phase 00 chỉ nghiệm thu định nghĩa.
+
+| Gate | Sau / trước phase | Luồng kiểm chứng |
+| --- | --- | --- |
+| IG03 | 03 / 04 | API/DB/state/events/outbox atomic, restart/dedup và isolation; không inference |
+| IG08 | 08 / 09 | Run thật text-only → events/SSE → Live Office/Inspector/replay; reconnect/error/usage, grant IG08 riêng nếu inference |
+| IG12 | 12 / 13 | Work Order → delegation → quyền/approval/tools → review/rework/evidence; budget/stop propagation, grant IG12 riêng |
+| IG16 | 16 / 17 | Calls/usage → ledger/budget/finance; dedup/late/unknown và lifetime cohort xuyên kỳ tách period cost; grant IG16 riêng nếu inference |
+| IG20 | 20 / 21 | Task/events/ledger/incident → lịch/report/inbox; sleep/restart/dedup, nguồn số khớp query; grant IG20 riêng nếu inference |
+
+R1–R8 tại release Phase 23 cần kèm evidence IG03/08/12/16/20. Gateway capability/isolation/privacy không đạt thì CG01: blocked + gap report cho Chủ tịch, không tự nới quyền/sửa/restart gateway shared hoặc tự đổi adapter. Phương án tiếp theo cần quyết định riêng; mock/đợt test thu hẹp không đạt thay tiêu chí runtime chưa kiểm chứng.
+
+Cost per accepted task chọn cohort bằng accepted_at rồi tính toàn bộ lifetime cost của chính task cohort, gồm retry/rework/review/children không trùng, kể cả kỳ trước. Period operating cost tính riêng theo occurred_at mọi call/resource phát sinh trong kỳ. Giữ cost basis/currency/coverage/as_of/corrections và unknown khác 0, như đặc tả mục 13.
 
 ## 9. Chặng vận hành sau V1
 
@@ -1215,3 +1251,11 @@ Nâng cấp sau V1 dựa trên evidence: 3D office, Executive Council, connector
 Đã kiểm tra cấu trúc đủ 24 phase, trạng thái nguồn/HTML, các đường dẫn tương đối, JavaScript syntax và render lại từ Markdown. AGENTS.md có 34 dòng, nguồn ý tưởng được lưu nguyên bản. Chưa chạy test sản phẩm hay inference.
 
 Kiểm tra trực quan trong trình duyệt tự động chưa thực hiện được: công cụ chặn navigation tới `file://`, chỉ chấp nhận HTTP/HTTPS. Trang vẫn được thiết kế để người dùng mở trực tiếp bằng trình duyệt; chưa khẳng định đã xác minh responsive qua ảnh render. Không start thêm server hay đổi port/proxy để thực hiện bước kiểm tra này.
+
+### Bàn giao Phase 00
+
+08/10/2026: cập nhật đặc tả/ADR/evidence và tài liệu trực quan. Phase 00 Chờ nghiệm thu; 01–23 giữ nguyên. 0 inference; 0 grant được cấp; chưa tạo runtime/công ty thật hoặc bắt đầu phase tiếp. Đầu lượt quan sát root có Git branch master và các file tài liệu untracked; giữ nguyên các thay đổi Git bên ngoài, không stage/commit. [Đặc tả V1](product-spec.html) · [Evidence](evidence/phase-00.md).
+
+### Nghiệm thu sau review Phase 00 — bản 1.1
+
+08/10/2026 — Chủ tịch yêu cầu bốn điều chỉnh nhỏ và nghiệm thu sau khi hoàn thành/kiểm tra nhất quán. Bốn điều chỉnh đã cập nhật vào đặc tả/ADR/roadmap; validation đạt, Phase 00 Hoàn tất. D01–D08/stack/adapter không đổi. IG03/08/12/16/20 và R1–R8 chỉ được định nghĩa, chưa kiểm chứng runtime. 0 inference, grant = 0, không quyền gọi model hoặc bắt đầu Phase 01; 01–23 giữ nguyên.

@@ -1,0 +1,26 @@
+[project]
+name = "agent-corporation-api"
+version = "0.1.0"
+description = "Local-first API skeleton for Agent Corporation"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+    "alembic==1.20.0",
+    "fastapi==0.142.4",
+    "psycopg[binary]==3.3.6",
+    "pydantic-settings==2.11.0",
+    "sqlalchemy==2.1.4",
+    "uvicorn[standard]==0.38.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx==0.28.1",
+    "pytest==9.0.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.uv]
+package = false
