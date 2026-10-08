@@ -1,0 +1,476 @@
+# Agent Corporation — Tập đoàn AI do bạn làm Chủ tịch
+
+Ý tưởng này đáng xây thành một siêu project độc lập, không chỉ là chatbot có nhiều vai trò. Tôi muốn biến nó thành một doanh nghiệp AI có cơ cấu tổ chức, nhân sự, ngân sách, công việc, KPI, phòng ban và khả năng tự đề xuất tái cơ cấu.
+
+Điểm thú vị nhất: bạn không phải trực tiếp điều hành từng AI. Bạn điều hành ban lãnh đạo, còn ban lãnh đạo điều phối nhân viên để hoàn thành mục tiêu.
+
+AGENT CORPORATION
+
+## Chairman's Office
+
+Mô hình tổ chức đề xuất
+
+Local-first
+
+YOU — CHAIRMAN
+
+Quyết định chiến lược, ngân sách và quyền hạn
+
+Chief of Staff / CEO Agent
+
+Model chiến lược · Lập kế hoạch · Điều phối
+
+Engineering
+
+Dev · QA · DevOps
+
+Research
+
+Research · Analyst
+
+Finance
+
+Token · Cost · ROI
+
+Operations
+
+Task · HR · Scheduling
+
+Creative
+
+Design · Writing
+
+Legal & Risk
+
+Review · Compliance
+
+Các phòng ban không nhất thiết hoạt động cùng lúc. Chỉ kích hoạt nhân sự khi có công việc phù hợp.
+
+Tôi sẽ thiết kế theo một nguyên tắc cực quan trọng:
+
+Nhân viên AI là một cấu hình nhân sự có trách nhiệm và quyền hạn; còn LLM chỉ được gọi khi nhân viên cần suy nghĩ hoặc thực hiện công việc.
+
+Nhờ vậy bạn có thể tạo 100 nhân viên mà không phải duy trì 100 tiến trình AI liên tục đốt token.
+
+Và tập đoàn phải có khả năng trả lời ba câu hỏi mỗi tháng: Đã làm được gì? Tốn bao nhiêu? Tháng tới nên cải thiện điều gì?
+
+## 1. Nhân viên đầu tiên nên là ai?
+
+Tôi chọn Chief of Staff (Chánh văn phòng Chủ tịch), chứ chưa thuê CEO ngay.
+
+Lý do: lúc mới thành lập, bạn vẫn muốn trực tiếp quyết định hướng đi. Chief of Staff sẽ nhận yêu cầu, phân tích, giao việc, báo cáo và đề xuất tổ chức. Sau này, khi tập đoàn có nhiều bộ phận và nhiệm vụ song song, bạn mới bổ nhiệm CEO để điều hành rộng hơn.
+
+Hồ sơ nhân viên đầu tiên
+
+Đề xuất
+
+[Chivio — Your AI program office](https://images.openai.com/static-rsc-4/UOi2u5o9YKFfany6Hss6Nyi-HIxNHOXsa5T-NOyrgQwBwYV5Dtt3JG2mqv3Objq-UiHtcxXv4hJiQuKt_O2k7iT7C6xWwRDt856np48IyBkfWHsr5H1t4ZAY2IlqS5LLDQrQW1B8awcVO5d34kmkIzPzQ_dVcZICkUbNeKX84HA?purpose=inline)
+
+### Ava — Chief of Staff
+
+Executive Office · Reports to Chairman
+
+Strategic
+
+Available
+
+| Model ưu tiên    | GPT-6.1 Sol High (theo lựa chọn của bạn, cần kiểm tra gateway hỗ trợ) |
+| ---------------- | --------------------------------------------------------------------- |
+| Vai trò          | Tiếp nhận, lập kế hoạch, điều phối                                    |
+| Quyền tuyển dụng | Chỉ được đề xuất                                                      |
+| Quyền đổi model  | Chỉ được đề xuất                                                      |
+| Quyền giao việc  | Trong ngân sách và phạm vi được duyệt                                 |
+| Báo cáo          | Theo nhiệm vụ và tổng kết ngày                                        |
+
+LỜI CHÀO KHI THÀNH LẬP
+
+"Thưa Chủ tịch, tôi đã sẵn sàng tiếp nhận nhiệm vụ. Hiện chúng ta chưa có bộ phận chuyên môn. Tôi sẽ đề xuất cơ cấu nhân sự phù hợp với công việc và ngân sách trước khi triển khai."
+
+Một điều chỉnh lớn: đừng dùng model mạnh nhất cho tất cả công việc. Chief of Staff chỉ cần suy luận mức High khi lập chiến lược, xử lý ngoại lệ hoặc đánh giá phương án phức tạp. Phân loại tác vụ, báo trạng thái và chuyển việc đơn giản có thể dùng model nhẹ hơn hoặc code thông thường.
+
+## 2. Biến ý tưởng tuyển nhân viên thành hệ thống thật
+
+Mỗi nhân viên sẽ có hồ sơ với ba phần tách biệt: nhân cách công việc (role/persona), năng lực (model + tools + skills), và quyền hạn (policy). Agent không được phép thay đổi policy của chính mình.
+
+HUMAN RESOURCES / EMPLOYEE 002
+
+## Alex
+
+Senior Software Engineer · Engineering
+
+Hồ sơQuyền hạnHiệu suất
+
+Model chínhworker-coder
+
+Fallbackworker-general
+
+Budget/task$2.00
+
+WorkloadOn demand
+
+ContextTask + codebase + approved memory
+
+Profile versionv1
+
+Tab trên là bản phác thảo tương tác của một hồ sơ nhân viên, chưa phải dữ liệu thực tế.
+
+Tôi muốn hồ sơ nhân viên được version hóa. Khi bạn đổi model, system prompt, skills hay context policy, hệ thống ghi nhận Employee v1 → v2. Như vậy sau này có thể biết phiên bản nào làm việc tốt hơn, thay vì chỉ nhìn một tỉ lệ thành công chung.
+
+## 3. Cơ chế giao việc giống doanh nghiệp
+
+Ví dụ bạn giao:
+
+> “Hãy xây một website quản lý chi tiêu gia đình, giao diện đẹp, hoạt động được trên máy tôi. Tôi muốn báo cáo tiến độ và sản phẩm cuối cùng.”
+
+Luồng thực tế nên là:
+
+Chairman
+
+Giao mục tiêu + giới hạn chi phí + mức tự chủ
+
+Chief of Staff
+
+Tạo work order, chia phạm vi, dự toán, chọn đội thực hiện
+
+Architect
+
+Thiết kế
+
+Engineer
+
+Xây dựng
+
+Tester
+
+Xác minh
+
+Quality Gate
+
+Test, review, evidence, chi phí, các tiêu chí chưa đạt
+
+Chairman's Approval
+
+Nhận sản phẩm và duyệt các hành động vượt quyền
+
+Điều quan trọng là không phải cứ có một task thì bắt buộc tất cả nhân viên phải họp. Task nhỏ có thể giao thẳng cho một worker. Task lớn mới cần Chief of Staff, Architect, Reviewer và Tester. Đây là cách tiết kiệm nhiều lượt gọi model.
+
+Mọi nhiệm vụ phải có `Work Order` chứa mục tiêu, đầu ra mong muốn, điều kiện nghiệm thu, quyền được dùng, thời hạn, ngân sách và điểm dừng.
+
+## 4. Cơ chế tuyển dụng và cắt giảm thông minh
+
+Đây là phần tôi thấy làm project của bạn khác hẳn những hệ thống multi-agent thông thường.
+
+Hệ thống nên có ba hình thức nhân sự:
+
+| Hình thức            | Ý nghĩa                                          | Ví dụ                            |
+| -------------------- | ------------------------------------------------ | -------------------------------- |
+| Permanent Employee   | Hồ sơ nhân sự cố định, có lịch sử và trách nhiệm | Chief of Staff, Engineering Lead |
+| On-demand Specialist | Agent được kích hoạt khi có nhiệm vụ             | Legal Researcher, UX Reviewer    |
+| Temporary Contractor | Worker sinh ra cho một task, xong thì giải phóng | 5 agents nghiên cứu 5 hướng      |
+
+Bạn có thể thành lập một phòng pháp lý nhưng không cần chạy Legal Agent mỗi ngày. Nó chỉ hoạt động khi có vấn đề pháp lý.
+
+### Một đề xuất tuyển dụng sẽ trông như thế này
+
+HR Proposal #HR-001
+
+Chờ duyệt
+
+## Tuyển thêm QA Automation Specialist
+
+Đây là ví dụ giả lập. Chief of Staff đề xuất bổ sung một chuyên viên QA do khối lượng kiểm thử tăng.
+
+Chi phí dự kiến/task
+
+## $0.30
+
+Hình thức
+
+## On-demand
+
+Điều kiện đánh giá: chạy thử trên benchmark QA hiện có, so sánh với quy trình không có specialist và chỉ giữ lại nếu hiệu quả tăng đủ để bù chi phí.
+
+Xem thiết kế tuyển dụngThiết kế từ chối
+
+Minh họa cách quản trị, không thực hiện tuyển dụng thật.
+
+Ngược lại, mỗi tháng CFO Agent có thể đề xuất:
+
+> “Phòng Research có 4 nhân sự cố định nhưng chỉ 1 nhân sự được sử dụng thường xuyên. Đề xuất chuyển 3 nhân sự sang on-demand.”
+
+Tuy nhiên, tôi sẽ không đo việc giữ người bằng số token đã tiêu thụ. AI tốn nhiều token không có nghĩa là làm việc tốt. Cũng không nên xóa một chuyên viên chỉ vì tháng đó không có task thuộc chuyên môn của họ.
+
+Hệ thống nên dựa trên nhu cầu thực tế, chất lượng đầu ra, chi phí biên và khả năng đáp ứng nhiệm vụ. Với nhân sự mới, có thể đặt thời gian probation và chạy benchmark trước khi duyệt tuyển chính thức.
+
+## 5. Dashboard tài chính, token và benchmark
+
+Tôi muốn biến CFO Agent thành bộ phận phân tích tài chính AI thực sự, nhưng mọi con số phải được lấy từ ledger do hệ thống ghi, không do LLM tự tưởng tượng.
+
+FINANCE DEPARTMENT
+
+## AI Operating Costs
+
+Mock data
+
+Chi phí tháng
+
+# $24.60
+
+Ngân sách $50
+
+Tokens
+
+# 8.42M
+
+Input + output
+
+Nhiệm vụ hoàn tất
+
+# 76
+
+Trong đó 61 được nghiệm thu
+
+Cost / accepted task
+
+# $0.40
+
+Từ chi phí $24.60
+
+$0$3$6$9$12EngineeringResearchExecutiveQualityOperations
+
+Dữ liệu giả lập để minh họa phân bổ chi phí theo phòng ban.
+
+Sử dụng ngân sách tháng
+
+49.2%
+
+Đây là UI minh họa, không phải dữ liệu server của bạn.
+
+Tôi muốn có khả năng lọc theo `Company → Department → Employee → Task → Model → Individual LLM Call`. Click vào một con số sẽ truy ra đúng request, số token input/output/cache, thời gian, error/retry, model version và giá đã áp dụng tại thời điểm gọi.
+
+Các KPI quan trọng nhất:
+
+| KPI                     | Tại sao cần                               |
+| ----------------------- | ----------------------------------------- |
+| Cost per accepted task  | Một kết quả được nghiệm thu tốn bao nhiêu |
+| First-pass success rate | Làm đúng ngay lần đầu                     |
+| Rework cost             | Chi phí sửa sai và làm lại                |
+| P50/P95 latency         | Tốc độ bình thường và những lần chậm      |
+| Human intervention rate | Bao nhiêu lần phải nhờ Chủ tịch xử lý     |
+| Budget utilization      | Có đang đốt ngân sách vô ích không        |
+| Benchmark score         | Chất lượng trên cùng một bộ nhiệm vụ      |
+| Idle capacity           | Cơ cấu nhân sự có đang quá lớn không      |
+
+Đối với model chạy trên máy local, không nên ghi chi phí $0 rồi kết luận miễn phí. Cần phân biệt chi phí API thực trả, token đo được, thời gian GPU/CPU và điện năng ước tính. Nếu gateway không trả usage đáng tin cậy, dashboard phải đánh dấu `estimated` hoặc `unknown`.
+
+Một tính năng tôi rất muốn là Model Tournament: cùng một bài test cho ba model khác nhau, chấm bằng bộ test và tiêu chí cố định, rồi so chi phí/chất lượng. Model thắng không nhất thiết là model mạnh nhất, mà là model đáp ứng chất lượng ở mức chi phí tốt nhất.
+
+## 6. Hệ thống trí nhớ và context riêng cho nhân viên
+
+Đây là phần quyết định chất lượng dài hạn. Một nhân viên không nên bị nhồi toàn bộ lịch sử tập đoàn vào prompt mỗi lần làm việc.
+
+Tôi đề xuất 5 lớp context:
+
+| Lớp               | Nội dung                                                       |
+| ----------------- | -------------------------------------------------------------- |
+| Corporate Memory  | Sứ mệnh, quy định, chính sách, quyết định của Chủ tịch         |
+| Department Memory | Quy trình và kiến thức chuyên môn của phòng ban                |
+| Employee Memory   | Kinh nghiệm đã được xác minh của nhân viên                     |
+| Task Context      | Đúng tài liệu, mục tiêu, dữ liệu của nhiệm vụ hiện tại         |
+| Working Memory    | Những bước đang thực hiện, kết quả tool và trạng thái tạm thời |
+
+Chief of Staff có quyền truy xuất những tài liệu cần thiết để điều phối, nhưng không đồng nghĩa được đọc mọi bí mật hay dữ liệu của tất cả bộ phận. Quyền truy cập phải được kiểm tra ở lớp backend, không chỉ ghi trong system prompt.
+
+Tôi đặc biệt thích cơ chế Memory Promotion:
+
+```
+Agent giải quyết được vấn đề
+             ↓
+Rút ra bài học có thể tái sử dụng
+             ↓
+Kiểm tra bằng chứng
+             ↓
+Đề xuất lưu vào memory
+             ↓
+Reviewer hoặc Chủ tịch duyệt
+             ↓
+Memory được version hóa
+             ↓
+Nhân viên tương lai sử dụng
+```
+
+Như vậy, tập đoàn tích lũy năng lực sau mỗi tháng mà không cần giữ những cuộc hội thoại dài vô hạn.
+
+## 7. Quyền lực trong tập đoàn: cần một “Hiến pháp AI”
+
+Nếu tất cả đều là AI và CEO được tự tuyển dụng, tự tăng ngân sách, tự đổi model, tự cấp tools thì bạn sẽ sớm mất khả năng kiểm soát.
+
+Tôi đề xuất ba cấp thẩm quyền:
+
+| Cấp                  | Ví dụ hành động                                                                                                                     | Quy tắc                       |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| Tự động              | Tìm thông tin, phân tích, viết bản nháp, chạy test trong sandbox                                                                    | Được phép khi nằm trong scope |
+| Ủy quyền có giới hạn | Giao subtask, gọi worker, thử lại, dùng ngân sách đã cấp                                                                            | Phải tuân thủ hạn mức         |
+| Chủ tịch phê duyệt   | Tuyển/sa thải nhân sự cố định, đổi model, tăng ngân sách, mở quyền, deploy production, gửi dữ liệu ra ngoài, xóa dữ liệu quan trọng | Luôn chờ quyết định của bạn   |
+
+Ví dụ CEO muốn đổi model của Developer từ `worker-small` sang `worker-strong`, hệ thống sẽ xuất một proposal có benchmark, giá chênh lệch và lý do. CEO không được tự sửa cấu hình chỉ bằng một tool call.
+
+Thậm chí nếu AI đề xuất sửa chính Hiến pháp AI, đó cũng chỉ là một đề xuất, không phải quyền tự sửa.
+
+Phải có một nút Emergency Stop để dừng các task và yêu cầu gọi model mới; các hành động đã gửi ra hệ thống ngoài không phải lúc nào cũng hoàn tác được.
+
+## 8. Một ngày làm việc thật sự của tập đoàn
+
+Tôi muốn nhân viên có lịch làm việc, trạng thái, bảng công việc và báo cáo, nhưng không giả vờ rằng họ đang liên tục suy nghĩ khi thực tế không có inference.
+
+## Company Daily Operations
+
+Ví dụ lịch vận hành, cấu hình được bởi Chủ tịch
+
+1. 08:00 — Morning Brief
+
+   Chief of Staff tổng hợp backlog, việc bị chặn, ngân sách còn lại và mục tiêu hôm nay.
+2. Trong ngày — Execution
+
+   Worker được kích hoạt theo queue. Khi rảnh sẽ ở trạng thái Available/Idle và không cần gọi LLM.
+3. 17:00 — Department Reports
+
+   Các trưởng bộ phận có task đang chạy tổng kết tiến độ, lỗi, bằng chứng và nhu cầu hỗ trợ.
+4. Cuối ngày — Optimization
+
+   CFO và Quality Auditor kiểm tra chi phí, retry, kết quả chưa nghiệm thu; đề xuất điều chỉnh nếu có bằng chứng.
+5. Cuối tháng — Board Review
+
+   Phân tích chất lượng, nhân sự, ngân sách và đưa các quyết định cần Chủ tịch phê duyệt vào một inbox.
+
+Lịch không cần cứng như công ty ngoài đời. Bạn có thể cho phòng Research hoạt động ban đêm, Engineering chạy khi nhận việc, Legal nghỉ cho đến khi được gọi.
+
+Nếu máy local tắt hoặc ngủ, job phải được lưu bền vững và tiếp tục khi dịch vụ hoạt động trở lại. Không được báo cáo rằng nhân viên đã làm việc xuyên đêm nếu thực tế chưa chạy.
+
+## 9. Kiến trúc kỹ thuật tôi khuyên dùng
+
+Tôi khuyên local-first, modular monolith trước, nhiều service sau. Một siêu project dễ thất bại nếu ngay ngày đầu bạn đã triển khai Kubernetes, microservices và 20 agent framework.
+
+\#chatgpt-mermaid-\_r_1bj\_{font-family:-apple-system-body,ui-sans-serif,-apple-system,system-ui,"Segoe UI",Helvetica,"Apple Color Emoji",Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";font-size:16px;fill:rgb(13, 13, 13);}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#chatgpt-mermaid-\_r_1bj\_ .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#chatgpt-mermaid-\_r_1bj\_ .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#chatgpt-mermaid-\_r_1bj\_ .error-icon{fill:rgb(243, 243, 243);}#chatgpt-mermaid-\_r_1bj\_ .error-text{fill:rgb(13, 13, 13);stroke:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ .edge-thickness-normal{stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .edge-thickness-thick{stroke-width:3.5px;}#chatgpt-mermaid-\_r_1bj\_ .edge-pattern-solid{stroke-dasharray:0;}#chatgpt-mermaid-\_r_1bj\_ .edge-thickness-invisible{stroke-width:0;fill:none;}#chatgpt-mermaid-\_r_1bj\_ .edge-pattern-dashed{stroke-dasharray:3;}#chatgpt-mermaid-\_r_1bj\_ .edge-pattern-dotted{stroke-dasharray:2;}#chatgpt-mermaid-\_r_1bj\_ .marker{fill:rgb(143, 143, 143);stroke:rgb(143, 143, 143);}#chatgpt-mermaid-\_r_1bj\_ .marker.cross{stroke:rgb(143, 143, 143);}#chatgpt-mermaid-\_r_1bj\_ svg{font-family:-apple-system-body,ui-sans-serif,-apple-system,system-ui,"Segoe UI",Helvetica,"Apple Color Emoji",Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";font-size:16px;}#chatgpt-mermaid-\_r_1bj\_ p{margin:0;}#chatgpt-mermaid-\_r_1bj\_ .label{font-family:-apple-system-body,ui-sans-serif,-apple-system,system-ui,"Segoe UI",Helvetica,"Apple Color Emoji",Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";color:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ .cluster-label text{fill:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ .cluster-label span{color:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ .cluster-label span p{background-color:transparent;}#chatgpt-mermaid-\_r_1bj\_ .label text,#chatgpt-mermaid-\_r_1bj\_ span{fill:rgb(13, 13, 13);color:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ .node rect,#chatgpt-mermaid-\_r_1bj\_ .node circle,#chatgpt-mermaid-\_r_1bj\_ .node ellipse,#chatgpt-mermaid-\_r_1bj\_ .node polygon,#chatgpt-mermaid-\_r_1bj\_ .node path{fill:rgb(222, 234, 251);stroke:rgb(83, 154, 248);stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .rough-node .label text,#chatgpt-mermaid-\_r_1bj\_ .node .label text,#chatgpt-mermaid-\_r_1bj\_ .image-shape .label,#chatgpt-mermaid-\_r_1bj\_ .icon-shape .label{text-anchor:middle;}#chatgpt-mermaid-\_r_1bj\_ .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .rough-node .label,#chatgpt-mermaid-\_r_1bj\_ .node .label,#chatgpt-mermaid-\_r_1bj\_ .image-shape .label,#chatgpt-mermaid-\_r_1bj\_ .icon-shape .label{text-align:center;}#chatgpt-mermaid-\_r_1bj\_ .node.clickable{cursor:pointer;}#chatgpt-mermaid-\_r_1bj\_ .root .anchor path{fill:rgb(143, 143, 143)!important;stroke-width:0;stroke:rgb(143, 143, 143);}#chatgpt-mermaid-\_r_1bj\_ .arrowheadPath{fill:rgb(143, 143, 143);}#chatgpt-mermaid-\_r_1bj\_ .edgePath .path{stroke:rgb(143, 143, 143);stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .flowchart-link{stroke:rgb(143, 143, 143);fill:none;}#chatgpt-mermaid-\_r_1bj\_ .edgeLabel{background-color:rgb(252, 252, 252);text-align:center;}#chatgpt-mermaid-\_r_1bj\_ .edgeLabel p{background-color:rgb(252, 252, 252);}#chatgpt-mermaid-\_r_1bj\_ .edgeLabel rect{opacity:0.5;background-color:rgb(252, 252, 252);fill:rgb(252, 252, 252);}#chatgpt-mermaid-\_r_1bj\_ .labelBkg{background-color:rgba(252, 252, 252, 0.5);}#chatgpt-mermaid-\_r_1bj\_ .cluster rect{fill:rgb(243, 243, 243);stroke:rgba(0, 0, 0, 0.1);stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .cluster text{fill:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ .cluster span{color:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:-apple-system-body,ui-sans-serif,-apple-system,system-ui,"Segoe UI",Helvetica,"Apple Color Emoji",Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";font-size:12px;background:rgb(243, 243, 243);border:1px solid rgba(0, 0, 0, 0.1);border-radius:2px;pointer-events:none;z-index:100;}#chatgpt-mermaid-\_r_1bj\_ .flowchartTitleText{text-anchor:middle;font-size:18px;fill:rgb(13, 13, 13);}#chatgpt-mermaid-\_r_1bj\_ rect.text{fill:none;stroke-width:0;}#chatgpt-mermaid-\_r_1bj\_ .icon-shape,#chatgpt-mermaid-\_r_1bj\_ .image-shape{background-color:rgb(252, 252, 252);text-align:center;}#chatgpt-mermaid-\_r_1bj\_ .icon-shape p,#chatgpt-mermaid-\_r_1bj\_ .image-shape p{background-color:rgb(252, 252, 252);padding:2px;}#chatgpt-mermaid-\_r_1bj\_ .icon-shape .label rect,#chatgpt-mermaid-\_r_1bj\_ .image-shape .label rect{opacity:0.5;background-color:rgb(252, 252, 252);fill:rgb(252, 252, 252);}#chatgpt-mermaid-\_r_1bj\_ .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#chatgpt-mermaid-\_r_1bj\_ .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#chatgpt-mermaid-\_r_1bj\_ .node .neo-node{stroke:rgb(83, 154, 248);}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node rect,#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].cluster rect,#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node polygon{stroke:url(#chatgpt-mermaid-\_r_1bj\_-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].swimlane.cluster rect{filter:none;}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node path{stroke:url(#chatgpt-mermaid-\_r_1bj\_-gradient);stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node .neo-line path{stroke:rgb(83, 154, 248);filter:none;}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node circle{stroke:url(#chatgpt-mermaid-\_r_1bj\_-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].node circle .state-start{fill:#000000;}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].icon-shape .icon{fill:url(#chatgpt-mermaid-\_r_1bj\_-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#chatgpt-mermaid-\_r_1bj\_ [data-look="neo"].icon-shape .icon-neo path{stroke:url(#chatgpt-mermaid-\_r_1bj\_-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#chatgpt-mermaid-\_r_1bj\_ .node text{font-size:14px;font-weight:600;letter-spacing:normal;fill:rgb(0, 79, 153);}#chatgpt-mermaid-\_r_1bj\_ .edgeLabels text{font-size:13px;font-weight:600;letter-spacing:-0.08px;fill:rgb(0, 79, 153);}#chatgpt-mermaid-\_r_1bj\_ .node tspan[font-weight="normal"],#chatgpt-mermaid-\_r_1bj\_ .edgeLabels tspan[font-weight="normal"]{font-weight:600;}#chatgpt-mermaid-\_r_1bj\_ .edgeLabel .label rect{opacity:1;rx:13px;ry:13px;fill:rgb(245, 250, 255);stroke:rgb(206, 219, 229);stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .node rect,#chatgpt-mermaid-\_r_1bj\_ .node circle,#chatgpt-mermaid-\_r_1bj\_ .node ellipse,#chatgpt-mermaid-\_r_1bj\_ .node polygon,#chatgpt-mermaid-\_r_1bj\_ .node path{fill:rgb(229, 243, 255);stroke:rgba(0, 0, 0, 0.1);stroke-width:1px;}#chatgpt-mermaid-\_r_1bj\_ .node rect{rx:16px;ry:16px;}#chatgpt-mermaid-\_r_1bj\_ .node.mermaid-decision .label-container{fill:rgb(245, 250, 255);stroke:rgb(206, 219, 229);stroke-dasharray:2,2;}#chatgpt-mermaid-\_r_1bj\_ .edgePaths .flowchart-link{stroke:rgb(143, 143, 143);stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;}#chatgpt-mermaid-\_r_1bj\_ .marker{fill:rgb(143, 143, 143);stroke:rgb(143, 143, 143);}#chatgpt-mermaid-\_r_1bj\_ :root{--mermaid-font-family:-apple-system-body,ui-sans-serif,-apple-system,system-ui,"Segoe UI",Helvetica,"Apple Color Emoji",Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";}Chairman DashboardCorporation BackendPolicy & Approval EngineTask OrchestratorHR / OrganizationBudget & AnalyticsPersistent Job QueueAgent RuntimeModel GatewayLocal / Hosted ModelsPermissioned ToolsSandbox / Browser / Files /CodeTrace & EvaluationPostgreSQL
+
+Đề xuất stack:
+
+| Thành phần              | Lựa chọn                                        |
+| ----------------------- | ----------------------------------------------- |
+| Frontend                | React + TypeScript                              |
+| Backend / Agent Runtime | Python + FastAPI + Pydantic                     |
+| Database                | PostgreSQL                                      |
+| Background jobs         | Persistent worker queue + scheduler             |
+| LLM interface           | Adapter tương thích OpenAI API                  |
+| Workflow                | State machine có checkpoint; cân nhắc LangGraph |
+| Observability           | Custom ledger + tùy chọn Langfuse               |
+| Local execution         | Sandboxed processes/containers                  |
+| Deployment              | Docker Compose trên máy local                   |
+
+Đối với phần orchestration, LangGraph có checkpoint/pause-resume và human-in-the-loop, khá phù hợp với nhiệm vụ đợi Chủ tịch duyệt. Temporal đáng xem ở giai đoạn workflow dài ngày và phục hồi sau lỗi phức tạp, nhưng chưa cần ngay bản đầu.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://github.com\&sz=32)
+
+GitHub
+
++1
+
+
+
+Đối với quan sát, Langfuse hỗ trợ tracking token/cost, còn LiteLLM hỗ trợ routing và quản lý chi phí nhiều model. Có thể tích hợp thay vì xây lại toàn bộ. Nếu sử dụng LiteLLM để áp ngân sách, cần triển khai persistence/database đúng cách; chế độ không có database không thực thi được các giới hạn chi tiêu như kỳ vọng.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://langfuse.com\&sz=32)
+
+Langfuse
+
++2
+
+
+
+Một lưu ý quan trọng về model bạn chọn: `GPT-6.1 Sol High` phải được xem như cấu hình mong muốn, không mặc định là model thực sự có thể gọi bằng API. Tập đoàn cần kiểm tra danh sách model mà server local cung cấp, khả năng tool calling, tham số suy luận, usage metadata và phương thức thanh toán. Server local có thể là model chạy trên máy hoặc gateway chuyển tiếp tới nhà cung cấp bên ngoài; hai trường hợp cần được theo dõi chi phí khác nhau.
+
+Và vì đây là hệ thống có quyền thao tác file, terminal và trình duyệt, không nên mở endpoint quản trị cho toàn mạng chỉ vì dùng Docker/Caddy. Giữ quyền local phù hợp, bảo vệ secrets, cô lập worker và xác thực nếu sau này điều khiển từ xa.
+
+## 10. Những tính năng đặc biệt có thể khiến nó thành siêu phẩm
+
+Tôi nghĩ còn 5 hướng nâng cấp rất đáng giá.
+
+Agent Probation & Tournament
+
+Nhân viên mới phải vượt benchmark trước khi được giao nhiệm vụ thật. Chạy thử model, system prompt và tool policy khác nhau trên cùng bộ nhiệm vụ, đánh giá bằng test tự động cộng với đánh giá của con người khi cần.
+
+Executive Council
+
+Với quyết định quan trọng, Chairman có thể triệu tập hội đồng CEO + CTO + CFO + Risk Officer. Mỗi agent phải đưa bằng chứng, chỉ rõ điểm không đồng ý và ước lượng tác động. Không cần họp cho task nhỏ.
+
+Corporate Experiment Lab
+
+Trước khi thay model hoặc tái cơ cấu, chạy thử phương án A/B trên benchmark và shadow tasks. So sánh chất lượng, latency và chi phí; chỉ chuyển sang phương án mới khi có dữ liệu hỗ trợ và được duyệt.
+
+Incident Command Center
+
+Khi một agent chạy vòng lặp vô ích, tiêu token bất thường, thực hiện tool sai quyền hoặc làm hỏng một task, hệ thống cô lập run, lưu trace, ghi nguyên nhân và đề xuất khôi phục.
+
+Virtual Office
+
+Một văn phòng 2D/3D tùy chọn, nơi bạn nhìn thấy nhân viên theo phòng ban, người đang làm task, phòng họp và bảng công việc. Nhưng đây là lớp visualization của dữ liệu thực, không phải những bot đang diễn hoạt động giả.
+
+Về phòng pháp lý, tài chính, y tế hay các chuyên môn nhạy cảm: có thể thuê agent hỗ trợ nghiên cứu và rà soát, nhưng không được đánh đồng với một chuyên gia có giấy phép hành nghề. Những quyết định mang hậu quả pháp lý, tài chính hoặc sức khỏe đáng kể vẫn cần kiểm chứng phù hợp.
+
+## 11. Chia thành các milestone để Codex xây dần
+
+Không nên bắt Codex viết 20 nhân viên trước. Phải tạo được một giao dịch công việc hoàn chỉnh, có thể kiểm chứng, rồi mới mở rộng số lượng nhân sự.
+
+| Milestone          | Phase | Sản phẩm đạt được                                                       |
+| ------------------ | ----- | ----------------------------------------------------------------------- |
+| I. Foundation      | 1–3   | Tạo tập đoàn, Chủ tịch, hồ sơ nhân viên, kết nối model server           |
+| II. First Employee | 4–6   | Chief of Staff nhận task, lập kế hoạch, lưu context, trả báo cáo        |
+| III. Real Work     | 7–10  | Tools, worker queue, task execution, sandbox, evidence và approval      |
+| IV. Organization   | 11–14 | Phòng ban, nhân viên chuyên môn, delegation, HR proposals               |
+| V. Finance         | 15–17 | Token ledger, budgets, cost analysis và monthly reports                 |
+| VI. Reliability    | 18–21 | Traces, benchmarks, evaluator, thử nghiệm model                         |
+| VII. Governance    | 22–24 | Policy engine, quyền Chủ tịch, audit, khôi phục và incident response    |
+| VIII. Intelligence | 25–28 | Memory promotion, HR optimization, council, daily autonomous operations |
+| IX. Product        | 29–31 | UX hoàn chỉnh, backup, installer, documentation và release              |
+| X. Evolution       | 32+   | Cải tiến dựa trên dữ liệu thực tế, không tự động thêm feature vô hạn    |
+
+Đây là khung roadmap sơ bộ, chưa phải danh sách phase đã được khảo sát dependency và nghiệm thu.
+
+### MVP đầu tiên mà tôi muốn sử dụng được
+
+CORPORATION V0.1 — MINIMUM WORKING COMPANY
+
+1 Chairman
+
+1 Chief of Staff
+
+1 General Worker
+
+1 Reviewer
+
+MVP phải làm được:
+
+Chủ tịch giao nhiệm vụ → Chief of Staff lập kế hoạch → Worker thực hiện bằng tool thực → Reviewer kiểm tra → Chủ tịch nhận kết quả, thấy token/chi phí/traces và có thể yêu cầu sửa.
+
+Chief of Staff cũng có thể đề xuất tuyển nhân viên thứ tư, nhưng không được tự phê duyệt.
+
+Chỉ cần MVP này hoạt động ổn định là bạn đã có một tập đoàn AI thực sự hoạt động theo workflow, không còn là giao diện chat đóng vai nhân viên.
+
+## 12. Chốt định hướng sản phẩm
+
+Tôi đề xuất tên working title là Agent Corporation, còn lúc khởi tạo app bạn tự đặt tên tập đoàn, chọn biểu tượng, khẩu hiệu, sứ mệnh, loại công việc, mức tự chủ và ngân sách.
+
+Điểm cốt lõi tôi muốn giữ xuyên suốt:
+
+Bạn sở hữu chiến lược, ngân sách và quyền lực. AI sở hữu trách nhiệm thực hiện trong giới hạn được giao. Hệ thống sở hữu bằng chứng, lịch sử và khả năng kiểm soát.
+
+Tôi cũng muốn sản phẩm có hai chế độ rõ ràng:
+
+- Chairman Mode: bạn chỉ giao mục tiêu, duyệt đề xuất và xem báo cáo.
+- Operator Mode: bạn có thể đi sâu vào từng task, từng agent, từng tool call, token, lỗi, benchmark và cấu hình.
+
+Như vậy vừa có cảm giác đang quản lý một tập đoàn, vừa giữ được năng lực của một công cụ engineering nghiêm túc.
+
+Và có một điều rất đáng bổ sung vào sứ mệnh dài hạn: tập đoàn không chỉ tối ưu số nhân viên hay chi phí, mà phải tối ưu giá trị công việc hoàn thành trên mỗi đơn vị chi phí, trong phạm vi rủi ro chấp nhận được. Nếu một tháng có 200 nhân viên nhưng chỉ làm ra 5 sản phẩm hữu ích thì đó không phải thành công. Ngược lại, 4 nhân viên AI mà hoàn thành 30 việc chất lượng cao thì đang là tổ chức hiệu quả hơn.
+
+Theo tôi, đây là hướng đủ lớn để xây hàng chục phase, làm portfolio, nghiên cứu agent reliability và thậm chí phát triển thành sản phẩm multi-agent dành cho người khác về sau.
