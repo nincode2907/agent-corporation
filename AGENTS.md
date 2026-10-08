@@ -3,7 +3,7 @@
 ## Hướng dẫn áp dụng
 - Đọc và tuân thủ `/Users/buivannin/.codex/RTK.md`; mọi lệnh shell dùng tiền tố `rtk`.
 - Dự án local-first để Chủ tịch giao mục tiêu, quản lý nhân viên AI, quan sát thực thi và nghiệm thu bằng chứng.
-- Phase 00–03 đã hoàn tất; Phase 04 đang được triển khai theo chỉ thị của Chủ tịch. Mỗi lượt chỉ triển khai phase được giao; không tự sang Phase 05.
+- Phase 00–03 đã hoàn tất; Phase 04–05 đang chờ nghiệm thu theo `docs/master-plan.md`. Mỗi lượt chỉ triển khai phase được giao; không tự chuyển sang phase tiếp.
 - Chỉ triển khai phase người dùng yêu cầu; hết phase thì báo cáo và dừng. Không tự chuyển phase, tạo công ty thật, gọi inference hoặc thay cấu hình toàn máy.
 
 ## Đọc đúng ngữ cảnh
@@ -12,7 +12,7 @@
 - Đối chiếu ý tưởng khi cần: `docs/sources/`; bản 02 ưu tiên cho thứ tự xây sản phẩm trước, vận hành sau.
 - Setup/runtime: dùng skill global `project-ai-bootstrap`; gateway: đọc README/source của codex-server; OpenAI native protocol dùng `openai-docs` khi cần.
 - UI dùng `ui-page-builder` hoặc `frontend-design`; feature dùng `feature-builder`; QA sau phase dùng `task-qa-review` khi phù hợp. Không nạp toàn bộ skill cùng lúc.
-- Khi kết thúc triển khai hoặc được yêu cầu kiểm định Phase NN: đọc `docs/tests/RULES.md` rồi `docs/tests/phases/phase-NN.md`; kiểm định đúng phase, lưu từng đợt vào `docs/tests/results/phase-NN/<test_batch_id>/`, mỗi test có tag `clean`, `need-change` hoặc `suggestion`. Test chưa chạy/thiếu evidence không được `clean`; kết quả AI không thay quyết định nghiệm thu của Chủ tịch.
+- Flow mặc định trong phase được giao: code → test ghi `docs/tests/results/` → remake theo report ghi `docs/remakes/` → retest ghi batch results mới; còn `need-change` giải quyết được thì tiếp tục. Đọc `docs/tests/RULES.md` và `docs/tests/phases/phase-NN.md`, dùng số vòng `rNNN` và tên file theo rule. “Chỉ test/không sửa” thì chỉ kiểm định; blocker thật cần quyền/dependency ngoài scope thì ghi rõ rồi dừng. Mỗi test có tag `clean`, `need-change` hoặc `suggestion`; thiếu evidence không được `clean`. AI không tự nghiệm thu hoặc sang phase khác.
 
 ## Ranh giới quan trọng
 - Runtime dùng HTTP gateway `/Users/buivannin/Desktop/workspace/personal/codex-server`, hiện tại `127.0.0.1:4000`. Đọc contract/source; không đổi server chung, không giả định streaming hay model entitlement.

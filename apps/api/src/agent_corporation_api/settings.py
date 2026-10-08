@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     migration_database_url: str | None = None
     app_database_user: str = "agent_corporation_app"
     app_database_password: str
+    codex_server_base_url: str = "http://127.0.0.1:4000"
+    codex_server_api_key: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=REPOSITORY_ROOT / ".env",

@@ -74,4 +74,4 @@ Phase 00 validator gọi renderer và có thể cập nhật HTML: kiểm diff/b
 
 Gate IG03 phải có verdict riêng và links evidence theo spec §13. Không PASS từ mock nếu nguồn yêu cầu runtime thật. IG03 chưa có public API thì ghi lớp đã kiểm, mismatch/blocked cho proof API còn thiếu; không thêm feature để né gate.
 
-Tạo `docs/tests/results/phase-03/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P03-01…P03-09 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Dừng tại Phase 03.
+Tạo `docs/tests/results/phase-03/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P03-01…P03-09 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Tiếp tục remake/retest theo RULES.md khi còn need-change giải quyết được trong Phase 03; không tự chuyển phase. Nếu chỉ được giao test không sửa hoặc gặp blocker thật, lưu kết quả và điều kiện tiếp tục.

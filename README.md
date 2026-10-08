@@ -37,9 +37,11 @@ npm run --prefix apps/web dev
 
 Mở `http://agent-corporation.localhost` (hoặc `http://127.0.0.1:15500`). Vite forward `/api` tới API loopback. Kiểm tra readiness trực tiếp bằng `curl -i http://127.0.0.1:15501/api/v1/health/ready`. Dừng PostgreSQL bằng `docker compose stop postgres`; lệnh này giữ nguyên dữ liệu local. Chạy lại bằng `docker compose start postgres`.
 
-Block `15500–15599` đã được reserve tại Dev Hub; mapping cụ thể ở registry trung tâm. Hostname `agent-corporation.localhost` dùng proxy Dev Hub chỉ publish trên IPv4/IPv6 loopback.
+Block `15500–15599` đã được reserve tại Dev Hub; mapping cụ thể ở registry trung tâm. Hostname `agent-corporation.localhost` dùng proxy Dev Hub chỉ publish trên IPv4 loopback; môi trường hiện tại không bind IPv6 loopback.
 
-`.env` được bootstrap ngẫu nhiên, quyền `0600` và bị Git ignore. Không commit/copy secret; `.env.example` chỉ chứa chỉ dẫn placeholder. Health routes không thực hiện authentication, nên API chỉ bind loopback và chỉ có liveness/readiness trong phase này.
+Phase 05 probe Codex server thủ công từ backend bằng `GET /health` và `GET /v1/models`. Mặc định gateway là `http://127.0.0.1:4000`; nếu cần cấu hình Bearer, chỉ lưu `CODEX_SERVER_API_KEY` trong `.env` mode `0600`, không đưa vào browser. Probe không gửi prompt hoặc xác minh model entitlement.
+
+`.env` được bootstrap ngẫu nhiên, quyền `0600` và bị Git ignore. Không commit/copy secret; `.env.example` chỉ chứa chỉ dẫn placeholder. API chưa có identity/auth cho người dùng nên chỉ bind loopback; các route gateway Phase 05 chỉ probe read-only theo thao tác thủ công.
 
 ## Kiểm tra và tài liệu
 

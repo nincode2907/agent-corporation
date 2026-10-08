@@ -1,0 +1,66 @@
+{
+  "created_at": "2026-10-08T16:20:50+07:00",
+  "phase": "04",
+  "test_batch_id": "20261008T162050+0700-demo-factory",
+  "commit": "edb550c",
+  "worktree": "dirty; changes outside this test preserved",
+  "dirty_files": [
+    ".env.example",
+    "README.md",
+    "apps/api/src/agent_corporation_api/main.py",
+    "apps/api/src/agent_corporation_api/settings.py",
+    "apps/web/src/App.css",
+    "apps/web/src/App.tsx",
+    "docs/master-plan.html",
+    "docs/master-plan.md",
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/",
+    "apps/api/tests/test_codex_gateway.py",
+    "docs/evidence/phase-05.md",
+    "docs/remakes/",
+    "docs/tests/results/phase-02/",
+    "docs/tests/results/phase-03/",
+    "docs/tests/results/phase-05/"
+  ],
+  "source_sha256": {
+    "AGENTS.md": "352d556d74071d9aa65d62c816128145fb85288e396020119a6e96102ddc1594",
+    "docs/tests/RULES.md": "193a1b954282c8252c9c18514d094b6440609ce8cc7bd6a1b3135a772022da59",
+    "docs/tests/phases/phase-04.md": "49a21d26c1b4a4f974c60f794d232b1d44d012e6287d4dc95f9bef7e93ddc85e",
+    "docs/master-plan.md": "4e9f2f024e83a4ce3cc8acc12faabd60ba135ca8852da8942026626b00233f08",
+    "docs/product-spec.md": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5",
+    "docs/decisions/0001-v1-foundation.md": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930",
+    "docs/evidence/phase-03.md": "a1799b7297280a44ef4d4a81c5a99a4db012c527e26c46f817f1beea76636084",
+    "docs/evidence/phase-04.md": "5bb09a890cb624d8ea7157d22bf4ac8cadabd7a16a657f8e1016a44c863c2255",
+    "docs/tests/results/phase-04/20261008T154151+0700-demo-factory/report.md": "7aca9dbef294bb4f51545aec51833458a9859e695766949cb2cb8d4a8086bb3b",
+    "apps/api/tests/test_phase03_persistence.py": "d053c9201694a3eaaf22c1dbdcf9163b6f7e3c132687e58a4e4fa46027c8e848",
+    "apps/api/tests/test_phase04_demo_factory.py": "a6c470529fff587466c8ccefecc388847c0728b6b0e5bd5dbeb30661cd805d2d",
+    "apps/api/src/agent_corporation_api/modules/demo/factory.py": "c3373dc48ac86b5811c91e88ef1aec87d188b14e31138028242ce634eb5e28d1",
+    "apps/api/src/agent_corporation_api/modules/demo/router.py": "99b88e2f4109e3b9d3f13fbc61c763ef2fdb24859641999ab9e3086bf645e84d",
+    "apps/api/migrations/versions/20261008_0003_demo_reset.py": "db13246fd1c2a49140347b721db627ab7df6029049f86379244f585f95e5f463",
+    "apps/web/src/App.tsx": "d69019819ac055002a3f1b995629374c3785490fe7e59909aab68245c9f9510f",
+    "apps/web/src/App.css": "4431c0eaa95c21e9a77a678941942022cf80ce4964f6df71f237c621de600b45",
+    "apps/web/index.html": "98beca1a2c54ecd8c8e507897c4e43bb7ceda7ee51a57363a97b5739eb7348a2"
+  },
+  "environment": {
+    "api": "127.0.0.1:15501",
+    "web": "127.0.0.1:15500",
+    "postgres": "127.0.0.1:15510",
+    "migration_head": "20261008_0003",
+    "database_readiness": "ok"
+  },
+  "demo_scope": {
+    "kind": "demo",
+    "release_locked": true,
+    "seed_version": 1,
+    "baseline_manifest_sha256": "03e1126cafadf2b400f51ebde367459565278634453e4b01fdcbf28a6242753a",
+    "after_test_manifest_sha256": "03e1126cafadf2b400f51ebde367459565278634453e4b01fdcbf28a6242753a",
+    "fixture_counts": {
+      "departments": 2,
+      "employees": 3,
+      "tasks": 5,
+      "events": 20
+    },
+    "inference_requests": 0
+  },
+  "inference": "not called; grant=0",
+  "ui_screenshot": "captured and inspected live in CUA; screenshot bytes not persisted as workspace evidence"
+}

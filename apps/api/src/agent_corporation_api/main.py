@@ -3,6 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from .database import database_is_ready
 from .modules.demo.router import router as demo_router
+from .modules.codex_gateway.router import router as codex_router
 
 
 app = FastAPI(
@@ -13,6 +14,7 @@ app = FastAPI(
     redoc_url=None,
 )
 app.include_router(demo_router)
+app.include_router(codex_router)
 
 
 @app.get("/api/v1/health/live", tags=["health"])

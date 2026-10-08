@@ -69,4 +69,4 @@ Phase 00 validator gọi renderer và có thể cập nhật HTML: kiểm diff/b
 
 ## Kết luận và lưu kết quả
 
-Tạo `docs/tests/results/phase-02/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P02-01…P02-07 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Dừng tại Phase 02.
+Tạo `docs/tests/results/phase-02/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P02-01…P02-07 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Tiếp tục remake/retest theo RULES.md khi còn need-change giải quyết được trong Phase 02; không tự chuyển phase. Nếu chỉ được giao test không sửa hoặc gặp blocker thật, lưu kết quả và điều kiện tiếp tục.

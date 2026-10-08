@@ -1,0 +1,47 @@
+{
+  "tested_at": "2026-10-08T16:12:41.649983+07:00",
+  "commit": "edb550c",
+  "worktree": "dirty; preserved owner changes; see dirty_files",
+  "dirty_files": [
+    ".env.example",
+    "README.md",
+    "apps/api/src/agent_corporation_api/main.py",
+    "apps/api/src/agent_corporation_api/settings.py",
+    "apps/web/src/App.css",
+    "apps/web/src/App.tsx",
+    "docs/master-plan.html",
+    "docs/master-plan.md",
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/",
+    "apps/api/tests/test_codex_gateway.py",
+    "docs/evidence/phase-05.md",
+    "docs/remakes/",
+    "docs/tests/results/phase-02/",
+    "docs/tests/results/phase-03/",
+    "docs/tests/results/phase-05/"
+  ],
+  "files": {
+    "AGENTS.md": "352d556d74071d9aa65d62c816128145fb85288e396020119a6e96102ddc1594",
+    "docs/tests/RULES.md": "193a1b954282c8252c9c18514d094b6440609ce8cc7bd6a1b3135a772022da59",
+    "docs/tests/phases/phase-02.md": "e77e9f661ffca82f488488dd15367082a81151480f2a52980605e7a70e0d5c0d",
+    "docs/tests/phases/phase-03.md": "7f78e337ce4ed1ba28fb5596313c086e15a65ed62b108a37f1d0a25dd3d65581",
+    "docs/master-plan.md": "81f23eebda0887d96800c1a399206baf479c6839493d9912eb8d043db60561c2",
+    "docs/product-spec.md": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5",
+    "docs/decisions/0001-v1-foundation.md": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930",
+    "apps/web/src/App.tsx": "d69019819ac055002a3f1b995629374c3785490fe7e59909aab68245c9f9510f",
+    "apps/web/src/App.css": "4431c0eaa95c21e9a77a678941942022cf80ce4964f6df71f237c621de600b45",
+    "apps/web/index.html": "98beca1a2c54ecd8c8e507897c4e43bb7ceda7ee51a57363a97b5739eb7348a2",
+    "apps/api/tests/test_phase03_persistence.py": "d053c9201694a3eaaf22c1dbdcf9163b6f7e3c132687e58a4e4fa46027c8e848",
+    "apps/api/migrations/versions/20261008_0002_durable_domain.py": "2fdcae9e8a3fbed7b7af7eee47269bab049e7ddf051e7c6d188a5eb3aecf897e",
+    "apps/api/src/agent_corporation_api/modules/work/commands.py": "f2c4f5608441ae387e9d294bad85217f0a0627e4b38a39f176e4e29047ec63e8"
+  },
+  "runtime": {
+    "web": "http://127.0.0.1:15500/",
+    "api": "127.0.0.1:15501",
+    "database": "127.0.0.1:15510",
+    "health_ready": "{\"status\":\"ok\",\"checks\":{\"database\":\"ok\"}}",
+    "migration_head": "20261008_0003"
+  },
+  "inference": "not called; grant 0; no probe, reset, create/run, or model actions",
+  "fixture_scope": "Phase 03 test generated fresh UUIDs for two environments and companies; cleanup filtered by those environment IDs in teardown.",
+  "updated_after_concurrent_worktree_change": true
+}

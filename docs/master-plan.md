@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00–03 Hoàn tất; Phase 04 Chờ nghiệm thu; 4/24 phase hoàn tất**. Chưa có runtime agent, chưa gọi inference.
+> Trạng thái: **Phase 00–03 Hoàn tất; Phase 04–05 Chờ nghiệm thu; Phase 06 Bị chặn; 4/24 phase hoàn tất**. Chưa có runtime agent, chưa gọi inference.
 
 ## 1. Hướng đi đã chọn
 
@@ -115,7 +115,7 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00–03 đã hoàn tất; Phase 04 chờ nghiệm thu; Phase 05–23 Chưa triển khai. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00–03 đã hoàn tất; Phase 04–05 chờ nghiệm thu; Phase 06 bị chặn tại dependency Phase 05 và CG01; Phase 07–23 Chưa triển khai. Inference grant = 0.
 
 Checklist/ghi chú cá nhân trên HTML lưu trong localStorage nếu browser cho phép; không sửa Markdown, không giao task cho Codex và không gọi backend. Có thể xuất JSON để giữ ghi chú rồi gửi cùng phản hồi nghiệm thu. File HTML khác path/browser có thể có bộ ghi chú khác; xuất trước khi đổi nơi lưu. Nếu storage bị chặn, UI báo chưa lưu bền vững; nội dung vẫn xuất được trong phiên hiện tại. Khi kế hoạch/checklist đổi phiên bản, xuất ghi chú cũ trước và kiểm tra lại tiêu chí.
 
@@ -369,7 +369,7 @@ Seed manifest, kiểm tra reset/isolation và ảnh nhãn demo.
 
 #### Nhật ký triển khai
 
-08/10/2026 — Triển khai và bàn giao Phase 04 chờ Chủ tịch nghiệm thu. Migration `20261008_0003` thêm hàm reset SECURITY DEFINER chỉ cho app role và scope demo cố định; seed tường minh tạo 2 phòng ban, 3 hồ sơ nhân sự v1, 5 Work Order ở các trạng thái fixture, approval, artifact metadata và 20 events; reset lặp cho cùng manifest hash. API `GET /api/v1/demo/dashboard` và `POST /api/v1/demo/reset` không nhận target scope; UI gắn nhãn demo xuyên các màn hình, yêu cầu xác nhận reset và không biến usage unknown thành 0. Alembic 0003, 7 API integration tests, web lint/build và API HTTP reset 2 lần đạt; không có inference request/grant. Checklist Phase 04 ghi blocker bằng chứng cho ledger/thread/file storage vì các domain này chưa tồn tại trong dependency hiện tại; xem [bằng chứng Phase 04](evidence/phase-04.md) và [report batch](tests/results/phase-04/20261008T154151+0700-demo-factory/report.md). Chưa đánh dấu Hoàn tất và chưa bắt đầu Phase 05.
+08/10/2026 — Triển khai và bàn giao Phase 04 chờ Chủ tịch nghiệm thu. Migration `20261008_0003` thêm hàm reset SECURITY DEFINER chỉ cho app role và scope demo cố định; seed tường minh tạo 2 phòng ban, 3 hồ sơ nhân sự v1, 5 Work Order ở các trạng thái fixture, approval, artifact metadata và 20 events; reset lặp cho cùng manifest hash. API `GET /api/v1/demo/dashboard` và `POST /api/v1/demo/reset` không nhận target scope; UI gắn nhãn demo xuyên các màn hình, yêu cầu xác nhận reset và không biến usage unknown thành 0. Alembic 0003, 7 API integration tests, web lint/build và API HTTP reset 2 lần đạt; không có inference request/grant. Checklist Phase 04 ghi blocker bằng chứng cho ledger/thread/file storage vì các domain này chưa tồn tại trong dependency hiện tại; xem [bằng chứng Phase 04](evidence/phase-04.md) và [report batch](tests/results/phase-04/20261008T154151+0700-demo-factory/report.md). Phase 04 chưa đánh dấu Hoàn tất; tại thời điểm bàn giao này Phase 05 chưa bắt đầu.
 
 #### Tài liệu liên quan
 
@@ -379,7 +379,7 @@ Seed manifest, kiểm tra reset/isolation và ảnh nhãn demo.
 ### Phase 05 — Kết nối Codex server local
 
 - Mốc: B
-- Trạng thái: Chưa triển khai
+- Trạng thái: Chờ nghiệm thu
 - Phụ thuộc: 03, 04
 - Mục tiêu: Sản phẩm nhận biết Codex khả dụng và model được chọn.
 
@@ -418,12 +418,17 @@ Contract/schema, health/models responses đã lọc, lỗi probe và profile sna
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Theo chỉ thị Chủ tịch sau remediation report Phase 01, triển khai adapter probe read-only và màn hình Settings để probe thủ công. Adapter chỉ cho HTTP literal loopback, chỉ GET `/health` + `/v1/models`, chặn redirect/proxy môi trường, timeout và response quá lớn; API chỉ trả trạng thái/model ID đã lọc, không trả secret hoặc khẳng định entitlement. Startup/health/profile không tự probe; không có POST chat/session hoặc inference. Codex server ở `127.0.0.1:4000` không nghe tại thời điểm kiểm chứng, nên live probe trả offline; API tests (9), web lint/build đều pass. Phần owner-authenticated model profile bị chặn vì API hiện chưa có identity/auth đáng tin; durable 429 queue/fallback allowlist chưa có persistence/Owner policy và thuộc capability chưa có ở phase này. CG01 bị chặn: source gateway xác nhận sandbox read-only không cô lập quyền đọc file máy, stateless chat vẫn tạo Codex thread/rollout có thể lưu prompt; không gửi input và không sửa server chung. Phase 04 vẫn Chờ nghiệm thu với khoảng trống isolation ledger/thread/file store và screenshot; Chủ tịch đã chỉ thị tiếp tục Phase 05, không thay trạng thái Phase 04. Xem [bằng chứng Phase 05](evidence/phase-05.md) và [report kiểm định](tests/results/phase-05/20261008T161028+0700-phase05-probe/report.md). Grant = 0; Phase 06 chưa bắt đầu.
+
+#### Tài liệu liên quan
+
+- [Bằng chứng Phase 05](evidence/phase-05.md)
+- [Report kiểm định Phase 05](tests/results/phase-05/20261008T161028+0700-phase05-probe/report.md)
 
 ### Phase 06 — Agent đầu tiên chạy trong sandbox
 
 - Mốc: B
-- Trạng thái: Chưa triển khai
+- Trạng thái: Bị chặn
 - Phụ thuộc: 05; nền event/state của 03
 - Mục tiêu: Một agent thử nghiệm thực hiện nhiệm vụ thật có giới hạn.
 
@@ -462,7 +467,7 @@ Trace thật đã lọc, artifact, timeout/deny/abort test, usage provenance.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Theo yêu cầu Chủ tịch tiếp Phase 06 sau khi làm lại test Phase 05, đã kiểm dependency trước khi triển khai. Phase 05 chưa được nghiệm thu: report r002 kết luận chưa đủ bằng chứng, live gateway offline, Owner auth/profile, durable queue/fallback và CG01 còn blocked; Phase 04 cũng Chờ nghiệm thu. CG01 chưa chứng minh isolation/read boundary và retention, inference grant = 0; backend hiện có run/checkpoint/events nền nhưng chưa có authenticated Owner grant/reservation hoặc ModelCall ledger/dispatcher. Vì vậy dừng trước khi thêm dispatcher/migration/API và trước khi gửi input; không gọi model, không restart shared gateway/API, không tự chọn instance thay thế. API health/gateway unit tests (9) pass; đây không thay bằng chứng Phase 06. Xem [report preflight Phase 06](tests/results/phase-06/20261008T170343+0700-r001-test/report.md). Điều kiện tiếp tục: dependency/gates được xử lý theo quyết định Chủ tịch, CG01 được chứng minh, và inference chỉ khi có grant riêng đúng test batch/mục đích/hạn mức/expiry.
 
 ### Phase 07 — Luồng event và khôi phục kết nối
 

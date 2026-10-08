@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-sha256" content="746d06d783e85dd5bed6640d55673c6b113309ac494be45617b3c01b088634c7">
+<meta name="source-sha256" content="16df8989bc9a906caa908298d84eebd762cb8364315760b2810beadc97be4ee9">
 <title>Bộ kiểm định phase · Agent Corporation</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23162938'/%3E%3Cpath d='m8 16 5 5 11-12' fill='none' stroke='%235de0b0' stroke-width='3'/%3E%3C/svg%3E">
 <style>
@@ -15,11 +15,11 @@ nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin:24px 0}section{margin-top:4
 @media(max-width:800px){.flow{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}@media(max-width:520px){main{padding:28px 18px}.flow,.tags{grid-template-columns:1fr}.phase{padding:16px;gap:12px}.metrics{gap:24px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style></head><body><main>
 <header><div class="eyebrow">Agent Corporation · Quy trình kiểm định</div><h1>Mỗi phase có bằng chứng để Chủ tịch đánh giá.</h1>
-<p class="lead">AI đọc rule, kiểm tra đúng phạm vi, lưu kết quả từng test rồi bàn giao. Checklist giúp xác định điều phải chứng minh; quyết định nghiệm thu thuộc Chủ tịch.</p>
-<nav aria-label="Tài liệu kiểm định"><a href="README.md">Hướng dẫn Markdown</a><a href="RULES.md">Đọc rule đầy đủ</a><a href="templates/report.md">Mẫu báo cáo</a><a href="results/README.md">Nơi lưu kết quả</a><a href="../master-plan.html">Roadmap</a></nav>
+<p class="lead">AI code đúng phase, test và lưu results, remake theo findings rồi test lại. Vòng lặp tiếp tục khi còn need-change giải quyết được trong phạm vi; quyết định nghiệm thu thuộc Chủ tịch.</p>
+<nav aria-label="Tài liệu kiểm định"><a href="README.md">Hướng dẫn Markdown</a><a href="RULES.md">Đọc rule đầy đủ</a><a href="templates/report.md">Mẫu report</a><a href="templates/remake.md">Mẫu remake</a><a href="results/README.md">Results</a><a href="../remakes/README.md">Remakes</a><a href="../master-plan.html">Roadmap</a></nav>
 <div class="notice">Đây là bộ kế hoạch kiểm định, chưa phải kết quả test sản phẩm. Không tự chuyển phase hoặc gọi inference. Mỗi đợt cần kiểm tra quyền và nguồn hiện tại.</div>
 <div class="metrics"><div><strong>24</strong>phase có checklist</div><div><strong>171</strong>test riêng theo phase</div><div><strong>8</strong>kiểm tra chung mỗi phase</div><div><strong>3</strong>tag cho từng kết quả</div></div></header>
-<section aria-labelledby="flow"><h2 id="flow">Từ rule đến báo cáo</h2><ol class="flow"><li><b>Đọc đúng phase</b><br>AGENTS → rule → checklist → roadmap/spec/ADR.</li><li><b>Đối chiếu thực tế</b><br>Source, diff, dependency, criteria và evidence cũ.</li><li><b>Kiểm định</b><br>Happy path, negative, race/crash phù hợp, đúng quyền.</li><li><b>Lưu bằng chứng</b><br>Tag, result, expected/actual, config và links cho từng test.</li><li><b>Bàn giao rồi dừng</b><br>Kết luận kỹ thuật; Chủ tịch nghiệm thu riêng.</li></ol></section>
+<section aria-labelledby="flow"><h2 id="flow">Code → test → remake → retest</h2><ol class="flow"><li><b>Code theo phase</b><br>Đọc rule/checklist/nguồn; triển khai đúng scope hoặc tiếp nhận code hiện có.</li><li><b>Test → results</b><br>Lưu report và evidence trước khi sửa; mỗi test có tag/result.</li><li><b>Remake → remakes</b><br>Đọc need-change; sửa trong phase; ghi nguyên nhân và thay đổi theo test ID.</li><li><b>Retest → results mới</b><br>Tăng vòng; link report trước/remake nguồn; kiểm lỗi và regression.</li><li><b>Lặp hoặc bàn giao</b><br>Còn need-change có thể giải quyết thì tiếp tục. Đạt hoặc blocker thật thì báo rõ.</li></ol><p>Yêu cầu “chỉ test/không sửa” dừng sau results. Suggestions tùy chọn; vòng lặp không tự cấp grant/quyền hoặc mở phase tiếp.</p></section>
 <section aria-labelledby="tags"><h2 id="tags">Gắn tag sau khi có kết quả</h2><div class="tags"><article class="tag"><span class="badge clean">clean</span><p>Đã chạy, đạt đủ kỳ vọng và có evidence.</p><p class="muted">Result: pass. Không dùng cho test chưa chạy.</p></article><article class="tag"><span class="badge change">need-change</span><p>Sai hành vi hoặc chưa đủ bằng chứng bắt buộc.</p><p class="muted">Result: fail, blocked hoặc not-run. Khoảng trống chưa chứng minh không tự coi là bug.</p></article><article class="tag"><span class="badge suggestion">suggestion</span><p>Đã đạt criteria, có cải tiến tùy chọn.</p><p class="muted">Result: pass; not-applicable chỉ cho case tùy điều kiện có nguồn loại trừ.</p></article></div><p>Tag, kết quả thực thi và mức độ lỗi là ba trường riêng. Không dùng suggestion cho thiếu proof bảo mật, isolation, ngân sách hoặc recovery.</p></section>
 <section aria-labelledby="boundaries"><h2 id="boundaries">Giữ phạm vi và quyền</h2><ul><li>Master-plan chuẩn về phạm vi/trạng thái; spec/ADR chuẩn về hợp đồng. Nguồn lệch nhau phải ghi nhận, không tự chọn trạng thái thuận lợi.</li><li>Test ghi DB, reset, kill/restart, migration hoặc restore cần tài nguyên kiểm định riêng và quyền đúng thao tác. Không có thì ghi blocked, tiếp tục phần độc lập.</li><li>Inference cần grant riêng theo phase, batch, mục đích, scope, model và hạn mức/expiry. Grant batch trước, nghiệm thu hoặc quyền phiên Codex không cấp lượt gọi mới.</li><li>Redact trước khi lưu. Không có secret thật, DB dump hay gateway transcripts trong evidence tracked. Unknown side effect không tự retry; replay chỉ đọc.</li><li>Kết luận: fail bắt buộc → cần sửa; còn blocked/not-run → chưa đủ bằng chứng; đủ pass/gate/evidence → đạt kỹ thuật. AI không tự nghiệm thu.</li></ul><p>Chi tiết điều kiện, C01–C08, severity và quy trình retest trong <a href="RULES.md">rule bắt buộc</a>.</p></section>
 <section aria-labelledby="gates"><h2 id="gates">Các checkpoint phải có báo cáo riêng</h2><ul class="gates"><li>03 → IG03 · dữ liệu</li><li>08 → IG08 · quan sát</li><li>12 → IG12 · điều phối</li><li>16 → IG16 · tài chính</li><li>20 → IG20 · báo cáo</li><li>23 → R1–R8 + đủ IG</li></ul><p>Gate yêu cầu run thật không pass bằng mock. Thiếu capability/isolation/privacy dùng CG01: blocked + gap report, Chủ tịch quyết định phương án riêng.</p></section>
@@ -96,12 +96,18 @@ nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin:24px 0}section{margin-top:4
 <div><h3><a href="phases/phase-23.md">Phase 23 — Nghiệm thu và phát hành V1</a></h3>
 <p class="muted">Phụ thuộc: 22; toàn bộ phase 00–22 được nghiệm thu · 10 test riêng + C01–C08</p>
 <p class="gate">R1–R8 + IG03/08/12/16/20</p><details><summary>Xem các test</summary><ul><li><code>P23-01</code> R1 công việc thật</li><li><code>P23-02</code> R2 observability/performance</li><li><code>P23-03</code> R3 quyền</li><li><code>P23-04</code> R4 ngân sách</li><li><code>P23-05</code> R5 sự cố</li><li><code>P23-06</code> R6 isolation</li><li><code>P23-07</code> R7 restore</li><li><code>P23-08</code> R8 cài/UX/bàn giao</li><li><code>P23-09</code> Audit toàn bộ IG</li><li><code>P23-10</code> Release lock/chặng B</li></ul></details></div></article></div></section>
-<section aria-labelledby="save"><h2 id="save">Mỗi batch giữ một lịch sử riêng</h2><pre>docs/tests/results/phase-NN/&lt;test_batch_id&gt;/
+<section aria-labelledby="save"><h2 id="save">Tên file và liên kết từng vòng</h2><pre>docs/tests/results/phase-NN/&lt;timestamp&gt;-r001-test/
   report.md
   evidence/
     source-manifest.json
     commands.md
-    … bằng chứng đã lọc</pre><p>Batch mới khi retest; liên kết supersedes, không ghi đè kết quả cũ. Report gồm C01–C08, mọi PNN-* và case bổ sung; ghi tag/result/evidence riêng từng test.</p><pre>rtk proxy python3 docs/tests/scripts/render.py
+    … bằng chứng đã lọc
+docs/remakes/phase-NN/&lt;timestamp&gt;-r001-remake/
+  remake.md
+  evidence/…
+docs/tests/results/phase-NN/&lt;timestamp&gt;-r002-test/
+  report.md
+  evidence/…</pre><p>Timestamp: YYYYMMDDTHHMMSS+0700. Test r001 → remake r001 → retest r002. Report mới link Supersedes và Remake nguồn; sổ vòng ở results/phase-NN/README.md. Không ghi đè lịch sử hoặc đổi tên batch legacy.</p><pre>rtk proxy python3 docs/tests/scripts/render.py
 rtk proxy python3 docs/tests/scripts/validate.py</pre><p class="muted">Hai lệnh chỉ xử lý bộ tài liệu local, không kết nối DB/gateway hoặc chạy test sản phẩm. Validator kiểm cấu trúc; AI vẫn phải đánh giá nội dung evidence.</p></section>
 <footer><p>Markdown là nguồn chuẩn của bộ kiểm định. <a href="README.md">Hướng dẫn</a> · <a href="RULES.md">Rule đầy đủ</a> · <a href="templates/report.md">Mẫu báo cáo</a></p><small class="muted">Soạn từ nguồn local 08/10/2026. HTML được đồng bộ từ Markdown; không lưu trạng thái nghiệm thu trong trình duyệt.</small></footer>
 </main></body></html>

@@ -1,20 +1,24 @@
 # Bộ kiểm định theo phase
 
-Bộ rule cho AI đọc sau khi triển khai một phase hoặc khi Chủ tịch yêu cầu kiểm định lại. Có checklist cho Phase 00–23, mẫu báo cáo và nơi lưu evidence từng đợt. Đây là kế hoạch kiểm định, không phải bằng chứng các phase đã đạt.
+Bộ rule điều khiển vòng **code phase → test/results → remake/remakes → retest/results → tiếp tục nếu còn need-change**. Có checklist cho Phase 00–23 và templates để AI nối từng kết quả test với thay đổi và lần kiểm chứng tiếp theo. Các tài liệu này không phải bằng chứng phase đã đạt.
 
-[Bản trực quan](index.html) · [Rule bắt buộc](RULES.md) · [Mẫu báo cáo](templates/report.md) · [Kết quả kiểm định](results/README.md)
+[Bản trực quan](index.html) · [Rule bắt buộc](RULES.md) · [Mẫu report](templates/report.md) · [Mẫu remake](templates/remake.md) · [Results](results/README.md) · [Remakes](../remakes/README.md)
 
 ## Cách dùng
 
 1. Đọc `AGENTS.md` root → `docs/tests/RULES.md` → `docs/tests/phases/phase-NN.md`.
 2. Đọc block Phase NN và dependency trong [master-plan](../master-plan.md), phần spec/ADR được checklist dẫn tới, diff/source/test thực tế và evidence bàn giao. Đối chiếu nguồn hiện tại, không lấy checklist cũ làm đặc tả mới.
-3. Chốt phạm vi batch, môi trường test, danh sách test bắt buộc và quyền đã có. Chạy các kiểm tra được phép; giữ test bị chặn trong báo cáo.
-4. Lưu `docs/tests/results/phase-NN/<test_batch_id>/report.md` và evidence đã lọc. Gắn một tag cho **mỗi** test, ghi kết quả, kỳ vọng, thực tế và đường dẫn evidence.
-5. Báo kết luận kỹ thuật, lỗi cần sửa và đề xuất. Dừng ở phase được giao; Chủ tịch quyết định nghiệm thu riêng.
+3. Code đúng phase nếu đang được giao triển khai; nếu phase đã có implementation thì bắt đầu kiểm định. Chốt số vòng, batch ID, môi trường và quyền; chạy checks được phép.
+4. Lưu `docs/tests/results/phase-NN/<timestamp>-rNNN-test/report.md` và evidence đã lọc. Mỗi test có một tag, result, expected/actual và evidence; giữ blocked/not-run rõ ràng.
+5. Nếu còn need-change giải quyết được: đọc report, sửa trong scope, ghi `docs/remakes/phase-NN/<timestamp>-rNNN-remake/remake.md` cùng số vòng.
+6. Tăng vòng và test lại vào results mới; link report trước/remake nguồn. Tiếp tục bước 5–6 tới khi đạt hoặc gặp blocker thật. Cập nhật sổ vòng `results/phase-NN/README.md`; giữ lịch sử cũ.
+7. Bàn giao report cuối và giới hạn; Chủ tịch nghiệm thu riêng. Nếu được chỉ thị “chỉ test/không sửa”, chỉ ghi results và bàn giao.
 
 Yêu cầu mẫu cho AI:
 
-> Kiểm định Phase 03 theo docs/tests/RULES.md và docs/tests/phases/phase-03.md. Đọc nguồn hiện tại, chạy test phù hợp trong phạm vi được phép, lưu report và evidence theo test_batch_id trong docs/tests/results/phase-03/. Gắn clean/need-change/suggestion cho từng test. Không inference, không tự sửa code, nghiệm thu hoặc chuyển phase.
+> Triển khai/test Phase 03 theo docs/tests/RULES.md và docs/tests/phases/phase-03.md. Chạy flow code → test/results → remake/remakes → retest/results, lặp khi còn need-change giải quyết được trong phase. Dùng số vòng rNNN, giữ evidence và liên kết lịch sử. Không inference nếu chưa có grant riêng; không tự nghiệm thu hoặc chuyển phase.
+
+Yêu cầu kiểm định độc lập: “Chỉ test Phase 03, lưu results; không sửa code.” Naming chi tiết và điều kiện dừng tại [RULES.md §§3/7](RULES.md).
 
 ## Ý nghĩa tag
 
@@ -64,7 +68,7 @@ rtk proxy python3 docs/tests/scripts/render.py
 rtk proxy python3 docs/tests/scripts/validate.py
 ```
 
-`validate.py` kiểm tra đủ 24 phase, test IDs, mapping tới tiêu chí roadmap/spec, links, report đã lưu và HTML đồng bộ. Nó không chứng minh sản phẩm đã đạt. Dùng `--batch docs/tests/results/phase-NN/<test_batch_id>` để kiểm tra riêng một báo cáo trước bàn giao. Placeholder trong template không phải kết quả test.
+`validate.py` kiểm tra đủ 24 phase, test IDs, mapping tới tiêu chí roadmap/spec, links trong bộ tests, cấu trúc report và HTML đồng bộ. Nó không chứng minh sản phẩm đã đạt hoặc tự xác nhận remake đã sửa hết lỗi. AI phải kiểm nội dung remake, links hai chiều qua sổ vòng và evidence retest. Dùng `--batch docs/tests/results/phase-NN/<test_batch_id>` để kiểm tra riêng một báo cáo. Placeholder trong template không phải kết quả test.
 
 ## Cập nhật bộ kiểm định
 

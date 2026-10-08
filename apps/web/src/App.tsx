@@ -11,6 +11,33 @@ type Health = {
   message?: string
 }
 
+type GatewayProbe = {
+  status: 'available' | 'offline' | 'auth_required' | 'rate_limited' | 'contract_mismatch' | 'configuration_error'
+  health: string
+  catalog: string
+  models: string[]
+  auth_configured: boolean
+  entitlement_verified: false
+  message: string
+}
+
+function isGatewayProbe(value: unknown): value is GatewayProbe {
+  if (!value || typeof value !== 'object') return false
+  const probe = value as Partial<GatewayProbe>
+  return ['available', 'offline', 'auth_required', 'rate_limited', 'contract_mismatch', 'configuration_error'].includes(String(probe.status))
+    && typeof probe.health === 'string'
+    && typeof probe.catalog === 'string'
+    && Array.isArray(probe.models)
+    && probe.models.every((model) => typeof model === 'string')
+    && typeof probe.auth_configured === 'boolean'
+    && probe.entitlement_verified === false
+    && typeof probe.message === 'string'
+}
+
+function gatewayContractError(message: string): GatewayProbe {
+  return { status: 'contract_mismatch', health: 'unavailable', catalog: 'unavailable', models: [], auth_configured: false, entitlement_verified: false, message }
+}
+
 type DemoTask = { id: string; goal: string; status: string; runs: { attempt: number; status: string }[]; pending_approvals: number; has_artifact: boolean; usage_status: string; cost_basis: string; usd_cost_micros: number | null; fixture: boolean }
 type DemoDashboard = { available: boolean; seed?: string; seed_version: number; manifest_sha256?: string; environment?: { name: string; kind: string }; company?: { name: string }; departments?: { id: string; name: string; employee_count: number }[]; employees?: { id: string; profile: { display_name: string; role: string }; version: number; department: string }[]; tasks?: DemoTask[]; usage?: { status: string; cost_basis: string; usd_cost_micros: number | null }; event_count?: number; message?: string }
 
@@ -64,6 +91,8 @@ function App() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [health, setHealth] = useState<Health>({ api: 'checking', database: 'checking' })
   const [healthReload, setHealthReload] = useState(0)
+  const [gatewayProbe, setGatewayProbe] = useState<GatewayProbe | null>(null)
+  const [gatewayProbing, setGatewayProbing] = useState(false)
   const [demo, setDemo] = useState<DemoDashboard | null>(null)
   const [demoError, setDemoError] = useState('')
   const [demoReload, setDemoReload] = useState(0)
@@ -147,6 +176,29 @@ function App() {
     }
   }
 
+  async function probeGateway() {
+    setGatewayProbing(true)
+    try {
+      const response = await fetch('/api/v1/codex/probe', { signal: AbortSignal.timeout(5000) })
+      if (!response.ok) {
+        setGatewayProbe(gatewayContractError(`API probe không khả dụng (HTTP ${response.status}). Cập nhật API local rồi thử lại.`))
+        return
+      }
+      let data: unknown
+      try {
+        data = await response.json()
+      } catch {
+        setGatewayProbe(gatewayContractError('API probe trả dữ liệu không đọc được. Kiểm tra contract API rồi thử lại.'))
+        return
+      }
+      setGatewayProbe(isGatewayProbe(data) ? data : gatewayContractError('API probe trả dữ liệu không đúng contract. Kiểm tra phiên bản API rồi thử lại.'))
+    } catch {
+      setGatewayProbe({ status: 'offline', health: 'unavailable', catalog: 'unavailable', models: [], auth_configured: false, entitlement_verified: false, message: 'Không kết nối được API nội bộ để probe. Kiểm tra dịch vụ local rồi thử lại.' })
+    } finally {
+      setGatewayProbing(false)
+    }
+  }
+
   const stateText = (state: CheckState) => state === 'ok' ? 'Đang hoạt động' : state === 'checking' ? 'Đang kiểm tra' : 'Chưa kết nối'
 
   return (
@@ -221,7 +273,7 @@ function App() {
           ) : demo?.available && ['work', 'approvals', 'inspector', 'replay', 'quality', 'incidents', 'organization', 'memory', 'finance', 'reports', 'office'].includes(activeId) ? (
             <DemoScreen screenId={activeId} demo={demo} />
           ) : activeId === 'settings' ? (
-            <section className="screen-panel settings-layout"><div className="settings-main"><p className="eyebrow">TRẠNG THÁI KẾT NỐI</p><h2>Dịch vụ trên máy này</h2><p className="screen-copy">Các trạng thái bên dưới lấy từ health endpoint của API. Không thực hiện yêu cầu tới model hoặc gateway.</p><div className="settings-status"><span className={`health-icon ${health.api}`}>↗</span><div><strong>API nội bộ</strong><small>GET /api/v1/health/live</small></div><span className={`health-result ${health.api}`}>{stateText(health.api)}</span></div><div className="settings-status"><span className={`health-icon ${health.database}`}>▤</span><div><strong>PostgreSQL</strong><small>GET /api/v1/health/ready</small></div><span className={`health-result ${health.database}`}>{stateText(health.database)}</span></div>{health.message && <p className="health-error" role="status">{health.message}</p>}<button className="primary-button" onClick={() => { setHealth({ api: 'checking', database: 'checking' }); setHealthReload((value) => value + 1) }}>Kiểm tra lại</button></div><aside className="settings-aside"><span className="aside-mark">i</span><h3>Gateway inference</h3><p>Chưa được kiểm tra trong Phase 02. Capability probe thuộc Phase 05 và cần gate riêng.</p><strong>Grant hiện tại: 0</strong></aside></section>
+            <section className="screen-panel settings-layout"><div className="settings-main"><p className="eyebrow">TRẠNG THÁI KẾT NỐI</p><h2>Dịch vụ trên máy này</h2><p className="screen-copy">Health API/DB được tải khi mở ứng dụng. Gateway chỉ được gọi khi bạn bấm probe; thao tác này chỉ GET health và catalog, không gọi model.</p><div className="settings-status"><span className={`health-icon ${health.api}`}>↗</span><div><strong>API nội bộ</strong><small>GET /api/v1/health/live</small></div><span className={`health-result ${health.api}`}>{stateText(health.api)}</span></div><div className="settings-status"><span className={`health-icon ${health.database}`}>▤</span><div><strong>PostgreSQL</strong><small>GET /api/v1/health/ready</small></div><span className={`health-result ${health.database}`}>{stateText(health.database)}</span></div>{health.message && <p className="health-error" role="status">{health.message}</p>}<button className="primary-button" onClick={() => { setHealth({ api: 'checking', database: 'checking' }); setHealthReload((value) => value + 1) }}>Kiểm tra lại</button><div className="gateway-panel"><div className="gateway-heading"><div><p className="eyebrow">CODEX SERVER LOCAL</p><h2>Gateway và model catalog</h2></div><button className="quiet-button" type="button" onClick={() => void probeGateway()} disabled={gatewayProbing}>{gatewayProbing ? 'Đang kiểm tra…' : 'Probe gateway'}</button></div><p className="screen-copy">Base URL do backend cấu hình. Không gửi prompt, không tạo session. Model trong catalog không đồng nghĩa account có entitlement.</p>{gatewayProbe ? <div className="gateway-result" role="status"><strong>{gatewayProbe.status === 'available' ? 'Gateway phản hồi' : gatewayProbe.status === 'offline' ? 'Không kết nối được' : gatewayProbe.status === 'auth_required' ? 'Cần xác thực gateway' : gatewayProbe.status === 'rate_limited' ? 'Gateway đang giới hạn probe' : 'Contract/cấu hình cần kiểm tra'}</strong><span>{gatewayProbe.message}</span><small>Health: {gatewayProbe.health} · Catalog: {gatewayProbe.catalog} · Secret reference phía backend: {gatewayProbe.auth_configured ? 'đã cấu hình' : 'chưa cấu hình'}</small>{gatewayProbe.models.length > 0 && <div className="gateway-model-list"><span>Catalog (chỉ để tham khảo)</span>{gatewayProbe.models.map((model) => <code key={model}>{model}</code>)}</div>}</div> : <p className="gateway-empty">Chưa chạy probe trong phiên này.</p>}<div className="profile-locked"><strong>Model profile / quyền Owner</strong><span>Chưa cấu hình profile. API hiện chưa có danh tính Owner đã xác thực; không cho phép tự khai báo actor từ giao diện. Entitlement chỉ kiểm tra trong đợt run được cấp grant riêng.</span></div></div></div><aside className="settings-aside"><span className="aside-mark">i</span><h3>Capability và quyền</h3><p>Probe chỉ xác nhận contract GET health/models. Không kiểm tra streaming, max_tokens, session API, quyền tài khoản hoặc privacy/retention.</p><strong>Inference grant: 0 · Chưa gọi model</strong></aside></section>
           ) : activeId === 'onboarding' ? (
             <section className="locked-panel"><span className="locked-icon" aria-hidden="true">⌑</span><p className="eyebrow">MỞ SAU KHI PHÁT HÀNH V1</p><h2>Chưa thể thành lập công ty thật</h2><p>Phase 04 chỉ tạo fixture trong scope demo cố định. Wizard này không tạo company thật, cấp quyền, chọn model hay khởi tạo agent.</p><span className="lock-caption">S14 · phase 21, 23</span></section>
           ) : (

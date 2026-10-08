@@ -1,0 +1,54 @@
+{
+  "test_batch_id": "20261008T165432+0700-r001-test",
+  "phase": "05",
+  "round": "r001",
+  "captured_at": "2026-10-08T16:54:32+07:00",
+  "dirty_worktree": true,
+  "scope_file_list": [
+    "AGENTS.md",
+    "docs/master-plan.md",
+    "docs/product-spec.md",
+    "docs/decisions/0001-v1-foundation.md",
+    "docs/tests/RULES.md",
+    "docs/tests/phases/phase-05.md",
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/adapter.py",
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/router.py",
+    "apps/api/src/agent_corporation_api/main.py",
+    "apps/web/src/App.tsx",
+    "apps/web/src/App.css",
+    "apps/api/tests/test_codex_gateway.py",
+    "docs/tests/results/phase-05/20261008T161028+0700-phase05-probe/"
+  ],
+  "parallel_user_changes_preserved": [
+    "docs/tests/results/phase-02/",
+    "docs/tests/results/phase-03/",
+    "docs/tests/results/phase-04/20261008T162050+0700-demo-factory/",
+    "docs/tests/RULES.md and phase checklists"
+  ],
+  "runtime": {
+    "api": "127.0.0.1:15501; existing process did not load Phase 05 route; GET /api/v1/codex/probe returned 404",
+    "web": "127.0.0.1:15500; existing Vite process served current App.tsx via HMR",
+    "codex_server": "127.0.0.1:4000 offline; GET-only adapter reports offline",
+    "inference_grant": 0
+  },
+  "tool_versions": {"node": "v24.21.0", "npm": "11.19.0", "uv": "0.12.23"},
+  "source_sha256": {
+    "AGENTS.md": "158f5cfc3e414a0071db49e09b08a3a14a205142ef3ef0c53251a2ab0f5b09ba",
+    "docs/master-plan.md": "4e9f2f024e83a4ce3cc8acc12faabd60ba135ca8852da8942026626b00233f08",
+    "docs/product-spec.md": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5",
+    "docs/decisions/0001-v1-foundation.md": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930",
+    "docs/tests/RULES.md": "518b8b712e0185a4fd025dcaa609e0a973cc38e05aa5b98a35d2f0ec4e8d9b05",
+    "docs/tests/phases/phase-05.md": "4bf0ced47454d57facc57f1df89c03cbc338b670990fc0fb7377b2f478a89f4d",
+    "apps/api/codex_gateway/adapter.py": "382e029811d0fc4d7131002548d7ced854580d6f300a3857da51a9a66b1b1349",
+    "apps/api/codex_gateway/router.py": "154184542660e5b6b937c35d030170604bd8567e4cc0422078e0fc7f8972a345",
+    "apps/api/main.py": "6c48de51f41a6d8abd654463c00ce78bc9ef0612b090ec8196ec0505ad9f3897",
+    "apps/web/App.tsx": "d69019819ac055002a3f1b995629374c3785490fe7e59909aab68245c9f9510f",
+    "apps/web/App.css": "4431c0eaa95c21e9a77a678941942022cf80ce4964f6df71f237c621de600b45",
+    "apps/api/tests/test_codex_gateway.py": "617bbab9352d3a9b82a92c5954d1cb845a6d62d7cedd94ebd11f393ee4cbc96f",
+    "gateway/src/server.ts": "b6565fd70664a64d98c72da225c33487c8dd0db451e83290f97e1ee66c3b9994",
+    "gateway/src/schema.ts": "6ab2bc1217794dab4c59ce3bd41a3e81b20f15fd20fc5d7b0a35e418f1229916",
+    "gateway/src/provider.ts": "99a84bd57ac97c5c60df2e839dd4eb937b3329b784f241bdeddeddc310b6d80e",
+    "gateway/src/sessions.ts": "54e2f00d6647c993eded5549d062603bf9963ae0b7239479fdfc1ceb4309d622"
+  },
+  "sensitive_data": "No .env values, credentials, gateway sessions/transcripts, database dumps, or inference requests were collected."
+}

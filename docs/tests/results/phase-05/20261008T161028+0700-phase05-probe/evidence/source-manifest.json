@@ -1,0 +1,55 @@
+{
+  "test_batch_id": "20261008T161028+0700-phase05-probe",
+  "phase": "05",
+  "captured_at": "2026-10-08T16:10:28+07:00",
+  "workspace": "/Users/buivannin/Desktop/workspace/personal/agent-corporation",
+  "worktree": "dirty; changes in this batch listed in report; no commit used as sole source identity",
+  "scope_file_list": [
+    ".env.example",
+    "README.md",
+    "apps/api/src/agent_corporation_api/main.py",
+    "apps/api/src/agent_corporation_api/settings.py",
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/adapter.py",
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/router.py",
+    "apps/api/tests/test_codex_gateway.py",
+    "apps/web/src/App.tsx",
+    "apps/web/src/App.css",
+    "docs/master-plan.md",
+    "docs/master-plan.html",
+    "docs/evidence/phase-05.md",
+    "docs/remakes/phase-01-followup.md",
+    "docs/tests/results/phase-05/20261008T161028+0700-phase05-probe/"
+  ],
+  "parallel_files_preserved_not_modified": [
+    "docs/tests/results/phase-02/20261008T161241+0700-phase-02/",
+    "docs/tests/results/phase-03/20261008T161241+0700-phase-03/"
+  ],
+  "runtime": {
+    "api": "127.0.0.1:15501 GET health returned 200; existing process not restarted",
+    "web": "127.0.0.1:15500 GET returned 200; existing process not restarted",
+    "codex_server": "127.0.0.1:4000 GET /health and /v1/models connection refused; no restart attempted",
+    "inference_grant": 0
+  },
+  "tool_versions": {
+    "node": "v24.21.0",
+    "npm": "11.19.0",
+    "uv": "0.12.23"
+  },
+  "source_sha256": {
+    "gateway/src/server.ts": "b6565fd70664a64d98c72da225c33487c8dd0db451e83290f97e1ee66c3b9994",
+    "gateway/src/schema.ts": "6ab2bc1217794dab4c59ce3bd41a3e81b20f15fd20fc5d7b0a35e418f1229916",
+    "gateway/src/provider.ts": "99a84bd57ac97c5c60df2e839dd4eb937b3329b784f241bdeddeddc310b6d80e",
+    "gateway/src/config.ts": "276b41d99850e614a911c77709ae0c26253dc99854b87c2682bf434a9197cd7a",
+    "gateway/docs/TECHNICAL.md": "b8e37dc82c6fe0478789a2d348735e206393a472eb7102e69ed81ca2cc39f269",
+    "workspace/README.md": "6f6d60a765c1a24bb1ede12edbb86ae0cc4b574fa799f1cd8ab60bc18b3e0227",
+    "workspace/docs/product-spec.md": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5",
+    "workspace/apps/api/modules/codex_gateway/adapter.py": "382e029811d0fc4d7131002548d7ced854580d6f300a3857da51a9a66b1b1349",
+    "workspace/apps/api/modules/codex_gateway/router.py": "154184542660e5b6b937c35d030170604bd8567e4cc0422078e0fc7f8972a345",
+    "workspace/apps/api/main.py": "6c48de51f41a6d8abd654463c00ce78bc9ef0612b090ec8196ec0505ad9f3897",
+    "workspace/apps/api/settings.py": "25aa450c278b6d36ffa57389e8536b832570a20bd8746a61a2f0631c29164171",
+    "workspace/apps/api/tests/test_codex_gateway.py": "617bbab9352d3a9b82a92c5954d1cb845a6d62d7cedd94ebd11f393ee4cbc96f",
+    "workspace/apps/web/src/App.tsx": "d69019819ac055002a3f1b995629374c3785490fe7e59909aab68245c9f9510f",
+    "workspace/apps/web/src/App.css": "4431c0eaa95c21e9a77a678941942022cf80ce4964f6df71f237c621de600b45"
+  },
+  "sensitive_data": "No .env contents, tokens, gateway sessions, transcripts, database dumps, or model requests were collected."
+}

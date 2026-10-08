@@ -6,6 +6,7 @@
 
 - Phase: NN
 - Test batch: <test_batch_id>
+- Vòng: <rNNN; khớp tên batch>
 - Bắt đầu / kết thúc: <ISO 8601 +07:00; Asia/Ho_Chi_Minh>
 - Người/AI kiểm định: <tên>
 - Yêu cầu/phạm vi được giao: <nguồn chỉ thị>
@@ -14,6 +15,7 @@
 - Inference: <không gọi; hoặc grant_id/version + phase/batch/purpose/limits/expiry/Owner ref>
 - Dependency/quyết định nghiệm thu: <links, ảnh hưởng, mismatch>
 - Supersedes: <link batch cũ hoặc không có>
+- Remake nguồn: <link remake đã thực hiện trước test này hoặc Không có ở vòng đầu>
 - Kết luận kỹ thuật: <đạt | cần sửa | chưa đủ bằng chứng>
 - Quyết định Chủ tịch: <Chưa có hoặc nguồn quyết định thật; không tự nghiệm thu>
 
@@ -71,4 +73,5 @@ Mỗi gate là một dòng riêng (IG03/IG08/IG12/IG16/IG20 hoặc R1…R8 theo 
 - Chưa kiểm chứng: <test IDs, lý do, ảnh hưởng và việc cần để chạy>
 - Cần sửa: <issue IDs + severity + bằng chứng + retest>
 - Đề xuất tùy chọn: <test IDs, benefit/effort; không che lỗi bắt buộc>
-- Bàn giao: <report/evidence/artifacts và kết luận kỹ thuật; dừng ở phase hiện tại>
+- Bước tiếp theo: <remake trong phase nếu còn need-change giải quyết được; hoặc đạt kỹ thuật/bị chặn/chỉ test và lý do>
+- Bàn giao: <report/evidence/artifacts và kết luận kỹ thuật; không tự chuyển phase>

@@ -62,4 +62,4 @@ Chưa có command runtime được xác minh cho phase này khi soạn. Khi phas
 
 ## Kết luận và lưu kết quả
 
-Tạo `docs/tests/results/phase-13/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P13-01…P13-07 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Dừng tại Phase 13.
+Tạo `docs/tests/results/phase-13/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P13-01…P13-07 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Tiếp tục remake/retest theo RULES.md khi còn need-change giải quyết được trong Phase 13; không tự chuyển phase. Nếu chỉ được giao test không sửa hoặc gặp blocker thật, lưu kết quả và điều kiện tiếp tục.
