@@ -8,6 +8,9 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 
 class Settings(BaseSettings):
     database_url: str
+    migration_database_url: str | None = None
+    app_database_user: str = "agent_corporation_app"
+    app_database_password: str
 
     model_config = SettingsConfigDict(
         env_file=REPOSITORY_ROOT / ".env",

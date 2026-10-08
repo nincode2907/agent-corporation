@@ -1,10 +1,10 @@
 # Bằng chứng Phase 02 — Khung giao diện Chủ tịch
 
-Ngày triển khai: 08/10/2026 · Trạng thái bàn giao: **Chờ nghiệm thu**.
+Ngày triển khai: 08/10/2026 · Trạng thái: **Hoàn tất theo chỉ thị chuyển tiếp sang Phase 03**.
 
 ## Dependency và giới hạn
 
-- Phase 00 đã được nghiệm thu; Phase 01 đã được Chủ tịch duyệt khi giao Phase 02. API local và PostgreSQL đang chạy trước khi bắt đầu.
+- Phase 00 đã được nghiệm thu; Phase 01 đã được Chủ tịch duyệt khi giao Phase 02. Khi giao Phase 03 trực tiếp, Phase 02 được tiếp nhận làm dependency; không xem đó là xác minh viewport 390 px.
 - Runtime được kiểm tra trước và sau thay đổi: `http://127.0.0.1:15500/` trả HTTP 200; `GET /api/v1/health/live` trả 200; `GET /api/v1/health/ready` trả `{"status":"ok","checks":{"database":"ok"}}`; favicon trả HTTP 200.
 - Không gọi codex-server, model, chat/session hay inference. Grant vẫn bằng 0. S13 nói rõ capability probe thuộc Phase 05.
 - Không tạo domain schema, company, employee, task, event hay dữ liệu fixture. S14 vẫn khóa thao tác thành lập công ty thật tới sau release V1.
@@ -41,8 +41,8 @@ Rà soát thiết kế: giữ layout điều hành tiết chế, palette xanh r�
 - CSS responsive breakpoint cho chiều rộng 390 px đã được triển khai, nhưng không đo overflow/screenshot tại viewport cố định 390 px: browser control bị người dùng lấy lại trước khi hoàn tất công cụ thiết bị. Cần xác minh ở lượt nghiệm thu hoặc trình duyệt có viewport override.
 - Semantic navigation, skip link, focus-visible, `lang="vi"`, reduced motion và favicon đã được kiểm tra trong source/build; chưa chạy audit accessibility chuyên biệt hoặc keyboard-only sweep đầy đủ.
 - Ảnh Chrome desktop đã được quan sát trong phiên kiểm tra nhưng chưa lưu thành artifact ảnh trong repository.
-- Giao diện S02–S12 là preview shell; không thể chứng minh chức năng domain trước Phase 03 và các phase tương ứng.
+- Tại thời điểm bàn giao Phase 02, S02–S12 là preview shell; chức năng domain chưa được triển khai trong phase đó.
 
 ## Bàn giao
 
-Các thay đổi UI nằm tại `apps/web/src/App.tsx`, `apps/web/src/App.css` và `apps/web/index.html`; cập nhật trạng thái/evidence ở `docs/master-plan.md`, `docs/evidence/phase-01.md`, README và hướng dẫn project. Phase 02 chờ Chủ tịch nghiệm thu. Phase 03 chưa bắt đầu.
+Các thay đổi UI nằm tại `apps/web/src/App.tsx`, `apps/web/src/App.css` và `apps/web/index.html`; cập nhật trạng thái/evidence ở `docs/master-plan.md`, `docs/evidence/phase-01.md`, README và hướng dẫn project. Phase 02 được tiếp nhận ngày 08/10/2026 theo chỉ thị trực tiếp bắt đầu Phase 03. Giới hạn viewport 390 px vẫn cần xác minh nếu trở thành tiêu chí phát hành.

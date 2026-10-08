@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-10-08T15:51:16.875999+07:00",
+  "base_commit": "2fd2a8f",
+  "source_state": "git worktree dirty; prior phase changes and out-of-scope Phase 01 report preserved; no new commit",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "352d556d74071d9aa65d62c816128145fb85288e396020119a6e96102ddc1594"
+    },
+    {
+      "path": "README.md",
+      "sha256": "db726c406f7dac548aee5a25931585ac7f63a159f2dd1fb9cf65753e0044aaea"
+    },
+    {
+      "path": "apps/api/migrations/versions/20261008_0003_demo_reset.py",
+      "sha256": "db13246fd1c2a49140347b721db627ab7df6029049f86379244f585f95e5f463"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/demo/__init__.py",
+      "sha256": "c224c744b5eb2043e72a071503ceb8d5205c415df907c041413c91c5707d7064"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/demo/factory.py",
+      "sha256": "c3373dc48ac86b5811c91e88ef1aec87d188b14e31138028242ce634eb5e28d1"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/demo/router.py",
+      "sha256": "99b88e2f4109e3b9d3f13fbc61c763ef2fdb24859641999ab9e3086bf645e84d"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/observability/events.py",
+      "sha256": "689ac7d8f3f8d1f904ff846f515bbe776ff6db9b2102671294989545d08a1bd3"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/main.py",
+      "sha256": "02c09a0a3209497d5f23da550777642d7768134813f798e9acd3166d36f14043"
+    },
+    {
+      "path": "apps/api/tests/test_health.py",
+      "sha256": "d493eba76e8662a93b739a0ff74d7b0c3a6ec83f199039272f0bf13cb7bb03be"
+    },
+    {
+      "path": "apps/api/tests/test_phase03_persistence.py",
+      "sha256": "d053c9201694a3eaaf22c1dbdcf9163b6f7e3c132687e58a4e4fa46027c8e848"
+    },
+    {
+      "path": "apps/api/tests/test_phase04_demo_factory.py",
+      "sha256": "a6c470529fff587466c8ccefecc388847c0728b6b0e5bd5dbeb30661cd805d2d"
+    },
+    {
+      "path": "scripts/seed_demo.py",
+      "sha256": "a6c5f1ee245c67b701dc4d4b8d6f64c616fe42ec72f0c4b53d64bb685009fc3a"
+    },
+    {
+      "path": "apps/web/src/App.tsx",
+      "sha256": "35914cbd2dcb04bed76d83b461cb0c4ddcc68fbf30c546ebb4bb70db6a22d8b0"
+    },
+    {
+      "path": "apps/web/src/App.css",
+      "sha256": "e80aabfaeed15f36dc6c7ceb6ebbb9e26e35714c5cc5b739f4a4b372fc23dc56"
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "9aea18178e77c6e6b25c3d9b18cb79a862cc30978035fb0c09961dc97ba8b89e"
+    },
+    {
+      "path": "docs/master-plan.html",
+      "sha256": "5d1d1c43c4854c845b4edaef7d9a0e2695e39314d91eb978db9cda6ff85bbc05"
+    },
+    {
+      "path": "docs/product-spec.md",
+      "sha256": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5"
+    },
+    {
+      "path": "docs/product-spec.html",
+      "sha256": "584b334be3e22a31a9c0d4d0c1fe01398b2171b1f5277794d649f893c8017aeb"
+    },
+    {
+      "path": "docs/evidence/phase-03.md",
+      "sha256": "a1799b7297280a44ef4d4a81c5a99a4db012c527e26c46f817f1beea76636084"
+    },
+    {
+      "path": "docs/evidence/phase-04.md",
+      "sha256": "5bb09a890cb624d8ea7157d22bf4ac8cadabd7a16a657f8e1016a44c863c2255"
+    },
+    {
+      "path": "docs/tests/RULES.md",
+      "sha256": "193a1b954282c8252c9c18514d094b6440609ce8cc7bd6a1b3135a772022da59"
+    },
+    {
+      "path": "docs/tests/phases/phase-01.md",
+      "sha256": "d1100fd10cdadf0f422cc7c87c2ae16f6dffafc86560f3f6813ebbe45eea102f"
+    },
+    {
+      "path": "docs/tests/phases/phase-04.md",
+      "sha256": "49a21d26c1b4a4f974c60f794d232b1d44d012e6287d4dc95f9bef7e93ddc85e"
+    },
+    {
+      "path": "docs/tests/index.html",
+      "sha256": "d05c9791cc2889cb510a640e2cb1ff4e73c9c3bab07f0dcd671ee00387e8bf08"
+    },
+    {
+      "path": "docs/tests/scripts/render.py",
+      "sha256": "abfb6db3be4c2051b014527f2fa04ccebb88276b4d97fd59efc07f7dd601eb7f"
+    },
+    {
+      "path": "docs/tests/scripts/validate.py",
+      "sha256": "dd23653f0bf16c4c6ae696e1ee70459b276a86614b391b9ba36bc3fc50385ac4"
+    },
+    {
+      "path": "scripts/render_plan.py",
+      "sha256": "bc1f49f1d549cd16c292d47a258dbf36e049edda3a8c7442a12457cedd3c0c39"
+    },
+    {
+      "path": "scripts/render_phase00.py",
+      "sha256": "1dddf9fd484ebe34f3b1b07d1b98312a3607008ac6844aa4986aa06d05dd9699"
+    }
+  ]
+}

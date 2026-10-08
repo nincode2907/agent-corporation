@@ -316,6 +316,7 @@ Khi crash mất heartbeat, active run chuyển reconciling. Nếu không có b�
 | TASK_RESUMED | rechecked revision/grant/checkpoint refs | 09 |
 | TASK_FAILED | final known failure, evidence refs | 06 |
 | TASK_CANCELLED | Owner decision and in-flight outcome summary | 09 |
+| TASK_STATE_CHANGED | old/new state, expected transition version, actor and reason ref | 03 |
 | RUN_STATE_CHANGED | old/new state, checkpoint/reason, expected revision | 06 |
 | BUDGET_RESERVED | grant/reservation, limit basis and amount nullable | 06, 16 |
 | BUDGET_SETTLED | call/reservation/ledger refs, known/unknown status | 06, 16 |
@@ -467,7 +468,7 @@ Các ngưỡng R2/R8 là baseline đặc tả đã được Chủ tịch nghiệ
 
 ### Integration verification gates trong và giữa các milestone
 
-Các checkpoint sau kiểm chứng **tích hợp những phần đã triển khai**, không thêm feature hoặc thay thứ tự phase. Bắt buộc ghi report PASS/FAIL, môi trường/config/version, test batch/grant nếu có, commands/results và event/artifact/ledger refs. PASS không tự cho phép chạy phase tiếp; FAIL giữ phần liên quan Bị chặn, cần sửa trong scope được giao và kiểm chứng lại. Không dùng mock để đạt tiêu chí yêu cầu run thật. Tất cả IG hiện **Chưa thực hiện**, độc lập với việc Phase 00 được nghiệm thu về đặc tả.
+Các checkpoint sau kiểm chứng **tích hợp những phần đã triển khai**, không thêm feature hoặc thay thứ tự phase. Bắt buộc ghi report PASS/FAIL, môi trường/config/version, test batch/grant nếu có, commands/results và event/artifact/ledger refs. PASS không tự cho phép chạy phase tiếp; FAIL giữ phần liên quan Bị chặn, cần sửa trong scope được giao và kiểm chứng lại. Không dùng mock để đạt tiêu chí yêu cầu run thật. IG03 được kiểm chứng lại cùng Phase 04 batch `20261008T154151+0700-demo-factory` bằng test Phase 03 persistence/transaction/dedup/RLS (xem [report Phase 04 C07](tests/results/phase-04/20261008T154151+0700-demo-factory/report.md)); IG08/12/16/20 vẫn **Chưa thực hiện**. Việc này không tự nghiệm thu phase hoặc cấp quyền inference.
 
 | Gate | Sau phase / trước phase | Luồng tích hợp và bằng chứng bắt buộc | Inference / cách xử lý FAIL |
 | --- | --- | --- | --- |

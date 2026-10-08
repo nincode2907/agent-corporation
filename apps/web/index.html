@@ -5,7 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f6f7f3" />
-    <meta name="description" content="Kiểm tra tình trạng dịch vụ local của Agent Corporation." />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem('agent-corporation.theme');
+        document.documentElement.dataset.theme = savedTheme === 'dark' || savedTheme === 'light'
+          ? savedTheme
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch {}
+    </script>
+    <meta name="description" content="Nền tảng local-first để quản trị công việc, trạng thái và bằng chứng của Agent Corporation." />
     <title>Agent Corporation · Tổng quan</title>
   </head>
   <body>

@@ -1,6 +1,6 @@
 # Agent Corporation
 
-Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quyền và nghiệm thu bằng chứng. Phase 00–01 đã được nghiệm thu; Phase 02 đã bàn giao, đang chờ nghiệm thu. Chưa có runtime agent hoặc inference.
+Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quyền và nghiệm thu bằng chứng. Phase 00–03 đã hoàn tất; Phase 04 chờ nghiệm thu. Chưa có runtime agent hoặc inference.
 
 - [Mở trang theo dõi phase](docs/master-plan.html)
 - [Kế hoạch và nguồn trạng thái chính thức](docs/master-plan.md)
@@ -9,7 +9,10 @@ Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quy�
 - [Bằng chứng Phase 00](docs/evidence/phase-00.md)
 - [Bằng chứng Phase 01](docs/evidence/phase-01.md)
 - [Bằng chứng Phase 02](docs/evidence/phase-02.md)
+- [Bằng chứng Phase 03](docs/evidence/phase-03.md)
+- [Bằng chứng Phase 04](docs/evidence/phase-04.md)
 - [Hướng dẫn cho agent](AGENTS.md)
+- [Bộ rule và checklist kiểm định từng phase](docs/tests/README.md) · [Bản trực quan](docs/tests/index.html)
 
 ## Khởi động local
 
@@ -32,9 +35,9 @@ uv run --project apps/api uvicorn agent_corporation_api.main:app --app-dir apps/
 npm run --prefix apps/web dev
 ```
 
-Mở `http://127.0.0.1:15500`. Vite forward `/api` tới API loopback. Kiểm tra readiness trực tiếp bằng `curl -i http://127.0.0.1:15501/api/v1/health/ready`. Dừng PostgreSQL bằng `docker compose stop postgres`; lệnh này giữ nguyên dữ liệu local. Chạy lại bằng `docker compose start postgres`.
+Mở `http://agent-corporation.localhost` (hoặc `http://127.0.0.1:15500`). Vite forward `/api` tới API loopback. Kiểm tra readiness trực tiếp bằng `curl -i http://127.0.0.1:15501/api/v1/health/ready`. Dừng PostgreSQL bằng `docker compose stop postgres`; lệnh này giữ nguyên dữ liệu local. Chạy lại bằng `docker compose start postgres`.
 
-Block `15500–15599` đã được reserve tại Dev Hub; mapping cụ thể ở registry trung tâm. Proxy `.localhost` tắt vì ingress Dev Hub hiện publish port 80 trên mọi interface. Dùng URL loopback cho runtime phase này.
+Block `15500–15599` đã được reserve tại Dev Hub; mapping cụ thể ở registry trung tâm. Hostname `agent-corporation.localhost` dùng proxy Dev Hub chỉ publish trên IPv4/IPv6 loopback.
 
 `.env` được bootstrap ngẫu nhiên, quyền `0600` và bị Git ignore. Không commit/copy secret; `.env.example` chỉ chứa chỉ dẫn placeholder. Health routes không thực hiện authentication, nên API chỉ bind loopback và chỉ có liveness/readiness trong phase này.
 
@@ -48,4 +51,4 @@ rtk proxy python3 scripts/render_plan.py
 rtk proxy python3 scripts/validate_phase00.py
 ```
 
-Hai lệnh tài liệu chỉ xử lý file local, không gọi model. Inference grant hiện là 0; Phase 01 không gọi inference. Mỗi phase sau cần được giao riêng.
+Các lệnh tài liệu chỉ xử lý file local, không gọi model. Inference grant hiện là 0; Phase 03 không gọi inference. Mỗi phase sau cần được giao riêng.

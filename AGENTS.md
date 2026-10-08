@@ -3,7 +3,7 @@
 ## Hướng dẫn áp dụng
 - Đọc và tuân thủ `/Users/buivannin/.codex/RTK.md`; mọi lệnh shell dùng tiền tố `rtk`.
 - Dự án local-first để Chủ tịch giao mục tiêu, quản lý nhân viên AI, quan sát thực thi và nghiệm thu bằng chứng.
-- Phase 00–01 đã được nghiệm thu; Phase 02 đã bàn giao và đang chờ Chủ tịch nghiệm thu. Mỗi lượt chỉ triển khai phase được giao; không tự sang Phase 03.
+- Phase 00–03 đã hoàn tất; Phase 04 đang được triển khai theo chỉ thị của Chủ tịch. Mỗi lượt chỉ triển khai phase được giao; không tự sang Phase 05.
 - Chỉ triển khai phase người dùng yêu cầu; hết phase thì báo cáo và dừng. Không tự chuyển phase, tạo công ty thật, gọi inference hoặc thay cấu hình toàn máy.
 
 ## Đọc đúng ngữ cảnh
@@ -12,6 +12,7 @@
 - Đối chiếu ý tưởng khi cần: `docs/sources/`; bản 02 ưu tiên cho thứ tự xây sản phẩm trước, vận hành sau.
 - Setup/runtime: dùng skill global `project-ai-bootstrap`; gateway: đọc README/source của codex-server; OpenAI native protocol dùng `openai-docs` khi cần.
 - UI dùng `ui-page-builder` hoặc `frontend-design`; feature dùng `feature-builder`; QA sau phase dùng `task-qa-review` khi phù hợp. Không nạp toàn bộ skill cùng lúc.
+- Khi kết thúc triển khai hoặc được yêu cầu kiểm định Phase NN: đọc `docs/tests/RULES.md` rồi `docs/tests/phases/phase-NN.md`; kiểm định đúng phase, lưu từng đợt vào `docs/tests/results/phase-NN/<test_batch_id>/`, mỗi test có tag `clean`, `need-change` hoặc `suggestion`. Test chưa chạy/thiếu evidence không được `clean`; kết quả AI không thay quyết định nghiệm thu của Chủ tịch.
 
 ## Ranh giới quan trọng
 - Runtime dùng HTTP gateway `/Users/buivannin/Desktop/workspace/personal/codex-server`, hiện tại `127.0.0.1:4000`. Đọc contract/source; không đổi server chung, không giả định streaming hay model entitlement.
@@ -35,11 +36,11 @@
 - Stack và dependency pins: `apps/web/package-lock.json`, `apps/api/uv.lock`, `compose.yml`; setup từ [README.md](README.md).
 - `.env` local tạo bởi `python3 scripts/bootstrap_local.py`; file chứa secret, Git ignore, mode `0600`; không in nội dung.
 - PostgreSQL chỉ bind `127.0.0.1:15510`; API `127.0.0.1:15501`; Vite `127.0.0.1:15500` và proxy `/api` cùng origin.
-- Dev Hub mapping ở registry trung tâm, block `15500–15599`; route proxy tắt do ingress wildcard. Không đổi bind/proxy nếu chưa có phạm vi được duyệt.
+- Dev Hub mapping ở registry trung tâm, block `15500–15599`; `agent-corporation.localhost` đi qua Caddy chỉ publish trên IPv4 loopback (Docker host từ chối bind IPv6 loopback).
 - Smoke/API: `uv run --project apps/api pytest apps/api/tests`; web: `npm run --prefix apps/web build`; migration: `uv run --project apps/api alembic -c apps/api/alembic.ini upgrade head`.
-- Health chỉ kiểm tra liveness/readiness; chưa có auth route, domain schema, worker, agent hoặc inference. Phase sau cần được giao riêng; grant hiện 0.
+- Health chỉ kiểm tra liveness/readiness; Phase 03 thêm domain schema/command nội bộ, chưa có auth route public, worker, agent hoặc inference. Phase sau cần được giao riêng; grant hiện 0.
 
 ## Runtime tương lai
 - Trước quyết định host port đọc `/Users/buivannin/Desktop/workspace/personal/dev-hub/projects.yml`, kiểm tra toàn block và listener rồi reserve → verify → configure.
-- Hiện dự án chưa có allocation/hostname hoạt động. Không dùng port dự đoán, không sửa Dev Hub trong bước lập kế hoạch.
+- Allocation/hostname hoạt động đã được xác minh ở Phase 01/03. Không dùng port dự đoán; thay đổi shared proxy chỉ trong phạm vi route local đã được yêu cầu và có evidence.
 - Khi triển khai runtime, giữ server trong terminal tương tác nhìn được log; chỉ công bố URL đã xác minh.

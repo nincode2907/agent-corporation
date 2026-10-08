@@ -1,5 +1,9 @@
 # Bằng chứng Phase 00 — Đặc tả V1
 
+## Bổ sung sau Phase 03 — 08/10/2026
+
+Phase 03 bổ sung `TASK_STATE_CHANGED` vào event catalog để biểu diễn execution-state transition được lưu cùng transaction. Đặc tả hiện có 31 event types; con số 30 ở các kết quả bên dưới là snapshot chính xác tại thời điểm Phase 00 được nghiệm thu, không bị viết lại lịch sử. Renderer/validator hiện kiểm tra catalog phiên bản hiện hành.
+
 > Ngày: 08/10/2026 · Trạng thái: Hoàn tất về đặc tả/baseline sau review Chủ tịch (bản 1.1). Đây là evidence của tài liệu/spec, không là kết quả test runtime.
 
 ## Phạm vi và dependency

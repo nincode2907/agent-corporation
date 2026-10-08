@@ -1,0 +1,38 @@
+{
+  "seed": "agent-corporation-phase-04-v1",
+  "seed_version": 1,
+  "environment": {
+    "id": "b93f752e-7b69-5e8b-8f74-1498a15a5609",
+    "kind": "demo",
+    "release_locked": true
+  },
+  "company": {
+    "id": "b4375333-b12b-5fca-b984-87864032d3a8",
+    "name": "Demo Corporation"
+  },
+  "departments": 2,
+  "employees": 3,
+  "employee_profile_versions": [1],
+  "work_orders_by_status": {
+    "draft": 1,
+    "executing": 1,
+    "awaiting_approval": 1,
+    "failed": 1,
+    "rework": 1
+  },
+  "runs": {
+    "running": 1,
+    "waiting_approval": 1,
+    "failed": 2,
+    "queued_retry": 1
+  },
+  "pending_approvals": 1,
+  "failure_artifact_metadata": 1,
+  "events": 20,
+  "usage_status": "unknown",
+  "cost_basis": "unknown",
+  "usd_cost_micros": null,
+  "max_model_requests_per_fixture_task": 0,
+  "inference_requests": 0,
+  "canonical_dashboard_manifest_sha256": "03e1126cafadf2b400f51ebde367459565278634453e4b01fdcbf28a6242753a"
+}

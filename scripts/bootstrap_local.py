@@ -16,11 +16,15 @@ def bootstrap() -> None:
         return
 
     password = secrets.token_hex(32)
+    app_password = secrets.token_hex(32)
     values = {
         "POSTGRES_USER": "agent_corporation",
         "POSTGRES_PASSWORD": password,
         "POSTGRES_DB": "agent_corporation",
-        "DATABASE_URL": f"postgresql+psycopg://agent_corporation:{password}@127.0.0.1:15510/agent_corporation",
+        "DATABASE_URL": f"postgresql+psycopg://agent_corporation_app:{app_password}@127.0.0.1:15510/agent_corporation",
+        "MIGRATION_DATABASE_URL": f"postgresql+psycopg://agent_corporation:{password}@127.0.0.1:15510/agent_corporation",
+        "APP_DATABASE_USER": "agent_corporation_app",
+        "APP_DATABASE_PASSWORD": app_password,
         "OWNER_BOOTSTRAP_TOKEN": secrets.token_urlsafe(48),
         "SESSION_SIGNING_KEY": secrets.token_hex(48),
     }

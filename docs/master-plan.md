@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00–01 Hoàn tất; Phase 02 Chờ nghiệm thu; 2/24 phase hoàn tất**. Phase 02 dựng khung giao diện local; chưa có runtime agent, chưa gọi inference.
+> Trạng thái: **Phase 00–03 Hoàn tất; Phase 04 Chờ nghiệm thu; 4/24 phase hoàn tất**. Chưa có runtime agent, chưa gọi inference.
 
 ## 1. Hướng đi đã chọn
 
@@ -115,7 +115,7 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00–01 đã được nghiệm thu; Phase 02 đang Chờ nghiệm thu theo lượt triển khai được giao; Phase 03–23 Chưa triển khai. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00–03 đã hoàn tất; Phase 04 chờ nghiệm thu; Phase 05–23 Chưa triển khai. Inference grant = 0.
 
 Checklist/ghi chú cá nhân trên HTML lưu trong localStorage nếu browser cho phép; không sửa Markdown, không giao task cho Codex và không gọi backend. Có thể xuất JSON để giữ ghi chú rồi gửi cùng phản hồi nghiệm thu. File HTML khác path/browser có thể có bộ ghi chú khác; xuất trước khi đổi nơi lưu. Nếu storage bị chặn, UI báo chưa lưu bền vững; nội dung vẫn xuất được trong phiên hiện tại. Khi kế hoạch/checklist đổi phiên bản, xuất ghi chú cũ trước và kiểm tra lại tiêu chí.
 
@@ -231,7 +231,7 @@ Runtime local sau khi khởi động: web `127.0.0.1:15500`, API `127.0.0.1:1550
 ### Phase 02 — Khung giao diện Chủ tịch
 
 - Mốc: A
-- Trạng thái: Chờ nghiệm thu
+- Trạng thái: Hoàn tất
 - Phụ thuộc: 01
 - Mục tiêu: Có không gian điều hành 2D nhất quán và dễ dùng.
 
@@ -270,7 +270,7 @@ Chưa có agent đang hoạt động; không dựng hoạt cảnh giả.
 
 #### Nhật ký triển khai
 
-08/10/2026 — Hoàn tất phạm vi UI shell S01–S14 sau khi dependency Phase 00–01 đạt và Chủ tịch duyệt Phase 01. Web build/lint, desktop navigation, mode Owner, trạng thái API lỗi/phục hồi, S13 và S14 đã được kiểm tra. CSS breakpoint 390 px đã có nhưng chưa xác minh trực tiếp viewport sau khi browser control bị người dùng lấy lại; xem giới hạn trong [bằng chứng Phase 02](evidence/phase-02.md). Bàn giao **Chờ nghiệm thu**. Phase 03 chưa bắt đầu; inference grant = 0, không có model request.
+08/10/2026 — Phase 02 được hoàn tất khi Chủ tịch trực tiếp yêu cầu tiếp tục sang Phase 03; đây là chỉ thị chuyển tiếp được dùng để tiếp nhận dependency. Web build/lint, desktop navigation, mode Owner, trạng thái API lỗi/phục hồi, S13 và S14 đã được kiểm tra trong lượt trước. CSS breakpoint 390 px vẫn là giới hạn chưa xác minh trực tiếp viewport; xem [bằng chứng Phase 02](evidence/phase-02.md). Không có model request; inference grant = 0.
 
 #### Tài liệu liên quan
 
@@ -280,7 +280,7 @@ Chưa có agent đang hoạt động; không dựng hoạt cảnh giả.
 ### Phase 03 — Dữ liệu và bằng chứng bền vững
 
 - Mốc: A
-- Trạng thái: Chưa triển khai
+- Trạng thái: Hoàn tất
 - Phụ thuộc: 01, 02
 - Mục tiêu: Dữ liệu công ty, công việc và event sống qua restart.
 
@@ -292,8 +292,9 @@ Chưa có agent đang hoạt động; không dựng hoạt cảnh giả.
 
 #### Có gì mới
 
-- Task và run có ID, trạng thái và lịch sử thay đổi có thể truy lại.
-- Nền dữ liệu cho dashboard, replay và ledger cùng một nguồn bằng chứng.
+- Schema PostgreSQL cho environment/company, departments/employees/version, policies, Work Orders/revisions/state, runs/checkpoints/approvals, artifacts, events và transactional outbox.
+- Task command ghi revision + state + event + outbox nguyên tử; state machine kiểm tra chuyển trạng thái/version, dedup theo company stream; app role bị giới hạn và RLS lọc chéo company.
+- Giao diện có dark mode lưu lựa chọn local và mặc định theo system preference; hostname `agent-corporation.localhost` được proxy loopback IPv4 tới web.
 
 #### Demo
 
@@ -319,12 +320,16 @@ Schema diagram, migration test, isolation/state/outbox test.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Phase 03 được Chủ tịch nghiệm thu ngày 08/10/2026 (“ok duyệt” trước chỉ thị Phase 04). Migration `20261008_0002` áp dụng; 17 bảng domain/evidence, app login role không privileged + forced RLS, Work Order/state/event/outbox command và redaction đã được kiểm tra bằng PostgreSQL integration tests (8/8). API restart/readiness đạt; web lint/build Node 24.21.0 đạt. Dark mode hoạt động theo lựa chọn local/system preference. Proxy `agent-corporation.localhost` trả 200 qua IPv4 loopback; IPv6 Docker bind bị từ chối, không mở rộng wildcard. Chi tiết lệnh/test/giới hạn ở [evidence Phase 03](evidence/phase-03.md). Không gọi codex-server/inference, grant = 0.
+
+#### Tài liệu liên quan
+
+- [Bằng chứng Phase 03](evidence/phase-03.md)
 
 ### Phase 04 — Nhà máy công ty demo
 
 - Mốc: A
-- Trạng thái: Chưa triển khai
+- Trạng thái: Chờ nghiệm thu
 - Phụ thuộc: 03
 - Mục tiêu: Có môi trường mẫu có thể tạo và reset an toàn.
 
@@ -336,8 +341,9 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 
 #### Có gì mới
 
-- Dashboard có dữ liệu demo được dán nhãn ở mọi màn hình.
-- Nút reset demo có xác nhận đúng phạm vi, không ảnh hưởng real.
+- Dashboard, công việc, approval, Inspector và finance đọc cùng fixture demo có nhãn; usage/chi phí unknown vẫn hiện là chưa biết.
+- Reset chỉ nhận xác nhận, không nhận environment/company từ client và chỉ tác động UUID demo cố định.
+- Seed v1 tạo phòng ban, hồ sơ nhân sự version hóa, state/run/approval/artifact metadata và event fixture deterministic; không mở runtime agent.
 
 #### Demo
 
@@ -363,7 +369,12 @@ Seed manifest, kiểm tra reset/isolation và ảnh nhãn demo.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+08/10/2026 — Triển khai và bàn giao Phase 04 chờ Chủ tịch nghiệm thu. Migration `20261008_0003` thêm hàm reset SECURITY DEFINER chỉ cho app role và scope demo cố định; seed tường minh tạo 2 phòng ban, 3 hồ sơ nhân sự v1, 5 Work Order ở các trạng thái fixture, approval, artifact metadata và 20 events; reset lặp cho cùng manifest hash. API `GET /api/v1/demo/dashboard` và `POST /api/v1/demo/reset` không nhận target scope; UI gắn nhãn demo xuyên các màn hình, yêu cầu xác nhận reset và không biến usage unknown thành 0. Alembic 0003, 7 API integration tests, web lint/build và API HTTP reset 2 lần đạt; không có inference request/grant. Checklist Phase 04 ghi blocker bằng chứng cho ledger/thread/file storage vì các domain này chưa tồn tại trong dependency hiện tại; xem [bằng chứng Phase 04](evidence/phase-04.md) và [report batch](tests/results/phase-04/20261008T154151+0700-demo-factory/report.md). Chưa đánh dấu Hoàn tất và chưa bắt đầu Phase 05.
+
+#### Tài liệu liên quan
+
+- [Bằng chứng Phase 04](evidence/phase-04.md)
+- [Report kiểm định Phase 04](tests/results/phase-04/20261008T154151+0700-demo-factory/report.md)
 
 ### Phase 05 — Kết nối Codex server local
 

@@ -3,12 +3,16 @@ import './App.css'
 
 type CheckState = 'checking' | 'ok' | 'unavailable'
 type Mode = 'chairman' | 'operator'
+type Theme = 'light' | 'dark'
 
 type Health = {
   api: CheckState
   database: CheckState
   message?: string
 }
+
+type DemoTask = { id: string; goal: string; status: string; runs: { attempt: number; status: string }[]; pending_approvals: number; has_artifact: boolean; usage_status: string; cost_basis: string; usd_cost_micros: number | null; fixture: boolean }
+type DemoDashboard = { available: boolean; seed?: string; seed_version: number; manifest_sha256?: string; environment?: { name: string; kind: string }; company?: { name: string }; departments?: { id: string; name: string; employee_count: number }[]; employees?: { id: string; profile: { display_name: string; role: string }; version: number; department: string }[]; tasks?: DemoTask[]; usage?: { status: string; cost_basis: string; usd_cost_micros: number | null }; event_count?: number; message?: string }
 
 type Screen = {
   id: string
@@ -21,9 +25,9 @@ type Screen = {
 }
 
 const screens: Screen[] = [
-  { id: 'overview', code: 'S01', title: 'Tổng quan', group: 'Điều hành', description: 'Một điểm vào để xem tình hình doanh nghiệp và đi tới công việc cần quyết định.', next: 'Phase 03 bổ sung dữ liệu doanh nghiệp; Phase 04 mới có công ty demo.', phase: '03–04' },
+  { id: 'overview', code: 'S01', title: 'Tổng quan', group: 'Điều hành', description: 'Một điểm vào để xem tình hình doanh nghiệp và đi tới công việc cần quyết định.', next: 'Phase 03 đã bổ sung nền dữ liệu và event; Phase 04 mới tạo công ty demo để hiển thị dữ liệu.', phase: '03–04' },
   { id: 'office', code: 'S02', title: 'Văn phòng trực tiếp', group: 'Điều hành', description: 'Không gian 2D để quan sát hoạt động đã được hệ thống ghi nhận.', next: 'Sẽ hiển thị hoạt động từ event store; hiện chưa có event.', phase: '07' },
-  { id: 'work', code: 'S05', title: 'Công việc', group: 'Điều hành', description: 'Work Order, kế hoạch và kết quả bàn giao được quản lý theo từng task.', next: 'Chưa có Work Order trong database. Không tạo task mẫu ở Phase 02.', phase: '03, 09' },
+  { id: 'work', code: 'S05', title: 'Công việc', group: 'Điều hành', description: 'Work Order, kế hoạch và kết quả bàn giao được quản lý theo từng task.', next: 'Schema và command bền vững đã sẵn sàng; chưa có công ty demo hoặc Work Order để hiển thị.', phase: '03, 09' },
   { id: 'approvals', code: 'S06', title: 'Chờ Chủ tịch duyệt', group: 'Điều hành', description: 'Các đề xuất cần quyết định của Chủ tịch sẽ xuất hiện tại đây.', next: 'Approval queue được nối với task ở các phase dữ liệu và policy.', phase: '03, 10' },
   { id: 'inspector', code: 'S03', title: 'Agent Inspector', group: 'Quan sát', description: 'Xem danh tính, trạng thái, run và bằng chứng trong cùng một phạm vi.', next: 'Chưa có nhân sự hoặc run; màn hình này hiện là khung điều hướng.', phase: '07–08' },
   { id: 'replay', code: 'S04', title: 'Phát lại', group: 'Quan sát', description: 'Tái dựng một lượt chạy chỉ từ những event đã lưu.', next: 'Chưa có event để phát lại. Replay sau này chỉ đọc, không gọi tool.', phase: '08' },
@@ -44,16 +48,42 @@ function getScreenFromHash() {
   return screens.find((screen) => screen.id === id)?.id ?? 'overview'
 }
 
+function getInitialTheme(): Theme {
+  try {
+    const saved = window.localStorage.getItem('agent-corporation.theme')
+    if (saved === 'dark' || saved === 'light') return saved
+  } catch {
+    // Storage may be unavailable in a restricted browser context.
+  }
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function App() {
   const [activeId, setActiveId] = useState(getScreenFromHash)
   const [mode, setMode] = useState<Mode>('chairman')
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [health, setHealth] = useState<Health>({ api: 'checking', database: 'checking' })
   const [healthReload, setHealthReload] = useState(0)
+  const [demo, setDemo] = useState<DemoDashboard | null>(null)
+  const [demoError, setDemoError] = useState('')
+  const [demoReload, setDemoReload] = useState(0)
+  const [resetting, setResetting] = useState(false)
   const activeScreen = useMemo(() => screens.find((screen) => screen.id === activeId) ?? screens[0], [activeId])
 
   useEffect(() => {
     document.title = `Agent Corporation · ${activeScreen.title}`
   }, [activeScreen.title])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#111713' : '#f6f7f3')
+    try {
+      window.localStorage.setItem('agent-corporation.theme', theme)
+    } catch {
+      // The selected theme remains active for the current page even if it cannot persist.
+    }
+  }, [theme])
 
   useEffect(() => {
     const onHashChange = () => setActiveId(getScreenFromHash())
@@ -88,6 +118,35 @@ function App() {
     }
   }, [healthReload])
 
+  useEffect(() => {
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), 5000)
+    fetch('/api/v1/demo/dashboard', { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Không đọc được bộ dữ liệu demo từ API local.')
+        return await response.json() as DemoDashboard
+      })
+      .then((data) => { setDemo(data); setDemoError('') })
+      .catch(() => { setDemo(null); setDemoError('Không đọc được demo. Seed tường minh bằng scripts/seed_demo.py --seed.') })
+      .finally(() => window.clearTimeout(timeout))
+    return () => { controller.abort(); window.clearTimeout(timeout) }
+  }, [demoReload])
+
+  async function resetDemo() {
+    if (!window.confirm('Đặt lại toàn bộ fixture trong Demo Corporation? Chỉ scope demo cố định bị reset; không ảnh hưởng công ty thật.')) return
+    setResetting(true)
+    try {
+      const response = await fetch('/api/v1/demo/reset', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ confirmed: true }) })
+      if (!response.ok) throw new Error('API từ chối reset fixture demo.')
+      setDemo(await response.json() as DemoDashboard)
+      setDemoError('')
+    } catch (error) {
+      setDemoError(error instanceof Error ? error.message : 'Reset demo không thành công.')
+    } finally {
+      setResetting(false)
+    }
+  }
+
   const stateText = (state: CheckState) => state === 'ok' ? 'Đang hoạt động' : state === 'checking' ? 'Đang kiểm tra' : 'Chưa kết nối'
 
   return (
@@ -98,7 +157,7 @@ function App() {
           <span className="brand-mark" aria-hidden="true">AC</span>
           <span className="brand-name">Agent Corporation<span>NỀN ĐIỀU HÀNH</span></span>
         </a>
-        <div className="workspace-switcher"><span className="workspace-icon">A</span><span><strong>Không gian local</strong><small>Chưa có tập đoàn</small></span><span className="chevron">⌄</span></div>
+        <div className="workspace-switcher"><span className="workspace-icon">A</span><span><strong>Không gian local</strong><small>{demo?.available ? 'Demo Corporation · fixture' : 'Chưa có công ty thật'}</small></span><span className="chevron">⌄</span></div>
         <nav className="primary-nav">
           {groups.map((group) => (
             <div className="nav-group" key={group}>
@@ -122,6 +181,9 @@ function App() {
           <div className="breadcrumbs"><span>Không gian local</span><span className="crumb-sep">/</span><strong>{activeScreen.title}</strong></div>
           <div className="topbar-actions">
             <div className="environment"><span className="environment-dot" />Local</div>
+            <button className="theme-toggle" type="button" aria-pressed={theme === 'dark'} aria-label={theme === 'dark' ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối'} onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}>
+              <span aria-hidden="true">{theme === 'dark' ? '☼' : '◐'}</span><span className="theme-label">{theme === 'dark' ? 'Giao diện tối' : 'Giao diện sáng'}</span>
+            </button>
             <span className="topbar-divider" />
             <div className="mode-switch" role="group" aria-label="Chọn góc nhìn">
               <button type="button" className={mode === 'chairman' ? 'selected' : ''} aria-pressed={mode === 'chairman'} onClick={() => setMode('chairman')}>Chủ tịch</button>
@@ -132,37 +194,61 @@ function App() {
         </header>
 
         <div className="content-wrap">
+          <section className="demo-strip" aria-label="Môi trường dữ liệu">
+            <span className="demo-mark">DEMO</span>
+            <span className="demo-strip-copy"><strong>{demo?.company?.name ?? 'Môi trường demo'}</strong><small>{demo?.available ? `Fixture v${demo.seed_version} · usage chưa biết · inference 0` : demoError || 'Đang đọc fixture…'}</small></span>
+            <button className="demo-reset" type="button" onClick={() => void resetDemo()} disabled={!demo?.available || resetting}>{resetting ? 'Đang đặt lại…' : 'Đặt lại demo'}</button>
+          </section>
+          {demoError && <p className="demo-error" role="status">{demoError}</p>}
           <div className="page-heading">
             <div><p className="eyebrow">{activeScreen.code} <span>·</span> PHASE {activeScreen.phase}</p><h1>{activeScreen.title}</h1><p className="page-description">{activeScreen.description}</p></div>
-            <span className={`page-state${activeId === 'onboarding' ? ' locked' : ''}`}>{activeId === 'onboarding' ? 'Đang khóa' : 'Chưa có dữ liệu'}</span>
+            <span className={`page-state${activeId === 'onboarding' ? ' locked' : ''}`}>{activeId === 'onboarding' ? 'Đang khóa' : demo?.available ? 'Dữ liệu demo' : 'Chưa có dữ liệu'}</span>
           </div>
 
-          {activeId === 'overview' ? (
+          {demo?.available && activeId === 'overview' ? (
             <>
               <section className="welcome-panel" aria-labelledby="welcome-title">
-                <div className="welcome-copy"><p className="eyebrow">BẢN ĐIỀU HÀNH · LOCAL</p><h2 id="welcome-title">Một nền tảng đang thành hình.</h2><p>Dịch vụ nền đã sẵn sàng. Dữ liệu doanh nghiệp sẽ xuất hiện khi các phase tiếp theo được triển khai.</p><a className="text-link" href="#work">Khám phá không gian công việc <span aria-hidden="true">↗</span></a></div>
+                <div className="welcome-copy"><p className="eyebrow">FIXTURE CỐ ĐỊNH · SEED V{demo.seed_version}</p><h2 id="welcome-title">Quan sát quy trình trên dữ liệu demo.</h2><p>Không tạo agent thật, không gọi model. Đây là môi trường demo tách biệt để nghiệm thu giao diện.</p><a className="text-link" href="#work">Xem các Work Order <span aria-hidden="true">↗</span></a></div>
                 <div className="welcome-ornament" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="orbit-core">AC</span><span className="orbit-star">✳</span></div>
               </section>
-              <div className="section-heading"><div><p className="eyebrow">TÌNH HÌNH HIỆN TẠI</p><h2>Chưa có nguồn dữ liệu nghiệp vụ</h2></div><span className="as-of">Dữ liệu được kiểm tra trực tiếp</span></div>
+              <div className="section-heading"><div><p className="eyebrow">TÌNH HÌNH DEMO</p><h2>{demo.company?.name}</h2></div><span className="as-of">Manifest {demo.manifest_sha256?.slice(0, 12)}</span></div>
               <section className="overview-grid" aria-label="Tình hình hệ thống và doanh nghiệp">
-                <article className="data-panel business-panel"><div className="panel-topline"><span className="panel-label">DOANH NGHIỆP</span><span className="unknown-mark">—</span></div><h3>Chưa được khởi tạo</h3><p>Chưa có công ty, nhân sự, công việc hay khoản chi trong môi trường này.</p><div className="panel-divider" /><a href="#organization" className="panel-link">Xem cấu trúc tổ chức <span>→</span></a></article>
+                <article className="data-panel business-panel"><div className="panel-topline"><span className="panel-label">DOANH NGHIỆP GIẢ LẬP</span><span className="fixture-badge">DEMO</span></div><h3>{demo.employees?.length ?? 0} hồ sơ nhân sự</h3><p>{demo.departments?.length ?? 0} phòng ban · {demo.tasks?.length ?? 0} Work Order · {demo.event_count ?? 0} event fixture.</p><div className="panel-divider" /><a href="#organization" className="panel-link">Xem cấu trúc tổ chức <span>→</span></a></article>
                 <article className="data-panel health-panel"><div className="panel-topline"><span className="panel-label">DỊCH VỤ LOCAL</span><span className={`live-indicator${health.api === 'unavailable' ? ' offline' : ''}`}><span /> {health.api === 'ok' ? 'SẴN SÀNG' : health.api === 'checking' ? 'ĐANG KIỂM TRA' : 'KHÔNG KẾT NỐI'}</span></div><div className="health-line"><span className={`health-icon ${health.api}`} aria-hidden="true">↗</span><span><strong>API nội bộ</strong><small>FastAPI · health/live</small></span><span className={`health-result ${health.api}`}>{stateText(health.api)}</span></div><div className="health-line"><span className={`health-icon ${health.database}`} aria-hidden="true">▤</span><span><strong>Cơ sở dữ liệu</strong><small>PostgreSQL · readiness</small></span><span className={`health-result ${health.database}`}>{stateText(health.database)}</span></div>{health.message && <p className="health-error" role="status">{health.message}</p>}<button className="quiet-button" type="button" onClick={() => { setHealth({ api: 'checking', database: 'checking' }); setHealthReload((value) => value + 1) }}>Kiểm tra lại dịch vụ <span aria-hidden="true">↻</span></button></article>
               </section>
-              <div className="bottom-grid"><section className="data-panel next-panel"><div className="panel-topline"><span className="panel-label">LỘ TRÌNH SẮP TỚI</span><span className="phase-pill">PHASE 03</span></div><h3>Nền dữ liệu bền vững</h3><p>Task, trạng thái thực thi và event sẽ có định danh cùng lịch sử truy xuất.</p><a href="#work" className="panel-link">Xem khu vực công việc <span>→</span></a></section><section className="data-panel mode-panel"><div className="panel-topline"><span className="panel-label">GÓC NHÌN ĐANG DÙNG</span><span className="mode-symbol" aria-hidden="true">◉</span></div><h3>{mode === 'chairman' ? 'Chủ tịch' : 'Vận hành'}</h3><p>Hai góc nhìn cùng quyền Owner. Chuyển chế độ chỉ thay đổi cách trình bày.</p><span className="permission-note">Quyền API không thay đổi theo chế độ.</span></section></div>
+              <div className="bottom-grid"><section className="data-panel next-panel"><div className="panel-topline"><span className="panel-label">USAGE VÀ CHI PHÍ</span><span className="fixture-badge">UNKNOWN</span></div><h3>Chưa xác định</h3><p>Usage chưa được đo; chi phí không phải 0. Không có inference request trong seed/reset.</p><a href="#finance" className="panel-link">Mở tài chính <span>→</span></a></section><section className="data-panel mode-panel"><div className="panel-topline"><span className="panel-label">GÓC NHÌN ĐANG DÙNG</span><span className="mode-symbol" aria-hidden="true">◉</span></div><h3>{mode === 'chairman' ? 'Chủ tịch' : 'Vận hành'}</h3><p>Chế độ chỉ đổi cách trình bày; không đổi quyền API.</p><span className="permission-note">Inference grant: chưa được cấp.</span></section></div>
             </>
+          ) : demo?.available && ['work', 'approvals', 'inspector', 'replay', 'quality', 'incidents', 'organization', 'memory', 'finance', 'reports', 'office'].includes(activeId) ? (
+            <DemoScreen screenId={activeId} demo={demo} />
           ) : activeId === 'settings' ? (
             <section className="screen-panel settings-layout"><div className="settings-main"><p className="eyebrow">TRẠNG THÁI KẾT NỐI</p><h2>Dịch vụ trên máy này</h2><p className="screen-copy">Các trạng thái bên dưới lấy từ health endpoint của API. Không thực hiện yêu cầu tới model hoặc gateway.</p><div className="settings-status"><span className={`health-icon ${health.api}`}>↗</span><div><strong>API nội bộ</strong><small>GET /api/v1/health/live</small></div><span className={`health-result ${health.api}`}>{stateText(health.api)}</span></div><div className="settings-status"><span className={`health-icon ${health.database}`}>▤</span><div><strong>PostgreSQL</strong><small>GET /api/v1/health/ready</small></div><span className={`health-result ${health.database}`}>{stateText(health.database)}</span></div>{health.message && <p className="health-error" role="status">{health.message}</p>}<button className="primary-button" onClick={() => { setHealth({ api: 'checking', database: 'checking' }); setHealthReload((value) => value + 1) }}>Kiểm tra lại</button></div><aside className="settings-aside"><span className="aside-mark">i</span><h3>Gateway inference</h3><p>Chưa được kiểm tra trong Phase 02. Capability probe thuộc Phase 05 và cần gate riêng.</p><strong>Grant hiện tại: 0</strong></aside></section>
           ) : activeId === 'onboarding' ? (
-            <section className="locked-panel"><span className="locked-icon" aria-hidden="true">⌑</span><p className="eyebrow">MỞ SAU KHI PHÁT HÀNH V1</p><h2>Chưa thể thành lập công ty thật</h2><p>Wizard sẽ được mở sau release gate. Giao diện Phase 02 không tạo company, cấp quyền, chọn model hay khởi tạo agent.</p><span className="lock-caption">S14 · phase 21, 23</span></section>
+            <section className="locked-panel"><span className="locked-icon" aria-hidden="true">⌑</span><p className="eyebrow">MỞ SAU KHI PHÁT HÀNH V1</p><h2>Chưa thể thành lập công ty thật</h2><p>Phase 04 chỉ tạo fixture trong scope demo cố định. Wizard này không tạo company thật, cấp quyền, chọn model hay khởi tạo agent.</p><span className="lock-caption">S14 · phase 21, 23</span></section>
           ) : (
-            <section className="screen-panel preview-layout"><div className="preview-main"><div className="preview-toolbar"><span className="preview-dot" /><span>KHUNG GIAO DIỆN</span><span className="preview-separator">·</span><span>CHƯA CÓ DỮ LIỆU</span></div><div className="empty-illustration" aria-hidden="true"><span className="empty-ring ring-a" /><span className="empty-ring ring-b" /><span className="empty-glyph">{activeScreen.code.slice(1)}</span></div><p className="empty-title">Khu vực này đang chờ dữ liệu nền</p><p className="empty-copy">{activeScreen.next}</p><span className="empty-boundary">Phase 02 chỉ cung cấp điều hướng và trạng thái trống.</span></div><aside className="preview-aside"><p className="eyebrow">ĐƯỢC XÂY Ở PHASE</p><strong>{activeScreen.phase}</strong><p>Phạm vi được chia theo lộ trình đã duyệt. Khi phase tương ứng hoàn tất, dữ liệu thật sẽ được kết nối tại đây.</p><a href="#overview" className="panel-link">Quay lại tổng quan <span>→</span></a></aside></section>
+            <section className="screen-panel preview-layout"><div className="preview-main"><div className="preview-toolbar"><span className="preview-dot" /><span>MÔI TRƯỜNG DEMO</span><span className="preview-separator">·</span><span>CHƯA CÓ FIXTURE</span></div><div className="empty-illustration" aria-hidden="true"><span className="empty-ring ring-a" /><span className="empty-ring ring-b" /><span className="empty-glyph">{activeScreen.code.slice(1)}</span></div><p className="empty-title">Chưa có dữ liệu demo</p><p className="empty-copy">{demo?.message || demoError || activeScreen.next}</p><button className="primary-button" type="button" onClick={() => setDemoReload((value) => value + 1)}>Tải lại dữ liệu demo</button></div><aside className="preview-aside"><p className="eyebrow">ĐƯỢC XÂY Ở PHASE</p><strong>{activeScreen.phase}</strong><p>Seed là thao tác tường minh. Mở trang và health check không gọi model.</p><a href="#overview" className="panel-link">Quay lại tổng quan <span>→</span></a></aside></section>
           )}
 
-          <footer className="page-footer"><span>Agent Corporation <i>·</i> Giao diện Phase 02</span><span>Inference chưa được cấp</span></footer>
+          <footer className="page-footer"><span>Agent Corporation <i>·</i> Không gian điều hành local</span><span>Inference chưa được cấp</span></footer>
         </div>
       </main>
     </div>
   )
+}
+
+function DemoScreen({ screenId, demo }: { screenId: string; demo: DemoDashboard }) {
+  const tasks = demo.tasks ?? []
+  const stateLabel: Record<string, string> = {
+    draft: 'Chưa bắt đầu', executing: 'Đang chạy (fixture)', awaiting_approval: 'Chờ duyệt (fixture)',
+    failed: 'Thất bại (fixture)', rework: 'Đang sửa / retry (fixture)',
+  }
+  if (screenId === 'organization') return <section className="demo-card"><div className="demo-card-heading"><div><p className="eyebrow">CƠ CẤU DEMO</p><h2>{demo.company?.name}</h2></div><span className="fixture-badge">DEMO FIXTURE</span></div><div className="org-grid">{(demo.departments ?? []).map((department) => <article className="org-unit" key={department.id}><span className="fixture-badge">DEMO</span><h3>{department.name}</h3><p>{department.employee_count} hồ sơ nhân sự</p>{(demo.employees ?? []).filter((employee) => employee.department === department.name).map((employee) => <div className="employee-row" key={employee.id}><span className="owner-avatar">{employee.profile.display_name.slice(0, 1)}</span><span><strong>{employee.profile.display_name}</strong><small>{employee.profile.role} · hồ sơ v{employee.version}</small></span></div>)}</article>)}</div></section>
+  if (screenId === 'work' || screenId === 'approvals' || screenId === 'inspector' || screenId === 'replay' || screenId === 'incidents' || screenId === 'office') {
+    const filtered = screenId === 'approvals' ? tasks.filter((task) => task.pending_approvals > 0) : screenId === 'incidents' ? tasks.filter((task) => task.status === 'failed' || task.status === 'rework') : tasks
+    return <section className="demo-card"><div className="demo-card-heading"><div><p className="eyebrow">{screenId === 'approvals' ? 'HÀNG CHỜ PHÊ DUYỆT' : screenId === 'inspector' ? 'RUN VÀ BẰNG CHỨNG' : 'WORK ORDER FIXTURE'}</p><h2>{screenId === 'approvals' ? `${filtered.reduce((sum, task) => sum + task.pending_approvals, 0)} yêu cầu đang chờ` : screenId === 'inspector' ? 'Run mẫu trong scope demo' : screenId === 'incidents' ? 'Fixture lỗi có chủ đích' : screenId === 'office' ? 'Hoạt động được ghi nhận' : screenId === 'replay' ? 'Timeline từ event fixture' : 'Trạng thái công việc'}</h2></div><span className="fixture-badge">DEMO · V{demo.seed_version}</span></div><div className="task-list">{filtered.map((task) => <article className="task-row" key={task.id}><div className="task-main"><span className="fixture-badge">DEMO</span><strong>{task.goal}</strong><small>{task.id.slice(0, 8)} · usage chưa biết · không có inference</small></div><span className={`task-state state-${task.status}`}>{stateLabel[task.status] ?? task.status}</span><div className="run-list">{task.runs.map((run) => <span key={`${task.id}-${run.attempt}`}>Lượt {run.attempt}: {run.status}</span>)}{task.pending_approvals > 0 && <span>Phê duyệt: đang chờ</span>}{task.has_artifact && <span>Bằng chứng lỗi: metadata fixture</span>}</div></article>)}</div></section>
+  }
+  if (screenId === 'finance' || screenId === 'quality') return <section className="demo-card"><div className="demo-card-heading"><div><p className="eyebrow">BÁO CÁO FIXTURE</p><h2>{screenId === 'finance' ? 'Usage và chi phí chưa biết' : 'Chưa có kết quả đánh giá'}</h2></div><span className="fixture-badge">DEMO · UNKNOWN</span></div><div className="unknown-metric"><strong>Chưa biết</strong><span>Không có usage thực hoặc ledger trong Phase 04. Không hiển thị số 0 thay thế.</span></div></section>
+  if (screenId === 'memory' || screenId === 'reports') return <section className="demo-card"><div className="demo-card-heading"><div><p className="eyebrow">KHÔNG CÓ NGUỒN FIXTURE CHO MÀN HÌNH NÀY</p><h2>{screenId === 'memory' ? 'Memory chưa được seed' : 'Chưa có báo cáo nghiệp vụ'}</h2></div><span className="fixture-badge">DEMO SCOPE</span></div><p className="screen-copy">Màn hình vẫn mang nhãn demo; không tổng hợp dữ liệu fixture thành memory hoặc báo cáo có vẻ là dữ liệu thật.</p></section>
+  return <section className="demo-card"><div className="demo-card-heading"><div><p className="eyebrow">EVENT FIXTURE</p><h2>{demo.event_count ?? 0} sự kiện demo đã lưu</h2></div><span className="fixture-badge">DEMO</span></div><p className="screen-copy">Dữ liệu mô phỏng cố định · seed v{demo.seed_version} · trạng thái run không phản ánh agent đang hoạt động.</p></section>
 }
 
 export default App

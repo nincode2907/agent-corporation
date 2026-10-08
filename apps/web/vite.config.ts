@@ -8,6 +8,7 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 15500,
     strictPort: true,
+    allowedHosts: ['agent-corporation.localhost'],
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:15501',

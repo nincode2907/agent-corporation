@@ -2,6 +2,7 @@ from fastapi import FastAPI, Response, status
 from sqlalchemy.exc import SQLAlchemyError
 
 from .database import database_is_ready
+from .modules.demo.router import router as demo_router
 
 
 app = FastAPI(
@@ -11,6 +12,7 @@ app = FastAPI(
     docs_url=None,
     redoc_url=None,
 )
+app.include_router(demo_router)
 
 
 @app.get("/api/v1/health/live", tags=["health"])

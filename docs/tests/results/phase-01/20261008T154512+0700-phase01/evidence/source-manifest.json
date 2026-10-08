@@ -1,0 +1,78 @@
+{
+  "captured_at": "2026-10-08T15:45:12+07:00",
+  "phase": "01",
+  "test_batch_id": "20261008T154512+0700-phase01",
+  "environment": "Local development workstation; Phase 04 runtime active; worktree contains Phase 03–04 changes.",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "352d556d74071d9aa65d62c816128145fb85288e396020119a6e96102ddc1594"
+    },
+    {
+      "path": "README.md",
+      "sha256": "db726c406f7dac548aee5a25931585ac7f63a159f2dd1fb9cf65753e0044aaea"
+    },
+    {
+      "path": "compose.yml",
+      "sha256": "be0f92ae9b044c61a50c3d32e1e74f383102ffdfb2bd9410c05e1e2128cba6b1"
+    },
+    {
+      "path": "apps/web/index.html",
+      "sha256": "98beca1a2c54ecd8c8e507897c4e43bb7ceda7ee51a57363a97b5739eb7348a2"
+    },
+    {
+      "path": "apps/web/vite.config.ts",
+      "sha256": "8e52fd627dea6268ce67eef18204732f7b85c46682c386b4c7faa98208bb8d75"
+    },
+    {
+      "path": "apps/web/package.json",
+      "sha256": "c46a37dceaab470c50adfe47c1bafa77a6d5fd8c7fd5d26074551594daa86bac"
+    },
+    {
+      "path": "apps/web/package-lock.json",
+      "sha256": "c7bd456788bb311aa383fb7b8824c8864f2ff7b88e7b458e4bfeb769fbc814d8"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "sha256": "acc9b8190d492df9206e996cd340b528a9b0a25448f5af0dc652a8d2e3775abe"
+    },
+    {
+      "path": "apps/api/uv.lock",
+      "sha256": "950fbae2f0f1824e6a4fc3241356c935c69d9a4b10230addc8274a66d7650e57"
+    },
+    {
+      "path": "apps/api/tests/test_health.py",
+      "sha256": "d493eba76e8662a93b739a0ff74d7b0c3a6ec83f199039272f0bf13cb7bb03be"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/main.py",
+      "sha256": "02c09a0a3209497d5f23da550777642d7768134813f798e9acd3166d36f14043"
+    },
+    {
+      "path": "apps/api/migrations/versions/20261008_0001_local_baseline.py",
+      "sha256": "7bde09dc6503275af8de8dda669e0f6dd71df8afa8e7dedbb8fd58f558739d0a"
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "d4a2bb5d715886ac16bcb1008b24b3c0562b2d7d2596239a61fce15d4e5da53f"
+    },
+    {
+      "path": "docs/product-spec.md",
+      "sha256": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5"
+    },
+    {
+      "path": "docs/tests/RULES.md",
+      "sha256": "193a1b954282c8252c9c18514d094b6440609ce8cc7bd6a1b3135a772022da59"
+    },
+    {
+      "path": "docs/tests/phases/phase-01.md",
+      "sha256": "d1100fd10cdadf0f422cc7c87c2ae16f6dffafc86560f3f6813ebbe45eea102f"
+    }
+  ],
+  "excluded": [
+    ".env contents",
+    "credentials",
+    "database dumps",
+    "gateway sessions and transcripts"
+  ]
+}
