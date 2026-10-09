@@ -1,0 +1,70 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.8, pytest-9.0.2, pluggy-1.6.0 -- /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collecting ... collected 53 items
+
+apps/api/tests/test_codex_gateway.py::test_probe_reads_only_allowlisted_get_endpoints_and_does_not_expose_auth PASSED [  1%]
+apps/api/tests/test_codex_gateway.py::test_probe_reports_offline_without_leaking_transport_error PASSED [  3%]
+apps/api/tests/test_codex_gateway.py::test_probe_maps_auth_rate_limit_and_schema_mismatch PASSED [  5%]
+apps/api/tests/test_codex_gateway.py::test_probe_rejects_non_loopback_and_never_opens_it PASSED [  7%]
+apps/api/tests/test_codex_gateway.py::test_http_get_bypasses_environment_proxies_and_uses_no_redirects PASSED [  9%]
+apps/api/tests/test_codex_gateway.py::test_api_probe_is_manual_and_sanitized PASSED [ 11%]
+apps/api/tests/test_health.py::test_liveness_does_not_depend_on_database PASSED [ 13%]
+apps/api/tests/test_health.py::test_readiness_reports_database_available PASSED [ 15%]
+apps/api/tests/test_health.py::test_readiness_returns_sanitized_unavailable_status PASSED [ 16%]
+apps/api/tests/test_owner_auth.py::test_owner_secret_default_deny_and_permission_symlink PASSED [ 18%]
+apps/api/tests/test_owner_auth.py::test_host_origin_and_fetch_site_rejected[headers0] PASSED [ 20%]
+apps/api/tests/test_owner_auth.py::test_host_origin_and_fetch_site_rejected[headers1] PASSED [ 22%]
+apps/api/tests/test_owner_auth.py::test_host_origin_and_fetch_site_rejected[headers2] PASSED [ 24%]
+apps/api/tests/test_owner_auth.py::test_missing_cookie_and_missing_origin_denied PASSED [ 26%]
+apps/api/tests/test_owner_auth.py::test_session_scope_from_store_csrf_logout_and_expiry PASSED [ 28%]
+apps/api/tests/test_owner_auth.py::test_login_failure_has_no_session_and_extra_owner_flag_rejected PASSED [ 30%]
+apps/api/tests/test_owner_auth.py::test_profile_no_privilege_or_secret_fields_allowed PASSED [ 32%]
+apps/api/tests/test_owner_auth.py::test_valid_login_uses_durable_scope_checks_cookie_and_no_secret PASSED [ 33%]
+apps/api/tests/test_owner_auth.py::test_owner_cannot_select_unknown_company_scope PASSED [ 35%]
+apps/api/tests/test_phase06_runtime.py::test_grant_mismatch_deny[phase-07] PASSED [ 37%]
+apps/api/tests/test_phase06_runtime.py::test_grant_mismatch_deny[batch_id-other] PASSED [ 39%]
+apps/api/tests/test_phase06_runtime.py::test_grant_mismatch_deny[purpose-other] PASSED [ 41%]
+apps/api/tests/test_phase06_runtime.py::test_grant_mismatch_deny[model-other] PASSED [ 43%]
+apps/api/tests/test_phase06_runtime.py::test_grant_mismatch_deny[effort-high] PASSED [ 45%]
+apps/api/tests/test_phase06_runtime.py::test_grant_mismatch_deny[stop_requested-True] PASSED [ 47%]
+apps/api/tests/test_phase06_runtime.py::test_grant_resource_deny[change0] PASSED [ 49%]
+apps/api/tests/test_phase06_runtime.py::test_grant_resource_deny[change1] PASSED [ 50%]
+apps/api/tests/test_phase06_runtime.py::test_grant_resource_deny[change2] PASSED [ 52%]
+apps/api/tests/test_phase06_runtime.py::test_missing_and_concurrency_grant_deny PASSED [ 54%]
+apps/api/tests/test_phase06_runtime.py::test_gate_missing_stale_world_readable_and_unverified PASSED [ 56%]
+apps/api/tests/test_phase06_runtime.py::test_usage_null_zero_and_tool_proposal_never_success PASSED [ 58%]
+apps/api/tests/test_phase06_runtime.py::test_fake_http_redirect_does_not_follow_and_cancel_closes_socket PASSED [ 60%]
+apps/api/tests/test_phase06_runtime.py::test_worker_stop_cancels_fake_inflight_without_retry PASSED [ 62%]
+apps/api/tests/test_phase06_runtime.py::test_runtime_http_requires_owner_and_cg01_cannot_be_self_approved PASSED [ 64%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[list] PASSED [ 66%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[null] PASSED [ 67%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[string] PASSED [ 69%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[invalid_json] PASSED [ 71%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[directory] PASSED [ 73%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[fifo] PASSED [ 75%]
+apps/api/tests/test_phase06_runtime.py::test_gate_malformed_and_nonregular_metadata_fails_closed[symlink] PASSED [ 77%]
+apps/api/tests/test_phase06_runtime.py::test_late_usage_validation_rejects_guesses_inconsistent_or_out_of_bound_details[usage0] PASSED [ 79%]
+apps/api/tests/test_phase06_runtime.py::test_late_usage_validation_rejects_guesses_inconsistent_or_out_of_bound_details[usage1] PASSED [ 81%]
+apps/api/tests/test_phase06_runtime.py::test_late_usage_validation_rejects_guesses_inconsistent_or_out_of_bound_details[usage2] PASSED [ 83%]
+apps/api/tests/test_phase06_runtime.py::test_late_usage_validation_rejects_guesses_inconsistent_or_out_of_bound_details[usage3] PASSED [ 84%]
+apps/api/tests/test_phase06_runtime.py::test_usage_flat_event_preserves_null_cache_and_reasoning_without_adding_to_total PASSED [ 86%]
+apps/api/tests/test_phase07_feed.py::test_cursor_rejects_tamper_expiry_different_scope_and_session PASSED [ 88%]
+apps/api/tests/test_phase07_feed.py::test_event_envelope_omits_raw_context_and_confidential_payloads PASSED [ 90%]
+apps/api/tests/test_phase07_feed.py::test_sse_frame_has_opaque_cursor_and_single_json_data PASSED [ 92%]
+apps/api/tests/test_phase07_feed.py::test_usage_redaction_preserves_only_valid_numeric_measurements PASSED [ 94%]
+apps/api/tests/test_sensitive_validation.py::test_login_validation_never_echoes_sensitive_input PASSED [ 96%]
+apps/api/tests/test_sensitive_validation.py::test_database_failure_is_handled_without_sql_parameters PASSED [ 98%]
+apps/api/tests/test_sensitive_validation.py::test_worker_database_failure_halts_without_sensitive_traceback PASSED [100%]
+
+=============================== warnings summary ===============================
+apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 53 passed, 1 warning in 0.78s =========================
+

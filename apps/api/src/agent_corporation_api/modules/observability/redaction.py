@@ -12,6 +12,8 @@ SECRET_FIELD = re.compile(
 SECRET_TEXT = re.compile(
     r"(?i)(\b(?:bearer|password|passwd|api[_-]?key|access[_-]?token|refresh[_-]?token|secret)\b\s*[:= ]\s*)([^\s,;]+)"
 )
+USAGE_FIELDS = frozenset({"input_tokens", "output_tokens", "prompt_tokens", "completion_tokens",
+                         "total_tokens", "cached_tokens", "cache_tokens", "reasoning_tokens"})
 
 
 def redact_text(value: str) -> str:
@@ -19,6 +21,9 @@ def redact_text(value: str) -> str:
 
 
 def redact_structure(value: Any, field_name: str | None = None) -> Any:
+    # Numeric usage counters are measurements, never authentication credentials.
+    if field_name in USAGE_FIELDS and (value is None or (type(value) is int and value >= 0)):
+        return value
     if field_name and SECRET_FIELD.search(field_name):
         return "[REDACTED]"
     if isinstance(value, Mapping):

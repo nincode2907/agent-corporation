@@ -1,0 +1,62 @@
+{
+  "phase": "03",
+  "test_batch_id": "20261009T094432+0700-r002-test",
+  "generated_at": "2026-10-09T09:44:32+07:00",
+  "git_head": "e44bc19783e15b29311f467a2be86943b76d847f",
+  "git_state": "dirty shared worktree; not used as complete revision",
+  "inference": "not called; grant=0",
+  "source_files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "879e29cfb95777c38a1250be9fe04bfb680270ac5b4915635f1dd41b71a9a5c6"
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "33f8ff155ded6d3068ebc69a3cc4b98e695a96ea3796c3da28aba7c3f9116249"
+    },
+    {
+      "path": "docs/master-plan.html",
+      "sha256": "8d975f004bd0f6ddb65cd62b8e22b20eb43c0169048dcaf130644436ed1f07d9"
+    },
+    {
+      "path": "docs/tests/phases/phase-03.md",
+      "sha256": "0ef231174486123c240f54abbcee796dc621ac820a3bdfa65330a1388fdccf70"
+    },
+    {
+      "path": "docs/tests/results/phase-03/20261008T161241+0700-phase-03/report.md",
+      "sha256": "fc98c6a19d7f64a894977a1a5ee0f3ff91c3ad054ee76c39a9426d750fa3c60e"
+    },
+    {
+      "path": "docs/remakes/phase-03/20261009T094205+0700-r001-remake/remake.md",
+      "sha256": "9552947bab5d562cc773c150f47d0289772f29a43ffcbcb9fcdd1c6331dd11c6"
+    },
+    {
+      "path": "apps/api/tests/test_phase03_persistence.py",
+      "sha256": "ed8fe53840d72c4b74ca5809df80d364c9c76dd2a5c546ed167f2324272f3584"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/work/commands.py",
+      "sha256": "f2c4f5608441ae387e9d294bad85217f0a0627e4b38a39f176e4e29047ec63e8"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/observability/events.py",
+      "sha256": "689ac7d8f3f8d1f904ff846f515bbe776ff6db9b2102671294989545d08a1bd3"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/observability/redaction.py",
+      "sha256": "104935409fb5da07028d0bebfc7d9fa2c84018230d1e099cf28860051b67dad9"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/observability/scope.py",
+      "sha256": "1f7a9adde4ce533522459537060dda279c2e780abafba22ab433bb5a3f5da32b"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/main.py",
+      "sha256": "6c48de51f41a6d8abd654463c00ce78bc9ef0612b090ec8196ec0505ad9f3897"
+    },
+    {
+      "path": "apps/api/migrations/versions/20261008_0002_durable_domain.py",
+      "sha256": "2fdcae9e8a3fbed7b7af7eee47269bab049e7ddf051e7c6d188a5eb3aecf897e"
+    }
+  ]
+}

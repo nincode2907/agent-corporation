@@ -1,0 +1,34 @@
+{
+  "phase": "01",
+  "test_batch_id": "20261009T091040+0700-r003-test",
+  "independent_tester": "/root/independent_phase01_test",
+  "remake_agent": "/root",
+  "source_commit": "e44bc19783e15b29311f467a2be86943b76d847f",
+  "working_tree_dirty": true,
+  "scope_note": "No Phase 01 product files changed during independent test. Existing user changes, including Phase 01 Chờ nghiệm thu, are preserved.",
+  "inference_grant": "0; no inference or gateway probe",
+  "test_environment": "Fresh web/API copies without .env; isolated PostgreSQL 18.6-alpine pinned digest, ephemeral loopback binding, no project volume; ephemeral API/Vite ports; all batch resources cleaned up.",
+  "source_sha256": {
+    "README.md": "6f6d60a765c1a24bb1ede12edbb86ae0cc4b574fa799f1cd8ab60bc18b3e0227",
+    "AGENTS.md": "cb6b249eadfaf0b4f6ea8b1393d25221aeb5e7d125768b4e9daab95eeed0c58e",
+    "compose.yml": "be0f92ae9b044c61a50c3d32e1e74f383102ffdfb2bd9410c05e1e2128cba6b1",
+    "apps/web/package.json": "c46a37dceaab470c50adfe47c1bafa77a6d5fd8c7fd5d26074551594daa86bac",
+    "apps/web/package-lock.json": "c7bd456788bb311aa383fb7b8824c8864f2ff7b88e7b458e4bfeb769fbc814d8",
+    "apps/web/index.html": "98beca1a2c54ecd8c8e507897c4e43bb7ceda7ee51a57363a97b5739eb7348a2",
+    "apps/web/vite.config.ts": "8e52fd627dea6268ce67eef18204732f7b85c46682c386b4c7faa98208bb8d75",
+    "apps/web/public/favicon.svg": "6f3a8baca05d7d9936b70b5f46ee63fdbd5f248a58fd29f27180cb7fd9c8617f",
+    "apps/api/pyproject.toml": "acc9b8190d492df9206e996cd340b528a9b0a25448f5af0dc652a8d2e3775abe",
+    "apps/api/uv.lock": "950fbae2f0f1824e6a4fc3241356c935c69d9a4b10230addc8274a66d7650e57",
+    "apps/api/alembic.ini": "3e071aeba91dbaf9a433c27e249fa65a3a5205aa548e7ce2a038e3e68fadaf75",
+    "apps/api/migrations/env.py": "d6c7806c5523532880635a4d4bbb6a505f64ea2656d33d32fe1767063a87ccc3",
+    "apps/api/src/agent_corporation_api/main.py": "6c48de51f41a6d8abd654463c00ce78bc9ef0612b090ec8196ec0505ad9f3897",
+    "apps/api/src/agent_corporation_api/settings.py": "25aa450c278b6d36ffa57389e8536b832570a20bd8746a61a2f0631c29164171",
+    "apps/api/src/agent_corporation_api/database.py": "f24ef03cf6cc3ae2d281378a435764c597ece7ad5b41bfe89e0bec118d1021d5",
+    "apps/api/tests/test_health.py": "d493eba76e8662a93b739a0ff74d7b0c3a6ec83f199039272f0bf13cb7bb03be",
+    "docs/master-plan.md": "78a617b613dbb0ccaa0e766e35b8aba634d222c353c4aedc0174547f3f6a9202",
+    "docs/product-spec.md": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5",
+    "docs/decisions/0001-v1-foundation.md": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930",
+    "docs/tests/phases/phase-01.md": "c21b4120946a433cddf5ca2f7851ef12b02e9254bbeca1c56b3a5f635c120045"
+  }
+}
+

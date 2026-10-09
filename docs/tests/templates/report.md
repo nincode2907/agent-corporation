@@ -9,6 +9,7 @@
 - Vòng: <rNNN; khớp tên batch>
 - Bắt đầu / kết thúc: <ISO 8601 +07:00; Asia/Ho_Chi_Minh>
 - Người/AI kiểm định: <tên>
+- Độc lập với AI triển khai/remake: <agent ID nguồn và agent ID kiểm định; không tự khai nếu không có agent khác>
 - Yêu cầu/phạm vi được giao: <nguồn chỉ thị>
 - Source: <commit + dirty state, link manifest/hashes>
 - Môi trường/config/tool versions: <refs đã lọc, không secrets>
@@ -53,6 +54,7 @@ Sao chép block dưới cho C01–C08, mọi PNN-* và test bổ sung. Xóa dòn
 - Bước/lệnh: <lệnh rtk từ root hoặc thao tác UI, exit code nếu đã chạy>
 - Kỳ vọng: <assertion cụ thể>
 - Thực tế: <quan sát, không diễn giải thành pass khi chưa chạy>
+- Kết quả phản biện: <none | accepted | rejected; accepted cần contract/evidence và case pass>
 - Tag: <clean | need-change | suggestion>
 - Kết quả: <pass | fail | blocked | not-run | not-applicable>
 - Mức độ: <critical | major | minor | info>

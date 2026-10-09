@@ -54,7 +54,7 @@ nav{{display:flex;gap:12px 24px;flex-wrap:wrap;margin:24px 0}}section{{margin-to
 @media(max-width:800px){{.flow{{grid-template-columns:1fr 1fr}}.grid{{grid-template-columns:1fr}}}}@media(max-width:520px){{main{{padding:28px 18px}}.flow,.tags{{grid-template-columns:1fr}}.phase{{padding:16px;gap:12px}}.metrics{{gap:24px}}}}@media(prefers-reduced-motion:reduce){{*{{scroll-behavior:auto}}}}
 </style></head><body><main>
 <header><div class="eyebrow">Agent Corporation · Quy trình kiểm định</div><h1>Mỗi phase có bằng chứng để Chủ tịch đánh giá.</h1>
-<p class="lead">AI code đúng phase, test và lưu results, remake theo findings rồi test lại. Vòng lặp tiếp tục khi còn need-change giải quyết được trong phạm vi; quyết định nghiệm thu thuộc Chủ tịch.</p>
+<p class="lead">AI triển khai bàn giao cho AI khác test và ghi issue, AI remake sửa hoặc phản biện, AI test lại xác minh. Pipeline tự tiếp tục trong phase; Chủ tịch theo dõi tick và lịch sử, không phải duyệt giữa các vòng.</p>
 <nav aria-label="Tài liệu kiểm định"><a href="README.md">Hướng dẫn Markdown</a><a href="RULES.md">Đọc rule đầy đủ</a><a href="templates/report.md">Mẫu report</a><a href="templates/remake.md">Mẫu remake</a><a href="results/README.md">Results</a><a href="../remakes/README.md">Remakes</a><a href="../master-plan.html">Roadmap</a></nav>
 <div class="notice">Đây là bộ kế hoạch kiểm định, chưa phải kết quả test sản phẩm. Không tự chuyển phase hoặc gọi inference. Mỗi đợt cần kiểm tra quyền và nguồn hiện tại.</div>
 <div class="metrics"><div><strong>24</strong>phase có checklist</div><div><strong>{total}</strong>test riêng theo phase</div><div><strong>8</strong>kiểm tra chung mỗi phase</div><div><strong>3</strong>tag cho từng kết quả</div></div></header>

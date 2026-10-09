@@ -1,0 +1,18 @@
+{
+  "phase": "07",
+  "test_batch_id": "20261009T105531+0700-r001-test",
+  "generated_at": "2026-10-09T10:55:31+07:00",
+  "worktree": "dirty shared worktree; no commit hash represents complete source revision",
+  "implementation_changed": false,
+  "inference_grant": 0,
+  "files": [
+    {"path": "docs/master-plan.md", "sha256": "c1b9c186d4c6e9954a6f24b8c53c5d1064cae1ba321a6583d8e14cfee6819c46"},
+    {"path": "docs/product-spec.md", "sha256": "e3cdfe10bfee101b9cc958a7c7c0ba446049f999dead06ae4792e9d67818abd5"},
+    {"path": "docs/decisions/0001-v1-foundation.md", "sha256": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930"},
+    {"path": "docs/tests/phases/phase-07.md", "sha256": "c6a513ad8381befe2c22f598ef51f890e604d7fc9bf5581d06796b1d8d356212"},
+    {"path": "docs/tests/results/phase-06/20261008T170343+0700-r001-test/evidence/blocked-dependency.md", "sha256": "a13f85fc40ad7f2e11cee98b9bcf10c34ab4e90673c360911e97d6d111329cf8"},
+    {"path": "apps/api/src/agent_corporation_api/main.py", "sha256": "6c48de51f41a6d8abd654463c00ce78bc9ef0612b090ec8196ec0505ad9f3897"},
+    {"path": "apps/api/src/agent_corporation_api/modules/observability/events.py", "sha256": "689ac7d8f3f8d1f904ff846f515bbe776ff6db9b2102671294989545d08a1bd3"},
+    {"path": "apps/api/src/agent_corporation_api/modules/observability/scope.py", "sha256": "1f7a9adde4ce533522459537060dda279c2e780abafba22ab433bb5a3f5da32b"}
+  ]
+}

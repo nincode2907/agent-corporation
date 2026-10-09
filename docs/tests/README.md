@@ -2,6 +2,8 @@
 
 Bộ rule điều khiển vòng **code phase → test/results → remake/remakes → retest/results → tiếp tục nếu còn need-change**. Có checklist cho Phase 00–23 và templates để AI nối từng kết quả test với thay đổi và lần kiểm chứng tiếp theo. Các tài liệu này không phải bằng chứng phase đã đạt.
 
+AI điều phối tự động bàn giao cho AI test độc lập sau code/remake. AI test note issue, AI remake note bản sửa hoặc phản biện, AI test lại xác minh. Tab Kiểm thử tự hiển thị tick từ files do AI ghi; Chủ tịch theo dõi tiến độ và lịch sử, không tick issue hoặc duyệt giữa các vòng. Xem vai trò và quy tắc phản biện/tick ở RULES.md §3.0.
+
 [Bản trực quan](index.html) · [Rule bắt buộc](RULES.md) · [Mẫu report](templates/report.md) · [Mẫu remake](templates/remake.md) · [Results](results/README.md) · [Remakes](../remakes/README.md)
 
 ## Cách dùng

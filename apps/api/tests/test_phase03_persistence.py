@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID, uuid4
 
 import pytest
 from sqlalchemy import create_engine, text
+from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
 from agent_corporation_api.modules.observability.redaction import redact_structure
@@ -96,6 +98,15 @@ def scoped_rows(factory: sessionmaker[Session], scope: CompanyScope, query: str,
         return session.execute(text(query), params or {}).mappings().all()
 
 
+def task_history(factory: sessionmaker[Session], scope: CompanyScope, task_id: UUID) -> dict[str, list[dict[str, object]]]:
+    return {
+        "state": scoped_rows(factory, scope, "SELECT status, transition_version FROM task_execution_state WHERE task_id=:task_id", {"task_id": task_id}),
+        "revisions": scoped_rows(factory, scope, "SELECT revision FROM task_revisions WHERE task_id=:task_id ORDER BY revision", {"task_id": task_id}),
+        "events": scoped_rows(factory, scope, "SELECT event_id, stream_seq, dedup_key FROM events WHERE task_id=:task_id ORDER BY stream_seq", {"task_id": task_id}),
+        "outbox": scoped_rows(factory, scope, "SELECT event_id, status FROM outbox_events WHERE event_id IN (SELECT event_id FROM events WHERE task_id=:task_id) ORDER BY event_id", {"task_id": task_id}),
+    }
+
+
 def test_app_role_is_non_privileged_and_rls_filters_other_company(databases, scoped_company) -> None:
     app_factory, migration_factory, _ = databases
     role = scoped_rows(app_factory, scoped_company.scope, "SELECT rolsuper, rolbypassrls FROM pg_roles WHERE rolname=current_user")
@@ -136,6 +147,22 @@ def test_app_role_is_non_privileged_and_rls_filters_other_company(databases, sco
     assert visible_other_environment == []
 
 
+def test_composite_scope_foreign_key_rejects_mismatched_company(databases, scoped_company) -> None:
+    _, migration_factory, _ = databases
+    wrong_task_id = uuid4()
+    with pytest.raises(IntegrityError):
+        with migration_factory.begin() as connection:
+            connection.execute(
+                text("INSERT INTO work_orders(id,environment_id,company_id,created_by) VALUES (:id,:environment_id,:company_id,'{}'::jsonb)"),
+                {"id": wrong_task_id, "environment_id": scoped_company.scope.environment_id, "company_id": scoped_company.other_company_id},
+            )
+            connection.execute(
+                text("""INSERT INTO task_revisions(task_id,environment_id,company_id,revision,goal,expected_outputs,acceptance_criteria,scope,budget_limits,stop_conditions,autonomy,created_by)
+                          VALUES (:task_id,:environment_id,:company_id,1,'bad scope','[]','[]','{}','{}','{}','strict','{}')"""),
+                {"task_id": wrong_task_id, "environment_id": scoped_company.scope.environment_id, "company_id": scoped_company.scope.company_id},
+            )
+
+
 def test_task_state_event_and_outbox_commit_dedup_and_fresh_connection(databases, scoped_company) -> None:
     app_factory, _, (app_engine, _) = databases
     first = create_work_order(app_factory, scope=scoped_company.scope, payload=payload(), dedup_key="acceptance:phase03:task-1")
@@ -168,6 +195,7 @@ def test_task_state_event_and_outbox_commit_dedup_and_fresh_connection(databases
         expected_version=1, actor={"kind": "owner", "id": "owner-local"}, dedup_key="acceptance:phase03:transition-1",
     )
     assert next_version == 2
+    before_rejected_transitions = task_history(app_factory, scoped_company.scope, first.work_order_id)
     with pytest.raises(InvalidTaskTransition):
         transition_task(
             app_factory, scope=scoped_company.scope, task_id=first.work_order_id, target_status="accepted",
@@ -180,6 +208,7 @@ def test_task_state_event_and_outbox_commit_dedup_and_fresh_connection(databases
         )
     state = scoped_rows(app_factory, scoped_company.scope, "SELECT status, transition_version FROM task_execution_state WHERE task_id=:task_id", {"task_id": first.work_order_id})
     assert state == [{"status": "queued", "transition_version": 2}]
+    assert task_history(app_factory, scoped_company.scope, first.work_order_id) == before_rejected_transitions
 
 
 def test_event_failure_rolls_back_work_order_revision_state_and_counter(databases, scoped_company, monkeypatch) -> None:
@@ -194,10 +223,60 @@ def test_event_failure_rolls_back_work_order_revision_state_and_counter(database
 
     assert scoped_rows(app_factory, scoped_company.scope, "SELECT id FROM work_orders") == []
     assert scoped_rows(app_factory, scoped_company.scope, "SELECT task_id FROM task_execution_state") == []
+    assert scoped_rows(app_factory, scoped_company.scope, "SELECT task_id FROM task_revisions") == []
+    assert scoped_rows(app_factory, scoped_company.scope, "SELECT event_id FROM events") == []
+    assert scoped_rows(app_factory, scoped_company.scope, "SELECT event_id FROM outbox_events") == []
     assert scoped_rows(app_factory, scoped_company.scope, "SELECT last_seq FROM event_stream_counters") == []
 
 
-def test_secret_fields_are_redacted_before_event_and_revision_storage(databases, scoped_company) -> None:
+def test_missing_scope_denies_reads_and_writes_without_pool_leakage(databases, scoped_company) -> None:
+    app_factory, _, (app_engine, _) = databases
+    created = create_work_order(app_factory, scope=scoped_company.scope, payload=payload(), dedup_key="acceptance:phase03:scope-leak")
+    with pytest.raises(DBAPIError):
+        with app_factory() as session, session.begin():
+            # Deliberately omit set_company_scope: the app role must not inherit scope from a prior checkout.
+            session.execute(
+                text("INSERT INTO work_orders(id,environment_id,company_id,created_by) VALUES (:id,:environment_id,:company_id,'{}'::jsonb)"),
+                {"id": uuid4(), "environment_id": scoped_company.scope.environment_id, "company_id": scoped_company.scope.company_id},
+            )
+    with app_factory() as session, session.begin():
+        visible = session.execute(text("SELECT id FROM work_orders WHERE id=:task_id"), {"task_id": created.work_order_id}).all()
+    assert visible == []
+    # Reuse one physical pool deliberately: transaction-local scope must reset at transaction end.
+    with app_engine.connect() as connection:
+        with connection.begin():
+            connection.execute(text("SELECT set_config('app.environment_id', :value, true)"), {"value": str(scoped_company.scope.environment_id)})
+            connection.execute(text("SELECT set_config('app.company_id', :value, true)"), {"value": str(scoped_company.scope.company_id)})
+            assert connection.execute(text("SELECT id FROM work_orders WHERE id=:task_id"), {"task_id": created.work_order_id}).first()
+        with connection.begin():
+            assert connection.execute(text("SELECT id FROM work_orders WHERE id=:task_id"), {"task_id": created.work_order_id}).all() == []
+
+
+def test_concurrent_creates_preserve_unique_order_and_complete_event_envelope(databases, scoped_company) -> None:
+    app_factory, _, _ = databases
+    def create(index: int):
+        return create_work_order(app_factory, scope=scoped_company.scope, payload=payload(), dedup_key=f"acceptance:phase03:parallel:{index}")
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        created = list(pool.map(create, range(6)))
+    assert sorted(item.stream_seq for item in created) == list(range(1, 7))
+    rows = scoped_rows(
+        app_factory,
+        scoped_company.scope,
+        """SELECT event_id, schema_version, event_type, stream_seq, occurred_at, recorded_at, task_id,
+                  run_id, correlation_id, parent_event_id, source, actor, sensitivity, payload,
+                  evidence_refs, dedup_key
+             FROM events ORDER BY stream_seq""",
+    )
+    assert len(rows) == 6
+    assert all(row["schema_version"] == 1 and row["event_type"] == "TASK_CREATED" for row in rows)
+    assert all(row["occurred_at"] is not None and row["recorded_at"] is not None for row in rows)
+    assert all(row["task_id"] is not None and row["run_id"] is None for row in rows)
+    assert all(row["correlation_id"] is not None and row["parent_event_id"] is None for row in rows)
+    assert all(row["source"] == "app" and row["sensitivity"] == "internal" for row in rows)
+    assert all(row["actor"] and row["payload"] and row["evidence_refs"] == [] and row["dedup_key"] for row in rows)
+
+
+def test_secret_fields_are_redacted_before_revision_event_outbox_and_logs(databases, scoped_company, caplog) -> None:
     app_factory, _, _ = databases
     spec = payload()
     spec["goal"] = "Tổng hợp tài liệu; password=topsecret123"
@@ -205,6 +284,11 @@ def test_secret_fields_are_redacted_before_event_and_revision_storage(databases,
     result = create_work_order(app_factory, scope=scoped_company.scope, payload=spec, dedup_key="acceptance:phase03:redaction")
     revision = scoped_rows(app_factory, scoped_company.scope, "SELECT goal, scope::text AS scope FROM task_revisions WHERE task_id=:task_id", {"task_id": result.work_order_id})
     events = scoped_rows(app_factory, scoped_company.scope, "SELECT payload::text AS payload FROM events WHERE event_id=:event_id", {"event_id": result.event_id})
+    outbox = scoped_rows(app_factory, scoped_company.scope, "SELECT event_id, topic FROM outbox_events WHERE event_id=:event_id", {"event_id": result.event_id})
+    persisted = " ".join([revision[0]["goal"], revision[0]["scope"], events[0]["payload"], str(outbox)])
+    assert all(secret not in persisted for secret in ("topsecret123", "private-key-value", "abc.def.ghi"))
+    captured_logs = " ".join(record.getMessage() for record in caplog.records)
+    assert all(secret not in captured_logs for secret in ("topsecret123", "private-key-value", "abc.def.ghi"))
     assert "topsecret123" not in revision[0]["goal"]
     assert "private-key-value" not in revision[0]["scope"]
     assert "abc.def.ghi" not in revision[0]["scope"]

@@ -66,6 +66,11 @@ def check_report(path: Path, expected: set[str] | None = None) -> int:
         for name in ['Nguồn/tiêu chí', 'Bắt buộc', 'Điều kiện/môi trường', 'Bước/lệnh', 'Kỳ vọng', 'Thực tế', 'Tag', 'Kết quả', 'Mức độ', 'Evidence', 'Xử lý/đề xuất']:
             field(body, name)
         tag, result = field(body, 'Tag'), field(body, 'Kết quả')
+        rebuttal = re.findall(r'^- Kết quả phản biện: (.+)$', body, re.M)
+        if rebuttal:
+            require(len(rebuttal) == 1 and rebuttal[0] in {'none', 'accepted', 'rejected'}, f'{ident}: kết quả phản biện sai')
+            require(rebuttal[0] != 'accepted' or result == 'pass', f'{ident}: phản biện accepted cần case pass')
+            require(rebuttal[0] != 'rejected' or result in {'fail', 'blocked', 'not-run'}, f'{ident}: phản biện rejected chưa được đóng issue')
         allowed = {'clean': {'pass'}, 'need-change': {'fail', 'blocked', 'not-run'}, 'suggestion': {'pass', 'not-applicable'}}
         require(tag in allowed and result in allowed[tag], f'{ident}: tag/result không hợp lệ {tag}/{result}')
         mandatory = field(body, 'Bắt buộc')

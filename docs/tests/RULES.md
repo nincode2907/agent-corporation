@@ -21,6 +21,28 @@ Master-plan chuẩn về phạm vi/trạng thái; spec/ADR chuẩn về hợp đ
 
 ## 3. Vòng code → test → remake → retest
 
+### 3.0. Pipeline tự động và vai trò AI
+
+Chủ tịch giao “chạy Phase NN” một lần rồi theo dõi pipeline. AI điều phối tự bàn giao giữa các vai trò, cập nhật files/HTML sau mỗi bước và tiếp tục vòng tiếp theo; không yêu cầu Chủ tịch tick issue, chuyển file, copy prompt hoặc duyệt từng vòng.
+
+- **AI triển khai/remake:** code phase, nhận report của AI test, sửa hoặc phản biện từng issue và lưu remakes. Không tự duyệt phản biện của mình.
+- **AI test độc lập:** một agent khác với AI vừa code/sửa; đọc source và contract trực tiếp, chạy kiểm định, ghi issues vào results, kiểm tra lại cả bản sửa và phản biện. Quyết định giữ/đóng/reopen issue bằng evidence.
+- **AI điều phối:** giao việc qua công cụ agent khi có, tuần tự hóa các thao tác ghi cùng source, theo dõi report/remake và gọi AI test cho vòng tiếp theo. Task bàn giao phải chỉ rõ phase, source revision/dirty hashes, round, report nguồn, scope, quyền và vị trí lưu. Các AI dùng cùng contract/ID; không tự mở phase mới.
+
+Khi công cụ agent không khả dụng, ghi rõ thiếu kiểm định độc lập và hoàn thành phần được phép; không giả danh nhiều AI hoặc yêu cầu Chủ tịch thao tác thay giữa các bước. Quyền gọi agent cộng tác cho pipeline này do chỉ thị Chủ tịch cấp; không đồng nghĩa grant gọi model trong runtime sản phẩm. Flow chạy trong phiên được giao, không khẳng định HTML tự khởi chạy agent nền.
+
+### 3.0a. Issue, phản biện và dấu tick do AI cập nhật
+
+- Test xong, AI test ghi từng issue bằng test ID vào report: expected/actual, evidence và hướng xử lý. Report mới nhất và lịch sử remake là nguồn của tab Kiểm thử; dữ liệu localStorage/checkbox cá nhân không quyết định trạng thái issue.
+- Remake xong, AI remake ghi `Trạng thái xử lý: changed` và thay đổi/evidence: tab tự hiện **✓ Đã sửa · chờ test lại**. Tick này thể hiện có ghi nhận sửa, chưa phải kết luận pipeline OK.
+- Nếu không đồng ý issue, ghi `Trạng thái xử lý: rebutted`, field `Phản biện`, contract/source/evidence và lý do issue sai. Tab hiện **Đã phản biện · chờ AI test xác minh**, không tự tick đóng issue.
+- AI test vòng kế tiếp ghi `Kết quả phản biện: accepted` hoặc `rejected` cho case có phản biện (các case khác: `none`). Accepted chỉ khi bằng chứng phù hợp contract và case đạt; tag/result vẫn theo §4. Phản biện không được bỏ criteria bắt buộc hay biến blocked thành pass.
+- Test lại đạt → **✓ Đã sửa · test lại đạt**; phản biện được xác minh đạt → **✓ Phản biện được AI test chấp nhận**. Test lại vẫn fail/blocked/not-run → issue mở lại, bỏ tick sửa chưa được chứng minh và chuyển remake tiếp.
+- Issue đã đóng vẫn hiển thị trong lịch sử, cùng ghi nhận test/sửa/phản biện và links. Case biến mất khỏi report sau không tự đóng issue. AI render `scripts/render_plan.py` sau mỗi results/remakes cập nhật để Chủ tịch refresh tab theo dõi.
+- Pipeline chỉ **OK** khi report hiện tại kết luận `đạt`, gate PASS và mọi issue bắt buộc đã được AI test xác minh; một tick sửa hay phản biện chưa duyệt không đủ. Không cần Chủ tịch tick/xác nhận để AI tiếp tục các vòng; nghiệm thu chính thức vẫn là quyết định riêng.
+
+Tab Kiểm thử luôn hiện một trạng thái pipeline dễ đọc: trước review là **Đã code, chờ review**; report có lỗi chưa remake là **Đã review có lỗi, chờ remake**; đã lưu remake và chờ AI test độc lập là **Đã remake, chờ review**; đủ điều kiện kết thúc kỹ thuật là **Pipeline OK**. Nếu có blocker, hiển thị **Review bị chặn** thay vì che blocker bằng một trong các trạng thái thường. Trạng thái đầu áp dụng khi phase đã được triển khai nhưng chưa có report; phase `Chưa triển khai` hiện **Chưa code**.
+
 ### 3.1. Code theo phase
 
 - Đọc scope/dependency/criteria của Phase NN; triển khai đúng phase hoặc tiếp nhận implementation hiện có khi được giao test/remake.
@@ -42,7 +64,7 @@ Master-plan chuẩn về phạm vi/trạng thái; spec/ADR chuẩn về hợp đ
 1. Tạo batch remake cùng số vòng với report nguồn, dùng [mẫu remake](templates/remake.md). Link chính xác report nguồn và từng test ID cần xử lý; ưu tiên lỗi critical/major rồi minor, bao gồm cả thiếu test/evidence bắt buộc.
 2. Với mỗi `need-change`, đọc expected/actual/evidence và source hiện tại; xác định nguyên nhân trước sửa. `fail` cần sửa hành vi; `blocked/not-run` cần giải quyết điều kiện hoặc bổ sung kiểm chứng, không mặc định là bug sản phẩm.
 3. Sửa code, test, tài liệu hoặc cách lưu evidence thuộc phase đã giao. Nếu thiếu screenshot, tìm cách lưu ảnh và thực hiện lại UI check; không chỉ ghi “chưa lưu” rồi dừng khi vẫn có công cụ hợp lệ để làm. Không hạ tag, loại criteria hay viết mock để né proof bắt buộc.
-4. Ghi vào `remake.md`: test ID nguồn, nguyên nhân, thay đổi thực tế/file refs, kiểm tra đã chạy, source trước/sau và phần còn thiếu. Trạng thái xử lý là `changed`, `blocked` hoặc `no-change`; đây không phải ba tag test và không tự đóng finding.
+4. Ghi vào `remake.md`: test ID nguồn, nguyên nhân, thay đổi thực tế/file refs hoặc phản biện có evidence, kiểm tra đã chạy, source trước/sau và phần còn thiếu. Trạng thái xử lý là `changed`, `rebutted`, `blocked` hoặc `no-change`; đây không phải ba tag test và không tự đóng finding.
 5. Sau khi thay đổi, chuyển sang retest ở vòng kế tiếp. Không chờ xác nhận giữa các vòng sửa trong phạm vi đã giao. `suggestion` là cải tiến tùy chọn: ghi lựa chọn làm/để lại, không bắt buộc sửa để đạt phase.
 
 ### 3.4. Test lại và tiếp tục

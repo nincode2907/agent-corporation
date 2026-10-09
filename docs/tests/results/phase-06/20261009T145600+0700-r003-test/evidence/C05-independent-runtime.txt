@@ -1,0 +1,29 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.8, pytest-9.0.2, pluggy-1.6.0 -- /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp
+plugins: anyio-4.15.1
+collecting ... collected 5 items
+
+../../../../../../tmp/test_ac067_independent.py::test_real_pg_owner_auth_profile_scope_csrf_expiry_logout PASSED [ 20%]
+../../../../../../tmp/test_ac067_independent.py::test_unknown_usage_retains_same_grant_reservation PASSED [ 40%]
+../../../../../../tmp/test_ac067_independent.py::test_cg01_json_list_fails_closed PASSED [ 60%]
+../../../../../../tmp/test_ac067_independent.py::test_actual_http_sse_reconnect_logout_no_duplicate_or_raw_content PASSED [ 80%]
+../../../../../../tmp/test_ac067_independent.py::test_disposable_worker_sigkill_recovery_never_replays_model_attempt PASSED [100%]
+
+=============================== warnings summary ===============================
+apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+test_ac067_independent.py::test_actual_http_sse_reconnect_logout_no_duplicate_or_raw_content
+  /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api/.venv/lib/python3.14/site-packages/websockets/legacy/__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions
+    warnings.warn(  # deprecated in 14.0 - 2024-11-09
+
+test_ac067_independent.py::test_actual_http_sse_reconnect_logout_no_duplicate_or_raw_content
+  /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api/.venv/lib/python3.14/site-packages/uvicorn/protocols/websockets/websockets_impl.py:17: DeprecationWarning: websockets.server.WebSocketServerProtocol is deprecated
+    from websockets.server import WebSocketServerProtocol
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 5 passed, 3 warnings in 3.40s =========================
+

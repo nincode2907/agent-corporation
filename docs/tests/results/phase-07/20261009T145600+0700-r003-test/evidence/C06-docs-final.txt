@@ -1,0 +1,25 @@
+PASS contract: 26 requirements/14 screens/8 flows/35 events/R1–R8; source/phase/decision/state refs và 2 JSON examples.
+PASS artifacts: 3 HTML đồng bộ/deterministic; links/anchors/IDs/lang=vi/favicon; JS syntax; không runtime/network client.
+LIMIT: chưa chạy product tests/inference; chưa visual QA browser/mobile. Không suy Phase 00 đã được Chủ tịch nghiệm thu.
+
+test_document_inline_javascript_syntax (test_phase_pipeline.PipelineTests.test_document_inline_javascript_syntax) ... ok
+test_failed_retest_reopens_and_removes_tick (test_phase_pipeline.PipelineTests.test_failed_retest_reopens_and_removes_tick) ... ok
+test_fixed_tick_is_pending_until_independent_retest (test_phase_pipeline.PipelineTests.test_fixed_tick_is_pending_until_independent_retest) ... ok
+test_grouped_legacy_mapping_and_explicit_override (test_phase_pipeline.PipelineTests.test_grouped_legacy_mapping_and_explicit_override) ... ok
+test_missing_case_in_latest_report_never_closes_old_issue (test_phase_pipeline.PipelineTests.test_missing_case_in_latest_report_never_closes_old_issue) ... ok
+test_no_reports_is_queued_and_suggestions_do_not_create_issues (test_phase_pipeline.PipelineTests.test_no_reports_is_queued_and_suggestions_do_not_create_issues) ... ok
+test_parallel_batch_start_does_not_reopen_pending_fix_after_retest (test_phase_pipeline.PipelineTests.test_parallel_batch_start_does_not_reopen_pending_fix_after_retest) ... ok
+test_rebuttal_does_not_close_itself (test_phase_pipeline.PipelineTests.test_rebuttal_does_not_close_itself) ... ok
+test_rejected_or_blocked_rebuttal_remains_open (test_phase_pipeline.PipelineTests.test_rejected_or_blocked_rebuttal_remains_open) ... ok
+test_rejected_rebuttal_with_inconsistent_pass_never_becomes_ok (test_phase_pipeline.PipelineTests.test_rejected_rebuttal_with_inconsistent_pass_never_becomes_ok) ... ok
+test_required_checklist_cases_cannot_be_marked_optional_to_get_ok (test_phase_pipeline.PipelineTests.test_required_checklist_cases_cannot_be_marked_optional_to_get_ok) ... ok
+test_same_second_orders_test_before_its_remake (test_phase_pipeline.PipelineTests.test_same_second_orders_test_before_its_remake) ... ok
+test_ui_renders_ai_ticks_and_history_without_manual_checkbox (test_phase_pipeline.PipelineTests.test_ui_renders_ai_ticks_and_history_without_manual_checkbox) ... ok
+test_verdict_without_evidence_or_with_failed_gate_is_not_ok (test_phase_pipeline.PipelineTests.test_verdict_without_evidence_or_with_failed_gate_is_not_ok) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.555s
+
+OK
+
+

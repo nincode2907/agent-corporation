@@ -6,6 +6,7 @@
 
 - Phase: NN
 - Remake batch: <remake_batch_id>
+- Người/AI remake: <agent ID/tên; khác AI test nguồn>
 - Vòng: <rNNN; cùng số vòng với report nguồn>
 - Report nguồn: <link report results thực sự tồn tại>
 - Bắt đầu / kết thúc: <ISO 8601 +07:00; Asia/Ho_Chi_Minh>
@@ -18,7 +19,7 @@
 
 | Test ID / tag-result nguồn | Nguyên nhân | Thay đổi thực tế / file refs | Trạng thái xử lý | Test cần rerun |
 | --- | --- | --- | --- | --- |
-| <ID + link case trong report> | <root cause hoặc gap> | <đã sửa gì hoặc chưa sửa vì sao> | <changed / blocked / no-change> | <original case + happy path + regression> |
+| <ID + link case trong report> | <root cause hoặc gap> | <đã sửa gì/phản biện hoặc chưa sửa vì sao> | <changed / rebutted / blocked / no-change> | <original case + happy path + regression> |
 
 Bao phủ mọi need-change của report nguồn. Suggestions ghi rõ làm/để lại. Không dùng changed để thay tag clean của test; finding chỉ đóng bằng results retest.
 
@@ -28,7 +29,9 @@ Bao phủ mọi need-change của report nguồn. Suggestions ghi rõ làm/để
 
 - Expected/actual nguồn: <tóm tắt và link evidence>
 - Nguyên nhân: <có bằng chứng; phân biệt bug và thiếu kiểm chứng>
+- Trạng thái xử lý: <changed | rebutted | blocked | no-change; khớp mapping>
 - Thay đổi: <file refs/diff thực tế; không mô tả kế hoạch như đã làm>
+- Phản biện: <contract/source/evidence và lý do issue không đúng; hoặc Không có>
 - Kiểm tra trong lúc sửa: <lệnh, exit code, output và links; không thay report retest>
 - Còn thiếu/blocker: <điều kiện để tiếp tục; hoặc Không có>
 - Retest cần chạy: <bước và postcondition cụ thể>

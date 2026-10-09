@@ -95,10 +95,17 @@ def test_demo_reset_http_requires_confirmation_and_rejects_scope_targets(databas
     app_factory, _ = databases
     monkeypatch.setattr("agent_corporation_api.modules.demo.router.get_session_factory", lambda: app_factory)
     client = TestClient(app)
-    rejected = client.post("/api/v1/demo/reset", json={"confirmed": False})
-    assert rejected.status_code == 400
-    forged = client.post("/api/v1/demo/reset", json={"confirmed": True, "environment_id": "real", "company_id": "other"})
-    assert forged.status_code == 422
+    from agent_corporation_api.modules.governance.auth import OwnerPrincipal, require_owner_write
+    from agent_corporation_api.modules.demo.factory import DEMO_SCOPE
+    assert client.post("/api/v1/demo/reset", json={"confirmed": True}).status_code == 403
+    app.dependency_overrides[require_owner_write] = lambda: OwnerPrincipal(DEMO_SCOPE, uuid4(), "owner-local")
+    try:
+        rejected = client.post("/api/v1/demo/reset", json={"confirmed": False})
+        assert rejected.status_code == 400
+        forged = client.post("/api/v1/demo/reset", json={"confirmed": True, "environment_id": "real", "company_id": "other"})
+        assert forged.status_code == 422
+    finally:
+        app.dependency_overrides.pop(require_owner_write, None)
     dashboard = client.get("/api/v1/demo/dashboard")
     assert dashboard.status_code == 200
     assert dashboard.json()["environment"]["kind"] == "demo"

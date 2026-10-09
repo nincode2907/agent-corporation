@@ -2,6 +2,8 @@
 
 AI đọc [rule code/test/remake](../tests/RULES.md) và report results nguồn trước khi sửa. Remake ghi thay đổi **đã thực hiện**, nguyên nhân, test IDs và việc cần retest. Kết quả test sau sửa vẫn được ghi trong `docs/tests/results/`, không ghi pass thay cho results ở đây.
 
+AI remake khác với AI test và có thể ghi phản biện có contract/evidence (`rebutted`). AI test độc lập xác minh lại và ghi accepted/rejected trong results. Tab tự tick bản sửa đã ghi nhưng ghi rõ đang chờ retest; chỉ đóng issue sau kiểm định đạt. Chủ tịch không phải tick hoặc bàn giao prompt giữa các AI.
+
 Tên batch: `YYYYMMDDTHHMMSS+0700-rNNN-remake`. Cùng số vòng với report nguồn; test sau sửa tăng vòng. Dùng [mẫu remake](../tests/templates/remake.md).
 
 ```text

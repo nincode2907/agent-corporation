@@ -1,0 +1,10 @@
+{
+  "captured_at": "2026-10-09T15:13:47.446178+07:00",
+  "phase": "06",
+  "files_sha256": {
+    "apps/api/src/agent_corporation_api/main.py": "35dddf798333a1a45c41373db58f80ce3305bc2e94ab6dcc78ab3acbe932e296",
+    "apps/api/src/agent_corporation_api/modules/execution/worker.py": "c3735c60dc276ce2e7ca64ad5f60a230a4a1af1304a77699e694e19a3d9d41be",
+    "apps/api/tests/test_sensitive_validation.py": "14acbee171eed620d1a3917f17426019601169427f16d9c10da214307d5d389d"
+  },
+  "inference_called": false
+}

@@ -1,0 +1,50 @@
+{
+  "phase": "02",
+  "test_batch_id": "20261009T094432+0700-r002-test",
+  "generated_at": "2026-10-09T09:44:32+07:00",
+  "git_head": "e44bc19783e15b29311f467a2be86943b76d847f",
+  "git_state": "dirty shared worktree; not used as complete revision",
+  "inference": "not called; grant=0",
+  "source_files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "879e29cfb95777c38a1250be9fe04bfb680270ac5b4915635f1dd41b71a9a5c6"
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "33f8ff155ded6d3068ebc69a3cc4b98e695a96ea3796c3da28aba7c3f9116249"
+    },
+    {
+      "path": "docs/master-plan.html",
+      "sha256": "8d975f004bd0f6ddb65cd62b8e22b20eb43c0169048dcaf130644436ed1f07d9"
+    },
+    {
+      "path": "docs/tests/phases/phase-02.md",
+      "sha256": "422cb5b80ef2340a3f6d19c3389cebefaa49a43368524a878224ccd5c694e6c5"
+    },
+    {
+      "path": "docs/tests/results/phase-02/20261008T161241+0700-phase-02/report.md",
+      "sha256": "e9f12efcda8ca549723d4ba823845d280f85ca5627b17a6b27e64ee08920acc7"
+    },
+    {
+      "path": "docs/remakes/phase-02/20261009T094205+0700-r001-remake/remake.md",
+      "sha256": "65c6789ec0bd7330c3ee196602ec6b691f7b01b79eb41c527f260e7497515f64"
+    },
+    {
+      "path": "apps/web/src/App.tsx",
+      "sha256": "f8c7a3382fedec893e45dd10320aecfaa19a5d4a348c9923f609f2859c9c811a"
+    },
+    {
+      "path": "apps/web/src/App.css",
+      "sha256": "4431c0eaa95c21e9a77a678941942022cf80ce4964f6df71f237c621de600b45"
+    },
+    {
+      "path": "apps/web/index.html",
+      "sha256": "98beca1a2c54ecd8c8e507897c4e43bb7ceda7ee51a57363a97b5739eb7348a2"
+    },
+    {
+      "path": "apps/web/public/favicon.svg",
+      "sha256": "6f3a8baca05d7d9936b70b5f46ee63fdbd5f248a58fd29f27180cb7fd9c8617f"
+    }
+  ]
+}

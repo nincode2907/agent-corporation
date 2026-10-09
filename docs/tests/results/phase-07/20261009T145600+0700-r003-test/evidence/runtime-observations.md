@@ -1,0 +1,16 @@
+# Quan sát kiểm định độc lập r003
+
+AI test `/root/independent_06_07_qa` khác AI triển khai `/root`, `runtime06`, `runtime_ui`. API source cuối bàn giao14:58:34+07:00; source hashes/dirty paths trong manifest, không commit.
+
+- PG18.6 pinned đúng compose, container riêng `agent-corporation-qa067-disposable`, label `agent-corporation.qa=phase06-07`, loopback Docker random50822, DBqa067. App roleqa_app non-superuser/non-bypass-RLS; tất cả credentials là fake canary. Bootstrap Python đặt Settings.model_config.env_file=None, không đọc/in .env thật.
+- Upgrade thật từ0005→0006 PASS; fresh0001→0005 đã kiểm ở r002. Full API source cuối73/73 PASS; 10 opt-in runtime PG tests nằm trong fullsuite. Independent5/5 PASS: Owner auth/Profile/CSRF/CAS/logout/expiry, missing usage hold, malformed proof deny, actual HTTP/SSE disconnect/reconnect/auth-expired, actual subprocess SIGKILL với explicit fake waiting transport. No shared gateway calls hoặc inference.
+- Framework pipeline14/14 PASS; web lint/build/diff check PASS. Numeric usage/provenance/late correction binding đã được test; unknown outcome vẫn giữ fence, không mở lại grant hết hạn/thu hồi.
+- Browser QA riêng `127.0.0.1:64520` phục vụ source dist + API với own DB. Exact ephemeral origin chỉ được thêm trong testprocess, không thay config/source sản phẩm. FakeOwner login/profilev1/reload/SSE persisted. Fixture waiting state là service/DB canary, không gọi transport/model. UI tự cập nhật run khi nhận event; worker30s cũ vẫn hiện mất heartbeat dù event store live. Dừng riêng owned preview PID92031 làm UI reconnecting và không đối chiếu được worker. Mobile390px: scrollWidth375, langvi, run button disabled. Các ảnh chỉ hạ tầng fixture, không phải demo agent/model thật.
+- Lượt rerun independent trước cleanup có2 failures harness vì fake browser reservation đang chiếm globalguard; đúng behavior guard. QA dọn chính xác own requestspan/run fixture, không sửa source, rồi independent5/5 PASS. Không dùng lượt nhiễu để mở lỗi sản phẩm.
+- Live CG01 chưa có proof isolation/privacy/retention/cancellation hợp lệ; Chủ tịch chưa cấp inferencegrant cho phase/batch/purpose/model/limits/expiry. Các fake grants ở ownDB không là grant sản phẩm. C02/C03/P06-02/03/06/07/P07-07 giữblocked theo loại evidence.
+
+Cleanup: Own worker subprocess đã chết SIGKILL/được join; HTTP SSE testserver shutdown; preview PID đã kiểm command chính xác trước kill; CUA tab đóng, viewport reset. Dataset negativecases cleanup theo tên environments và scope QA, không sharedDB. Disposable container giữ cho report/docs check cuối rồi sẽ remove only owned resource.
+
+Cleanup đã thực hiện: docker inspect xác minh /agent-corporation-qa067-disposable + labelphase06-07 + pinnedimage; docker rm -fv exit0 xóa riêng container và anonymousvolume; dockerps exactname empty. FakeOwnersecret và ownpreview URL/run metadata đã unlink, không đụng .env/sharedsecret/project DB.
+
+Root bổ sung API SQL503 và workerCLI sanitized stop sau PG cleanup, addendum r002/evidence/privacy-error-* giữ snapshot lịch sử. AI test rerun53nonDBunits finalsource PASS; ghi riêng giới hạn PG-before-handlerpatch, không claim PG rerun. C06 contract35/3HTMLdeterministic + framework14/report IDs đã xác minh, case closed.

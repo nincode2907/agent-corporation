@@ -1,0 +1,14 @@
+{
+  "phase": "01",
+  "batch": "20261009T092011+0700-r004-remake",
+  "scope": ["README.md"],
+  "change": "npm ci --prefix apps/web -> npm --prefix apps/web ci",
+  "commit": "e44bc19783e15b29311f467a2be86943b76d847f",
+  "sha256": {
+    "README.md": "416262119b1bea00503fafb01c623719a28799a673f9449175ccff112f095205"
+  },
+  "dirty_worktree": true,
+  "other_user_changes_preserved": true,
+  "inference": "none",
+  "project_database_mutated": false
+}

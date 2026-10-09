@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00–03 Hoàn tất; Phase 04–05 Chờ nghiệm thu; Phase 06 Bị chặn; 4/24 phase hoàn tất**. Chưa có runtime agent, chưa gọi inference.
+> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Phase 07 bị chặn tại Phase 06/CG01 và thiếu Owner auth để bảo vệ SSE scope; Phase 08 phụ thuộc Phase 07 và cần IG08 chạy thật. Đã có code Owner/runtime/SSE Phase06–07; grant thật0, chưa chạy model thật.
 
 ## 1. Hướng đi đã chọn
 
@@ -115,11 +115,13 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00–03 đã hoàn tất; Phase 04–05 chờ nghiệm thu; Phase 06 bị chặn tại dependency Phase 05 và CG01; Phase 07–23 Chưa triển khai. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–23 Chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Phase06–07 đã có source Owner/runtime/SSE và remake; các gate run thật vẫn thiếu CG01/grant, không tự nghiệm thu. Inference grant = 0.
+
+Mỗi phase có tab **Kiểm thử** hiển thị pipeline AI và lịch sử `docs/tests/results/phase-NN/` + `docs/remakes/phase-NN/`. Chủ tịch chỉ theo dõi, không tự tick issue. AI triển khai bàn giao cho AI khác test; AI test note issue, AI remake ghi bản sửa hoặc phản biện, AI test độc lập xác minh lại, tiếp tục các vòng đến OK hoặc blocker thật. Dấu ✓ tự cập nhật từ files AI: đã sửa chờ retest, sửa được test lại xác nhận, hoặc phản biện được AI test chấp nhận. Phản biện chưa xác minh không đóng issue; retest vẫn lỗi thì mở lại và bỏ tick. Issue đóng vẫn giữ lịch sử và links; case biến mất khỏi report mới không tự coi là đã fix. Pipeline chỉ OK khi report mới kết luận đạt, gates đạt và không còn issue bắt buộc chưa xác minh. AI render HTML sau mỗi bước; refresh trang để xem tiến độ đã lưu. HTML là bảng theo dõi, không khởi chạy agent nền. Nghiệm thu chính thức vẫn theo Markdown/quyết định Chủ tịch.
 
 Checklist/ghi chú cá nhân trên HTML lưu trong localStorage nếu browser cho phép; không sửa Markdown, không giao task cho Codex và không gọi backend. Có thể xuất JSON để giữ ghi chú rồi gửi cùng phản hồi nghiệm thu. File HTML khác path/browser có thể có bộ ghi chú khác; xuất trước khi đổi nơi lưu. Nếu storage bị chặn, UI báo chưa lưu bền vững; nội dung vẫn xuất được trong phiên hiện tại. Khi kế hoạch/checklist đổi phiên bản, xuất ghi chú cũ trước và kiểm tra lại tiêu chí.
 
-Mẫu yêu cầu: “Triển khai Phase 00 của Agent Corporation theo docs/master-plan.md. Chỉ làm phase này; cập nhật evidence và HTML, báo cáo để tôi nghiệm thu rồi dừng, chưa sang phase tiếp.” Nếu dependency chưa xong, agent trình bày điều còn thiếu và chờ quyết định, không âm thầm vượt phase.
+Mẫu yêu cầu: “Chạy pipeline Phase NN theo docs/master-plan.md và docs/tests/RULES.md: AI triển khai → AI khác test/results → AI remake sửa hoặc phản biện/remakes → AI test lại, lặp trong phase đến OK hoặc blocker thật. Tự cập nhật tick và HTML để tôi theo dõi; không chờ duyệt giữa các vòng và không tự chuyển phase.” Nếu dependency/quyền thật sự chưa có, AI ghi blocker và điều kiện tiếp tục sau khi hoàn thành phần độc lập.
 
 Sau mỗi phase: cập nhật trạng thái, ngày, phạm vi thực tế, phần mới, files/commit nếu có, demo URL đã kiểm chứng, lệnh test + kết quả, evidence/artifacts, blocker/known limits và quyết định của Chủ tịch trong Markdown; render HTML cùng thay đổi. Không ghi phase Hoàn tất khi chỉ có giao diện hoặc checklist cá nhân.
 
@@ -181,7 +183,7 @@ Lịch sử bàn giao bản 1.0 (trước nghiệm thu): 08/10/2026 — Đã tri
 ### Phase 01 — Dựng nền phát triển local
 
 - Mốc: A
-- Trạng thái: Hoàn tất
+- Trạng thái: Chờ nghiệm thu
 - Phụ thuộc: 00
 - Mục tiêu: Có một môi trường phát triển khởi động và kiểm tra được.
 
@@ -222,16 +224,24 @@ Log khởi động, health responses, lệnh kiểm tra và registry diff.
 
 08/10/2026 — Đã tạo Vite/React/TypeScript frontend, FastAPI/Pydantic API, Compose PostgreSQL 18.6, secret local mode 0600, liveness/readiness, health page tiếng Việt và migration Alembic baseline không có domain tables. Dev Hub reserve `agent-corporation`, block `15500–15599`: web `127.0.0.1:15500`, API `127.0.0.1:15501`, PostgreSQL `127.0.0.1:15510 → 5432`; proxy route tắt vì ingress chung publish wildcard. Dependency pins ở package-lock/uv.lock/image digest. Log, migration, API tests, build, HTTP/browser và database-down evidence tại [Phase 01](evidence/phase-01.md). Chủ tịch duyệt Phase 01 ngày 08/10/2026; chưa seed dữ liệu, worker/agent, domain schema hoặc inference; grant = 0.
 
+09/10/2026 — Remake theo report kiểm định legacy Phase 01: README hiện tại đã đúng IPv4-only; clean install frontend/backend và migration baseline trên PostgreSQL cô lập đều đạt; retest r002 do agent thực hiện có 15/15 ca clean/pass. Theo chỉ thị mới, trạng thái chuyển sang Chờ nghiệm thu để đợi AI khác kiểm định độc lập; không xem r002 là nghiệm thu cuối. Không cần sửa source sản phẩm Phase 01; không dừng DB/runtime dùng chung, không gọi inference. Xem [report r002](tests/results/phase-01/20261009T085957+0700-r002-test/report.md), [remake r001](remakes/phase-01/20261009T085800+0700-r001-remake/remake.md) và [sổ vòng Phase 01](tests/results/phase-01/README.md).
+
+09/10/2026 — Kiểm định độc lập phát hiện P01-01: lệnh README `npm ci --prefix apps/web` fail trên npm 11; README được remake sang `npm --prefix apps/web ci`. Report r004 cũng để C03/P01-02/P01-03 chờ kiểm chứng cô lập. Đang chờ AI khác chạy retest sau remake; Phase 01 vẫn Chờ nghiệm thu, không đánh dấu hoàn tất. Xem [report độc lập r004](tests/results/phase-01/20261009T091446+0700-r004-test/report.md), [remake r004](remakes/phase-01/20261009T092011+0700-r004-remake/remake.md) và [sổ vòng](tests/results/phase-01/README.md).
+09/10/2026 — Retest độc lập r005 xác nhận README install command đã chạy nguyên văn trên bản sao sạch (Node 24/npm 11), build/lint/API tests đạt; kiểm thử demo, DB-down/readiness và migration baseline chạy trên PostgreSQL cô lập, không ảnh hưởng runtime dùng chung. 15/15 ca checklist Phase 01 đều `clean/pass`, không còn issue cần remake; bằng chứng và validation tại [report r005](tests/results/phase-01/20261009T092254+0700-r005-test/report.md). Vòng r004 finding đã được sửa ở [remake r004](remakes/phase-01/20261009T092011+0700-r004-remake/remake.md); lịch sử đầy đủ ở [sổ vòng](tests/results/phase-01/README.md). Kết luận kỹ thuật đạt, nhưng Phase 01 vẫn **Chờ nghiệm thu** của Chủ tịch; không mở Phase 05 hay gọi inference.
+
+09/10/2026 — AI độc lập chạy r005 sau remake: 15/15 ca clean/pass, gồm đúng lệnh cài README, demo sạch, DB-down (liveness 200/readiness 503) và migration baseline idempotent trên tài nguyên cô lập. Kết quả này đóng vòng remake về mặt kiểm thử độc lập; Phase 01 vẫn Chờ nghiệm thu theo chỉ thị, chờ quyết định của Chủ tịch và không tự chuyển phase. Không gọi inference hoặc tác động runtime/DB dùng chung. Xem [report r005](tests/results/phase-01/20261009T092254+0700-r005-test/report.md).
+
 #### Tài liệu liên quan
 
 - [Hướng dẫn chạy local](../README.md)
 - [Bằng chứng Phase 01](evidence/phase-01.md)
+- [Kết quả remake/retest Phase 01](tests/results/phase-01/README.md)
 Runtime local sau khi khởi động: web `127.0.0.1:15500`, API `127.0.0.1:15501`.
 
 ### Phase 02 — Khung giao diện Chủ tịch
 
 - Mốc: A
-- Trạng thái: Hoàn tất
+- Trạng thái: Chờ nghiệm thu
 - Phụ thuộc: 01
 - Mục tiêu: Có không gian điều hành 2D nhất quán và dễ dùng.
 
@@ -272,6 +282,10 @@ Chưa có agent đang hoạt động; không dựng hoạt cảnh giả.
 
 08/10/2026 — Phase 02 được hoàn tất khi Chủ tịch trực tiếp yêu cầu tiếp tục sang Phase 03; đây là chỉ thị chuyển tiếp được dùng để tiếp nhận dependency. Web build/lint, desktop navigation, mode Owner, trạng thái API lỗi/phục hồi, S13 và S14 đã được kiểm tra trong lượt trước. CSS breakpoint 390 px vẫn là giới hạn chưa xác minh trực tiếp viewport; xem [bằng chứng Phase 02](evidence/phase-02.md). Không có model request; inference grant = 0.
 
+09/10/2026 — Remake theo report Phase 02: đã đối chiếu source hiện tại; có thông báo lỗi và thao tác tải lại demo trong preview, kiểm tra lại health ở Settings. Không phát hiện lỗi hành vi cần đổi source, nhưng report nguồn chưa chứng minh được phục hồi sau API failure bằng network isolation và thiếu screenshot viewport 390 px lưu trong evidence. Các mục P02-03/P02-06 giữ mở chờ AI độc lập xác minh/lưu bằng chứng; P02-07 chỉ là suggestion để lại. Trạng thái chuyển Chờ nghiệm thu theo chỉ thị không đánh dấu hoàn tất sau remake. Xem [remake r001](remakes/phase-02/20261009T094205+0700-r001-remake/remake.md), report nguồn [legacy](tests/results/phase-02/20261008T161241+0700-phase-02/report.md), sổ vòng [Phase 02](tests/results/phase-02/README.md). Không gọi inference.
+
+09/10/2026 — Retest độc lập r002: 12 pass, 3 blocked (C04 thiếu network/call-count evidence; P02-03 thiếu controlled error/recovery; P02-06 thiếu viewport 390×844 và screenshot giữ lại). Không tái hiện lỗi source; kết luận chưa đủ bằng chứng. Phase 02 tiếp tục Chờ nghiệm thu. Xem [report r002](tests/results/phase-02/20261009T094432+0700-r002-test/report.md) và evidence trong batch. Không gọi inference.
+
 #### Tài liệu liên quan
 
 - [Bằng chứng Phase 02](evidence/phase-02.md)
@@ -280,7 +294,7 @@ Chưa có agent đang hoạt động; không dựng hoạt cảnh giả.
 ### Phase 03 — Dữ liệu và bằng chứng bền vững
 
 - Mốc: A
-- Trạng thái: Hoàn tất
+- Trạng thái: Chờ nghiệm thu
 - Phụ thuộc: 01, 02
 - Mục tiêu: Dữ liệu công ty, công việc và event sống qua restart.
 
@@ -321,6 +335,10 @@ Schema diagram, migration test, isolation/state/outbox test.
 #### Nhật ký triển khai
 
 08/10/2026 — Phase 03 được Chủ tịch nghiệm thu ngày 08/10/2026 (“ok duyệt” trước chỉ thị Phase 04). Migration `20261008_0002` áp dụng; 17 bảng domain/evidence, app login role không privileged + forced RLS, Work Order/state/event/outbox command và redaction đã được kiểm tra bằng PostgreSQL integration tests (8/8). API restart/readiness đạt; web lint/build Node 24.21.0 đạt. Dark mode hoạt động theo lựa chọn local/system preference. Proxy `agent-corporation.localhost` trả 200 qua IPv4 loopback; IPv6 Docker bind bị từ chối, không mở rộng wildcard. Chi tiết lệnh/test/giới hạn ở [evidence Phase 03](evidence/phase-03.md). Không gọi codex-server/inference, grant = 0.
+
+09/10/2026 — Remake theo report kiểm định Phase 03: thêm assertion cho constraint composite FK; lịch sử revision/event/outbox không đổi khi transition sai/stale; rollback kiểm tra trực tiếp revision/event/outbox; thiếu scope và transaction-local scope khi tái dùng pooled connection; concurrent event sequencing/envelope; canary không lọt outbox/log capture. Target PostgreSQL integration suite hiện tại đạt 8/8. Chưa chạy clean-database migration/restart và task/run/checkpoint/event persistence sau restart trên stack cô lập; IG03 còn chờ bằng chứng độc lập. Trạng thái Chờ nghiệm thu theo chỉ thị, chưa đánh dấu Hoàn tất. Xem [remake r001](remakes/phase-03/20261009T094205+0700-r001-remake/remake.md), report nguồn [legacy](tests/results/phase-03/20261008T161241+0700-phase-03/report.md), sổ vòng [Phase 03](tests/results/phase-03/README.md). Không gọi inference, không restart DB/API dùng chung.
+
+09/10/2026 — Retest độc lập r002 đạt 17/17; IG03 PASS. PostgreSQL 18.6 disposable migrate sạch từ 0001 tới 0003; suite đạt 8/8 trên DB hiện tại và DB sạch. Uvicorn test process được restart trong môi trường cô lập; scoped task/run/checkpoint/2 events còn đọc được. Run/checkpoint được fixture hóa bằng migration role do chưa có run creator ở Phase 03; không suy diễn public route. Phase 03 vẫn Chờ nghiệm thu theo chỉ thị, chưa đánh dấu Hoàn tất. Xem [report r002](tests/results/phase-03/20261009T094432+0700-r002-test/report.md), [evidence restart](tests/results/phase-03/20261009T094432+0700-r002-test/evidence/P03-08-restart-observation.md) và [sổ vòng](tests/results/phase-03/README.md). Không gọi inference; shared DB/API không bị dừng.
 
 #### Tài liệu liên quan
 
@@ -420,6 +438,10 @@ Contract/schema, health/models responses đã lọc, lỗi probe và profile sna
 
 08/10/2026 — Theo chỉ thị Chủ tịch sau remediation report Phase 01, triển khai adapter probe read-only và màn hình Settings để probe thủ công. Adapter chỉ cho HTTP literal loopback, chỉ GET `/health` + `/v1/models`, chặn redirect/proxy môi trường, timeout và response quá lớn; API chỉ trả trạng thái/model ID đã lọc, không trả secret hoặc khẳng định entitlement. Startup/health/profile không tự probe; không có POST chat/session hoặc inference. Codex server ở `127.0.0.1:4000` không nghe tại thời điểm kiểm chứng, nên live probe trả offline; API tests (9), web lint/build đều pass. Phần owner-authenticated model profile bị chặn vì API hiện chưa có identity/auth đáng tin; durable 429 queue/fallback allowlist chưa có persistence/Owner policy và thuộc capability chưa có ở phase này. CG01 bị chặn: source gateway xác nhận sandbox read-only không cô lập quyền đọc file máy, stateless chat vẫn tạo Codex thread/rollout có thể lưu prompt; không gửi input và không sửa server chung. Phase 04 vẫn Chờ nghiệm thu với khoảng trống isolation ledger/thread/file store và screenshot; Chủ tịch đã chỉ thị tiếp tục Phase 05, không thay trạng thái Phase 04. Xem [bằng chứng Phase 05](evidence/phase-05.md) và [report kiểm định](tests/results/phase-05/20261008T161028+0700-phase05-probe/report.md). Grant = 0; Phase 06 chưa bắt đầu.
 
+09/10/2026 — Remake theo report Phase 05 r002. Đối chiếu lại blocker và chạy lại kiểm tra hồi quy cục bộ: API 9 tests, web lint/build và `git diff --check` đều đạt. Không sửa source sản phẩm vì các finding còn lại cần dependency Phase 04 được nghiệm thu, identity/authorization Owner, queue/policy bền vững hoặc proof/quyết định CG01; live gateway vẫn offline. Không gọi inference, không restart/chỉnh gateway hoặc dịch vụ dùng chung. Remake r002 được lưu ở [remake](remakes/phase-05/20261009T110817+0700-r002-remake/remake.md); Phase 05 vẫn Chờ nghiệm thu và pipeline bị chặn, chờ AI độc lập chạy retest r003.
+
+09/10/2026 — Retest độc lập Phase 05 r003 xác minh remake r002. API health/gateway tests 9/9, web lint/build và validator đạt; remake giữ đúng blocker cho live gateway, Owner auth/profile, durable queue/fallback và CG01. Không probe gateway, inference, ghi DB hoặc sửa source sản phẩm. C03 demo/UI và các criteria live/Owner/queue/CG01 còn blocked; 9/15 ca clean, 6/15 blocked. [Report r003](tests/results/phase-05/20261009T111044+0700-r003-test/report.md), [sổ vòng](tests/results/phase-05/README.md). Phase 05 vẫn Chờ nghiệm thu; pipeline Review bị chặn.
+
 #### Tài liệu liên quan
 
 - [Bằng chứng Phase 05](evidence/phase-05.md)
@@ -469,10 +491,12 @@ Trace thật đã lọc, artifact, timeout/deny/abort test, usage provenance.
 
 08/10/2026 — Theo yêu cầu Chủ tịch tiếp Phase 06 sau khi làm lại test Phase 05, đã kiểm dependency trước khi triển khai. Phase 05 chưa được nghiệm thu: report r002 kết luận chưa đủ bằng chứng, live gateway offline, Owner auth/profile, durable queue/fallback và CG01 còn blocked; Phase 04 cũng Chờ nghiệm thu. CG01 chưa chứng minh isolation/read boundary và retention, inference grant = 0; backend hiện có run/checkpoint/events nền nhưng chưa có authenticated Owner grant/reservation hoặc ModelCall ledger/dispatcher. Vì vậy dừng trước khi thêm dispatcher/migration/API và trước khi gửi input; không gọi model, không restart shared gateway/API, không tự chọn instance thay thế. API health/gateway unit tests (9) pass; đây không thay bằng chứng Phase 06. Xem [report preflight Phase 06](tests/results/phase-06/20261008T170343+0700-r001-test/report.md). Điều kiện tiếp tục: dependency/gates được xử lý theo quyết định Chủ tịch, CG01 được chứng minh, và inference chỉ khi có grant riêng đúng test batch/mục đích/hạn mức/expiry.
 
+09/10/2026 — Theo chỉ thị sửa blocker và thực hiện lại Phase 06–07, đã triển khai Owner authentication/CSRF/profile bền vững, runtime text-only có grant/gate và reservation một call toàn ứng dụng, cùng committed event feed/SSE/UI. Client gateway mặc định được đồng bộ sang cổng 15600 theo registry/source và kiểm tra GET health/models; không sửa server dùng chung. AI độc lập r002 phát hiện lỗi GET/counter, proof sai định dạng, usage thiếu và lifecycle task; các lỗi được sửa trong [remake r002](remakes/phase-06/20261009T145834+0700-r002-remake/remake.md). Retest r003 ghi nhận 73 API tests và 5 kiểm tra bổ sung đạt trên PostgreSQL disposable ở migration 0006; 14 tests framework, web lint/build và browser QA riêng đạt. Sau đó bổ sung xử lý lỗi DB không echo SQL parameters; 34 focused unit tests của AI remake và 53/53 unit tests của AI độc lập trên source cuối đều đạt; không chạy lại PostgreSQL suite sau thay đổi handler. Report r003 đã chốt: 10 ca clean/pass, 6 ca blocked, không có ca fail. Xem [evidence Phase 06](evidence/phase-06.md), [report nguồn r002](tests/results/phase-06/20261009T121142+0700-r002-test/report.md), [retest r003](tests/results/phase-06/20261009T145600+0700-r003-test/report.md) và [sổ vòng](tests/results/phase-06/README.md). Phase vẫn Bị chặn tại CG01, grant/run thật và nghiệm thu dependency; không tự đánh dấu Hoàn tất, không gọi inference hoặc mở Phase 08.
+
 ### Phase 07 — Luồng event và khôi phục kết nối
 
 - Mốc: B
-- Trạng thái: Chưa triển khai
+- Trạng thái: Bị chặn
 - Phụ thuộc: 06
 - Mục tiêu: Tiến độ thực được stream từ dữ liệu đã lưu.
 
@@ -511,12 +535,14 @@ Log reconnect/crash, event IDs và state sau phục hồi.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+09/10/2026 — Preflight theo yêu cầu triển khai Phase 07. Dependency Phase 06 đang Bị chặn do Phase 05/CG01 chưa đạt, inference grant = 0; API chưa có Owner auth/session hay execution worker/dispatcher. Spec §9 yêu cầu SSE lấy scope từ session; mở event feed không xác thực sẽ có nguy cơ lộ event nội bộ/chéo company. Không sửa code hoặc dựng mock/public route để vượt dependency; 8 ca phase bị chặn, 7 kiểm tra chung pass. Điều kiện tiếp tục: xử lý dependency/gates Phase 06, có Owner-authenticated scope boundary, sau đó triển khai/test Phase 07 trong batch riêng. Xem [preflight r001](tests/results/phase-07/20261009T105531+0700-r001-test/report.md) và [evidence blocker](tests/results/phase-07/20261009T105531+0700-r001-test/evidence/blocker.md). Grant = 0; không gọi model/gateway.
+
+09/10/2026 — Theo chỉ thị sửa blocker và thực hiện lại Phase 06–07, đã triển khai Owner authentication/CSRF/profile bền vững, runtime text-only có grant/gate và reservation một call toàn ứng dụng, cùng committed event feed/SSE/UI. Client gateway mặc định được đồng bộ sang cổng 15600 theo registry/source và kiểm tra GET health/models; không sửa server dùng chung. AI độc lập r002 phát hiện lỗi GET/counter, proof sai định dạng, usage thiếu và lifecycle task; các lỗi được sửa trong [remake r002](remakes/phase-07/20261009T145834+0700-r002-remake/remake.md). Retest r003 ghi nhận 73 API tests và 5 kiểm tra bổ sung đạt trên PostgreSQL disposable ở migration 0006; 14 tests framework, web lint/build và browser QA riêng đạt. Sau đó bổ sung xử lý lỗi DB không echo SQL parameters; 34 focused unit tests của AI remake và 53/53 unit tests của AI độc lập trên source cuối đều đạt; không chạy lại PostgreSQL suite sau thay đổi handler. Report r003 đã chốt: 12 ca clean/pass, 3 ca blocked, không có ca fail. Xem [evidence Phase 07](evidence/phase-07.md), [report nguồn r002](tests/results/phase-07/20261009T121142+0700-r002-test/report.md), [retest r003](tests/results/phase-07/20261009T145600+0700-r003-test/report.md) và [sổ vòng](tests/results/phase-07/README.md). Phase vẫn Bị chặn tại CG01, grant/run thật và nghiệm thu dependency; không tự đánh dấu Hoàn tất, không gọi inference hoặc mở Phase 08.
 
 ### Phase 08 — Live Office và Agent Inspector
 
 - Mốc: B
-- Trạng thái: Chưa triển khai
+- Trạng thái: Bị chặn
 - Phụ thuộc: 07
 - Mục tiêu: Nhìn được agent đang làm gì và xem lại run đã chạy.
 
@@ -555,7 +581,7 @@ Video/ảnh demo thật, event correlation và kiểm tra replay/redaction.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+09/10/2026 — Preflight trước code Phase 08 ghi nhận Phase 07 chưa có run thật/IG08 và không cho phép dựng mock để thay gate; xem [preflight r001](tests/results/phase-08/20261009T114228+0700-r001-test/report.md). Theo chỉ thị tiếp tục code Phase 08, đã triển khai S02/S03/S04 trong web shell: Office hiển thị run từ status API và phòng ban fixture có nhãn riêng; Inspector xem trường run/event đã allowlist; Replay lọc và seek trên event đã tải, chỉ đọc. Các view cần Owner session; không thêm endpoint/migration, không gọi inference. Phòng ban không được gán agent khi thiếu quan hệ run–employee; summary/tools/file diff/messages/profile chi tiết hiện chưa có nguồn và được đánh dấu rõ. Xem [evidence Phase 08](evidence/phase-08.md). Phase 08 vẫn Bị chặn chờ kiểm định riêng, dependency Phase 06–07 và IG08 run thật; chưa đánh dấu Hoàn tất.
 
 ### Phase 09 — Bảng nhiệm vụ và hàng đợi
 

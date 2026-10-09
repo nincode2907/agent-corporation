@@ -29,8 +29,8 @@ def test_probe_reads_only_allowlisted_get_endpoints_and_does_not_expose_auth(mon
     result = adapter.probe_gateway(adapter.ProbeSettings(api_key="secret-canary"))
 
     assert calls == [
-        ("http://127.0.0.1:4000/health", "secret-canary"),
-        ("http://127.0.0.1:4000/v1/models", "secret-canary"),
+        ("http://127.0.0.1:15600/health", "secret-canary"),
+        ("http://127.0.0.1:15600/v1/models", "secret-canary"),
     ]
     assert result["status"] == "available"
     assert result["models"] == ["catalog-model"]

@@ -103,7 +103,10 @@ def main():
     require([r[0] for r in rows(adr, r"D\d{2}")] == [r[0] for r in decisions], "Spec và ADR lệch decisions")
     catalog = rows(sections[9], r"[A-Z_]+")
     event_types = {r[0] for r in catalog}
-    require(len(catalog) == len(event_types) == 31, "Event catalogue thiếu/trùng")
+    # Phase06 adds four explicit Owner/run/grant audit types to the 31-type baseline.
+    require(len(catalog) == len(event_types) == 35, "Event catalogue thiếu/trùng")
+    require({"RUN_CREATED", "RUN_STOP_REQUESTED", "EXECUTION_GRANT_CREATED", "OWNER_MODEL_PROFILE_UPDATED"} <= event_types,
+            "Thiếu event audit Owner/runtime Phase06")
     required_original = {"TASK_CREATED", "TASK_STARTED", "AGENT_ASSIGNED", "PLAN_UPDATED", "LLM_CALL_STARTED", "LLM_CALL_COMPLETED", "TOOL_CALL_STARTED", "TOOL_CALL_COMPLETED", "TOKEN_USAGE_RECORDED", "AGENT_HANDOFF", "APPROVAL_REQUESTED", "EVALUATION_COMPLETED", "TASK_COMPLETED", "TASK_FAILED"}
     require(required_original <= event_types, "Mất event types trong nguồn I2")
     task_states = {"draft", "queued", "planning", "awaiting_approval", "executing", "reviewing", "awaiting_acceptance", "rework", "paused", "blocked", "accepted", "failed", "cancelled"}
@@ -127,7 +130,7 @@ def main():
     require(event["run_id"] is None and event["payload"]["fixture"] is True, "Sample chỉ là fixture, không run thật")
     for value in [work["id"], work["company_id"], work["environment_id"], event["event_id"], event["correlation_id"]]:
         uuid.UUID(value)
-    print("PASS contract: 26 requirements/14 screens/8 flows/31 events/R1–R8; source/phase/decision/state refs và 2 JSON examples.")
+    print("PASS contract: 26 requirements/14 screens/8 flows/35 events/R1–R8; source/phase/decision/state refs và 2 JSON examples.")
     if args.baseline:
         before = json.loads(args.baseline.read_text())
         for ident, digest in before["phases"].items():

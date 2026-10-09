@@ -102,7 +102,7 @@ Bước 3 chỉ xuất hiện khi policy yêu cầu; task nhỏ trong grant khô
 | Artifacts | File store local theo environment/company/task/run | DB lưu manifest/hash; không dùng path từ client/agent để đọc thẳng |
 | Inference | HTTP adapter → codex-server hiện có | Giữ gateway text-only; app sở hữu orchestration/tools và ledger |
 | Executor | Sandbox riêng cho tools; capability allowlist | Không chạy terminal trong gateway, không dùng quyền phiên Codex hiện tại |
-| Runtime local | Compose cho PostgreSQL; frontend/API/worker trên host lúc dev | Kết nối 127.0.0.1:4000 server-to-server; không thêm host networking của container |
+| Runtime local | Compose cho PostgreSQL; frontend/API/worker trên host lúc dev | Kết nối 127.0.0.1:15600 server-to-server; không thêm host networking của container |
 
 Phiên bản thư viện/image cụ thể được pin từ tooling có thể kiểm chứng ở Phase 01; đây là việc chọn version, không đổi stack. Không tự nâng codex-server hoặc gateway CLI để phù hợp với dự án.
 
@@ -112,7 +112,7 @@ Phiên bản thư viện/image cụ thể được pin từ tooling có thể ki
 Chủ tịch → Frontend React → Backend FastAPI (auth + policy + commands)
                                   ├→ PostgreSQL (state/events/jobs/ledger/memory)
                                   ├→ Artifact store (manifest + hashes)
-                                  ├→ HTTP gateway 127.0.0.1:4000 → Codex CLI → model
+                                  ├→ HTTP gateway 127.0.0.1:15600 → Codex CLI → model
                                   └→ Tool executor sandbox (chỉ sau validate + approval)
 Backend commit event → SSE → Dashboard / Live Office / Inspector / Replay
 Model response → tool proposal → backend kiểm quyền → executor → receipt → lượt model sau
@@ -130,7 +130,7 @@ Nguồn đã đọc: `codex-server/src/server.ts`, `src/schema.ts`, `src/provide
 
 | Contract | Quy định cho adapter V1 |
 | --- | --- |
-| Endpoint | `http://127.0.0.1:4000`, cấu hình ở backend; chỉ loopback endpoint allowlist; không nhận URL tùy ý từ agent |
+| Endpoint | `http://127.0.0.1:15600`, cấu hình ở backend; chỉ loopback endpoint allowlist; không nhận URL tùy ý từ agent |
 | Auth | Nếu gateway yêu cầu Bearer thì backend lấy secret ref; không in `.env`/auth hoặc đưa token vào browser |
 | Probe | GET /health và /v1/models; catalog không là entitlement; 401 không tự đọc secret để vượt |
 | Request | POST /v1/chat/completions, text messages, model explicit, reasoning_effort explicit, n=1, stream=false; không gửi max_tokens/response_format/metadata/custom IDs |
@@ -144,6 +144,8 @@ Nguồn đã đọc: `codex-server/src/server.ts`, `src/schema.ts`, `src/provide
 | Privacy | Chat stateless tại route này vẫn có thể tạo Codex rollout, không phải ephemeral playground; app redaction không xóa transcript nguồn |
 
 Không gửi task secrets hoặc prompt không tin cậy tới gateway shared khi chưa kiểm chứng inference isolation/read boundary và retention. Khả năng này là gate trước Phase 06; nếu không đạt thì dừng run, không sửa gateway chung. V1 app tự lưu Plan/Decision Summary tường minh từ response; không thu thập chain-of-thought. Live chờ model chỉ hiển thị “Đang chờ phản hồi model” và elapsed; không có live token count giả.
+
+Cập nhật cấu hình local ngày 09/10/2026: gateway đã được dự án codex-server đăng ký ở block15600–15699 và đang nghe15600; health/models GET được xác minh không inference. Agent Corporation đồng bộ default endpoint theo registry, không đổi gateway hoặc baseline HTTP. Evidence khảo sát cũ4000 vẫn giữ nguyên trong các batch lịch sử.
 
 ### CG01 — Contingency và decision gate cho gateway
 
@@ -318,6 +320,10 @@ Khi crash mất heartbeat, active run chuyển reconciling. Nếu không có b�
 | TASK_CANCELLED | Owner decision and in-flight outcome summary | 09 |
 | TASK_STATE_CHANGED | old/new state, expected transition version, actor and reason ref | 03 |
 | RUN_STATE_CHANGED | old/new state, checkpoint/reason, expected revision | 06 |
+| RUN_CREATED | run text-only đã ghi, grant ref; chưa có dispatch | 06 |
+| RUN_STOP_REQUESTED | yêu cầu dừng, in-flight và trạng thái cancellation còn cần xác minh | 06 |
+| EXECUTION_GRANT_CREATED | Owner, phase/batch/limits/expiry; không bỏ CG01 | 06 |
+| OWNER_MODEL_PROFILE_UPDATED | Owner profile version/model/effort/fallback config; không cấp inference | 06 |
 | BUDGET_RESERVED | grant/reservation, limit basis and amount nullable | 06, 16 |
 | BUDGET_SETTLED | call/reservation/ledger refs, known/unknown status | 06, 16 |
 | INCIDENT_DETECTED | incident ID, run/cause/evidence refs | 19 |
@@ -421,7 +427,7 @@ Reserve resource/cost atomically trước dispatch, settle/release khi outcome c
 
 Sơ đồ file tương lai: `storage/<environment_uuid>/<company_uuid>/<task_uuid>/<run_uuid>/<artifact_uuid>` với manifest xác minh root/symlink và hash; demo reset tính phạm vi từ DB và manifest, không nhận absolute path từ UI. Backup bao gồm DB + artifacts + config references; auth secrets backup riêng có kiểm soát, không nhét vào archive chia sẻ. Restore không tự gỡ stop, tạo model request hoặc chạy lại tool; phải reconcile checkpoint/outcome.
 
-Port block chỉ reserve ở Phase 01 sau đọc registry và kiểm tra toàn block/listeners. Không chọn port 3000/8000 tùy ý. Codex gateway giữ 127.0.0.1:4000, là dependency ngoài allocation Agent Corporation, không move/restart để phục vụ phase này. Proxy Dev Hub hiện publish 80 wildcard: không bật route quản trị vào ingress đó khi chưa chứng minh local-only access và auth/Host/Origin behavior. Default usable runtime sẽ là direct loopback sau khởi động thành công; hostname .localhost là lựa chọn dự kiến, không claim đã hoạt động.
+Port block chỉ reserve ở Phase 01 sau đọc registry và kiểm tra toàn block/listeners. Không chọn port 3000/8000 tùy ý. Codex gateway giữ 127.0.0.1:15600, là dependency ngoài allocation Agent Corporation, không move/restart để phục vụ phase này. Proxy Dev Hub hiện publish 80 wildcard: không bật route quản trị vào ingress đó khi chưa chứng minh local-only access và auth/Host/Origin behavior. Default usable runtime sẽ là direct loopback sau khởi động thành công; hostname .localhost là lựa chọn dự kiến, không claim đã hoạt động.
 
 Machine sleep/offline không có agent execution thực. Schedules dựa trên durable job occurrence key; skip mặc định, catch-up phải Owner cấp. Báo cáo chỉ dùng task/event/ledger nguồn trong interval và environment; AI summary phải dẫn evidence. Không định kỳ gọi tất cả trưởng phòng khi không có việc.
 

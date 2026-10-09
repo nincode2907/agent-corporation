@@ -1,0 +1,17 @@
+{
+  "phase": "03",
+  "remake_batch_id": "20261009T094205+0700-r001-remake",
+  "report_source": "docs/tests/results/phase-03/20261008T161241+0700-phase-03/report.md",
+  "generated_at": "2026-10-09T09:42:05+07:00",
+  "git_state": "dirty; shared worktree; no commit hash treated as a complete source revision",
+  "database_test_target": "PostgreSQL fixture; scoped UUID environments created and deleted by test fixture",
+  "shared_database_or_api_restarted": false,
+  "inference_grant": 0,
+  "files": [
+    {"path": "apps/api/tests/test_phase03_persistence.py", "sha256": "ed8fe53840d72c4b74ca5809df80d364c9c76dd2a5c546ed167f2324272f3584"},
+    {"path": "apps/api/migrations/versions/20261008_0002_durable_domain.py", "sha256": "2fdcae9e8a3fbed7b7af7eee47269bab049e7ddf051e7c6d188a5eb3aecf897e"},
+    {"path": "AGENTS.md", "sha256": "879e29cfb95777c38a1250be9fe04bfb680270ac5b4915635f1dd41b71a9a5c6"},
+    {"path": "docs/master-plan.md", "sha256": "33f8ff155ded6d3068ebc69a3cc4b98e695a96ea3796c3da28aba7c3f9116249"},
+    {"path": "docs/master-plan.html", "sha256": "8d975f004bd0f6ddb65cd62b8e22b20eb43c0169048dcaf130644436ed1f07d9"}
+  ]
+}

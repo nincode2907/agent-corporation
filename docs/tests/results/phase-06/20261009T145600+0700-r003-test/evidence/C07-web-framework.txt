@@ -1,0 +1,46 @@
+test_document_inline_javascript_syntax (test_phase_pipeline.PipelineTests.test_document_inline_javascript_syntax) ... ok
+test_failed_retest_reopens_and_removes_tick (test_phase_pipeline.PipelineTests.test_failed_retest_reopens_and_removes_tick) ... ok
+test_fixed_tick_is_pending_until_independent_retest (test_phase_pipeline.PipelineTests.test_fixed_tick_is_pending_until_independent_retest) ... ok
+test_grouped_legacy_mapping_and_explicit_override (test_phase_pipeline.PipelineTests.test_grouped_legacy_mapping_and_explicit_override) ... ok
+test_missing_case_in_latest_report_never_closes_old_issue (test_phase_pipeline.PipelineTests.test_missing_case_in_latest_report_never_closes_old_issue) ... ok
+test_no_reports_is_queued_and_suggestions_do_not_create_issues (test_phase_pipeline.PipelineTests.test_no_reports_is_queued_and_suggestions_do_not_create_issues) ... ok
+test_parallel_batch_start_does_not_reopen_pending_fix_after_retest (test_phase_pipeline.PipelineTests.test_parallel_batch_start_does_not_reopen_pending_fix_after_retest) ... ok
+test_rebuttal_does_not_close_itself (test_phase_pipeline.PipelineTests.test_rebuttal_does_not_close_itself) ... ok
+test_rejected_or_blocked_rebuttal_remains_open (test_phase_pipeline.PipelineTests.test_rejected_or_blocked_rebuttal_remains_open) ... ok
+test_rejected_rebuttal_with_inconsistent_pass_never_becomes_ok (test_phase_pipeline.PipelineTests.test_rejected_rebuttal_with_inconsistent_pass_never_becomes_ok) ... ok
+test_required_checklist_cases_cannot_be_marked_optional_to_get_ok (test_phase_pipeline.PipelineTests.test_required_checklist_cases_cannot_be_marked_optional_to_get_ok) ... ok
+test_same_second_orders_test_before_its_remake (test_phase_pipeline.PipelineTests.test_same_second_orders_test_before_its_remake) ... ok
+test_ui_renders_ai_ticks_and_history_without_manual_checkbox (test_phase_pipeline.PipelineTests.test_ui_renders_ai_ticks_and_history_without_manual_checkbox) ... ok
+test_verdict_without_evidence_or_with_failed_gate_is_not_ok (test_phase_pipeline.PipelineTests.test_verdict_without_evidence_or_with_failed_gate_is_not_ok) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.374s
+
+OK
+
+
+> web@0.0.0 lint
+> oxlint
+
+
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.3 building client environment for production...
+transforming...
+✓ 19 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.02 kB │ gzip:  0.59 kB
+dist/assets/index-C4tYOjlH.css   31.52 kB │ gzip:  7.40 kB
+dist/assets/index-B1A1s3aO.js   265.41 kB │ gzip: 81.39 kB
+
+✓ built in 105ms
+
+
+uv 0.12.23 (46b84fd0b 2026-10-03 aarch64-apple-darwin)
+
+v24.21.0
+
+

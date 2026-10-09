@@ -14,7 +14,7 @@ MAX_RESPONSE_BYTES = 256 * 1024
 
 @dataclass(frozen=True)
 class ProbeSettings:
-    base_url: str = "http://127.0.0.1:4000"
+    base_url: str = "http://127.0.0.1:15600"
     api_key: str | None = None
 
 
