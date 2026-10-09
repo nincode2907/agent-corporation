@@ -105,11 +105,14 @@ def create_work_order(
 
         lock_event_stream(session, scope)
         duplicate = session.execute(
-            text("""SELECT task_id, event_id, stream_seq FROM events
+            text("""SELECT task_id, event_id, stream_seq, payload FROM events
                      WHERE environment_id=:environment_id AND company_id=:company_id AND dedup_key=:dedup_key"""),
             {"environment_id": scope.environment_id, "company_id": scope.company_id, "dedup_key": dedup_key},
         ).mappings().first()
         if duplicate:
+            request_hash = hashlib.sha256(json.dumps(spec,ensure_ascii=False,sort_keys=True,default=str,separators=(",",":")).encode()).hexdigest()
+            if duplicate["payload"].get("request_hash") != request_hash:
+                raise ValueError("Idempotency-Key đã được dùng cho Work Order có nội dung khác")
             return WorkOrderCreated(
                 work_order_id=duplicate["task_id"],
                 revision=1,
@@ -117,6 +120,14 @@ def create_work_order(
                 stream_seq=duplicate["stream_seq"],
                 duplicate=True,
             )
+
+        for member_id, label in ((spec["assignee_id"], "assignee"), (spec["reviewer_id"], "reviewer")):
+            if member_id is not None:
+                member = session.execute(text("""SELECT lifecycle FROM employees
+                    WHERE environment_id=:environment_id AND company_id=:company_id AND id=:id FOR SHARE"""),
+                    {"environment_id":scope.environment_id,"company_id":scope.company_id,"id":member_id}).scalar_one_or_none()
+                if member not in {"active","probation"}:
+                    raise ValueError(f"{label} phải là nhân sự đang active/probation trong scope hiện tại")
 
         task_id = uuid4()
         session.execute(
@@ -164,6 +175,7 @@ def create_work_order(
             {"task_id": task_id, "environment_id": scope.environment_id, "company_id": scope.company_id},
         )
         goal_ref = hashlib.sha256(spec["goal"].encode("utf-8")).hexdigest()
+        request_hash = hashlib.sha256(json.dumps(spec,ensure_ascii=False,sort_keys=True,default=str,separators=(",",":")).encode()).hexdigest()
         event = append_event(
             session,
             scope=scope,
@@ -175,7 +187,7 @@ def create_work_order(
             source="app",
             actor=spec["created_by"],
             sensitivity="internal",
-            payload={"task_revision": 1, "goal_ref": goal_ref, "criteria_count": len(spec["acceptance_criteria"])},
+            payload={"task_revision": 1, "goal_ref": goal_ref, "criteria_count": len(spec["acceptance_criteria"]), "request_hash":request_hash},
             evidence_refs=[],
             dedup_key=dedup_key,
         )

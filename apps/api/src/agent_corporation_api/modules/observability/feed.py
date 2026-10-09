@@ -63,7 +63,7 @@ SAFE_PAYLOAD_KEYS = {
     "attempt", "retry_count", "ready_at", "usage_status", "measurement", "usage_available",
     "input_tokens", "output_tokens", "cached_tokens", "reasoning_tokens", "total_tokens", "cost_basis",
     "usage_provenance", "source", "correction_reference", "execution_outcome_unchanged",
-    "task_revision", "expected_version", "new_version", "criteria_count", "goal_ref",
+    "task_revision", "expected_version", "new_version", "criteria_count", "goal_ref", "priority",
     "fixture", "seed", "seed_version", "stop_epoch", "checkpoint_id", "heartbeat_at",
 }
 

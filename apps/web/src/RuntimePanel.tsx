@@ -7,10 +7,15 @@ type Profile = { version: number; model: string | null; reasoning_effort: string
 type Grant = { id: string; phase: string; batch_id: string; purpose: string; model: string; effort: string; max_requests: number; used_requests: number; expires_at: string; revoked: boolean }
 type Run = { id: string; task_id?: string; status: string; model: string; effort: string; stop_requested: boolean; outcome: unknown; usage: unknown; output?: unknown; created_at: string; worker_heartbeat_at?: string | null; lease_until?: string | null }
 type RuntimeStatus = { cg01: { allowed: boolean; reason: string }; inference_grants: number; runs: Run[] }
+type WorkOrder = { task_id: string; created_at: string; status: string; revision: number; transition_version: number; goal: string; expected_outputs: string[]; acceptance_criteria: { id: string; description: string; evidence_kind: string }[]; scope: { input_refs: string[]; tool_capabilities: string[] }; deadline_at: string | null; budget_limits: Record<string, unknown>; stop_conditions: Record<string, unknown>; assignee_id: string | null; reviewer_id: string | null; autonomy: string; priority: number | null; queue_status: string | null; ready_at: string | null; run_count: number }
+type Assignee = { id: string; lifecycle: string; display_name: string | null; role: string | null; department: string | null }
+type WorkBoardData = { tasks: WorkOrder[]; assignees: Assignee[] }
 type DomainEvent = { event_id: string; stream_seq: number; event_type: string; occurred_at: string; recorded_at: string; run_id: string | null; task_id?: string | null; agent_id?: string | null; source: string; payload: unknown; sensitivity?: string; content_withheld?: boolean }
 type EventBatch = { events: DomainEvent[]; cursor: string; latest_seq: number; server_time: string }
 type Connection = 'connecting' | 'live' | 'reconnecting' | 'stale' | 'gap' | 'offline'
 const connectionLabel: Record<Connection, string> = { connecting: 'Đang kết nối', live: 'Đã kết nối', reconnecting: 'Đang kết nối lại', stale: 'Dữ liệu đã cũ', gap: 'Có khoảng trống dữ liệu', offline: 'Mất kết nối' }
+type TaskActionName = 'enqueue' | 'pause' | 'resume' | 'cancel' | 'accept' | 'request_rework'
+const taskLabel: Record<string, string> = { draft:'Bản nháp',queued:'Trong hàng đợi',planning:'Đang lập kế hoạch',awaiting_approval:'Chờ phê duyệt',executing:'Đang thực hiện',reviewing:'Đang rà soát',rework:'Cần làm lại',awaiting_acceptance:'Chờ Chủ tịch nghiệm thu',accepted:'Đã nghiệm thu',blocked:'Bị chặn',paused:'Đã tạm dừng',failed:'Thất bại',cancelled:'Đã hủy' }
 const runLabel: Record<string, string> = { queued: 'Đang chờ', waiting: 'Đang chờ model', waiting_model: 'Đang chờ model', running: 'Đang xử lý', completed: 'Hoàn tất', succeeded: 'Hoàn tất', failed: 'Thất bại', aborted: 'Đã dừng', stopped: 'Đã dừng', cancelled: 'Đã dừng trước dispatch', interrupted: 'Bị gián đoạn · kết quả chưa được xác nhận', unknown: 'Chưa biết kết quả', outcome_unknown: 'Chưa biết kết quả' }
 class ApiError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status = status } }
 function isDomainEvent(value: unknown): value is DomainEvent {
@@ -22,7 +27,7 @@ function isDomainEvent(value: unknown): value is DomainEvent {
 function display(value: unknown) { return typeof value === 'string' ? value : value === null || value === undefined ? 'Chưa biết' : JSON.stringify(value) }
 function time(value: string | null) { return value ? new Date(value).toLocaleString('vi-VN') : 'Chưa có cập nhật' }
 
-type ObservationView = 'office' | 'inspector' | 'replay'
+type ObservationView = 'office' | 'inspector' | 'replay' | 'work'
 
 export default function RuntimePanel({ view = 'runtime', departments = [] }: { view?: 'runtime' | ObservationView; departments?: string[] }) {
   const [session, setSession] = useState<OwnerSession | null>(null)
@@ -37,6 +42,8 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
   const [grantId, setGrantId] = useState('')
   const [input, setInput] = useState('')
   const [runs, setRuns] = useState<Run[]>([])
+  const [workOrders, setWorkOrders] = useState<WorkOrder[]>([])
+  const [assignees, setAssignees] = useState<Assignee[]>([])
   const [events, setEvents] = useState<DomainEvent[]>([])
   const [connection, setConnection] = useState<Connection>('offline')
   const [lastSeen, setLastSeen] = useState<string | null>(null)
@@ -52,6 +59,8 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
   const sequence = useRef(0)
   const eventHistory = useRef<DomainEvent[]>([])
   const currentRuns = useRef<Run[]>([])
+  const createKey = useRef<{ key: string; payload: Record<string, unknown> } | null>(null)
+  const actionKeys = useRef(new Map<string, string>())
   const currentSession = useRef<OwnerSession | null>(null)
   currentSession.current = session
   currentRuns.current = runs
@@ -61,13 +70,13 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
     stream.current = null
     const previous = currentSession.current
     if (previous) { try { sessionStorage.removeItem(`ac.events.${previous.session_id}`) } catch { /* Storage is optional. */ } }
-    setSession(null); setProfile(null); setRuntime(null); setGrants([]); setRuns([]); setEvents([]); setCachedIds(new Set()); eventHistory.current = []; setLastSeen(null); sequence.current = 0; setConnection('offline')
+    setSession(null); setProfile(null); setRuntime(null); setGrants([]); setRuns([]); setWorkOrders([]); setAssignees([]); setEvents([]); setCachedIds(new Set()); eventHistory.current = []; setLastSeen(null); sequence.current = 0; setConnection('offline')
   }
 
-  async function request<T>(path: string, body?: unknown, method = 'POST'): Promise<T> {
+  async function request<T>(path: string, body?: unknown, method = 'POST', idempotencyKey?: string): Promise<T> {
     const sentSessionId = currentSession.current?.session_id
     let response: Response
-    try { response = await fetch(`/api/v1/${path}`, { credentials: 'same-origin', cache: 'no-store', signal: AbortSignal.timeout(10000), ...(body === undefined ? {} : { method, headers: { 'Content-Type': 'application/json', ...(currentSession.current ? { 'X-CSRF-Token': currentSession.current.csrf_token } : {}) }, body: JSON.stringify(body) }) }) }
+    try { response = await fetch(`/api/v1/${path}`, { credentials: 'same-origin', cache: 'no-store', signal: AbortSignal.timeout(10000), ...(body === undefined ? {} : { method, headers: { 'Content-Type': 'application/json', ...(currentSession.current ? { 'X-CSRF-Token': currentSession.current.csrf_token } : {}), ...(idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {}) }, body: JSON.stringify(body) }) }) }
     catch { throw new Error(body === undefined ? 'Không nhận được phản hồi từ API local. Kiểm tra kết nối rồi tải lại.' : 'Chưa biết API đã ghi thao tác hay chưa. Đối chiếu trạng thái trước khi gửi lại.') }
     let data: unknown
     try { data = await response.json() } catch { throw new Error('API không trả về dữ liệu hợp lệ. Kiểm tra phiên bản API rồi thử lại.') }
@@ -94,10 +103,10 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
     let active = true
     async function load() {
       try {
-        const [saved, state, available] = await Promise.all([request<Profile>('owner/profile'), request<RuntimeStatus>('runtime/status'), request<Grant[] | { grants: Grant[] }>('runtime/grants')])
+        const [saved, state, available, board] = await Promise.all([request<Profile>('owner/profile'), request<RuntimeStatus>('runtime/status'), request<Grant[] | { grants: Grant[] }>('runtime/grants'), request<WorkBoardData>('work-orders')])
         if (!active) return
         setProfile(saved); setModel(saved.model ?? ''); setEffort(saved.reasoning_effort ?? 'medium'); setFallback(saved.fallback_models.join(', ')); setRuntime(state); setRuns(state.runs); setRunReadFailed(false)
-        setGrants(Array.isArray(available) ? available : available.grants)
+        setGrants(Array.isArray(available) ? available : available.grants); setWorkOrders(board.tasks); setAssignees(board.assignees)
       } catch (reason) { if (active) setError((reason as Error).message) }
     }
     void load()
@@ -169,7 +178,7 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, reload])
 
-  async function action(work: () => Promise<void>) { if (busy) return; setBusy(true); setError(''); setNotice(''); try { await work() } catch (reason) { setError((reason as Error).message) } finally { setBusy(false) } }
+  async function action(work: () => Promise<void>): Promise<boolean> { if (busy) return false; setBusy(true); setError(''); setNotice(''); try { await work(); return true } catch (reason) { setError((reason as Error).message); return false } finally { setBusy(false) } }
   function login(event: FormEvent) { event.preventDefault(); void action(async () => {
     const metadata = await request<{ available: boolean; environment?: { id: string }; company?: { id: string } }>('demo/dashboard')
     if (!metadata.available || !metadata.environment?.id || !metadata.company?.id) throw new Error('Chưa có scope demo hợp lệ. Bootstrap demo trước khi đăng nhập.')
@@ -181,6 +190,30 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
   function submitRun(event: FormEvent) { event.preventDefault(); void action(async () => { if (!grant || !runtime?.cg01.allowed) throw new Error('Cần grant hợp lệ và CG01 cho phép trước khi gửi run.'); const run = await request<Run>('runtime/runs', { grant_id: grant.id, phase: grant.phase, batch_id: grant.batch_id, purpose: grant.purpose, model: grant.model, effort: grant.effort, input_text: input, idempotency_key: crypto.randomUUID() }); setRuns(previous => [run, ...previous.filter(value => value.id !== run.id)]); setNotice('Đã ghi run. Theo dõi kết quả đã lưu; không gửi lại khi chưa rõ kết quả.') }) }
   async function refreshRun(id: string) { const run = await request<Run>(`runtime/runs/${encodeURIComponent(id)}`); setRuns(previous => previous.map(value => value.id === id ? run : value)) }
   function resetStream() { if (session) { try { sessionStorage.removeItem(`ac.events.${session.session_id}`) } catch { /* Storage is optional. */ } } sequence.current = 0; setEvents([]); setCachedIds(new Set()); setError(''); setReload(value => value + 1) }
+  async function createWorkOrder(payload: Record<string, unknown>): Promise<boolean> {
+    if (!createKey.current) createKey.current = { key: crypto.randomUUID(), payload }
+    const stable = createKey.current
+    return await action(async () => {
+      const result = await request<{ task_id: string; duplicate: boolean }>('work-orders', stable.payload, 'POST', stable.key)
+      createKey.current = null
+      setNotice(`Đã lưu Work Order ${result.task_id.slice(0, 8)} ở trạng thái nháp. Chưa có inference.`)
+      setReload(value => value + 1)
+    })
+  }
+  async function changeWorkOrder(task: WorkOrder, actionName: TaskActionName, priority = 0, reason?: string): Promise<boolean> {
+    const keyParts = [task.task_id, actionName, task.transition_version, priority, reason ?? ''].join(':')
+    const key = actionKeys.current.get(keyParts) ?? crypto.randomUUID()
+    actionKeys.current.set(keyParts, key)
+    return await action(async () => {
+      const response = await request<{ status: string; idempotent_replay: boolean }>(`work-orders/${encodeURIComponent(task.task_id)}/actions`, {
+        action: actionName, expected_version: task.transition_version, priority, reason: reason ?? null,
+      }, 'POST', key)
+      actionKeys.current.delete(keyParts)
+      setNotice(`${response.idempotent_replay ? 'Đã đối chiếu thao tác trước đó' : 'Đã cập nhật Work Order'} · ${taskLabel[response.status] ?? response.status}.`)
+      setReload(value => value + 1)
+    })
+  }
+
   function workerStatus(run: Run) {
     if (!['waiting_model', 'running'].includes(run.status)) return 'Không có worker đang chờ model cho trạng thái này'
     if (runReadFailed) return 'Không đối chiếu được worker · dữ liệu có thể đã cũ'
@@ -191,11 +224,11 @@ export default function RuntimePanel({ view = 'runtime', departments = [] }: { v
   }
 
   return <section className={`runtime-panel${view !== 'runtime' ? ' observatory-panel' : ''}`} aria-labelledby="runtime-title">
-    <header className="runtime-heading"><div><p className="eyebrow">{view === 'runtime' ? 'THỰC THI VÀ KẾT NỐI · PHASE 06–07' : 'LIVE OFFICE · INSPECTOR · REPLAY · PHASE 08'}</p><h2 id="runtime-title">{view === 'runtime' ? 'Runtime demo có kiểm soát' : view === 'office' ? 'Hoạt động đã ghi nhận' : view === 'inspector' ? 'Inspector lượt chạy' : 'Phát lại sự kiện đã lưu'}</h2><p>{view === 'runtime' ? 'Đăng nhập Chủ tịch để đọc event và quản lý run trong scope được backend cấp. Mở trang không gọi model.' : 'Đăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này không gọi model hoặc thay đổi trạng thái.'}</p></div>{session && <button className="quiet-button" type="button" disabled={busy} onClick={() => void action(async () => { await request('owner/logout', {}); discardSession(); setNotice('Đã đăng xuất và đóng luồng event.') })}>Đăng xuất</button>}</header>
+    <header className="runtime-heading"><div><p className="eyebrow">{view === 'runtime' ? 'THỰC THI VÀ KẾT NỐI · PHASE 06–07' : view === 'work' ? 'WORK ORDER · TASK QUEUE · PHASE 09' : 'LIVE OFFICE · INSPECTOR · REPLAY · PHASE 08'}</p><h2 id="runtime-title">{view === 'runtime' ? 'Runtime demo có kiểm soát' : view === 'work' ? 'Bảng nhiệm vụ và hàng đợi' : view === 'office' ? 'Hoạt động đã ghi nhận' : view === 'inspector' ? 'Inspector lượt chạy' : 'Phát lại sự kiện đã lưu'}</h2><p>{view === 'runtime' ? 'Đăng nhập Chủ tịch để đọc event và quản lý run trong scope được backend cấp. Mở trang không gọi model.' : view === 'work' ? 'Đăng nhập Chủ tịch để quản lý Work Order trong scope được backend cấp. Thao tác chỉ ghi trạng thái; chưa dispatch hoặc gọi model.' : 'Đăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.'}</p></div>{session && <button className="quiet-button" type="button" disabled={busy} onClick={() => void action(async () => { await request('owner/logout', {}); discardSession(); setNotice('Đã đăng xuất và đóng luồng event.') })}>Đăng xuất</button>}</header>
     {error && <p className="runtime-error" role="alert">{error}</p>}{notice && <p className="runtime-notice" role="status">{notice}</p>}
     {!checked ? <p role="status">Đang xác minh session…</p> : !session ? <form className="runtime-login" onSubmit={login}><label htmlFor="owner-secret">Secret Chủ tịch local</label><input id="owner-secret" type="password" autoComplete="off" value={secret} onChange={event => setSecret(event.target.value)} required maxLength={128} /><p>Nhập secret được bootstrap riêng trên máy. Secret không được lưu trong trình duyệt; đăng nhập không cấp inference grant.</p><button className="primary-button" disabled={busy || !secret}>{busy ? 'Đang xác thực…' : 'Đăng nhập Chủ tịch'}</button></form> : <>
       <p className="runtime-scope">Chủ tịch đã xác thực · Demo scope <code>{session.scope.company_id.slice(0, 8)}</code> · Session có thể hết hạn hoặc bị thu hồi.</p>
-      {view !== 'runtime' ? <Observatory view={view} runs={runs} events={events} cachedIds={cachedIds} connection={connection} lastSeen={lastSeen} departments={departments} onReload={resetStream} /> : <>
+      {view !== 'runtime' ? <Observatory view={view} runs={runs} events={events} cachedIds={cachedIds} connection={connection} lastSeen={lastSeen} departments={departments} workOrders={workOrders} assignees={assignees} onCreateWorkOrder={createWorkOrder} onTaskAction={changeWorkOrder} onWorkRefresh={() => setReload(value => value + 1)} onReload={resetStream} /> : <>
       <div className="runtime-columns"><form className="runtime-form" onSubmit={saveProfile}><h3>Model profile</h3><p>Backend kiểm tra quyền Owner. Catalog và profile chưa xác nhận entitlement.</p><label htmlFor="runtime-model">Model ID</label><input id="runtime-model" value={model} onChange={event => setModel(event.target.value)} required maxLength={120} /><label htmlFor="runtime-effort">Reasoning effort</label><select id="runtime-effort" value={effort} onChange={event => setEffort(event.target.value)}>{['minimal', 'low', 'medium', 'high', 'xhigh'].map(value => <option key={value}>{value}</option>)}</select><label htmlFor="runtime-fallback">Fallback được phép (phân cách bằng dấu phẩy)</label><input id="runtime-fallback" value={fallback} onChange={event => setFallback(event.target.value)} maxLength={600} /><small>Danh sách này chỉ là cấu hình. Runtime không tự retry hoặc đổi model khi kết quả chưa rõ.</small><button className="quiet-button" disabled={busy || !profile}>{busy ? 'Đang xử lý…' : `Lưu profile · v${profile?.version ?? '—'}`}</button></form>
       <form className="runtime-form" onSubmit={submitRun}><h3>Một run phân tích văn bản</h3><p className="runtime-gate">CG01: {runtime?.cg01.allowed ? 'Đã cho phép theo bằng chứng' : 'Đang khóa'} · {runtime?.cg01.reason ?? 'Chưa lấy được trạng thái gate'}</p><label htmlFor="runtime-grant">Grant riêng cho đợt test</label><select id="runtime-grant" value={grantId} onChange={event => setGrantId(event.target.value)} required><option value="">{eligibleGrants.length ? 'Chọn grant đã được cấp' : 'Chưa có grant hợp lệ'}</option>{eligibleGrants.map(value => <option key={value.id} value={value.id}>Phase {value.phase} · {value.batch_id} · {value.used_requests}/{value.max_requests} lượt</option>)}</select>{grant && <p className="runtime-grant-detail">Mục đích: {grant.purpose} · Model: {grant.model} / {grant.effort} · Hết hạn: {time(grant.expires_at)}</p>}<label htmlFor="runtime-input">Văn bản tin cậy trong scope demo</label><textarea id="runtime-input" rows={5} value={input} onChange={event => setInput(event.target.value)} required maxLength={16000} /><small>Text-only, một turn, tools tắt. Usage/chi phí thiếu nguồn sẽ hiển thị chưa biết. Không tạo grant tự động.</small><button className="primary-button" disabled={busy || !grant || !runtime?.cg01.allowed || !input.trim()}>Gửi một run được cấp quyền</button></form></div>
       <section className="runtime-runs" aria-labelledby="runtime-runs-title"><div className="runtime-subheading"><h3 id="runtime-runs-title">Run đã lưu</h3><button className="quiet-button" type="button" disabled={busy} onClick={() => setReload(value => value + 1)}>Tải trạng thái</button></div>{!runs.length ? <p>Chưa có run trong scope này.</p> : runs.map(run => <article className="runtime-run" key={run.id}><div><strong>{runLabel[run.status] ?? run.status}</strong><code>{run.id}</code><p>{run.model} · {run.effort} · {time(run.created_at)}</p><p>{workerStatus(run)} · Cập nhật worker: {time(run.worker_heartbeat_at ?? null)}</p><small>Trạng thái đã lưu không chứng minh agent còn hoạt động. Heartbeat event store độc lập với worker.</small><p>Usage: {display(run.usage)} · Outcome: {display(run.outcome)}</p>{run.stop_requested && <p>Đã yêu cầu dừng. Request đang bay có thể còn xử lý; kết quả phải được đối chiếu.</p>}{run.output !== undefined && run.output !== null && <details><summary>Kết quả đã lưu</summary><pre>{display(run.output)}</pre></details>}</div><div className="runtime-run-actions"><button className="quiet-button" type="button" disabled={busy} onClick={() => void action(() => refreshRun(run.id))}>Đối chiếu</button>{['queued', 'waiting', 'waiting_model', 'running', 'dispatching', 'pending'].includes(run.status) && <button className="quiet-button" type="button" disabled={busy || run.stop_requested} onClick={() => void action(async () => { const updated = await request<Run>(`runtime/runs/${encodeURIComponent(run.id)}/stop`, {}); setRuns(previous => previous.map(value => value.id === run.id ? updated : value)); setNotice('Đã ghi yêu cầu dừng; không giả định gateway đã hủy request.') })}>Yêu cầu dừng</button>}</div></article>)}</section>
@@ -214,7 +247,7 @@ function eventSummary(event: DomainEvent) {
   const entries = summaryPayloadKeys.filter(key => Object.hasOwn(payload, key) && (payload[key] === null || ['string', 'number', 'boolean'].includes(typeof payload[key])))
   return entries.length ? entries.map(key => `${key}: ${String(payload[key] ?? 'chưa biết')}`).join(' · ') : 'Chưa có trường tóm tắt được phép hiển thị.'
 }
-function Observatory({ view, runs, events, cachedIds, connection, lastSeen, departments, onReload }: { view: ObservationView; runs: Run[]; events: DomainEvent[]; cachedIds: Set<string>; connection: Connection; lastSeen: string | null; departments: string[]; onReload: () => void }) {
+function Observatory({ view, runs, events, cachedIds, connection, lastSeen, departments, workOrders, assignees, onCreateWorkOrder, onTaskAction, onWorkRefresh, onReload }: { view: ObservationView; runs: Run[]; events: DomainEvent[]; cachedIds: Set<string>; connection: Connection; lastSeen: string | null; departments: string[]; workOrders: WorkOrder[]; assignees: Assignee[]; onCreateWorkOrder: (payload: Record<string, unknown>) => Promise<boolean>; onTaskAction: (task: WorkOrder, action: TaskActionName, priority?: number, reason?: string) => Promise<boolean>; onWorkRefresh: () => void; onReload: () => void }) {
   const [runId, setRunId] = useState('all')
   const [position, setPosition] = useState(0)
   const selectedRunId = view === 'inspector' && runId === 'all' ? events.at(-1)?.run_id ?? runs[0]?.id ?? 'all' : runId
@@ -227,6 +260,7 @@ function Observatory({ view, runs, events, cachedIds, connection, lastSeen, depa
   ]
   return <div className="observatory-content">
     <div className="observatory-status"><span className={`live-indicator${connection === 'offline' || connection === 'gap' || connection === 'stale' ? ' offline' : ''}`}><span />{connectionLabel[connection]}</span><span>Cập nhật kết nối: {time(lastSeen)}</span><span>Scope: Chủ tịch đã xác thực</span></div>
+    {view === 'work' && <WorkBoard tasks={workOrders} assignees={assignees} onCreate={onCreateWorkOrder} onAction={onTaskAction} onRefresh={onWorkRefresh} />}
     {view === 'office' && <>
       <div className="office-grid" aria-label="Trạng thái các lượt chạy đã lưu">{statusGroups.map(group => {
         const matching = runs.filter(run => group.key === 'unknown' ? ['unknown', 'outcome_unknown', 'interrupted'].includes(run.status) : group.key === 'waiting' ? ['queued', 'waiting', 'waiting_model'].includes(run.status) : run.status === group.key)
@@ -246,4 +280,65 @@ function Observatory({ view, runs, events, cachedIds, connection, lastSeen, depa
     </>}
     {cachedIds.size > 0 && <p className="observatory-note">Có metadata cũ từ cache session; nội dung chi tiết chỉ được đưa vào sau khi đối chiếu với event store.</p>}
   </div>
+}
+
+
+function WorkBoard({ tasks, assignees, onCreate, onAction, onRefresh }: { tasks: WorkOrder[]; assignees: Assignee[]; onCreate: (payload: Record<string, unknown>) => Promise<boolean>; onAction: (task: WorkOrder, action: TaskActionName, priority?: number, reason?: string) => Promise<boolean>; onRefresh: () => void }) {
+  const [goal,setGoal]=useState('')
+  const [outputs,setOutputs]=useState('')
+  const [criteria,setCriteria]=useState('')
+  const [refs,setRefs]=useState('')
+  const [duration,setDuration]=useState('120')
+  const [reworkLimit,setReworkLimit]=useState('0')
+  const [assignee,setAssignee]=useState('')
+  const [reviewer,setReviewer]=useState('')
+  const [priority,setPriority]=useState('0')
+  const [filter,setFilter]=useState('all')
+  const [query,setQuery]=useState('')
+  const [createPending,setCreatePending]=useState(false)
+  const [pendingPayload,setPendingPayload]=useState<Record<string,unknown>|null>(null)
+  const [reworkReason,setReworkReason]=useState<Record<string,string>>({})
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const payload = pendingPayload ?? {
+      goal, expected_outputs: outputs.split('\n').map(value=>value.trim()).filter(Boolean),
+      acceptance_criteria: [{id:'AC01',description:criteria.trim(),evidence_kind:'owner_review'}],
+      scope: {input_refs:refs.split('\n').map(value=>value.trim()).filter(Boolean),tool_capabilities:[]},
+      deadline_at:null,budget_limits:{max_model_requests:0,cost_basis:'unknown'},
+      stop_conditions:{max_duration_seconds:Number(duration),max_rework_rounds:Number(reworkLimit)},
+      assignee_id:assignee||null,reviewer_id:reviewer||null,autonomy:'strict',
+    }
+    setCreatePending(true);setPendingPayload(payload)
+    void onCreate(payload).then(success=>{if(success){setGoal('');setOutputs('');setCriteria('');setRefs('');setAssignee('');setReviewer('');setCreatePending(false);setPendingPayload(null)}else{setCreatePending(false)}})
+  }
+  const visible = tasks.filter(task => (filter==='all'||task.status===filter) && (!query.trim()||task.goal.toLocaleLowerCase('vi').includes(query.trim().toLocaleLowerCase('vi'))))
+  const groups: {title:string; statuses:string[]}[] = [
+    {title:'Bản nháp',statuses:['draft']},{title:'Hàng đợi',statuses:['queued']},
+    {title:'Đang xử lý / chờ',statuses:['planning','awaiting_approval','executing','reviewing','awaiting_acceptance']},
+    {title:'Tạm dừng / cần xử lý',statuses:['paused','blocked','rework','failed']},
+    {title:'Đã kết thúc',statuses:['accepted','cancelled']},
+  ]
+  const assigneeLabel=(id:string|null)=>id?assignees.find(value=>value.id===id)?.display_name??id.slice(0,8):'Chưa giao'
+  return <div className="task-board">
+    <div className="task-board-intro"><div><p className="eyebrow">OWNER TASK BOARD</p><h3>Work Order và trạng thái đã lưu</h3><p>Tạo task không gọi model. Budget request hiện khóa ở 0; task trong queue chưa có worker được bật để dispatch.</p></div><button className="quiet-button" type="button" onClick={onRefresh}>Tải lại bảng</button></div>
+    <form className="task-create" onSubmit={submit}>
+      <h3>Tạo Work Order</h3><p>Mọi task bắt đầu ở bản nháp. Chọn “Đưa vào queue” riêng để ghi hàng đợi bền vững.</p>
+      <label htmlFor="task-goal">Mục tiêu</label><textarea id="task-goal" value={goal} onChange={event=>setGoal(event.target.value)} required minLength={1} maxLength={8000} rows={3} disabled={createPending||!!pendingPayload} />
+      <div className="task-form-grid"><label htmlFor="task-outputs">Đầu ra mong đợi · mỗi dòng một mục<textarea id="task-outputs" value={outputs} onChange={event=>setOutputs(event.target.value)} required rows={3} disabled={createPending||!!pendingPayload} /></label><label htmlFor="task-criteria">Tiêu chí nghiệm thu<textarea id="task-criteria" value={criteria} onChange={event=>setCriteria(event.target.value)} required rows={3} disabled={createPending||!!pendingPayload} /></label><label htmlFor="task-refs">Reference đầu vào đã cấp · mỗi dòng một ref<input id="task-refs" value={refs} onChange={event=>setRefs(event.target.value)} required maxLength={4000} disabled={createPending||!!pendingPayload} /></label><label htmlFor="task-duration">Thời hạn tối đa · giây<input id="task-duration" type="number" min="1" max="86400" value={duration} onChange={event=>setDuration(event.target.value)} required disabled={createPending||!!pendingPayload} /></label><label htmlFor="task-rework-limit">Số vòng rework tối đa<input id="task-rework-limit" type="number" min="0" max="5" value={reworkLimit} onChange={event=>setReworkLimit(event.target.value)} required disabled={createPending||!!pendingPayload} /></label><label htmlFor="task-assignee">Người nhận việc<select id="task-assignee" value={assignee} onChange={event=>setAssignee(event.target.value)} disabled={createPending||!!pendingPayload}><option value="">Chưa giao</option>{assignees.map(person=><option value={person.id} key={person.id}>{person.display_name??person.id.slice(0,8)} · {person.role??person.lifecycle}</option>)}</select></label><label htmlFor="task-reviewer">Người rà soát<select id="task-reviewer" value={reviewer} onChange={event=>setReviewer(event.target.value)} disabled={createPending||!!pendingPayload}><option value="">Chưa chọn</option>{assignees.map(person=><option value={person.id} key={person.id}>{person.display_name??person.id.slice(0,8)} · {person.role??person.lifecycle}</option>)}</select></label></div>
+      <p className="task-no-inference">Inference grant: 0 · Model requests: 0 · Cost basis: chưa biết. Chọn người nhận chỉ lưu assignment; không tự chạy worker.</p>
+      <button className="primary-button" type="submit" disabled={createPending}>{createPending?'Đang ghi…':pendingPayload?'Gửi lại cùng Work Order':'Tạo bản nháp'}</button>
+      {pendingPayload&&<small role="status">Phản hồi lần trước chưa rõ. Form được giữ nguyên để gửi lại cùng Idempotency-Key.</small>}
+    </form>
+    <div className="task-board-filters"><label htmlFor="task-filter">Lọc trạng thái<select id="task-filter" value={filter} onChange={event=>setFilter(event.target.value)}><option value="all">Tất cả</option>{Object.entries(taskLabel).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><label htmlFor="task-search">Tìm mục tiêu<input id="task-search" value={query} onChange={event=>setQuery(event.target.value)} maxLength={120} /></label><label htmlFor="queue-priority">Ưu tiên khi đưa vào queue<input id="queue-priority" type="number" min="-100" max="100" value={priority} onChange={event=>setPriority(event.target.value)} /></label><span>{visible.length} / {tasks.length} task</span></div>
+    <div className="task-lanes">{groups.map(group=>{const rows=visible.filter(task=>group.statuses.includes(task.status));return <section className="task-lane" key={group.title}><h4>{group.title}<span>{rows.length}</span></h4>{rows.length?rows.map(task=><TaskCard key={task.task_id} task={task} assignee={assigneeLabel(task.assignee_id)} priority={Number(priority)} reason={reworkReason[task.task_id]??''} onReason={value=>setReworkReason(prev=>({...prev,[task.task_id]:value}))} onAction={onAction}/>):<p>Không có task</p>}</section>})}</div>
+  </div>
+}
+
+function TaskCard({task,assignee,priority,reason,onReason,onAction}:{task:WorkOrder;assignee:string;priority:number;reason:string;onReason:(value:string)=>void;onAction:(task:WorkOrder,action:TaskActionName,priority?:number,reason?:string)=>Promise<boolean>}) {
+  return <article className="task-card"><div className="task-card-top"><span className={`task-state state-${task.status}`}>{taskLabel[task.status]??task.status}</span><span className="task-revision">r{task.revision} · v{task.transition_version}</span></div><h5>{task.goal}</h5><p>{assignee}{task.reviewer_id?' · Có người rà soát':' · Chưa chọn người rà soát'}</p><div className="task-card-meta"><span>Hạn: {time(task.deadline_at)}</span><span>Queue: {task.queue_status??'chưa enqueue'}{task.priority!==null?` · ưu tiên ${task.priority}`:''}</span><span>{task.run_count} run liên kết</span></div><details><summary>Đầu ra, tiêu chí và scope</summary><strong>Đầu ra</strong><ul>{task.expected_outputs.map((value,index)=><li key={`${index}-${value}`}>{value}</li>)}</ul><strong>Tiêu chí</strong><ul>{task.acceptance_criteria.map(item=><li key={item.id}>{item.id} · {item.description} · {item.evidence_kind}</li>)}</ul><small>Input refs: {task.scope.input_refs.join(', ')} · Model request cap: {String(task.budget_limits.max_model_requests??0)}</small></details><div className="task-actions">
+    {task.status==='draft'&&<button className="quiet-button" type="button" onClick={()=>void onAction(task,'enqueue',priority)}>Đưa vào queue</button>}
+    {task.status==='queued'&&<><button className="quiet-button" type="button" onClick={()=>void onAction(task,'pause')}>Tạm dừng</button><button className="quiet-button" type="button" onClick={()=>void onAction(task,'cancel')}>Hủy</button></>}
+    {task.status==='paused'&&<><button className="quiet-button" type="button" onClick={()=>void onAction(task,'resume')}>Tiếp tục</button><button className="quiet-button" type="button" onClick={()=>void onAction(task,'cancel')}>Hủy</button></>}
+    {task.status==='awaiting_acceptance'&&<><button className="primary-button" type="button" disabled={task.run_count===0} onClick={()=>void onAction(task,'accept')}>Chủ tịch nghiệm thu</button><input aria-label="Lý do yêu cầu rework" value={reason} maxLength={500} onChange={event=>onReason(event.target.value)} placeholder="Lý do rework"/><button className="quiet-button" type="button" disabled={!reason.trim()} onClick={()=>void onAction(task,'request_rework',0,reason)}>Yêu cầu rework</button></>}
+  </div><small>Task hoàn tất hoặc có run không tự được nghiệm thu. Hủy chỉ khả dụng ở trạng thái chưa dispatch an toàn.</small></article>
 }

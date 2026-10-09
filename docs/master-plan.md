@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Phase 07 bị chặn tại Phase 06/CG01 và thiếu Owner auth để bảo vệ SSE scope; Phase 08 phụ thuộc Phase 07 và cần IG08 chạy thật. Đã có code Owner/runtime/SSE Phase06–07; grant thật0, chưa chạy model thật.
+> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Phase 07 bị chặn tại Phase 06/CG01 và thiếu Owner auth để bảo vệ SSE scope; Phase 08 phụ thuộc Phase 07 và cần IG08 chạy thật. Phase 09 đã có Work Order board/API/queue commands nhưng chưa có worker lease/concurrency và Phase 08 chưa được nghiệm thu. Grant thật = 0, chưa chạy model thật.
 
 ## 1. Hướng đi đã chọn
 
@@ -115,7 +115,7 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–23 Chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Phase06–07 đã có source Owner/runtime/SSE và remake; các gate run thật vẫn thiếu CG01/grant, không tự nghiệm thu. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09 đang triển khai; Phase 10–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Phase06–07 đã có source Owner/runtime/SSE và remake; các gate run thật vẫn thiếu CG01/grant, không tự nghiệm thu. Inference grant = 0.
 
 Mỗi phase có tab **Kiểm thử** hiển thị pipeline AI và lịch sử `docs/tests/results/phase-NN/` + `docs/remakes/phase-NN/`. Chủ tịch chỉ theo dõi, không tự tick issue. AI triển khai bàn giao cho AI khác test; AI test note issue, AI remake ghi bản sửa hoặc phản biện, AI test độc lập xác minh lại, tiếp tục các vòng đến OK hoặc blocker thật. Dấu ✓ tự cập nhật từ files AI: đã sửa chờ retest, sửa được test lại xác nhận, hoặc phản biện được AI test chấp nhận. Phản biện chưa xác minh không đóng issue; retest vẫn lỗi thì mở lại và bỏ tick. Issue đóng vẫn giữ lịch sử và links; case biến mất khỏi report mới không tự coi là đã fix. Pipeline chỉ OK khi report mới kết luận đạt, gates đạt và không còn issue bắt buộc chưa xác minh. AI render HTML sau mỗi bước; refresh trang để xem tiến độ đã lưu. HTML là bảng theo dõi, không khởi chạy agent nền. Nghiệm thu chính thức vẫn theo Markdown/quyết định Chủ tịch.
 
@@ -586,7 +586,7 @@ Video/ảnh demo thật, event correlation và kiểm tra replay/redaction.
 ### Phase 09 — Bảng nhiệm vụ và hàng đợi
 
 - Mốc: B
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 08
 - Mục tiêu: Quản lý toàn bộ vòng đời công việc có thể tiếp tục an toàn.
 
@@ -625,7 +625,7 @@ Queue/lease/crash tests và state transition evidence.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+09/10/2026 — Theo chỉ thị “code phase 9”, đã thêm API Owner-scoped cho đọc/tạo Work Order và action queue, migration queue/command receipts có RLS, ưu tiên, idempotency và optimistic transition version; UI S05 tạo task, xếp hàng, lọc/tìm, pause/resume/hủy và luồng nghiệm thu/rework có điều kiện. Model request cap khóa ở 0, tools không được cấp, không có dispatch tự động. Lint/build đạt; 59 API/unit regression tests chọn lọc đạt; xem [evidence Phase 09](evidence/phase-09.md). Chưa có independent review, PostgreSQL migration/integration, lease/concurrency/restart worker, demo hai task hoặc run liên kết để acceptance. Dependency Phase 08 vẫn bị chặn; chưa nghiệm thu Phase 09, chưa gọi inference/grant = 0.
 
 ### Phase 10 — Quyền hạn và hộp phê duyệt
 
