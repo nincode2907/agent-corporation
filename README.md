@@ -39,6 +39,8 @@ Mở `http://agent-corporation.localhost` (hoặc `http://127.0.0.1:15500`). Vit
 
 Block `15500–15599` đã được reserve tại Dev Hub; mapping cụ thể ở registry trung tâm. Hostname `agent-corporation.localhost` dùng proxy Dev Hub chỉ publish trên IPv4 loopback; môi trường hiện tại không bind IPv6 loopback.
 
+Sau lần chuẩn bị đầu tiên, có thể chạy toàn bộ ứng dụng bằng một file: macOS/Linux dùng `./run.sh`; Windows dùng `run.bat`. Script tự tạo `.env` nếu chưa có, bật PostgreSQL, đồng bộ dependency Python, cài dependency web nếu thiếu, chạy migration rồi mở API và web. Trên macOS/Linux, nhấn `Ctrl+C` để dừng API và web; trên Windows, đóng hai cửa sổ API/Web. PostgreSQL tiếp tục chạy nền.
+
 Phase 05 probe Codex server thủ công từ backend bằng `GET /health` và `GET /v1/models`. Mặc định gateway là `http://127.0.0.1:15600`, đã đối chiếu registry/source và GET ngày 09/10/2026 (endpoint khảo sát cũ là4000). Nếu cần cấu hình Bearer, chỉ lưu `CODEX_SERVER_API_KEY` trong `.env` mode `0600`, không đưa vào browser. Probe không gửi prompt hoặc xác minh model entitlement.
 
 `.env` được bootstrap ngẫu nhiên, quyền `0600` và bị Git ignore. Không commit/copy secret; `.env.example` chỉ chứa chỉ dẫn placeholder. Owner session lấy scope được backend cấp; mọi cấu hình profile/run/grant và reset demo cần Owner + CSRF. API vẫn chỉ bind loopback.

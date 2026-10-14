@@ -1,0 +1,17 @@
+{
+  "before": {
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/adapter.py": "3889f25dd0838b961feaa4e4a7714baddc67ac4ea5dd0d5ed77cb64b9acd9d42",
+    "apps/api/src/agent_corporation_api/modules/governance/profile.py": "32f16b49054ea194178d6410603838a537c2017790b02d55d8c894cb3ab203ca",
+    "apps/web/src/RuntimePanel.tsx": "50692547589d119cb0819b875a1b7f71051f4de93eb094bb142787dcbe2bf220",
+    "apps/api/tests/test_codex_gateway.py": "097e3debb64ea1147e258146ffe64cf561326c8bd4206ebb8d18af3fdb7ecf8d",
+    "apps/api/tests/test_owner_auth.py": "4167491bbbfcb1da64f903c7bfd0b85b6f886c93b44aa6cefb57934f2f475510"
+  },
+  "after": {
+    "apps/api/src/agent_corporation_api/modules/codex_gateway/adapter.py": "72901ecf547e5a5302652f90a952ed7803a52676530b350335ac1db416a4c2fd",
+    "apps/api/src/agent_corporation_api/modules/governance/profile.py": "15b3291ac0739ec7da1f61f02887501d61429f08491763898e4bb1115ce44a9e",
+    "apps/web/src/RuntimePanel.tsx": "17384293c97ec68516a3e6dea87d5e7b9339f2e9150f8e91a8e558ae3aca1820",
+    "apps/api/tests/test_codex_gateway.py": "c91d1a8bc117d9d2fdb9972ca2af7839a793ad9fc421dfdc1f4163f33a7a9162",
+    "apps/api/tests/test_owner_auth.py": "5effed0c34c8b0d0daf28d9fe5dbfb2e5d2de6f70feaf9c6f30579db31e92e1f"
+  },
+  "head": "f74320e2ff20516ec93fbfe3413cfb953695b51d"
+}

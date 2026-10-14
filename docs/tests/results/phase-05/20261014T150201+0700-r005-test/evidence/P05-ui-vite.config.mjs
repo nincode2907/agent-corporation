@@ -1,0 +1,1 @@
+export default {root:"/Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/web",server:{host:'127.0.0.1',port:15500,strictPort:true,proxy:{'/api':{target:'http://127.0.0.1:15592',changeOrigin:true}}}};

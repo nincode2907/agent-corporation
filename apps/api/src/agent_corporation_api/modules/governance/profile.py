@@ -7,6 +7,8 @@ from typing import Literal
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+from ...settings import get_settings
+from ..codex_gateway.adapter import ProbeSettings, profile_model_capabilities
 from ..observability.events import append_event, lock_event_stream
 from ..observability.scope import set_company_scope
 from .auth import OwnerPrincipal
@@ -14,7 +16,7 @@ from .auth import OwnerPrincipal
 class ProfileWrite(BaseModel):
     model_config = ConfigDict(extra="forbid")
     model: str = Field(min_length=1,max_length=100,pattern=r"^[A-Za-z0-9._:-]+$")
-    reasoning_effort: Literal["minimal","low","medium","high","xhigh"]
+    reasoning_effort: Literal["minimal","low","medium","high","xhigh","max","ultra","persistent"]
     fallback_models: list[str] = Field(default_factory=list,max_length=10)
     expected_version: int = Field(ge=0)
 
@@ -36,6 +38,14 @@ def save_profile(factory, principal: OwnerPrincipal, body: ProfileWrite) -> dict
     import re
     if any(not re.fullmatch(r"[A-Za-z0-9._:-]{1,100}", model) for model in body.fallback_models) or len(set(body.fallback_models)) != len(body.fallback_models):
         raise HTTPException(422,"Fallback model không hợp lệ hoặc trùng.")
+    settings = get_settings()
+    capabilities = profile_model_capabilities(ProbeSettings(
+        base_url=settings.codex_server_base_url, api_key=settings.codex_server_api_key,
+    ))
+    if capabilities is None:
+        raise HTTPException(503,"Chưa xác minh được catalog gateway; kiểm tra kết nối rồi lưu lại. Profile hiện tại được giữ nguyên.")
+    if any(body.reasoning_effort not in capabilities.get(model, []) for model in [body.model, *body.fallback_models]):
+        raise HTTPException(422,"Model hoặc effort chưa được catalog gateway hỗ trợ, bao gồm cả fallback. Catalog không xác nhận entitlement.")
     scope = principal.scope
     params = {"env":scope.environment_id,"company":scope.company_id,"model":body.model,
         "effort":body.reasoning_effort,"fallback":json.dumps(body.fallback_models),"version":body.expected_version+1}
