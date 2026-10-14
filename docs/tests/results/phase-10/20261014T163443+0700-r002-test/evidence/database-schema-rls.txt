@@ -1,0 +1,3 @@
+Isolated DB `ac-phase10-pg-20261014`, database `agent_corporation_test`; PostgreSQL 18.6; alembic revision 20261014_0008.
+
+Read-only observations: approvals, approval_request_receipts, approval_decision_receipts exist; RLS enabled and FORCE RLS set; each `app_scope` USING/WITH CHECK compares environment/company to `app.environment_id` / `app.company_id`. `agent_corporation_app` is not superuser and has no BYPASSRLS. Grants are SELECT/INSERT, plus UPDATE on approvals. Schema contains task_revision/action_type/hash/status/expiry/consumed fields, scoped FKs and shape/hash checks. No rows were present or changed, so this does not prove populated row visibility/isolation or CRUD lifecycle.

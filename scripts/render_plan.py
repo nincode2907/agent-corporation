@@ -88,24 +88,47 @@ def phase_test_report(ident):
     report_path = reports[-1]
     source = report_path.read_text()
     cases = []
-    pattern = r"^### ((?:C\d{2}|P\d{2}-\d{2}|[A-Z][A-Z0-9]*-\d+)) — ([^\n]+)\n(.*?)(?=^### |^## |\Z)"
-    fields = ["Tag", "Kết quả", "Mức độ", "Thực tế", "Xử lý/đề xuất"]
+    pattern = r"^### ((?:C\d{2}|P\d{2}-\d{2}|[A-Z][A-Z0-9]*-\d+))(?: — ([^\n]+))?\n(.*?)(?=^### |^## |\Z)"
     for match in re.finditer(pattern, source, re.M | re.S):
         block = match.group(3)
-        case = {"id": match.group(1), "title": match.group(2)}
-        case.update({name: report_field(block, name) for name in fields})
-        if case["Tag"] and case["Kết quả"]:
+        case_id = match.group(1)
+        result = report_field(block, "Kết quả")
+        tag = report_field(block, "Tag")
+        severity = report_field(block, "Mức độ")
+        actual = report_field(block, "Thực tế")
+        handling = report_field(block, "Xử lý/đề xuất")
+        # Accept concise independent reports while canonical reports use the
+        # fully labeled fields above. Keep tags/results explicit in either form.
+        if not result:
+            concise = re.search(r"^- Result:\s*`?(pass|fail|blocked|not-run|not-applicable)`?\s*;\s*severity:\s*`?([^;`]+)`?\s*;\s*tag:\s*`?(clean|need-change|suggestion)`?", block, re.M | re.I)
+            if concise:
+                result, severity, tag = (value.strip().strip("`") for value in concise.groups())
+        if not actual:
+            actual = report_field(block, "Actual")
+        if not handling:
+            handling = report_field(block, "Follow-up")
+        if tag and result:
             cases.append({
-                "id": case["id"], "title": case["title"], "tag": case["Tag"],
-                "result": case["Kết quả"], "severity": case["Mức độ"],
-                "actual": case["Thực tế"], "handling": case["Xử lý/đề xuất"],
+                "id": case_id, "title": match.group(2) or case_id, "tag": tag,
+                "result": result, "severity": severity,
+                "actual": actual, "handling": handling,
             })
     if not cases:
         raise ValueError(f"Test report không có case đọc được: {report_path}")
+    round_label = report_field(source, "Vòng")
+    if not round_label:
+        round_match = re.search(r"\bround\s+(r?\d{3})\b", source, re.I)
+        round_label = round_match.group(1) if round_match else ""
+        if round_label and not round_label.startswith("r"):
+            round_label = f"r{round_label}"
+    verdict = report_field(source, "Kết luận kỹ thuật") or report_field(source, "Result")
+    if verdict:
+        bold_verdict = re.match(r"\*\*([^*]+)\*\*", verdict.strip())
+        verdict = bold_verdict.group(1) if bold_verdict else verdict.strip().strip("*`")
     return {
         "batch": report_field(source, "Test batch") or report_path.parent.name,
-        "round": report_field(source, "Vòng"),
-        "verdict": report_field(source, "Kết luận kỹ thuật"),
+        "round": round_label,
+        "verdict": verdict,
         "url": os.path.relpath(report_path, start=SOURCE.parent).replace(os.sep, "/"),
         "rounds_url": os.path.relpath(phase_dir / "README.md", start=SOURCE.parent).replace(os.sep, "/") if (phase_dir / "README.md").is_file() else "",
         "cases": cases,

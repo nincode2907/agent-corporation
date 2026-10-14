@@ -140,3 +140,34 @@ def test_owner_cannot_select_unknown_company_scope(owner_secret,monkeypatch):
     result=client.post("/api/v1/owner/login",json={"secret":"a"*64,"environment_id":str(uuid4()),"company_id":str(uuid4())},headers={"Origin":"http://127.0.0.1:15500"})
     assert result.status_code==403
     assert "set-cookie" not in result.headers
+
+
+@pytest.mark.parametrize("model,effort,fallback", [
+    ("not-in-catalog", "low", []),
+    ("supported", "minimal", []),
+    ("supported", "max", ["fallback-low-only"]),
+    ("supported", "low", ["not-in-catalog"]),
+])
+def test_profile_rejects_unknown_model_or_effort_before_any_write(monkeypatch, model, effort, fallback):
+    from agent_corporation_api.modules.governance import profile
+    monkeypatch.setattr(profile, "get_settings", lambda: SimpleNamespace(codex_server_base_url="http://127.0.0.1:15600", codex_server_api_key=None))
+    monkeypatch.setattr(profile, "profile_model_capabilities", lambda _settings: {"supported": ["low", "max"], "fallback-low-only": ["low"]})
+    def no_database(): raise AssertionError("Invalid profile must not start a transaction")
+    with pytest.raises(HTTPException) as error:
+        profile.save_profile(no_database, None, ProfileWrite(model=model, reasoning_effort=effort, fallback_models=fallback, expected_version=0))
+    assert error.value.status_code == 422
+
+
+def test_profile_preserves_state_when_catalog_is_unavailable(monkeypatch):
+    from agent_corporation_api.modules.governance import profile
+    monkeypatch.setattr(profile, "get_settings", lambda: SimpleNamespace(codex_server_base_url="http://127.0.0.1:15600", codex_server_api_key=None))
+    monkeypatch.setattr(profile, "profile_model_capabilities", lambda _settings: None)
+    def no_database(): raise AssertionError("Unavailable catalog must not start a transaction")
+    with pytest.raises(HTTPException) as error:
+        profile.save_profile(no_database, None, ProfileWrite(model="supported", reasoning_effort="max", expected_version=0))
+    assert error.value.status_code == 503
+
+
+@pytest.mark.parametrize("effort", ["max", "ultra", "persistent"])
+def test_profile_accepts_gateway_schema_efforts_before_model_specific_validation(effort):
+    assert ProfileWrite(model="supported", reasoning_effort=effort, expected_version=0).reasoning_effort == effort

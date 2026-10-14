@@ -1,6 +1,6 @@
 # Agent Corporation
 
-Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quyền và nghiệm thu bằng chứng. Phase 00–03 đã hoàn tất; Phase 04 chờ nghiệm thu. Chưa có runtime agent hoặc inference.
+Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quyền và nghiệm thu bằng chứng. Trạng thái chính thức ở master plan; runtime có Owner session và worker text-only được gate kiểm soát. CG01 còn bị chặn, chưa chạy inference thật.
 
 - [Mở trang theo dõi phase](docs/master-plan.html)
 - [Kế hoạch và nguồn trạng thái chính thức](docs/master-plan.md)
@@ -11,6 +11,8 @@ Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quy�
 - [Bằng chứng Phase 02](docs/evidence/phase-02.md)
 - [Bằng chứng Phase 03](docs/evidence/phase-03.md)
 - [Bằng chứng Phase 04](docs/evidence/phase-04.md)
+- [Employee Chat — thiết kế V1](docs/designs/employee-chat.html) · [Markdown](docs/designs/employee-chat.md)
+- [CG01 — kiểm định và quy trình xác minh](docs/reviews/cg01-20261014/report.html) · [Markdown](docs/reviews/cg01-20261014/report.md)
 - [Hướng dẫn cho agent](AGENTS.md)
 - [Bộ rule và checklist kiểm định từng phase](docs/tests/README.md) · [Bản trực quan](docs/tests/index.html)
 
@@ -38,6 +40,8 @@ npm run --prefix apps/web dev
 Mở `http://agent-corporation.localhost` (hoặc `http://127.0.0.1:15500`). Vite forward `/api` tới API loopback. Kiểm tra readiness trực tiếp bằng `curl -i http://127.0.0.1:15501/api/v1/health/ready`. Dừng PostgreSQL bằng `docker compose stop postgres`; lệnh này giữ nguyên dữ liệu local. Chạy lại bằng `docker compose start postgres`.
 
 Block `15500–15599` đã được reserve tại Dev Hub; mapping cụ thể ở registry trung tâm. Hostname `agent-corporation.localhost` dùng proxy Dev Hub chỉ publish trên IPv4 loopback; môi trường hiện tại không bind IPv6 loopback.
+
+Sau lần chuẩn bị đầu tiên, có thể chạy toàn bộ ứng dụng bằng một file: macOS/Linux dùng `./run.sh`; Windows dùng `run.bat`. Script tự tạo `.env` nếu chưa có, bật PostgreSQL, đồng bộ dependency Python, cài dependency web nếu thiếu, chạy migration rồi mở API và web. Trên macOS/Linux, nhấn `Ctrl+C` để dừng API và web; trên Windows, đóng hai cửa sổ API/Web. PostgreSQL tiếp tục chạy nền.
 
 Phase 05 probe Codex server thủ công từ backend bằng `GET /health` và `GET /v1/models`. Mặc định gateway là `http://127.0.0.1:15600`, đã đối chiếu registry/source và GET ngày 09/10/2026 (endpoint khảo sát cũ là4000). Nếu cần cấu hình Bearer, chỉ lưu `CODEX_SERVER_API_KEY` trong `.env` mode `0600`, không đưa vào browser. Probe không gửi prompt hoặc xác minh model entitlement.
 

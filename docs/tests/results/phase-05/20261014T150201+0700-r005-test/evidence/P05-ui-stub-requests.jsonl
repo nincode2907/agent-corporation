@@ -1,0 +1,8 @@
+{"method": "GET", "path": "/health", "mode": "utf8", "status": 200}
+{"method": "GET", "path": "/v1/models", "mode": "utf8", "status": 200}
+{"method": "GET", "path": "/health", "mode": "auth", "status": 401}
+{"method": "GET", "path": "/v1/models", "mode": "auth", "status": 401}
+{"method": "GET", "path": "/health", "mode": "schema", "status": 200}
+{"method": "GET", "path": "/v1/models", "mode": "schema", "status": 200}
+{"method": "GET", "path": "/health", "mode": "rate", "status": 429}
+{"method": "GET", "path": "/v1/models", "mode": "rate", "status": 429}

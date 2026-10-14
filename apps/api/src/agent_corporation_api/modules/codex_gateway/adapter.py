@@ -58,7 +58,11 @@ def _get_json(url: str, api_key: str | None) -> tuple[int, object | None]:
             body = response.read(MAX_RESPONSE_BYTES + 1)
             if len(body) > MAX_RESPONSE_BYTES:
                 return response.status, None
-            return response.status, json.loads(body)
+            try:
+                return response.status, json.loads(body)
+            except (ValueError, RecursionError):
+                # A response with invalid JSON/encoding is a contract error, not an outage.
+                return response.status, None
     except HTTPError as error:
         return error.code, None
     except (URLError, TimeoutError, OSError, json.JSONDecodeError):
@@ -77,6 +81,33 @@ def _models_shape(payload: object) -> list[str] | None:
             return None
         ids.append(item["id"][:128])
     return ids
+
+
+def profile_model_capabilities(settings: ProbeSettings) -> dict[str, list[str]] | None:
+    """Read catalog capabilities for an explicit profile save; never infer entitlement."""
+    try:
+        base_url = _validated_base_url(settings.base_url)
+    except ValueError:
+        return None
+    code, payload = _get_json(f"{base_url}/v1/models", settings.api_key)
+    ids = _models_shape(payload) if code == 200 else None
+    code, payload = _get_json(f"{base_url}/api/models", settings.api_key)
+    if ids is None or code != 200 or not isinstance(payload, dict) or not isinstance(payload.get("models"), list):
+        return None
+    allowed_efforts = {"minimal", "low", "medium", "high", "xhigh", "max", "ultra", "persistent"}
+    capabilities: dict[str, list[str]] = {}
+    seen: set[str] = set()
+    for item in payload["models"]:
+        if not isinstance(item, dict):
+            return None
+        model, efforts = item.get("id"), item.get("reasoning")
+        if (not isinstance(model, str) or model in seen or not isinstance(item.get("chat_supported"), bool)
+                or not isinstance(efforts, list) or any(not isinstance(effort, str) or effort not in allowed_efforts for effort in efforts)):
+            return None
+        seen.add(model)
+        if model in ids and item["chat_supported"] and efforts:
+            capabilities[model] = efforts
+    return capabilities
 
 
 def probe_gateway(settings: ProbeSettings) -> dict[str, object]:

@@ -1,0 +1,154 @@
+{
+  "phase": "05",
+  "batch": "20261014T150201+0700-r005-test",
+  "commit": "f74320e2ff20516ec93fbfe3413cfb953695b51d",
+  "source_state_at_start": "dirty source from completed r004 remake; five modified product/test files; reviewer changed only report/evidence",
+  "inference_calls": 0,
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "a7cf430ae4c856de2c74adbe6f1fe98686c875e2a4473b0390eb54d27e7b4b43"
+    },
+    {
+      "path": "README.md",
+      "sha256": "2c826b2bbc25c86d516eead712f807f578ee7380f5e72518f1a7d127bcb7a8af"
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "ebd155af2265614b83c0b96b04af10dbc61fefc69c2d315a9847d79fec0664c2"
+    },
+    {
+      "path": "docs/product-spec.md",
+      "sha256": "05071632d34365789e345b804ec3e1eda2e4748f127dd877c3e1192b98bf6fbd"
+    },
+    {
+      "path": "docs/decisions/0001-v1-foundation.md",
+      "sha256": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930"
+    },
+    {
+      "path": "docs/tests/RULES.md",
+      "sha256": "d234a36a249bbdd27703826ac0e80d25aece859577d7d4c9c0e65b1ff22f96ba"
+    },
+    {
+      "path": "docs/tests/phases/phase-05.md",
+      "sha256": "4bf0ced47454d57facc57f1df89c03cbc338b670990fc0fb7377b2f478a89f4d"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/settings.py",
+      "sha256": "f55d24ee5d9641731ad9bebe6bc3a2041b63462caa1fb3ffe93cd35fe29e0bcc"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/main.py",
+      "sha256": "1141e43b39b460a8b4d26108eff82cdc60f4010ca3e68314522c0598713feae1"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/codex_gateway/adapter.py",
+      "sha256": "72901ecf547e5a5302652f90a952ed7803a52676530b350335ac1db416a4c2fd"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/codex_gateway/router.py",
+      "sha256": "154184542660e5b6b937c35d030170604bd8567e4cc0422078e0fc7f8972a345"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/auth.py",
+      "sha256": "26e4de9b00aa8e6772cfb647e0f42236aea5e7e153b24111a7abc75b0c8ae12e"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/auth_router.py",
+      "sha256": "c56d646f659d98f53b79bd6dcfd2591053643d1397f54ed371507e4db26e786f"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/profile.py",
+      "sha256": "15b3291ac0739ec7da1f61f02887501d61429f08491763898e4bb1115ce44a9e"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/gateway.py",
+      "sha256": "ebf280bada9c092963a3e84e880d4b0d79d5c56898590dcf38a228412db1b68b"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/gates.py",
+      "sha256": "80631e4c6af4735bcb2e5b7e3e9ea8235a941207c350e0dcef654b169cedb041"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/service.py",
+      "sha256": "75dbbb0cd9dd2e3b66dc3939e381b76c3a9b52c8b1fa6f62fa2522f3a68792a6"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/worker.py",
+      "sha256": "c3735c60dc276ce2e7ca64ad5f60a230a4a1af1304a77699e694e19a3d9d41be"
+    },
+    {
+      "path": "apps/api/tests/test_codex_gateway.py",
+      "sha256": "c91d1a8bc117d9d2fdb9972ca2af7839a793ad9fc421dfdc1f4163f33a7a9162"
+    },
+    {
+      "path": "apps/api/tests/test_owner_auth.py",
+      "sha256": "5effed0c34c8b0d0daf28d9fe5dbfb2e5d2de6f70feaf9c6f30579db31e92e1f"
+    },
+    {
+      "path": "apps/api/tests/test_phase06_runtime.py",
+      "sha256": "c934266187e570c2e4a93e6925437f8c4273ed8bd0a4024d00bb499bf9b30b3d"
+    },
+    {
+      "path": "apps/api/tests/test_phase06_runtime_persistence.py",
+      "sha256": "e04415517b02c6c48a87b35b67c3c34a4fa91b2e2b15a104b20c252be19cc41b"
+    },
+    {
+      "path": "apps/web/src/App.tsx",
+      "sha256": "260156b41b3d75d69b798b94c4eb019cdf2e1f172a89d6ffbbb2099401e55208"
+    },
+    {
+      "path": "apps/web/src/RuntimePanel.tsx",
+      "sha256": "17384293c97ec68516a3e6dea87d5e7b9339f2e9150f8e91a8e558ae3aca1820"
+    },
+    {
+      "path": "apps/web/src/main.tsx",
+      "sha256": "6e9e5807fcbd48b75a96db5cbef36c996262196be42e6d4760dc86babbe61ad2"
+    },
+    {
+      "path": "apps/web/index.html",
+      "sha256": "98beca1a2c54ecd8c8e507897c4e43bb7ceda7ee51a57363a97b5739eb7348a2"
+    },
+    {
+      "path": "apps/api/uv.lock",
+      "sha256": "950fbae2f0f1824e6a4fc3241356c935c69d9a4b10230addc8274a66d7650e57"
+    },
+    {
+      "path": "apps/web/package-lock.json",
+      "sha256": "c7bd456788bb311aa383fb7b8824c8864f2ff7b88e7b458e4bfeb769fbc814d8"
+    },
+    {
+      "path": "../codex-server/package.json",
+      "sha256": "467a724276bb69b2806e2709c2fceca5777847a8a44d85aa8c593e90ea77cbaf"
+    },
+    {
+      "path": "../codex-server/README.md",
+      "sha256": "b200546e657b2bd20624e7c40ecbfac418db799b01e94ca3ad83c1b198184143"
+    },
+    {
+      "path": "../codex-server/src/server.ts",
+      "sha256": "b6565fd70664a64d98c72da225c33487c8dd0db451e83290f97e1ee66c3b9994"
+    },
+    {
+      "path": "../codex-server/src/provider.ts",
+      "sha256": "99a84bd57ac97c5c60df2e839dd4eb937b3329b784f241bdeddeddc310b6d80e"
+    },
+    {
+      "path": "../codex-server/src/schema.ts",
+      "sha256": "6ab2bc1217794dab4c59ce3bd41a3e81b20f15fd20fc5d7b0a35e418f1229916"
+    },
+    {
+      "path": "../codex-server/src/config.ts",
+      "sha256": "276b41d99850e614a911c77709ae0c26253dc99854b87c2682bf434a9197cd7a"
+    },
+    {
+      "path": "../codex-server/src/catalog.ts",
+      "sha256": "80fae3f8334471759f4279dfcfd3ebeceb9c2b7ab3d6483d844780912ca7f39a"
+    },
+    {
+      "path": "../codex-server/data/models.json",
+      "sha256": "375f34a8ad768d4776eca9d4b1384a0630e0e297975dcb25d5d3bc8cb0fc3180"
+    }
+  ],
+  "remake_after_hashes_match": true
+}

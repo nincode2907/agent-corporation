@@ -1,7 +1,7 @@
-# Sổ vòng kiểm thử và triển khai — Phase 08
+# Phase 08 test batches
 
-| Vòng | Report test | Kết luận | Remake | Report retest | Trạng thái vòng |
-| --- | --- | --- | --- | --- | --- |
-| r001 preflight | [report](20261009T114228+0700-r001-test/report.md) | Chưa đủ bằng chứng; dependency blocked | Không có (không có bug source xác nhận) | — | blocked |
-
-Phase 08 chưa có implementation. Phase 07/06/CG01 chưa đạt; IG08 cần run thật, saved events và SSE. Không thay thế bằng mock. Điều kiện tiếp tục ghi trong [preflight](20261009T114228+0700-r001-test/report.md).
+| Round | Report | Conclusion | Remake | Retest | Status |
+|---|---|---|---|---|---|
+| r001 | [legacy](20261009T114228+0700-r001-test/report.md) | legacy | none | r002 | done |
+| r002 | [report](20261014T161904+0700-r002-test/report.md) | chưa đủ bằng chứng | none | [r003](20261014T162815+0700-r003-test/report.md) | blocked |
+| r003 | [report](20261014T162815+0700-r003-test/report.md) | chưa đủ bằng chứng | none | none | blocked |

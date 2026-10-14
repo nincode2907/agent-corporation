@@ -1,6 +1,8 @@
 import asyncio
 
 import httpx
+import pytest
+from types import SimpleNamespace
 from urllib.request import ProxyHandler, Request
 
 from agent_corporation_api.modules.codex_gateway import adapter
@@ -115,3 +117,53 @@ def test_api_probe_is_manual_and_sanitized(monkeypatch) -> None:
     assert response.status_code == 200
     assert response.json()["status"] == "offline"
     assert "token" not in response.text.lower()
+
+
+@pytest.mark.parametrize("body", [b"\xff", b"not-json", b"[" * 2000 + b"0" + b"]" * 2000])
+def test_malformed_json_or_encoding_is_normalized_instead_of_http_500(monkeypatch, body) -> None:
+    from agent_corporation_api.modules.codex_gateway import router
+
+    class Response:
+        status = 200
+        def __enter__(self): return self
+        def __exit__(self, *_args): return False
+        def read(self, _limit): return body
+
+    class Opener:
+        def open(self, _request, timeout): return Response()
+
+    monkeypatch.setattr(adapter, "build_opener", lambda *_args: Opener())
+    monkeypatch.setattr(router, "get_settings", lambda: SimpleNamespace(codex_server_base_url="http://127.0.0.1:15600", codex_server_api_key=None))
+    response = get_probe()
+    assert response.status_code == 200
+    assert response.json()["status"] == "contract_mismatch"
+
+
+def test_profile_capabilities_intersect_live_catalog_and_model_efforts(monkeypatch):
+    calls = []
+    def response(url, _key):
+        calls.append(url)
+        if url.endswith("/v1/models"):
+            return 200, {"object": "list", "data": [{"id": "supported"}, {"id": "disabled"}]}
+        return 200, {"models": [
+            {"id": "supported", "chat_supported": True, "reasoning": ["low", "max"], "price": "ignored-canary"},
+            {"id": "disabled", "chat_supported": False, "reasoning": ["low"]},
+            {"id": "not-live", "chat_supported": True, "reasoning": ["high"]},
+        ]}
+    monkeypatch.setattr(adapter, "_get_json", response)
+    result = adapter.profile_model_capabilities(adapter.ProbeSettings())
+    assert result == {"supported": ["low", "max"]}
+    assert calls == ["http://127.0.0.1:15600/v1/models", "http://127.0.0.1:15600/api/models"]
+    assert "ignored-canary" not in repr(result)
+
+
+@pytest.mark.parametrize("item", [
+    {"id": "model", "chat_supported": True, "reasoning": [None]},
+    {"id": "model", "chat_supported": True, "reasoning": ["new-unknown-effort"]},
+    {"id": "model", "chat_supported": "true", "reasoning": ["low"]},
+])
+def test_profile_capabilities_fail_closed_on_schema_change(monkeypatch, item):
+    def response(url, _key):
+        return (200, {"object": "list", "data": [{"id": "model"}]}) if url.endswith("/v1/models") else (200, {"models": [item]})
+    monkeypatch.setattr(adapter, "_get_json", response)
+    assert adapter.profile_model_capabilities(adapter.ProbeSettings()) is None

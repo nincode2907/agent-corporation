@@ -1,0 +1,148 @@
+[
+  {
+    "case": "review-open",
+    "focus": "Đóng",
+    "open": true
+  },
+  {
+    "case": "focus-wrap",
+    "focus": "Hủy, quay lại chat",
+    "focusOutline": "3px"
+  },
+  {
+    "case": "escape-restore",
+    "focus": "review-open",
+    "open": false
+  },
+  {
+    "case": "desktop-state",
+    "eligibility": "Đang chờ xác minh gateway\nXem bước xử lý",
+    "metricsEnabled": false,
+    "overflow": false,
+    "state": "empty",
+    "visible": "TRAO ĐỔI RIÊNG\nBạn muốn trao đổi gì với Linh?\n\nHỏi ý kiến, cùng làm rõ một ý tưởng hoặc chuẩn bị nội dung trước khi giao việc.\n\nGợi ý cấu trúc một báo cáo ngắn\n"
+  },
+  {
+    "case": "desktop-state",
+    "eligibility": "Đang tải · gửi tạm khóa\nXem bước xử lý",
+    "metricsEnabled": false,
+    "overflow": false,
+    "state": "loading",
+    "visible": "Đang tải hội thoại…\n\nKhông tạo lời chào hay gọi model khi tải."
+  },
+  {
+    "case": "desktop-state",
+    "eligibility": "Đang chờ tải lại lịch sử\nXem bước xử lý",
+    "metricsEnabled": true,
+    "overflow": false,
+    "state": "error",
+    "visible": "Chưa tải được lịch sử mới nhất\n\nTin đã hiển thị và bản nháp vẫn được giữ. Đây là lỗi tải, không phải trạng thái CG01.\n\nThử tải lại (minh họa)\nCHỦ TỊCH\n09:41 · v"
+  },
+  {
+    "case": "desktop-state",
+    "eligibility": "Chưa có hạn mức phù hợp\nXem bước xử lý",
+    "metricsEnabled": true,
+    "overflow": false,
+    "state": "grant",
+    "visible": "CHỦ TỊCH\n09:41 · ví dụ\n\nTôi muốn báo cáo ngắn hơn nhưng vẫn đủ nguồn. Em đề xuất cấu trúc như thế nào?\n\nXem lượt phản hồi liên quan\nLINH\n09:42 · ví dụ\n\nCó thể b"
+  },
+  {
+    "case": "desktop-state",
+    "eligibility": "Đang chờ xác minh gateway\nXem bước xử lý",
+    "metricsEnabled": true,
+    "overflow": false,
+    "state": "blocked",
+    "visible": "CHỦ TỊCH\n09:41 · ví dụ\n\nTôi muốn báo cáo ngắn hơn nhưng vẫn đủ nguồn. Em đề xuất cấu trúc như thế nào?\n\nXem lượt phản hồi liên quan\nLINH\n09:42 · ví dụ\n\nCó thể b"
+  },
+  {
+    "case": "mobile-layout-final",
+    "chat": 390,
+    "composerBottom": 844,
+    "height": 844,
+    "scrollWidth": 390,
+    "transcriptOverflow": "auto",
+    "viewport": 390
+  },
+  {
+    "case": "mobile-state-final",
+    "composerBottom": 844,
+    "eligibility": "Đang chờ xác minh gateway\nXem bước xử lý",
+    "height": 844,
+    "metricsEnabled": false,
+    "overflow": false,
+    "state": "empty",
+    "visible": "TRAO ĐỔI RIÊNG\nBạn muốn trao đổi gì với Linh?\n\nHỏi ý kiến, cùng làm rõ một ý tưởng hoặc chuẩn bị nội dung trước khi giao"
+  },
+  {
+    "case": "mobile-state-final",
+    "composerBottom": 844,
+    "eligibility": "Đang tải · gửi tạm khóa\nXem bước xử lý",
+    "height": 844,
+    "metricsEnabled": false,
+    "overflow": false,
+    "state": "loading",
+    "visible": "Đang tải hội thoại…\n\nKhông tạo lời chào hay gọi model khi tải."
+  },
+  {
+    "case": "mobile-state-final",
+    "composerBottom": 844,
+    "eligibility": "Đang chờ tải lại lịch sử\nXem bước xử lý",
+    "height": 844,
+    "metricsEnabled": true,
+    "overflow": false,
+    "state": "error",
+    "visible": "Chưa tải được lịch sử mới nhất\n\nTin đã hiển thị và bản nháp vẫn được giữ. Đây là lỗi tải, không phải trạng thái CG01.\n\nT"
+  },
+  {
+    "case": "mobile-state-final",
+    "composerBottom": 844,
+    "eligibility": "Chưa có hạn mức phù hợp\nXem bước xử lý",
+    "height": 844,
+    "metricsEnabled": true,
+    "overflow": false,
+    "state": "grant",
+    "visible": "CHỦ TỊCH\n09:41 · ví dụ\n\nTôi muốn báo cáo ngắn hơn nhưng vẫn đủ nguồn. Em đề xuất cấu trúc như thế nào?\n\nXem lượt phản hồ"
+  },
+  {
+    "case": "mobile-grant-help",
+    "help": "Chủ tịch mở Quản trị để xem grant cho đúng công ty, nhân viên, conversation, model và batch. Grant phải còn hạn, đủ budget và Emergency Stop đã gỡ. Chat không tự tạo grant.",
+    "open": true
+  },
+  {
+    "case": "mobile-inspector",
+    "controls": "mobile-dialog",
+    "duplicateIds": [
+      "inspector-usage"
+    ],
+    "open": true,
+    "popup": "dialog"
+  },
+  {
+    "case": "mobile-escape-return",
+    "dialogOpen": false,
+    "focus": "inspector-open"
+  },
+  {
+    "case": "desktop-final-size",
+    "chat": 1264,
+    "inspectorHidden": true,
+    "list": 176,
+    "scrollWidth": 1440,
+    "viewport": 1440
+  },
+  {
+    "case": "desktop-inspector-final",
+    "chat": 964,
+    "expanded": "true",
+    "inspector": 300,
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "case": "mobile-IDs-retest",
+    "duplicates": [],
+    "open": true,
+    "scrollWidth": 390,
+    "width": 390
+  }
+]

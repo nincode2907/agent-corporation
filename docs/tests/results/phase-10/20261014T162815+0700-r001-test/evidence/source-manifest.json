@@ -1,0 +1,105 @@
+{
+  "phase": "phase-10",
+  "test_batch_id": "20261014T162815+0700-r001-test",
+  "captured_at": "2026-10-14T16:28:15+07:00",
+  "git_head": "9bc4066cc75adb0fc89c89eb54784e81a46629d3",
+  "worktree": "dirty",
+  "git_status_at_capture": [
+    " M README.md",
+    " M apps/api/src/agent_corporation_api/main.py",
+    " M apps/api/src/agent_corporation_api/modules/README.md",
+    " M apps/api/src/agent_corporation_api/modules/governance/__init__.py",
+    " M apps/web/src/App.tsx",
+    " M apps/web/src/RuntimePanel.css",
+    " M apps/web/src/RuntimePanel.tsx",
+    " M docs/master-plan.html",
+    " M docs/master-plan.md",
+    " M docs/product-spec.html",
+    " M docs/product-spec.md",
+    " M scripts/validate_phase00.py",
+    "?? apps/api/migrations/versions/20261014_0008_governance_approvals.py",
+    "?? apps/api/src/agent_corporation_api/modules/governance/approval_router.py",
+    "?? apps/api/src/agent_corporation_api/modules/governance/approvals.py",
+    "?? apps/api/src/agent_corporation_api/modules/governance/permission.py",
+    "?? apps/api/tests/test_phase10_approvals.py",
+    "?? docs/decisions/0002-employee-chat.html",
+    "?? docs/decisions/0002-employee-chat.md",
+    "?? docs/designs/",
+    "?? docs/evidence/phase-10.md",
+    "?? docs/reviews/",
+    "?? docs/tests/results/phase-06/20261014T161904+0700-r004-test/",
+    "?? docs/tests/results/phase-07/20261014T161904+0700-r004-test/",
+    "?? docs/tests/results/phase-08/20261014T161904+0700-r002-test/",
+    "?? docs/tests/results/phase-08/20261014T162815+0700-r003-test/",
+    "?? docs/tests/results/phase-09/",
+    "?? docs/tests/results/phase-10/",
+    "?? scripts/render_employee_chat_docs.py"
+  ],
+  "files": [
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/permission.py",
+      "sha256": "8c0928ca52848c35b1c345591cd8e36099cda2a7df3f7432021a5283ff5dd005",
+      "bytes": 4689
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/approvals.py",
+      "sha256": "892eca00e1d5fbd363cc6bc0face251a20a36d72aada78fd2ea3aaea684f1f9f",
+      "bytes": 23798
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/approval_router.py",
+      "sha256": "f2eca7ee47b4a28ba913611c1b0ac5a0d2dc3e35997c0c59026e051075fe5e20",
+      "bytes": 3772
+    },
+    {
+      "path": "apps/api/migrations/versions/20261014_0008_governance_approvals.py",
+      "sha256": "7afc299f54d9c5295bb1afe55b3e92a450551a86f23cb0cae5248d91d4db5e81",
+      "bytes": 5331
+    },
+    {
+      "path": "apps/api/tests/test_phase10_approvals.py",
+      "sha256": "2e0e53d03f913be73a99b3e8be0e6895bf3d49d5135600cd4e8e8b0ab83442bc",
+      "bytes": 6418
+    },
+    {
+      "path": "apps/api/tests/test_owner_auth.py",
+      "sha256": "5effed0c34c8b0d0daf28d9fe5dbfb2e5d2de6f70feaf9c6f30579db31e92e1f",
+      "bytes": 8956
+    },
+    {
+      "path": "apps/web/src/App.tsx",
+      "sha256": "b25beb04b44d79c85a9a778bf3b31b7c37720ec6512f40ed82a1913d7d10d221",
+      "bytes": 31591
+    },
+    {
+      "path": "apps/web/src/RuntimePanel.tsx",
+      "sha256": "d00c263b11b019beaf98f17a075d57453b153b7fdd9efd23184f8993f257919b",
+      "bytes": 55516
+    },
+    {
+      "path": "apps/web/src/RuntimePanel.css",
+      "sha256": "bd83a6fb7b49c19711bc31a1e60a0c48b150de565044a454024ab9d142d63a2a",
+      "bytes": 16373
+    },
+    {
+      "path": "docs/tests/phases/phase-10.md",
+      "sha256": "7ca2a4fd3287534b4688b82984b14bb73e792d18fb9ebc6e57c47d94f6c00417",
+      "bytes": 5651
+    },
+    {
+      "path": "docs/tests/RULES.md",
+      "sha256": "d234a36a249bbdd27703826ac0e80d25aece859577d7d4c9c0e65b1ff22f96ba",
+      "bytes": 23502
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "f44df9ca9b7126cfe4c14273e7a473a5d2da3c11d710242801491587f9732dd8",
+      "bytes": 91227
+    },
+    {
+      "path": "docs/product-spec.md",
+      "sha256": "29ce13218e4e2d5179f04397b654ee47ebbb1fc2115fcb1605204ab6cf0c7d77",
+      "bytes": 74580
+    }
+  ]
+}

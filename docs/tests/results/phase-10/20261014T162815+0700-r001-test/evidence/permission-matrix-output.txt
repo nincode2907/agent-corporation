@@ -1,0 +1,12 @@
+exact_match_allows=PASS
+action_type_mismatch_denies=PASS
+revision_mismatch_denies=PASS
+company_mismatch_denies=PASS
+environment_mismatch_denies=PASS
+payload_mismatch_denies=PASS
+run_mismatch_denies=PASS
+policy_mismatch_denies=PASS
+expired_denies=PASS
+consumed_denies=PASS
+default_deny=PASS
+unknown_action_denies=PASS

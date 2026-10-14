@@ -1,5 +1,20 @@
 # Bằng chứng Phase 05 — Kết nối Codex server local
 
+Cập nhật: 14/10/2026 · Bàn giao: **Chờ Chủ tịch nghiệm thu** · Inference grant: **0**.
+
+## Kết quả kiểm định hiện tại — 14/10/2026
+
+- Pipeline [test độc lập r004](../tests/results/phase-05/20261014T144929+0700-r004-test/report.md) → [remake r004](../remakes/phase-05/20261014T145852+0700-r004-remake/remake.md) → [retest độc lập r005](../tests/results/phase-05/20261014T150201+0700-r005-test/report.md): 14/15 ca `clean/pass`, 0 fail, còn P05-06 `need-change/blocked`.
+- Runtime gateway hiện là `127.0.0.1:15600`; GET health/models hoạt động, 7 model IDs. Catalog và profile không xác nhận entitlement. Source hiện đã có Owner session/CSRF/profile và queue; các ghi nhận thiếu implementation ở bản bàn giao cũ bên dưới là lịch sử.
+- Đã sửa encoding/JSON malformed: probe trả trạng thái contract mismatch thay vì 500. Đã sửa profile model/effort/fallback: explicit save kiểm intersection model catalog và capability snapshot qua GET `/v1/models` + `/api/models`; unsupported 422, unavailable 503 không đổi profile/version/audit. Profile read/startup không gọi metadata gateway. Probe vẫn chỉ GET `/health` + `/v1/models`.
+- 68 kiểm thử API tập trung, PostgreSQL disposable và API profile persistence/audit/version/auth/CSRF/429/unknown/fallback đều đạt; lint/build đạt. [UI retest](../tests/results/phase-05/20261014T150201+0700-r005-test/evidence/P05-ui-observation.md) xác minh live probe, invalid UTF-8, 401, offline, schema mismatch, 429 và recovery bằng Chrome. Không dùng fixture làm proof inference/CG01.
+- CG01 hiện `allowed=false`, `reason=missing_or_invalid_proof`. Cần trusted evidence đúng fingerprint/endpoint/expiry cho isolation, privacy-retention và cancellation. Không khẳng định gateway hiện đã bị exploit; không tạo proof bằng giá trị giả. Đợt cần inference sau này phải có grant riêng.
+- Không đọc secret hoặc native transcripts, không gọi inference, không ghi DB/restart gateway hoặc API dùng chung. Tài nguyên QA riêng đã dọn. Phase 05 và dependency 03/04 không được tự nghiệm thu.
+
+## Bản bàn giao ngày 08/10/2026 — lịch sử
+
+Các mục còn lại ghi nhận cấu hình, implementation và giới hạn tại thời điểm 08/10/2026; không thay kết quả cập nhật ở trên.
+
 Ngày: 08/10/2026 · Bàn giao: **Chờ Chủ tịch nghiệm thu** · Inference grant: **0**.
 
 ## Dependency và quyền

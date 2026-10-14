@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Phase 07 bị chặn tại Phase 06/CG01 và thiếu Owner auth để bảo vệ SSE scope; Phase 08 phụ thuộc Phase 07 và cần IG08 chạy thật. Phase 09 đã có Work Order board/API/queue commands và nền lease đơn luồng; chưa nối queue vào worker/runtime, chưa kiểm chứng migration/lease trên PostgreSQL disposable, và Phase 08 chưa được nghiệm thu. Grant thật = 0, chưa chạy model thật.
+> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09–10 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Kiểm định lại 14/10: Phase 06 còn CG01/grant/run thật; Phase 07 còn hai lỗi reconnect; Phase 08 thiếu live run/IG08; Phase 09 thiếu lease/recovery/retry. Phase 10 đang được triển khai theo yêu cầu riêng, nhưng chưa tích hợp executor và phụ thuộc Phase 09 chưa đạt. Grant thật = 0, chưa chạy model thật.
 
 ## 1. Hướng đi đã chọn
 
@@ -13,6 +13,7 @@ Xây nền tảng hoàn chỉnh trước, kiểm thử bằng công ty demo và 
 - Chairman Mode: giao mục tiêu, duyệt đề xuất, nhận báo cáo. Operator Mode: xem task/run/agent/tools/metrics/config.
 - Dashboard → Live Office 2D → Agent Inspector dùng chung; replay từ dữ liệu đã lưu.
 - Work Order → lập kế hoạch → thực hiện → kiểm tra → sửa nếu cần → Chủ tịch nghiệm thu.
+- Bổ sung V1 ngày 14/10/2026: Employee Chat riêng giữa Chủ tịch và từng nhân viên; tách Work Order, approved versions, text-only/no tools/no config mutation. [Thiết kế](designs/employee-chat.md) · [CG01 review](reviews/cg01-20261014/report.md).
 - Nhân viên là hồ sơ version hóa, không phải tiến trình suy nghĩ liên tục. Chỉ kích hoạt khi có việc.
 - Chief of Staff đầu tiên; CEO, hội đồng nhiều agent và văn phòng 3D để sau V1 khi có nhu cầu.
 
@@ -115,7 +116,7 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09 đang triển khai; Phase 10–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Phase06–07 đã có source Owner/runtime/SSE và remake; các gate run thật vẫn thiếu CG01/grant, không tự nghiệm thu. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–10 đang triển khai; Phase 11–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Kiểm định lại Phase 06–09 ngày 14/10 vẫn ghi nhận CG01/grant, reconnect, live-run và worker/retry gaps; xem nhật ký từng phase bên dưới. Phase 10 đang được code, chưa được nghiệm thu. Inference grant = 0.
 
 Mỗi phase có tab **Kiểm thử** hiển thị pipeline AI và lịch sử `docs/tests/results/phase-NN/` + `docs/remakes/phase-NN/`. Chủ tịch chỉ theo dõi, không tự tick issue. AI triển khai bàn giao cho AI khác test; AI test note issue, AI remake ghi bản sửa hoặc phản biện, AI test độc lập xác minh lại, tiếp tục các vòng đến OK hoặc blocker thật. Dấu ✓ tự cập nhật từ files AI: đã sửa chờ retest, sửa được test lại xác nhận, hoặc phản biện được AI test chấp nhận. Phản biện chưa xác minh không đóng issue; retest vẫn lỗi thì mở lại và bỏ tick. Issue đóng vẫn giữ lịch sử và links; case biến mất khỏi report mới không tự coi là đã fix. Pipeline chỉ OK khi report mới kết luận đạt, gates đạt và không còn issue bắt buộc chưa xác minh. AI render HTML sau mỗi bước; refresh trang để xem tiến độ đã lưu. HTML là bảng theo dõi, không khởi chạy agent nền. Nghiệm thu chính thức vẫn theo Markdown/quyết định Chủ tịch.
 
@@ -404,6 +405,7 @@ Seed manifest, kiểm tra reset/isolation và ảnh nhãn demo.
 #### Phạm vi
 
 - Adapter HTTP tới codex-server hiện có; base URL cấu hình, contract/capability probe, auth ref và secret redaction.
+- [TDG-CG01](designs/cg01-technical-decision.md): quyết định sớm target hiện tại có đáp ứng CG01 hoặc phải trình isolated gateway; OPEN, không tự đổi shared target/provisioning hoặc bỏ gate. Chốt trước inference 06 và backend chat 13.
 - Tách role/persona, model/tools/skills, policy; xác thực lựa chọn model thực thay vì hardcode nhãn GPT-6.1 Sol High.
 - Health/auth status, profile config tối thiểu, owner-only model config; adapter giả cho lỗi và test miễn phí.
 
@@ -442,6 +444,8 @@ Contract/schema, health/models responses đã lọc, lỗi probe và profile sna
 
 09/10/2026 — Retest độc lập Phase 05 r003 xác minh remake r002. API health/gateway tests 9/9, web lint/build và validator đạt; remake giữ đúng blocker cho live gateway, Owner auth/profile, durable queue/fallback và CG01. Không probe gateway, inference, ghi DB hoặc sửa source sản phẩm. C03 demo/UI và các criteria live/Owner/queue/CG01 còn blocked; 9/15 ca clean, 6/15 blocked. [Report r003](tests/results/phase-05/20261009T111044+0700-r003-test/report.md), [sổ vòng](tests/results/phase-05/README.md). Phase 05 vẫn Chờ nghiệm thu; pipeline Review bị chặn.
 
+14/10/2026 — Kiểm định lại source hiện tại theo pipeline độc lập r004 → remake r004 → retest r005. Gateway `127.0.0.1:15600` trả health/models; Owner session/CSRF/profile/audit/version và durable queue 429 đã được kiểm chứng bằng PostgreSQL cô lập. Sửa hai lỗi: response UTF-8/JSON sai làm probe trả 500; profile nhận model/effort/fallback không được catalog hỗ trợ. Profile save hiện đối chiếu GET `/v1/models` và GET `/api/models`, không suy entitlement và không inference; catalog offline giữ nguyên profile. Retest có **14/15 clean/pass, 0 fail**, 68 kiểm thử API tập trung cùng lint/build đạt; UI probe/error/recovery được kiểm bằng Chrome trong runtime QA riêng. Còn P05-06 **blocked**: CG01 trả `missing_or_invalid_proof`, thiếu trusted evidence về isolation/privacy-retention/cancellation. Không tạo proof hoặc cấp grant giả, không sửa/restart runtime dùng chung; tài nguyên kiểm thử đã dọn. Phase 05 vẫn **Chờ nghiệm thu**, pipeline **Review bị chặn** chỉ tại CG01. Xem [report r004](tests/results/phase-05/20261014T144929+0700-r004-test/report.md), [remake r004](remakes/phase-05/20261014T145852+0700-r004-remake/remake.md), [report r005](tests/results/phase-05/20261014T150201+0700-r005-test/report.md) và [sổ vòng](tests/results/phase-05/README.md).
+
 #### Tài liệu liên quan
 
 - [Bằng chứng Phase 05](evidence/phase-05.md)
@@ -451,7 +455,7 @@ Contract/schema, health/models responses đã lọc, lỗi probe và profile sna
 
 - Mốc: B
 - Trạng thái: Bị chặn
-- Phụ thuộc: 05; nền event/state của 03
+- Phụ thuộc: 05; TDG-CG01 chốt target và CG01 đạt trước inference; nền event/state của 03
 - Mục tiêu: Một agent thử nghiệm thực hiện nhiệm vụ thật có giới hạn.
 
 #### Phạm vi
@@ -492,6 +496,8 @@ Trace thật đã lọc, artifact, timeout/deny/abort test, usage provenance.
 08/10/2026 — Theo yêu cầu Chủ tịch tiếp Phase 06 sau khi làm lại test Phase 05, đã kiểm dependency trước khi triển khai. Phase 05 chưa được nghiệm thu: report r002 kết luận chưa đủ bằng chứng, live gateway offline, Owner auth/profile, durable queue/fallback và CG01 còn blocked; Phase 04 cũng Chờ nghiệm thu. CG01 chưa chứng minh isolation/read boundary và retention, inference grant = 0; backend hiện có run/checkpoint/events nền nhưng chưa có authenticated Owner grant/reservation hoặc ModelCall ledger/dispatcher. Vì vậy dừng trước khi thêm dispatcher/migration/API và trước khi gửi input; không gọi model, không restart shared gateway/API, không tự chọn instance thay thế. API health/gateway unit tests (9) pass; đây không thay bằng chứng Phase 06. Xem [report preflight Phase 06](tests/results/phase-06/20261008T170343+0700-r001-test/report.md). Điều kiện tiếp tục: dependency/gates được xử lý theo quyết định Chủ tịch, CG01 được chứng minh, và inference chỉ khi có grant riêng đúng test batch/mục đích/hạn mức/expiry.
 
 09/10/2026 — Theo chỉ thị sửa blocker và thực hiện lại Phase 06–07, đã triển khai Owner authentication/CSRF/profile bền vững, runtime text-only có grant/gate và reservation một call toàn ứng dụng, cùng committed event feed/SSE/UI. Client gateway mặc định được đồng bộ sang cổng 15600 theo registry/source và kiểm tra GET health/models; không sửa server dùng chung. AI độc lập r002 phát hiện lỗi GET/counter, proof sai định dạng, usage thiếu và lifecycle task; các lỗi được sửa trong [remake r002](remakes/phase-06/20261009T145834+0700-r002-remake/remake.md). Retest r003 ghi nhận 73 API tests và 5 kiểm tra bổ sung đạt trên PostgreSQL disposable ở migration 0006; 14 tests framework, web lint/build và browser QA riêng đạt. Sau đó bổ sung xử lý lỗi DB không echo SQL parameters; 34 focused unit tests của AI remake và 53/53 unit tests của AI độc lập trên source cuối đều đạt; không chạy lại PostgreSQL suite sau thay đổi handler. Report r003 đã chốt: 10 ca clean/pass, 6 ca blocked, không có ca fail. Xem [evidence Phase 06](evidence/phase-06.md), [report nguồn r002](tests/results/phase-06/20261009T121142+0700-r002-test/report.md), [retest r003](tests/results/phase-06/20261009T145600+0700-r003-test/report.md) và [sổ vòng](tests/results/phase-06/README.md). Phase vẫn Bị chặn tại CG01, grant/run thật và nghiệm thu dependency; không tự đánh dấu Hoàn tất, không gọi inference hoặc mở Phase 08.
+
+14/10/2026 — Kiểm định độc lập lại source hiện tại r004: 7 clean, 9 blocked, không fail. Owner auth/session checks và local tests đạt; CG01, grant/run thật, cancellation/usage, cross-scope DB integration và demo thật còn thiếu bằng chứng. Giữ trạng thái Bị chặn. Xem [report r004](tests/results/phase-06/20261014T161904+0700-r004-test/report.md).
 
 ### Phase 07 — Luồng event và khôi phục kết nối
 
@@ -539,6 +545,8 @@ Log reconnect/crash, event IDs và state sau phục hồi.
 
 09/10/2026 — Theo chỉ thị sửa blocker và thực hiện lại Phase 06–07, đã triển khai Owner authentication/CSRF/profile bền vững, runtime text-only có grant/gate và reservation một call toàn ứng dụng, cùng committed event feed/SSE/UI. Client gateway mặc định được đồng bộ sang cổng 15600 theo registry/source và kiểm tra GET health/models; không sửa server dùng chung. AI độc lập r002 phát hiện lỗi GET/counter, proof sai định dạng, usage thiếu và lifecycle task; các lỗi được sửa trong [remake r002](remakes/phase-07/20261009T145834+0700-r002-remake/remake.md). Retest r003 ghi nhận 73 API tests và 5 kiểm tra bổ sung đạt trên PostgreSQL disposable ở migration 0006; 14 tests framework, web lint/build và browser QA riêng đạt. Sau đó bổ sung xử lý lỗi DB không echo SQL parameters; 34 focused unit tests của AI remake và 53/53 unit tests của AI độc lập trên source cuối đều đạt; không chạy lại PostgreSQL suite sau thay đổi handler. Report r003 đã chốt: 12 ca clean/pass, 3 ca blocked, không có ca fail. Xem [evidence Phase 07](evidence/phase-07.md), [report nguồn r002](tests/results/phase-07/20261009T121142+0700-r002-test/report.md), [retest r003](tests/results/phase-07/20261009T145600+0700-r003-test/report.md) và [sổ vòng](tests/results/phase-07/README.md). Phase vẫn Bị chặn tại CG01, grant/run thật và nghiệm thu dependency; không tự đánh dấu Hoàn tất, không gọi inference hoặc mở Phase 08.
 
+14/10/2026 — Kiểm định độc lập lại r004: 5 clean, 2 fail, 8 blocked. Reconnect EventSource sau event vẫn nhận HTTP 400 vì query cursor ban đầu không khớp `Last-Event-ID`; gap/reconnect status cũng chưa rõ. Không sửa ngoài phạm vi lượt này. Giữ trạng thái Bị chặn. Xem [report r004](tests/results/phase-07/20261014T161904+0700-r004-test/report.md).
+
 ### Phase 08 — Live Office và Agent Inspector
 
 - Mốc: B
@@ -583,6 +591,8 @@ Video/ảnh demo thật, event correlation và kiểm tra replay/redaction.
 
 09/10/2026 — Preflight trước code Phase 08 ghi nhận Phase 07 chưa có run thật/IG08 và không cho phép dựng mock để thay gate; xem [preflight r001](tests/results/phase-08/20261009T114228+0700-r001-test/report.md). Theo chỉ thị tiếp tục code Phase 08, đã triển khai S02/S03/S04 trong web shell: Office hiển thị run từ status API và phòng ban fixture có nhãn riêng; Inspector xem trường run/event đã allowlist; Replay lọc và seek trên event đã tải, chỉ đọc. Các view cần Owner session; không thêm endpoint/migration, không gọi inference. Phòng ban không được gán agent khi thiếu quan hệ run–employee; summary/tools/file diff/messages/profile chi tiết hiện chưa có nguồn và được đánh dấu rõ. Xem [evidence Phase 08](evidence/phase-08.md). Phase 08 vẫn Bị chặn chờ kiểm định riêng, dependency Phase 06–07 và IG08 run thật; chưa đánh dấu Hoàn tất.
 
+14/10/2026 — Kiểm định độc lập lại sau thay đổi Phase 10 UI r003: 5 clean, 10 blocked, không fail. Office/Inspector/Replay wiring và build vẫn đạt; reconnect regression Phase 07 vẫn xuất HTTP 400. Live run, IG08, event/DB ACL, browser responsive/state coverage và replay payload đối chiếu còn thiếu. Giữ trạng thái Bị chặn. Xem [report r003](tests/results/phase-08/20261014T162815+0700-r003-test/report.md) và [sổ vòng](tests/results/phase-08/README.md).
+
 ### Phase 09 — Bảng nhiệm vụ và hàng đợi
 
 - Mốc: B
@@ -595,6 +605,8 @@ Video/ảnh demo thật, event correlation và kiểm tra replay/redaction.
 - Work Order gồm mục tiêu, đầu ra, acceptance, quyền, deadline, budget, điểm dừng và assignee.
 - Queue bền vững, ưu tiên, concurrency/lease, states blocked/awaiting approval/quality/rework/accepted.
 - Pause ngăn bước mới; abort HTTP request đang chạy khi cần; resume từ checkpoint xác minh, retry có attempt mới và idempotency.
+
+- Hợp đồng nhận draft từ chat: Owner review selected excerpts rồi tạo draft có provenance; submit/enqueue là lệnh riêng, không tự dispatch từ tin nhắn.
 
 #### Có gì mới
 
@@ -627,12 +639,12 @@ Queue/lease/crash tests và state transition evidence.
 
 09/10/2026 — Theo chỉ thị “code phase 9”, đã thêm API Owner-scoped cho đọc/tạo Work Order và action queue, migration queue/command receipts có RLS, ưu tiên, idempotency và optimistic transition version; UI S05 tạo task, xếp hàng, lọc/tìm, pause/resume/hủy và luồng nghiệm thu/rework có điều kiện. Model request cap khóa ở 0, tools không được cấp, không có dispatch tự động. Lint/build đạt; 59 API/unit regression tests chọn lọc đạt; xem [evidence Phase 09](evidence/phase-09.md). Chưa có independent review, PostgreSQL migration/integration, lease/concurrency/restart worker, demo hai task hoặc run liên kết để acceptance. Dependency Phase 08 vẫn bị chặn; chưa nghiệm thu Phase 09, chưa gọi inference/grant = 0.
 
-11/10/2026 — Theo yêu cầu code trước Phase 10, bổ sung migration `20261011_0008` và API nội bộ claim/heartbeat có token fencing, ưu tiên queue, advisory lock giới hạn một lease active/company, cùng pause/resume/cancel thu hồi lease. Lease hết hạn chỉ tự requeue vì primitive chưa dispatch side effect; không nối queue vào worker/runtime khi Phase 08 còn bị chặn, inference cap vẫn 0. Checklist/review và PostgreSQL integration chưa nghiệm thu; xem [bằng chứng Phase 09](evidence/phase-09.md). Phase 09 tiếp tục Đang triển khai.
+14/10/2026 — Kiểm định độc lập lại sau thay đổi Phase 10 UI r002: 5 clean, 3 fail, 7 blocked. Worker lease/concurrency, crash recovery và retry attempt lineage còn thiếu; DB/UI state integration và demo queue chưa có bằng chứng. Lint/build và focused tests đạt nhưng không thay behavior bắt buộc. Giữ trạng thái Đang triển khai, không nghiệm thu. Xem [report r002](tests/results/phase-09/20261014T162815+0700-r002-test/report.md) và [sổ vòng](tests/results/phase-09/README.md).
 
 ### Phase 10 — Quyền hạn và hộp phê duyệt
 
 - Mốc: B
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 09; baseline đã có ở 06
 - Mục tiêu: Chủ tịch kiểm soát hành động vượt thẩm quyền.
 
@@ -641,6 +653,8 @@ Queue/lease/crash tests và state transition evidence.
 - Ba cấp: tự động trong scope, ủy quyền có hạn, Chủ tịch duyệt; backend và executor cùng cưỡng chế.
 - Approval gắn action/payload hash/company/run, policy version, expiry, budget; deny stale/replay/cross-scope.
 - Secrets references, audit owner-only configuration; policy không cho agent tự cấp quyền.
+
+- Thiết kế chat operation scope/grant và reviewed transition; lời model không là approval/config command, không tự cấp quyền từ chat.
 
 #### Có gì mới
 
@@ -671,7 +685,7 @@ Bypass/replay/stale tests và audit trail.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+14/10/2026 — Theo yêu cầu kiểm định lại Phase 06–09 rồi code Phase 10, đã thêm migration `20261014_0008`, Owner-scoped approval inbox/API, canonical payload hash, idempotency receipts, fail-closed permission evaluator và S06 review UI. API decision chỉ ghi audit, không dispatch. AI độc lập r001 phát hiện evaluator thiếu ràng buộc `action_type`/`task_revision`; remake r001 thêm checks và negative tests, retest r002 xác nhận evaluator-level fix. Retest r002: 6 clean, 9 blocked, không fail; approval lifecycle/tamper/replay/race, populated cross-scope RLS, executor bypass/stop race và browser audit UI còn blocked. Toàn API suite 102 passed/10 skipped, web lint/build đạt; Alembic 0008 chạy trên PostgreSQL disposable 18.6 và catalog xác nhận FORCE RLS/scoped policies. Không migration DB runtime, inference, grant hoặc gateway. Phase 09 còn fail lease/recovery/retry và Phase 06 CG01 vẫn blocked; Phase 10 chưa tích hợp executor, chưa nghiệm thu. Xem [evidence Phase 10](evidence/phase-10.md), [test r001](tests/results/phase-10/20261014T162815+0700-r001-test/report.md), [remake r001](remakes/phase-10/20261014T163334+0700-r001-remake/remake.md), [retest r002](tests/results/phase-10/20261014T163443+0700-r002-test/report.md) và [sổ vòng](tests/results/phase-10/README.md).
 
 ### Phase 11 — Hệ thống công cụ thực thi
 
@@ -765,7 +779,7 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 
 - Mốc: C
 - Trạng thái: Chưa triển khai
-- Phụ thuộc: 12
+- Phụ thuộc: 12; target TDG-CG01 được Owner chốt trước chat backend; baseline 03/06/07/08/10 cho chat foundation.
 - Mục tiêu: Quản lý tập đoàn như một tổ chức có trách nhiệm.
 
 #### Phạm vi
@@ -773,6 +787,9 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - Organization chart, department, reporting line; permanent/on-demand/contractor với trạng thái thật.
 - Employee version lưu role/persona, model + reasoning, tools/skills, context và policy refs.
 - Inspector dùng chung mọi nơi; xem workload và hiệu suất gắn đúng profile version.
+
+- Employee Chat S15: profile/org chart/Inspector → conversation riêng; schema/RLS/pins/idempotent turns, durable app history, text-only backend và fixtures. Send thật khóa đến IGCHAT; không triển khai bằng task/run giả.
+- Bổ sung tiêu chí EC01–07/10: private scope, versions/ACL, không tools/config side effects, resume không gateway memory; [thiết kế và acceptance](designs/employee-chat.md).
 
 #### Có gì mới
 
@@ -818,6 +835,8 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - Approve/reject/offboard; thu hồi quyền và stop/drain các run trước chuyển trạng thái.
 - Lưu assessment thử việc; benchmark tự động nâng cấp ở Phase 17, giai đoạn này dùng evidence suite cố định.
 
+- Offboard/drain/revoke profile áp cho chat: chặn lượt mới, xử lý in-flight qua stop và giữ lịch sử version cũ.
+
 #### Có gì mới
 
 - Inbox tuyển dụng, thử việc, thay đổi hình thức nhân sự và nghỉ việc.
@@ -862,6 +881,8 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - Promotion: bài học → evidence → đề xuất → reviewer/Chủ tịch duyệt → version; rollback/expiry.
 - Task context selection và chống đưa tài liệu không tin cậy thành policy.
 
+- Chat context manifest có ACL/version; private transcript không tự thành corp memory. Context cap theo transport, summary cần quyền/grant riêng; source revoked chặn gửi.
+
 #### Có gì mới
 
 - Xem context được cấp, nguồn kiến thức và lịch sử memory.
@@ -905,6 +926,8 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - Ledger Company → Department → Employee → Task → Model → call/span quan sát được; reconcile và dedup usage cumulative.
 - Pricing versions tại thời điểm gọi; reserve/settle/release concurrent budgets theo task/day/month.
 - API trả thực, subscription, local compute và ước tính điện tách riêng; thiếu usage/giá ghi unknown.
+
+- Subject chat riêng: company → employee → conversation → turn → call; shared reservation/concurrency với Work Order, unknown/late corrections không zero/double count, không nhập chat vào accepted-task KPI.
 
 #### Có gì mới
 
@@ -1029,7 +1052,7 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 
 - Mốc: D
 - Trạng thái: Chưa triển khai
-- Phụ thuộc: 18; stop tối thiểu đã có ở 06
+- Phụ thuộc: 18; chat foundation 13/14/15/16 và quyền 10; stop tối thiểu đã có ở 06
 - Mục tiêu: Cô lập run bất thường và phục hồi có bằng chứng.
 
 #### Phạm vi
@@ -1037,6 +1060,8 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - Incident detection: loop, timeout, token burst, tool deny, stalled lease, server disconnect.
 - Global Emergency Stop durable: chặn dispatch/request/tool mới, abort request và worker app đang chạy; không dừng codex-server chung hoặc run ứng dụng khác.
 - Incident timeline, reconciliation, safe retry/manual intervention và recovery drill.
+
+- Emergency Stop bao phủ chat và Work Order cùng epoch/pool; no unknown replay. IGCHAT sau 19 kiểm EC01–10 baseline + EC12 live; EC11 restore ở release 22–23. Cần CG01 + authorization/grant riêng cho model thật; foundation từ 13 không tự mở inference.
 
 #### Có gì mới
 
@@ -1073,7 +1098,7 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 
 - Mốc: D
 - Trạng thái: Chưa triển khai
-- Phụ thuộc: 19
+- Phụ thuộc: 19; IGCHAT cho tích hợp Employee Chat trước mốc vận hành 20
 - Mục tiêu: Có báo cáo ngày/tháng dựa trên việc đã chạy.
 
 #### Phạm vi
@@ -1170,6 +1195,8 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - Backup/restore database + artifacts + config refs; secrets xử lý riêng; version-compatible migration/recovery.
 - Crash recovery và restore drill có checkpoint/thread reconciliation, không tự replay side effects.
 
+- Backup/restore/private chat retention: transcript/context pins/call/ledger/proposal links có scope/ACL và tombstones; không tự replay call sau restore (EC02/11).
+
 #### Có gì mới
 
 - Trang backup/restore và tình trạng hệ thống, hướng dẫn khôi phục có kiểm tra.
@@ -1205,7 +1232,7 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 
 - Mốc: E
 - Trạng thái: Chưa triển khai
-- Phụ thuộc: 22; toàn bộ phase 00–22 được nghiệm thu
+- Phụ thuộc: 22; toàn bộ phase 00–22 được nghiệm thu; IGCHAT có evidence đạt
 - Mục tiêu: Nền tảng sẵn sàng để Chủ tịch bắt đầu vận hành thật.
 
 #### Phạm vi
@@ -1213,6 +1240,8 @@ Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm th
 - E2E nhiệm vụ thật sandbox: goal → plan → worker tools → reviewer → approval → acceptance → ledger/report.
 - Polish UI, error handling, pagination/virtualization/retention, hiệu năng, cài local và tài liệu vận hành.
 - Release checklist định lượng, bằng chứng tất cả gates, known limits; Chủ tịch nghiệm thu V1 rồi mới mở real onboarding.
+
+- Employee Chat live end-to-end (EC01–EC12): ba lối vào, private scope/versions, saved history/resume/ledger/stop và reviewed promotion; R2–R8 bao phủ chat. Không thay Work Order R1 bằng chat.
 
 #### Có gì mới
 
@@ -1262,7 +1291,7 @@ Các ngưỡng dưới đây là baseline đặc tả Phase 00 đã được Ch�
 
 ### Checkpoint tích hợp trước tiếp bước
 
-Chi tiết tại Product Spec V1 mục 13; đây là điều kiện kiểm chứng các phần đã triển khai, không thêm feature. Gate có report/config/version/batch/grant/evidence và PASS/FAIL; FAIL giữ Bị chặn, không thay run thật bằng mock. PASS không cấp quyền bắt đầu phase tiếp. Hiện mọi IG **Chưa thực hiện**; Phase 00 chỉ nghiệm thu định nghĩa.
+Chi tiết tại Product Spec V1 mục 13; đây là điều kiện kiểm chứng các phần đã triển khai, không thêm feature. Gate có report/config/version/batch/grant/evidence và PASS/FAIL; FAIL giữ Bị chặn, không thay run thật bằng mock. PASS không cấp quyền bắt đầu phase tiếp. IG03 có evidence kiểm định trong Phase 04; IG08/12/16/20 chưa có live acceptance đầy đủ. IGCHAT mới là thiết kế bổ sung 14/10/2026, chưa chạy; Phase 00 chỉ nghiệm thu định nghĩa baseline cũ.
 
 | Gate | Sau / trước phase | Luồng kiểm chứng |
 | --- | --- | --- |
@@ -1270,9 +1299,10 @@ Chi tiết tại Product Spec V1 mục 13; đây là điều kiện kiểm chứ
 | IG08 | 08 / 09 | Run thật text-only → events/SSE → Live Office/Inspector/replay; reconnect/error/usage, grant IG08 riêng nếu inference |
 | IG12 | 12 / 13 | Work Order → delegation → quyền/approval/tools → review/rework/evidence; budget/stop propagation, grant IG12 riêng |
 | IG16 | 16 / 17 | Calls/usage → ledger/budget/finance; dedup/late/unknown và lifetime cohort xuyên kỳ tách period cost; grant IG16 riêng nếu inference |
+| IGCHAT | 19 / 20 | Private Employee Chat từ S07/S03 → approved pins/context → call được cấp → saved history/resume → ledger/stop → reviewed draft; EC01–10 baseline + EC12 live; EC11 restore ở release 22–23. Cần foundation 13/14/15/16/19, CG01 và grant batch riêng; qualification cô lập trong batch được cấp, general send chỉ sau PASS; mock không thay live evidence |
 | IG20 | 20 / 21 | Task/events/ledger/incident → lịch/report/inbox; sleep/restart/dedup, nguồn số khớp query; grant IG20 riêng nếu inference |
 
-R1–R8 tại release Phase 23 cần kèm evidence IG03/08/12/16/20. Gateway capability/isolation/privacy không đạt thì CG01: blocked + gap report cho Chủ tịch, không tự nới quyền/sửa/restart gateway shared hoặc tự đổi adapter. Phương án tiếp theo cần quyết định riêng; mock/đợt test thu hẹp không đạt thay tiêu chí runtime chưa kiểm chứng.
+R1–R8 tại release Phase 23 cần kèm evidence IG03/08/12/16/20 và IGCHAT. Bổ sung chat là thiết kế chưa triển khai/nghiệm thu; tất cả trạng thái phase giữ nguyên. Xem [ADR-0002](decisions/0002-employee-chat.md) và [thiết kế S15](designs/employee-chat.md). Gateway capability/isolation/privacy không đạt thì CG01: blocked + gap report cho Chủ tịch, không tự nới quyền/sửa/restart gateway shared hoặc tự đổi adapter. Phương án tiếp theo cần quyết định riêng; mock/đợt test thu hẹp không đạt thay tiêu chí runtime chưa kiểm chứng.
 
 Cost per accepted task chọn cohort bằng accepted_at rồi tính toàn bộ lifetime cost của chính task cohort, gồm retry/rework/review/children không trùng, kể cả kỳ trước. Period operating cost tính riêng theo occurred_at mọi call/resource phát sinh trong kỳ. Giữ cost basis/currency/coverage/as_of/corrections và unknown khác 0, như đặc tả mục 13.
 
@@ -1303,3 +1333,7 @@ Kiểm tra trực quan trong trình duyệt tự động chưa thực hiện đ�
 ### Nghiệm thu sau review Phase 00 — bản 1.1
 
 08/10/2026 — Chủ tịch yêu cầu bốn điều chỉnh nhỏ và nghiệm thu sau khi hoàn thành/kiểm tra nhất quán. Bốn điều chỉnh đã cập nhật vào đặc tả/ADR/roadmap; validation đạt, Phase 00 Hoàn tất. D01–D08/stack/adapter không đổi. IG03/08/12/16/20 và R1–R8 chỉ được định nghĩa, chưa kiểm chứng runtime. 0 inference, grant = 0, không quyền gọi model hoặc bắt đầu Phase 01; 01–23 giữ nguyên.
+
+14/10/2026 — Review CG01 không inference và bổ sung Employee Chat V1 theo yêu cầu Chủ tịch. [CG01 report](reviews/cg01-20261014/report.md) phân biệt VERIFIED/NOT VERIFIED/BLOCKED, quy trình V01–V07 và quyền cần bổ sung; gate vẫn đóng, không tạo proof/grant. [Thiết kế chat](designs/employee-chat.md) phân lát phase 13/14/15/16/19/22/23, thêm IGCHAT sau 19/trước 20. Đây là cập nhật tài liệu, không bắt đầu phase hoặc đổi quyết định nghiệm thu cũ.
+
+14/10/2026 — Sau review Chủ tịch: giữ kiến trúc Conversation/Work Order tách biệt; chỉnh S15 chat-first, Inspector đóng mặc định, compact composer eligibility, reviewed transition trước tạo task và call-source cost drilldown. Thêm TDG-CG01 OPEN ở 05–06 trước inference/backend chat13, không đợi release. [Prototype revision02](designs/employee-chat-prototype.html); review UI riêng không là nghiệm thu sản phẩm/CG01.

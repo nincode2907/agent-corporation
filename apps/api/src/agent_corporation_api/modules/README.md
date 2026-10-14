@@ -8,7 +8,7 @@ Các package này chỉ đánh dấu nơi đặt domain code sau khi phase liên
 | `organization` | Phòng ban, vai trò, hồ sơ nhân viên |
 | `work` | Work Order và task |
 | `execution` | Run và worker |
-| `governance` | Policy, quyền và approval |
+| `governance` | Owner auth/profile (06), policy evaluator và approval ledger/inbox (10); chưa có tool executor |
 | `observability` | Event, trace và replay |
 | `finance` | Reservation, usage và cost |
 | `knowledge` | Memory và artifact tham chiếu |

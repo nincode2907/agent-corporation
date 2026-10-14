@@ -1,7 +1,7 @@
 # Đặc tả sản phẩm Agent Corporation V1
 
-> Phiên bản đặc tả: 1.1 · Ngày: 08/10/2026 · Phase: 00.
-> Trạng thái: Đã nghiệm thu đặc tả và baseline kiến trúc — Phase 00 Hoàn tất.
+> Phiên bản đặc tả: 1.2 · Điều chỉnh sau review Chủ tịch: 14/10/2026 · Baseline Phase 00: 1.1 ngày 08/10/2026.
+> Trạng thái: Baseline 1.1 đã nghiệm thu — Phase 00 Hoàn tất. Bổ sung Employee Chat 1.2 là thiết kế V1 theo yêu cầu Chủ tịch, chưa triển khai hoặc nghiệm thu tính năng; không mở inference.
 > Runtime/inference đã chạy trong Phase 00: **0 lượt**. Hạn mức test được cấp hiện tại: **0 lượt**. Không có công ty thật của người dùng.
 
 [Trang đặc tả trực quan](product-spec.html) · [Theo dõi Phase 00](master-plan.html#phase-00) · [Quyết định nền V1](decisions/0001-v1-foundation.md) · [Bằng chứng Phase 00](evidence/phase-00.md).
@@ -28,6 +28,7 @@ V1 có một Owner local, hỗ trợ nhiều hồ sơ công ty trong store nhưn
 ### Phạm vi được giữ
 
 - Công ty/phòng ban/hồ sơ nhân viên version hóa; permanent, on-demand, contractor.
+- Employee Chat: Chủ tịch trao đổi riêng với từng nhân viên, dùng approved profile/model/context snapshot; tách Work Order, không tools hoặc đổi cấu hình. [Thiết kế S15](designs/employee-chat.md).
 - Work Order, queue, runtime qua gateway HTTP local, tool executor sandbox và giao việc nhiều agent có hạn mức.
 - Dashboard, Live Office 2D, Inspector dùng chung, replay read-only, inbox approval.
 - Ledger/budgets, benchmark/tournament, proposal tối ưu, context/memory promotion.
@@ -56,6 +57,7 @@ Văn phòng 3D, CEO được bổ nhiệm tự động, Executive Council nhiề
 | S12 | Lịch và báo cáo | Scheduled jobs, miss/catch-up, daily/monthly brief, evidence links | Máy ngủ/tắt, skipped, partial usage | 20 |
 | S13 | Thiết lập và sức khỏe | Kết nối gateway, catalog/model config, auth refs, policy/budget, backup | Health không chứng minh entitlement; error cụ thể | 05, 10, 22 |
 | S14 | Wizard thành lập | Tên/sứ mệnh/mục tiêu, model, autonomy, budget, một Chief of Staff | Real locked đến release; submit idempotent | 21, 23 |
+| S15 | Trao đổi riêng với nhân viên | Thread riêng, approved versions, composer, call/usage/cost trace, reviewed draft transition | CG01/grant/budget/stop blocked, queued, waiting, unknown, offline, version stale, archived | 13, 15, 16, 19, 22, 23 |
 
 Inspector mở từ S01/S02/S05/S07 mà giữ scope và run đang chọn. Mọi màn hình có nhãn môi trường và thời điểm dữ liệu cập nhật. Metrics `null` hiển thị “Chưa biết”, không thành 0. Empty state chỉ dẫn một hành động phù hợp, không tự seed real. Responsive mục tiêu 390 px, keyboard focus rõ, reduced motion, `lang=vi` và favicon.
 
@@ -88,6 +90,7 @@ Bước 3 chỉ xuất hiện khi policy yêu cầu; task nhỏ trong grant khô
 | F06 | Đổi model/nhân sự | Proposal + benchmark nếu cần + Owner quyết định; run cũ giữ immutable snapshot | 13, 14, 18 |
 | F07 | Máy ngủ qua lịch báo cáo | Không báo đã làm việc; dùng miss policy, dedup job và ghi catch-up thực | 20 |
 | F08 | First-run sau release | Wizard thật, budget mặc định 0, Owner cấp scope, chỉ bổ nhiệm một Chief of Staff | 21, 23 |
+| F09 | Employee Chat riêng | S07/S03 → S15 → approved versions/ACL → CG01/grant/budget/stop → chat turn → saved reply/trace; chọn excerpt → review → draft/proposal, không tự chạy Work Order | 13, 15, 16, 19, 22, 23 |
 
 ## 5. Baseline kiến trúc và tổ chức repository
 
@@ -149,6 +152,8 @@ Cập nhật cấu hình local ngày 09/10/2026: gateway đã được dự án 
 
 ### CG01 — Contingency và decision gate cho gateway
 
+[TDG-CG01](designs/cg01-technical-decision.md) là checkpoint kỹ thuật OPEN trong 05–06: chốt capability/target trước inference đầu tiên và trước backend chat13. Kết quả KEEP-BLOCKED, CURRENT-TARGET-QUALIFIED hoặc ISOLATED-PROPOSAL-REQUIRED phải dựa trên evidence/Owner decision; không thay proof/grant hoặc cấp quyền thay gateway. Không trì hoãn lựa chọn target tới release23.
+
 Nếu probe/test chỉ ra codex-server không đáp ứng capability bắt buộc, inference isolation hoặc privacy/retention đã quy định, đánh dấu gate **FAIL/Bị chặn** trước inference hoặc trước khi cấp inputs tương ứng. Lưu capability matrix, version/source fingerprint, lỗi đã lọc và requirement/test bị ảnh hưởng; không gửi thêm prompt để thử vượt boundary. Không tự nới quyền, CORS/bind, auth, native tools, logging/retention hoặc sửa/restart gateway dùng chung.
 
 Chủ tịch là người quyết định phương án tiếp theo sau khi nhận gap report:
@@ -160,6 +165,8 @@ Chủ tịch là người quyết định phương án tiếp theo sau khi nhậ
 | Đề xuất instance cô lập hoặc thay đổi cần thiết | Chỉ chuẩn bị phương án: capability/privacy, cấu hình/data/auth tách biệt, chi phí và validation/rollback | Chủ tịch phê duyệt riêng thay đổi/provisioning; nếu đổi baseline/adapter thì có ADR và sửa spec trước implement; không sửa gateway shared |
 
 Mặc định là giữ blocked, không tự chọn fallback provider/adapter/instance. HTTP gateway đã chọn vẫn là baseline; contingency không cấp quyền tạo instance khác. Sau phương án được Chủ tịch chọn, phải kiểm chứng lại capability/isolation/privacy và cấp **grant mới cho đợt test tiếp theo**, không tái dùng grant của đợt đã fail. Gate không đạt thì chưa nghiệm thu năng lực liên quan hoặc bước tích hợp phụ thuộc. Thiếu token streaming/max_tokens đã biết là giới hạn V1, không tự coi là lý do đổi kiến trúc; chỉ thiếu capability bắt buộc mới kích hoạt CG01.
+
+[Báo cáo kiểm định CG01 và quy trình V01–V07](reviews/cg01-20261014/report.md) ngày 14/10/2026: source/live GET đã kiểm; isolation/retention/cancellation thực tế chưa đủ bằng chứng. Gate vẫn BLOCKED. Proof là operator attestation; không dùng boolean hoặc source hash làm thay thế evidence. Qualification provider thật cần phương án cô lập và Owner authorization riêng, không proof tạm hoặc bypass worker.
 
 ## 7. Mô hình dữ liệu logic và các bất biến
 
@@ -173,6 +180,9 @@ Mặc định là giữ blocked, không tự chọn fallback provider/adapter/in
 | WorkOrder / TaskRevision | Goal, output, criteria, scope, deadline, budget/grant, assignee | Criteria/policy version được snapshot; revision thay đổi quyền cần Owner duyệt |
 | Run / Step / Checkpoint | Task revision, attempt, employee version, status, planned steps, resume boundary | Một run gắn đúng một revision/profile; completed không suy ra accepted |
 | ModelCall | Request span ID, gateway call ID nullable, model/effort, request status, usage | Unknown outcome không auto retry; usage nguồn cả turn, không native/global totals |
+| Conversation / ChatMessage (dự kiến Phase 13) | Owner, company/environment/employee scope, immutable pins, ordered messages và body ACL | Không chia sẻ chat sang nhân viên khác hoặc corp memory; không task giả |
+| ChatTurn / ChatContextManifest (dự kiến) | Approved employee/model/context/policy refs, selected history, state/lease/idempotency | App giữ history; stateless gateway; revoked ACL/stop/grant recheck mỗi lượt |
+| Chat promotion draft (dự kiến) | Owner-selected excerpts + hashes, reviewed draft/proposal link | Explicit review trước tạo draft, submit/approval riêng; không tự enqueue hoặc đổi quyền |
 | ToolAction / Receipt | Function/schema version, validated args digest, permission/approval refs, receipt | Prepared trước dispatch; idempotency key và outcome, không tự lặp unknown side effect |
 | Approval / Decision | Actor, action/payload hash, company/run/policy/expiry, decision | Scoped, one-use, không dùng cho payload đã sửa; chỉ Owner được duyệt owner-only |
 | Event / Outbox | Envelope v1, per-company stream sequence, payload đã lọc | Append-only; state + event + outbox cùng transaction |
@@ -291,6 +301,10 @@ Khi crash mất heartbeat, active run chuyển reconciling. Nếu không có b�
 
 `stream_seq` được cấp bằng khóa counter theo company trong transaction ghi state/event/outbox, tránh PG sequence có commit out-of-order làm cursor bỏ mất event. Event metadata append-only; retention/redaction purge nếu được Owner duyệt phải có tombstone/audit, không rewrite trạng thái lịch sử để làm đẹp báo cáo. Nội dung nhạy cảm dùng artifact ref/ACL riêng, không nhúng cả prompt/tool output vào SSE envelope.
 
+### Mở rộng chat dự kiến Phase 13
+
+35 event types hiện tại bên dưới giữ baseline. Employee Chat cần migration/registry mở rộng có kiểm thử: conversation/message/turn subject, CONVERSATION_CREATED, CHAT_MESSAGE_COMMITTED, CHAT_TURN_STATE_CHANGED, CHAT_PROMOTION_DRAFTED; ModelCall/Budget/LLM events nhận đúng một subject task/run hoặc chat_turn. Chat không tạo run thiếu task để vượt invariant hiện có. SSE chung chỉ có metadata đã lọc; nội dung riêng qua API Owner có ACL. Chi tiết [chat contract](designs/employee-chat.md). Đây chưa là event đã triển khai.
+
 ### Danh mục event và payload tối thiểu
 
 | Type | Payload tối thiểu / ý nghĩa | Phase tạo khả năng |
@@ -394,6 +408,12 @@ Hoàn tất/hủy/fail đợt test, hết hạn, revoke hoặc chuyển phase k�
 
 Candidate test grant trước Phase 06: **1 request text-only**, concurrency 1, client timeout 120 giây, expiry 1 giờ, không tools/fallback và inputs fixture tin cậy. Đây là phương án chờ Chủ tịch cấp riêng, không là authorization hiện tại. Giá/usage chưa biết thì không có USD hard cap; Owner phải thấy rõ hạn mức tài nguyên và chi phí API-equivalent chưa là hóa đơn subscription.
 
+### Employee Chat: quyền và dữ liệu riêng
+
+S15 chat-first: list 176 px, vùng tin nhắn rộng, Inspector mặc định đóng; context/policy/provenance và metrics chi tiết chỉ mở khi cần. Trạng thái CG01/grant là dòng hướng dẫn ngắn tại composer, không là banner lỗi chat. [Prototype revision02](designs/employee-chat-prototype.html) có trạng thái empty/loading/error/blocked/grant và review sheet trước tạo draft.
+
+S15 tuân thủ cùng CG01, Owner session/CSRF, approved snapshots, context ACL, reservation/budget và durable Emergency Stop. Grant cần operation scope employee_chat và conversation/employee allowlist; grant task không kế thừa. Text-only, tools off, không handler đổi configuration/permission/HR trong mode chat. Lịch sử chỉ thuộc đúng company/environment/employee/conversation, không tự promote memory. App lưu đầy đủ nguồn context để resume không phụ thuộc gateway memory. Mỗi call có subject chat riêng, usage/cost thiếu vẫn unknown; drilldown conversation/message → turn → unique span/call → source response và pricing version, phân biệt confirmed usage, estimated API-equivalent cost và unknown độc lập, có coverage/as_of; user message không có cost đo riêng, không gán trùng full-turn tokens; period operating cost gồm chat, accepted-task KPI không nhập chi phí chat hồi tố. Chuyển excerpt thành draft Work Order/proposal cần Owner review nội dung chia sẻ và bước submit/approval tách biệt. [Hợp đồng đầy đủ](designs/employee-chat.md).
+
 ## 11. Ngân sách, đo lường và giới hạn vận hành
 
 ### Giá trị mặc định đóng / các trần thiết kế
@@ -482,9 +502,10 @@ Các checkpoint sau kiểm chứng **tích hợp những phần đã triển kha
 | IG08 | Sau 08 / trước 09 (quan sát B) | Run text-only sandbox thật → event đã lưu → SSE → Live Office/Inspector → replay; reconnect/filter/error/usage unknown và no replay side effect; đối chiếu IDs, không yêu cầu tools Phase 11 sớm | Grant riêng của đợt IG08 nếu chạy model; CG01/trace gap thì blocked, không dùng fixture để thay run thật |
 | IG12 | Sau 12 / trước 13 (tổ chức C) | Work Order → supervisor/worker → permission/approval → sandbox tools → reviewer/rework → manifest; handoff correlation, budget/stop propagation và no duplicate side effect | Grant riêng của đợt IG12; failed handoff/policy/evidence thì blocked trước mở rộng HR/org |
 | IG16 | Sau 16 / trước 17 (đo lường D) | Run/call/usage → ledger/reservation/pricing → finance drilldown; parallel reserve/dedup/late usage/unknown; cohort accepted task xuyên kỳ tính đủ lifetime, period operating cost không đổi kỳ | Fixture ledger cho edge cases + run thật với grant IG16 riêng nếu gọi model; mismatch/overcount/unknown bị ghi 0 thì FAIL |
+| IGCHAT | Sau 19 / trước 20 | S15 từ profile/org/Inspector → private thread + approved context → authorized call → saved reply → restart/resume → usage/ledger → stop → reviewed draft transition; EC01–10 baseline + EC12 live; EC11 restore ở 22–23 | Foundation 13/14/15/16/19 được kiểm định; CG01 và grant batch riêng cho live EC12/cancel; thiếu bằng chứng giữ BLOCKED |
 | IG20 | Sau 20 / trước 21 (D → hoàn thiện E) | Task/events/ledger/incident → persistent schedule → daily/monthly report và proposal inbox; sleep/restart/missed job dedup, nguồn số khớp query, stop không tự gỡ | Fixture clock/DB kiểm tra lịch; grant IG20 riêng cho summary inference nếu cần; số báo cáo sai hoặc bỏ gate runtime trước đó thì blocked onboarding |
 
-Report IG phải liên kết các checkpoint trước đã PASS hoặc chỉ rõ phần chưa đạt; IG20 không bù việc thiếu IG08/IG12/IG16. Release Phase 23 kiểm tra evidence của cả IG03/08/12/16/20 bên cạnh R1–R8. Không chạy các gate này trong Phase 00; chỉ định nghĩa cách nghiệm thu tích hợp cho các phase tương ứng.
+Report IG phải liên kết các checkpoint trước đã PASS hoặc chỉ rõ phần chưa đạt; IG20 không bù việc thiếu IG08/IG12/IG16. Release Phase 23 kiểm tra evidence của cả IG03/08/12/16/20 và IGCHAT bên cạnh R1–R8. Bổ sung 1.2: R2/R3/R4/R5/R6/R7/R8 phải bao phủ private chat, trace/unknown, stop, scope và restore; EC01–EC12 trong thiết kế chat là acceptance chưa chạy. IGCHAT không thay các live Work Order gates. Không chạy các gate này trong Phase 00; chỉ định nghĩa cách nghiệm thu tích hợp cho các phase tương ứng.
 
 ## 14. Ma trận yêu cầu → phase → tiêu chí kiểm chứng
 
@@ -517,11 +538,17 @@ Nguồn `I1` là ý tưởng tập đoàn; `I2` là xây sản phẩm trước. 
 | REQ23 | I1 | Lịch/báo cáo ngày tháng, máy ngủ không bịa hoạt động | 20 | F07/S12, schedule dedup/miss/reports query evidence |
 | REQ24 | I1/I2 | Onboarding thật sau V1, chỉ Chief of Staff | 21, 23 | F08/S14 transaction/double-submit/release lock; R6 |
 | REQ25 | I2 | Auth/secrets/backup/migration/restore | 01, 10, 22 | Section 10/12 auth boundary + RLS, S13 restore manifest; R3/R7 |
-| REQ26 | I2/P | UX Việt, accessible, cài local và release đo được | 01, 02, 23 | S01–S14 lang/favicon/states/390px/keyboard/local install; R8 |
+| REQ26 | I2/P | UX Việt, accessible, cài local và release đo được | 01, 02, 23 | S01–S15 lang/favicon/states/390px/keyboard/local install; R8 |
+| REQ27 | P | Chairman mở private Employee Chat từ profile/org chart/Inspector, đúng company/employee | 13, 23 | S15/EC01–02: route/scope/Owner/keyboard/mobile; không rò transcript |
+| REQ28 | P | Approved employee/model/context/policy versions, không đổi ngầm | 13, 14, 15 | EC03: pins/diff/explicit branch, revoked ACL/offboard deny |
+| REQ29 | P | Chat tách Work Order, no tools/config changes; reviewed promotion | 09, 10, 13, 15 | EC07/10: text-only backend, Owner review trước tạo bất kỳ task/draft, selected excerpts/draft/submit riêng |
+| REQ30 | P | Chat messages/calls/usage/cost có trace và subject riêng, unknown không zero | 13, 16 | EC05/08: reservation/dedup/late usage, không double count task KPI |
+| REQ31 | P | Resume từ app history, không gateway memory hoặc unknown replay | 13, 15, 22 | EC06/11: restart/restore/context manifest/pins/retention |
+| REQ32 | P | Chat bị cưỡng chế CG01/grant/budget/Emergency Stop | 06, 10, 13, 16, 19, 23 | EC04/09/12 + IGCHAT: deny trước POST, real smoke đúng authorization |
 
 ## 15. Quyết định đóng và điểm cần xác minh sau này
 
-Chi tiết/rationale trong [ADR-0001](decisions/0001-v1-foundation.md). D01–D08 đã được Chủ tịch nghiệm thu về đặc tả/baseline sau khi bốn điều chỉnh review hoàn tất và kiểm tra nhất quán. Nghiệm thu không cấp inference grant, model access hoặc quyền bắt đầu Phase 01.
+Chi tiết/rationale trong [ADR-0001](decisions/0001-v1-foundation.md). Bổ sung Employee Chat được mô tả tại [ADR-0002](decisions/0002-employee-chat.md); trạng thái thiết kế đề xuất, không sửa lịch sử nghiệm thu D01–D08. D01–D08 đã được Chủ tịch nghiệm thu về đặc tả/baseline sau khi bốn điều chỉnh review hoàn tất và kiểm tra nhất quán. Nghiệm thu không cấp inference grant, model access hoặc quyền bắt đầu Phase 01.
 
 | ID | Quyết định baseline | Người có thẩm quyền / người soạn | Ảnh hưởng |
 | --- | --- | --- | --- |
@@ -548,9 +575,11 @@ Không còn lựa chọn kiến trúc thiếu quyết định cho Phase 01–03:
 
 ## 16. Cách nghiệm thu Phase 00 và bằng chứng
 
+Bảng dưới ghi nghiệm thu lịch sử baseline 1.1 (REQ01–26/S01–14/F01–F08). Bổ sung 1.2 có 32 requirements, 15 màn hình và 9 luồng; S15/F09/REQ27–32 chưa triển khai/nghiệm thu.
+
 | Tiêu chí Phase 00 | Bằng chứng đã soạn | Trạng thái hiện tại |
 | --- | --- | --- |
-| Từng yêu cầu cốt lõi truy ra phase và tiêu chí | 26 requirements tại Section 14; 14 màn hình, F01–F08; R1–R8 | Đã kiểm tra tài liệu và được Chủ tịch nghiệm thu đặc tả |
+| Từng yêu cầu cốt lõi truy ra phase và tiêu chí | 26 baseline requirements REQ01–26; 14 màn hình S01–14, F01–F08; R1–R8 | Đã kiểm tra tài liệu và được Chủ tịch nghiệm thu đặc tả |
 | Không có điểm mở làm sai thiết kế 01–03 | Baseline D02–D05 + data/state/events; O02 quy trình thực hiện setup | Baseline giữ nguyên, đã được Chủ tịch nghiệm thu |
 | Chủ tịch chốt V1 và cơ chế test inference | Sections 2/10/13, ADR-0001, candidate grant chưa cấp | Đã nghiệm thu cơ chế cấp grant riêng từng batch/phase; vẫn chưa có inference authorization |
 
@@ -568,3 +597,5 @@ Chủ tịch đã chỉ dẫn nghiệm thu sau khi hoàn thành bốn điều ch
 
 - 08/10/2026: bản 1.1 theo review Chủ tịch: lifetime accepted-task cost tách period operating cost; CG01 contingency; IG03/08/12/16/20; grant riêng theo đợt test/phase. Giữ nguyên baseline kiến trúc; chưa cấp quyền inference hoặc Phase 01.
 - 08/10/2026: validation bản 1.1 đạt; ghi nhận nghiệm thu có điều kiện của Chủ tịch đã được đáp ứng. Phase 00 Hoàn tất về đặc tả/baseline; grant = 0, không gọi model, Phase 01 chưa được giao.
+
+14/10/2026 — Bổ sung 1.2 theo yêu cầu Chủ tịch: S15/F09/REQ27–32, thiết kế private Employee Chat và IGCHAT; CG01 review không inference. Baseline 1.1 vẫn giữ lịch sử nghiệm thu, tính năng chat chưa triển khai/nghiệm thu; grant thật vẫn 0.
