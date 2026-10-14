@@ -1,6 +1,6 @@
 # Agent Corporation
 
-Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quyền và nghiệm thu bằng chứng. Phase 00–03 đã hoàn tất; Phase 04 chờ nghiệm thu. Chưa có runtime agent hoặc inference.
+Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quyền và nghiệm thu bằng chứng. Trạng thái chính thức ở master plan; runtime có Owner session và worker text-only được gate kiểm soát. CG01 còn bị chặn, chưa chạy inference thật.
 
 - [Mở trang theo dõi phase](docs/master-plan.html)
 - [Kế hoạch và nguồn trạng thái chính thức](docs/master-plan.md)
@@ -11,6 +11,8 @@ Nền tảng local-first để Chủ tịch giao mục tiêu, kiểm soát quy�
 - [Bằng chứng Phase 02](docs/evidence/phase-02.md)
 - [Bằng chứng Phase 03](docs/evidence/phase-03.md)
 - [Bằng chứng Phase 04](docs/evidence/phase-04.md)
+- [Employee Chat — thiết kế V1](docs/designs/employee-chat.html) · [Markdown](docs/designs/employee-chat.md)
+- [CG01 — kiểm định và quy trình xác minh](docs/reviews/cg01-20261014/report.html) · [Markdown](docs/reviews/cg01-20261014/report.md)
 - [Hướng dẫn cho agent](AGENTS.md)
 - [Bộ rule và checklist kiểm định từng phase](docs/tests/README.md) · [Bản trực quan](docs/tests/index.html)
 

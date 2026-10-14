@@ -56,7 +56,7 @@ const screens: Screen[] = [
   { id: 'overview', code: 'S01', title: 'Tổng quan', group: 'Điều hành', description: 'Một điểm vào để xem tình hình doanh nghiệp và đi tới công việc cần quyết định.', next: 'Phase 03 đã bổ sung nền dữ liệu và event; Phase 04 mới tạo công ty demo để hiển thị dữ liệu.', phase: '03–04' },
   { id: 'office', code: 'S02', title: 'Văn phòng trực tiếp', group: 'Điều hành', description: 'Quan sát run và sự kiện đã ghi nhận trong phạm vi Owner.', next: 'Nguồn run thật phụ thuộc Phase 06–07, grant và gate CG01.', phase: '08' },
   { id: 'work', code: 'S05', title: 'Công việc', group: 'Điều hành', description: 'Tạo Work Order, xếp ưu tiên, pause/resume/hủy an toàn và theo dõi nghiệm thu.', next: 'Bảng đã nối API Owner và queue bền vững; worker lease/dispatch vẫn chưa có.', phase: '03, 09' },
-  { id: 'approvals', code: 'S06', title: 'Chờ Chủ tịch duyệt', group: 'Điều hành', description: 'Các đề xuất cần quyết định của Chủ tịch sẽ xuất hiện tại đây.', next: 'Approval queue được nối với task ở các phase dữ liệu và policy.', phase: '03, 10' },
+  { id: 'approvals', code: 'S06', title: 'Chờ Chủ tịch duyệt', group: 'Điều hành', description: 'Xem payload, phạm vi, hạn và bằng chứng trước khi ghi quyết định.', next: 'Phase 10 lưu decision audit theo payload hash; chưa dispatch hành động sau khi duyệt.', phase: '10' },
   { id: 'inspector', code: 'S03', title: 'Agent Inspector', group: 'Quan sát', description: 'Mở run đã lưu để xem trạng thái, model, usage và event liên quan.', next: 'Thông tin chưa có nguồn được đánh dấu rõ; không suy diễn prompt, tool hoặc file diff.', phase: '08' },
   { id: 'replay', code: 'S04', title: 'Phát lại', group: 'Quan sát', description: 'Duyệt tuần tự event đã commit, lọc theo run và chọn mốc thời gian.', next: 'Replay chỉ đọc; khoảng trống và dữ liệu ngoài cửa sổ tải được hiển thị rõ.', phase: '08' },
   { id: 'quality', code: 'S10', title: 'Chất lượng', group: 'Quan sát', description: 'Theo dõi chất lượng bàn giao và kết quả benchmark có nguồn.', next: 'Chưa có kết quả đánh giá; số liệu unknown không được thay bằng 0.', phase: '13, 17' },
@@ -258,10 +258,12 @@ function App() {
           {demoError && <p className="demo-error" role="status">{demoError}</p>}
           <div className="page-heading">
             <div><p className="eyebrow">{activeScreen.code} <span>·</span> PHASE {activeScreen.phase}</p><h1>{activeScreen.title}</h1><p className="page-description">{activeScreen.description}</p></div>
-            <span className={`page-state${activeId === 'onboarding' ? ' locked' : ''}`}>{activeId === 'onboarding' ? 'Đang khóa' : ['office', 'inspector', 'replay'].includes(activeId) ? 'Cần session Owner' : demo?.available ? 'Dữ liệu demo' : 'Chưa có dữ liệu'}</span>
+            <span className={`page-state${activeId === 'onboarding' ? ' locked' : ''}`}>{activeId === 'onboarding' ? 'Đang khóa' : ['office', 'inspector', 'replay', 'approvals'].includes(activeId) ? 'Cần session Owner' : demo?.available ? 'Dữ liệu demo' : 'Chưa có dữ liệu'}</span>
           </div>
 
-          {demo?.available && activeId === 'overview' ? (
+          {activeId === 'approvals' ? (
+            <RuntimePanel view="approvals" />
+          ) : demo?.available && activeId === 'overview' ? (
             <>
               <section className="welcome-panel" aria-labelledby="welcome-title">
                 <div className="welcome-copy"><p className="eyebrow">FIXTURE CỐ ĐỊNH · SEED V{demo.seed_version}</p><h2 id="welcome-title">Quan sát quy trình trên dữ liệu demo.</h2><p>Không tạo agent thật, không gọi model. Đây là môi trường demo tách biệt để nghiệm thu giao diện.</p><a className="text-link" href="#work">Xem các Work Order <span aria-hidden="true">↗</span></a></div>

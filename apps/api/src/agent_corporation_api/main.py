@@ -7,6 +7,7 @@ from .database import database_is_ready
 from .modules.demo.router import router as demo_router
 from .modules.codex_gateway.router import router as codex_router
 from .modules.governance.auth_router import router as owner_router
+from .modules.governance.approval_router import router as approvals_router
 from .modules.observability.router import router as events_router
 from .modules.execution.router import router as runtime_router
 from .modules.work.router import router as work_orders_router
@@ -22,6 +23,7 @@ app = FastAPI(
 app.include_router(demo_router)
 app.include_router(codex_router)
 app.include_router(owner_router)
+app.include_router(approvals_router)
 app.include_router(events_router)
 app.include_router(runtime_router)
 app.include_router(work_orders_router)
@@ -30,7 +32,7 @@ app.include_router(work_orders_router)
 @app.middleware("http")
 async def private_runtime_responses(request, call_next):
     response = await call_next(request)
-    if request.url.path.startswith(("/api/v1/owner", "/api/v1/runtime", "/api/v1/events", "/api/v1/work-orders")):
+    if request.url.path.startswith(("/api/v1/owner", "/api/v1/runtime", "/api/v1/events", "/api/v1/work-orders", "/api/v1/approvals")):
         response.headers["Cache-Control"] = "no-store"
     return response
 

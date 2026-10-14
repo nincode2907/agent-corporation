@@ -1,0 +1,425 @@
+{
+  "checked_at": "2026-10-14T08:32:57.960296+00:00",
+  "scope": "read-only; no inference, grants, proof creation, shared state or config changes",
+  "endpoint": "http://127.0.0.1:15600",
+  "proof_path": ".local/cg01-proof.json",
+  "proof_metadata": {
+    ".local": {
+      "exists": false
+    },
+    ".local/cg01-proof.json": {
+      "exists": false
+    }
+  },
+  "gate_result": {
+    "allowed": false,
+    "reason": "missing_or_invalid_proof",
+    "fingerprint": "78f0a5ae3caa013fe3f667aee69855f08711380e6da3c98e51d56cce10b80a37"
+  },
+  "http": {
+    "/health": {
+      "status": 200,
+      "body": {
+        "ok": true,
+        "provider": "codex",
+        "active_requests": 0
+      }
+    },
+    "/v1/models": {
+      "status": 200,
+      "body": {
+        "object": "list",
+        "data": [
+          {
+            "id": "gpt-6.1-sol",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          },
+          {
+            "id": "gpt-6-luna",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          },
+          {
+            "id": "gpt-6-astra",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          },
+          {
+            "id": "gpt-6-sol",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          },
+          {
+            "id": "gpt-5.6-sol",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          },
+          {
+            "id": "gpt-5.6-terra",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          },
+          {
+            "id": "gpt-5.6-luna",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-codex"
+          }
+        ]
+      }
+    },
+    "/api/models": {
+      "status": 200,
+      "body": {
+        "checked_on": "2026-10-02",
+        "models": [
+          {
+            "id": "gpt-6.1-sol",
+            "name": "GPT-6.1 Sol",
+            "provider": "OpenAI",
+            "default_effort": "medium",
+            "availability": "rollout",
+            "note": "Đang rollout vào Plus. Nếu picker chưa có, dùng GPT-6 Sol cùng effort.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max",
+              "ultra"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 2,
+              "output_per_million": 10,
+              "cached_input_per_million": 0.1,
+              "source_id": "spec-gpt-6.1-sol",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+          },
+          {
+            "id": "gpt-6-luna",
+            "name": "GPT-6 Luna",
+            "provider": "OpenAI",
+            "default_effort": "low",
+            "availability": "included",
+            "note": "Work/Codex; High là một bước nâng khi Low chưa đủ.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 0.1,
+              "output_per_million": 0.5,
+              "cached_input_per_million": 0.01,
+              "source_id": "spec-gpt-6-luna",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+          },
+          {
+            "id": "gpt-6-astra",
+            "name": "GPT-6 Astra",
+            "provider": "OpenAI",
+            "default_effort": "xhigh",
+            "availability": "included",
+            "note": "Plus dùng Astra trong Work/Codex; GPT-6 Pro trong Chat không thuộc Plus. Ultra là orchestration bằng subagents, không có AA tương đương.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max",
+              "ultra"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 10,
+              "output_per_million": 50,
+              "cached_input_per_million": 1,
+              "source_id": "spec-gpt-6-astra",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-6-astra"
+          },
+          {
+            "id": "gpt-6-sol",
+            "name": "GPT-6 Sol",
+            "provider": "OpenAI",
+            "default_effort": "medium",
+            "availability": "included",
+            "note": "Giữ làm fallback cùng effort; không tự coi benchmark 6.1 là benchmark 6 Sol.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max",
+              "ultra"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 2,
+              "output_per_million": 10,
+              "cached_input_per_million": 0.2,
+              "source_id": "spec-gpt-6-sol",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-6-sol"
+          },
+          {
+            "id": "gpt-5.6-sol",
+            "name": "GPT-5.6 Sol",
+            "provider": "OpenAI",
+            "default_effort": "none",
+            "availability": "included",
+            "note": "Chat Plus không có Extra High/Pro. Instant của Chat không được coi là cùng cấu hình API none. Giá API promotional ít nhất tới21/11/2026.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max",
+              "ultra"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 4,
+              "output_per_million": 20,
+              "cached_input_per_million": 0.4,
+              "source_id": "spec-gpt-5.6-sol",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-5.6-sol"
+          },
+          {
+            "id": "gpt-5.6-terra",
+            "name": "GPT-5.6 Terra",
+            "provider": "OpenAI",
+            "default_effort": "medium",
+            "availability": "included",
+            "note": "Dùng khi cần tương thích workflow cũ; không phải lựa chọn mới mặc định.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 2,
+              "output_per_million": 12,
+              "cached_input_per_million": 0.2,
+              "source_id": "spec-gpt-5.6-terra",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-5.6-terra"
+          },
+          {
+            "id": "gpt-5.6-luna",
+            "name": "GPT-5.6 Luna",
+            "provider": "OpenAI",
+            "default_effort": "low",
+            "availability": "included",
+            "note": "Chat Plus không có Luna riêng trong model picker; Luna là default Chat cho Free/Go.",
+            "reasoning": [
+              "low",
+              "medium",
+              "high",
+              "xhigh",
+              "max"
+            ],
+            "chat_supported": true,
+            "price": {
+              "input_per_million": 0.2,
+              "output_per_million": 1.2,
+              "cached_input_per_million": 0.02,
+              "source_id": "spec-gpt-5.6-luna",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-5.6-luna"
+          },
+          {
+            "id": "gpt-5.5",
+            "name": "GPT-5.5",
+            "provider": "OpenAI",
+            "default_effort": "medium",
+            "availability": "legacy",
+            "note": "Retire ChatGPT/Work/Codex ngày14/10/2026; API vẫn còn. Không đề xuất cho workflow mới.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": 5,
+              "output_per_million": 30,
+              "cached_input_per_million": 0.5,
+              "source_id": "spec-gpt-5.5",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://developers.openai.com/api/docs/models/gpt-5.5"
+          },
+          {
+            "id": "claude-opus-5-5",
+            "name": "Claude Opus 5.5",
+            "provider": "Anthropic",
+            "default_effort": "high",
+            "availability": "not_available",
+            "note": "Ngoài gói OpenAI; cần Claude/API riêng. AA chạy adaptive reasoning + default fallback; không tương đương trực tiếp Codex harness.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": 4,
+              "output_per_million": 20,
+              "cached_input_per_million": 0.2,
+              "source_id": "claude-opus",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://platform.claude.com/docs/en/models/opus-5-5/overview"
+          },
+          {
+            "id": "claude-sonnet-5-5",
+            "name": "Claude Sonnet 5.5",
+            "provider": "Anthropic",
+            "default_effort": "medium",
+            "availability": "not_available",
+            "note": "Official khuyên Medium cho agentic task rõ, High khi khó. AA coding/agentic chưa xác minh; chưa kết luận thắng Sol trong repo của bạn.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": 2,
+              "output_per_million": 10,
+              "cached_input_per_million": null,
+              "source_id": "claude-opus",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://platform.claude.com/docs/en/models/opus-5-5/overview"
+          },
+          {
+            "id": "gemini-3.8-flash",
+            "name": "Gemini 3.8 Flash",
+            "provider": "Google",
+            "default_effort": "high",
+            "availability": "not_available",
+            "note": "Giá Standard từ Gemini pricing tới31/12/2026; giá tăng từ01/01/2027. Tốc độ output không đồng nghĩa time-to-answer thấp.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": 0.75,
+              "output_per_million": 3.75,
+              "cached_input_per_million": 0.075,
+              "source_id": "gemini-pricing",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://ai.google.dev/gemini-api/docs/pricing"
+          },
+          {
+            "id": "gemini-4-argon",
+            "name": "Gemini 4 Argon",
+            "provider": "Google",
+            "default_effort": "high",
+            "availability": "not_available",
+            "note": "Google30/09: tiếp cận giới hạn qua Fairwind, broad availability chưa mở. Giá là giá giới thiệu đã công bố; context chính thức chưa xác minh.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": 2,
+              "output_per_million": 10,
+              "cached_input_per_million": 0.1,
+              "source_id": "gemini-argon",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://blog.google/intl/es-419/noticias-de-la-empresa/tecnologia/gemini-4-argon/"
+          },
+          {
+            "id": "deepseek-v4.1-flash",
+            "name": "DeepSeek V4.1 Flash",
+            "provider": "DeepSeek",
+            "default_effort": "max",
+            "availability": "not_available",
+            "note": "AA có dữ liệu; catalog/availability/giá chính thức chưa xác minh trong lần kiểm tra này. Không tự đề xuất chuyển sang model này.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": null,
+              "output_per_million": null,
+              "cached_input_per_million": null,
+              "source_id": "aa-deepseek-v4-1-flash",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://artificialanalysis.ai/models/deepseek-v4-1-flash"
+          },
+          {
+            "id": "grok-4.7",
+            "name": "Grok 4.7",
+            "provider": "xAI",
+            "default_effort": "xhigh",
+            "availability": "not_available",
+            "note": "AA theo dõi; thông số và quyền truy cập chính thức N/A, chưa đưa vào recommendation.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": null,
+              "output_per_million": null,
+              "cached_input_per_million": null,
+              "source_id": "aa-grok-4-7",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://artificialanalysis.ai/models/grok-4-7"
+          },
+          {
+            "id": "muse-spark-1.3",
+            "name": "Muse Spark 1.3",
+            "provider": "Meta",
+            "default_effort": "max",
+            "availability": "not_available",
+            "note": "AA theo dõi; thông số và quyền truy cập chính thức N/A, chưa đưa vào recommendation.",
+            "reasoning": [],
+            "chat_supported": false,
+            "price": {
+              "input_per_million": null,
+              "output_per_million": null,
+              "cached_input_per_million": null,
+              "source_id": "aa-muse-spark-1-3",
+              "scope": "USD / 1M tokens, Standard; tool fees, cache writes và long-context premium có thể thêm."
+            },
+            "price_source": "https://artificialanalysis.ai/models/muse-spark-1-3"
+          }
+        ]
+      }
+    }
+  },
+  "hashes": {
+    "codex-server/package.json": "467a724276bb69b2806e2709c2fceca5777847a8a44d85aa8c593e90ea77cbaf",
+    "codex-server/src/server.ts": "b6565fd70664a64d98c72da225c33487c8dd0db451e83290f97e1ee66c3b9994",
+    "codex-server/src/schema.ts": "6ab2bc1217794dab4c59ce3bd41a3e81b20f15fd20fc5d7b0a35e418f1229916",
+    "codex-server/src/provider.ts": "99a84bd57ac97c5c60df2e839dd4eb937b3329b784f241bdeddeddc310b6d80e",
+    "codex-server/src/config.ts": "276b41d99850e614a911c77709ae0c26253dc99854b87c2682bf434a9197cd7a",
+    "codex-server/package-lock.json": "4cee833ac13ab6303d0d408f92aad67d6362845272c2e6f050c41d7ca9452df8",
+    "codex-server/src/index.ts": "142b355b856c6d91865e43d8dbab24675122ba2f5f7b6d179e141971f2d9ca14",
+    "codex-server/src/sessions.ts": "54e2f00d6647c993eded5549d062603bf9963ae0b7239479fdfc1ceb4309d622",
+    "codex-server/src/metrics.ts": "9312d91658b9e4285ee76503685b70d1a05ae2b450adece7a2c94b593de01938",
+    "codex-server/src/native-usage.ts": "c876c7081fddc6683b42bdc4a35f34704b497f8e033e39e001605afca0edf4b0",
+    "codex-server/src/protocol.ts": "073f5029e50f7b604720b4b020fa824c3904e66868d17b63870a1e63acf1b532",
+    "codex-server/dist/provider.js": "cc4182c36ac594d620f7e4f3428dc4f3d71878f11b241d8ba444805df9adcfc7",
+    "codex-server/dist/server.js": "f97a86c498f3e9cf952e47945e08b0d194ed8dffa7fc42e54a59f3ecedc27d3e",
+    "codex-server/dist/config.js": "7eb89c5968befd1ec88fbaa158e34757cbfabfd97422dfe56667bfbb6ff3fa5f",
+    "codex-server/node_modules/@openai/codex/package.json": "29c350dfcd8d33749852c16e2f5dcde528409d7e1d3f5d916fe3c576f3914820",
+    "codex-server/node_modules/@openai/codex-sdk/package.json": "e8c2fd59b5499439b33c8fa6f1b6e5d3a51d9a38ca6cca8d8d95f5aa69576338",
+    "agent-corporation/apps/api/src/agent_corporation_api/modules/execution/gates.py": "80631e4c6af4735bcb2e5b7e3e9ea8235a941207c350e0dcef654b169cedb041",
+    "agent-corporation/apps/api/src/agent_corporation_api/modules/execution/gateway.py": "ebf280bada9c092963a3e84e880d4b0d79d5c56898590dcf38a228412db1b68b",
+    "agent-corporation/apps/api/src/agent_corporation_api/modules/execution/worker.py": "c3735c60dc276ce2e7ca64ad5f60a230a4a1af1304a77699e694e19a3d9d41be"
+  },
+  "listener": "COMMAND   PID      USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    86867 buivannin   22u  IPv4 0x3863404e62b911d3      0t0  TCP 127.0.0.1:15600 (LISTEN)\n"
+}

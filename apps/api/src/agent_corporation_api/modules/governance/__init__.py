@@ -1,1 +1,1 @@
-"""Policy and approval domain boundary; implementation is not in Phase 01."""
+"""Owner identity baseline (06) and scoped policy/approval controls (10)."""

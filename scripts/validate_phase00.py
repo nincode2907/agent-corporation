@@ -84,8 +84,8 @@ def main():
     require(set(phases) == {f"{i:02}" for i in range(24)}, "Master plan thiếu phase")
     screens = rows(sections[3], r"S\d{2}")
     requirements = rows(sections[14], r"REQ\d{2}")
-    require([r[0] for r in screens] == [f"S{i:02}" for i in range(1, 15)], "Screen IDs thiếu/trùng")
-    require([r[0] for r in requirements] == [f"REQ{i:02}" for i in range(1, 27)], "Requirement IDs thiếu/trùng")
+    require([r[0] for r in screens] == [f"S{i:02}" for i in range(1, 16)], "Screen IDs thiếu/trùng")
+    require([r[0] for r in requirements] == [f"REQ{i:02}" for i in range(1, 33)], "Requirement IDs thiếu/trùng")
     for r in requirements:
         require(len(r) == 5 and all(r), f"Requirement thiếu field: {r[0]}")
         require(set(r[1].split("/")) <= {"I1", "I2", "P", "G"}, f"Source ref không rõ: {r[0]}")
@@ -93,7 +93,7 @@ def main():
         require(bool(re.findall(r"\b\d{2}\b", r[3])), f"Thiếu phase: {r[0]}")
     require(set(re.findall(r"\bS\d{2}\b", spec)) <= {r[0] for r in screens}, "Screen ref sai")
     require(set(re.findall(r"\bREQ\d{2}\b", spec)) == {r[0] for r in requirements}, "Requirement ref sai")
-    require(len(rows(sections[4], r"[1-7]")) == 7 and len(rows(sections[4], r"F0[2-8]")) == 7, "Flow coverage cần F01–F08")
+    require(len(rows(sections[4], r"[1-7]")) == 7 and len(rows(sections[4], r"F0[2-9]")) == 8, "Flow coverage cần F01–F09")
     require(len(rows(sections[13], r"R[1-8]")) == 8, "Release gates thiếu/trùng")
     decisions = rows(sections[15], r"D\d{2}")
     opens = rows(sections[15], r"O\d{2}")
@@ -130,7 +130,7 @@ def main():
     require(event["run_id"] is None and event["payload"]["fixture"] is True, "Sample chỉ là fixture, không run thật")
     for value in [work["id"], work["company_id"], work["environment_id"], event["event_id"], event["correlation_id"]]:
         uuid.UUID(value)
-    print("PASS contract: 26 requirements/14 screens/8 flows/35 events/R1–R8; source/phase/decision/state refs và 2 JSON examples.")
+    print("PASS contract: 32 requirements/15 screens/9 flows/35 baseline events + planned chat extension/R1–R8; source/phase/decision/state refs và 2 JSON examples.")
     if args.baseline:
         before = json.loads(args.baseline.read_text())
         for ident, digest in before["phases"].items():
