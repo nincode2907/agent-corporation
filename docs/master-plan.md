@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Phase 07 bị chặn tại Phase 06/CG01 và thiếu Owner auth để bảo vệ SSE scope; Phase 08 phụ thuộc Phase 07 và cần IG08 chạy thật. Phase 09 đã có Work Order board/API/queue commands nhưng chưa có worker lease/concurrency và Phase 08 chưa được nghiệm thu. Grant thật = 0, chưa chạy model thật.
+> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Phase 07 bị chặn tại Phase 06/CG01 và thiếu Owner auth để bảo vệ SSE scope; Phase 08 phụ thuộc Phase 07 và cần IG08 chạy thật. Phase 09 đã có Work Order board/API/queue commands và nền lease đơn luồng; chưa nối queue vào worker/runtime, chưa kiểm chứng migration/lease trên PostgreSQL disposable, và Phase 08 chưa được nghiệm thu. Grant thật = 0, chưa chạy model thật.
 
 ## 1. Hướng đi đã chọn
 
@@ -626,6 +626,8 @@ Queue/lease/crash tests và state transition evidence.
 #### Nhật ký triển khai
 
 09/10/2026 — Theo chỉ thị “code phase 9”, đã thêm API Owner-scoped cho đọc/tạo Work Order và action queue, migration queue/command receipts có RLS, ưu tiên, idempotency và optimistic transition version; UI S05 tạo task, xếp hàng, lọc/tìm, pause/resume/hủy và luồng nghiệm thu/rework có điều kiện. Model request cap khóa ở 0, tools không được cấp, không có dispatch tự động. Lint/build đạt; 59 API/unit regression tests chọn lọc đạt; xem [evidence Phase 09](evidence/phase-09.md). Chưa có independent review, PostgreSQL migration/integration, lease/concurrency/restart worker, demo hai task hoặc run liên kết để acceptance. Dependency Phase 08 vẫn bị chặn; chưa nghiệm thu Phase 09, chưa gọi inference/grant = 0.
+
+11/10/2026 — Theo yêu cầu code trước Phase 10, bổ sung migration `20261011_0008` và API nội bộ claim/heartbeat có token fencing, ưu tiên queue, advisory lock giới hạn một lease active/company, cùng pause/resume/cancel thu hồi lease. Lease hết hạn chỉ tự requeue vì primitive chưa dispatch side effect; không nối queue vào worker/runtime khi Phase 08 còn bị chặn, inference cap vẫn 0. Checklist/review và PostgreSQL integration chưa nghiệm thu; xem [bằng chứng Phase 09](evidence/phase-09.md). Phase 09 tiếp tục Đang triển khai.
 
 ### Phase 10 — Quyền hạn và hộp phê duyệt
 

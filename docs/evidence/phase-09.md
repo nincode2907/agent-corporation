@@ -20,8 +20,9 @@
 
 ## Chưa được chứng minh
 
-- Không chạy migration hay test ghi dữ liệu lên PostgreSQL dùng chung. Trong môi trường hiện tại chỉ thấy container DB dự án đang bind `127.0.0.1:15510`; không có disposable database dành cho Phase 09. Vì vậy RLS/rollback/index và migration từ 0006→0007 chưa được kiểm chứng trực tiếp.
-- Chưa có worker lease/heartbeat, atomic claim, concurrency cap, crash/expired-lease reconciliation, queue dispatch hoặc liên kết để người dùng tạo Work Order chạy qua runtime. Không tự nối dispatcher vì Phase 08 chưa được nghiệm thu và queue worker có thể mở đường dispatch thực thi.
+- Không chạy migration hay test ghi dữ liệu lên PostgreSQL dùng chung. Trong môi trường hiện tại chỉ thấy container DB dự án đang bind `127.0.0.1:15510`; không có disposable database dành cho Phase 09. Vì vậy RLS/rollback/index và migration từ 0007→0008 chưa được kiểm chứng trực tiếp.
+- Bổ sung 11/10/2026: migration `20261011_0008` thêm lease owner/token/expiry và claim count cho queue. API nội bộ `claim_next` dùng transaction advisory lock theo company, khóa state, chọn task theo ưu tiên, giới hạn một lease active/company; heartbeat yêu cầu đúng worker + token chưa hết hạn. Claim hết hạn được trả về pending vì primitive này chưa dispatch side effect. Pause/resume/cancel xóa lease hiện hành.
+- Lease/concurrency/recovery mới có test tích hợp opt-in trong `apps/api/tests/test_phase09_queue_leases.py`; chưa chạy trên PostgreSQL disposable. Chưa có worker CLI/loop gọi queue claims và chưa nối queue với Phase 06 runtime. Không tự nối dispatcher vì Phase 08 chưa được nghiệm thu và worker queue có thể mở đường dispatch thực thi.
 - Chưa chạy browser demo hai task, chưa thử restart/resume/retry hoặc acceptance/rework end-to-end. Source không tự tạo checkpoint/attempt mới khi resume.
 - Chưa có AI kiểm định độc lập. 12 unit checks là kiểm tra code của đợt triển khai, không phải report nghiệm thu Phase 09.
 - Không gọi codex-server/inference; không có inference grant.
@@ -33,6 +34,6 @@ Phase 08 vẫn `Bị chặn` theo master-plan; source Owner/session/event của 
 ## Source
 
 - API: `apps/api/src/agent_corporation_api/modules/work/router.py`, `queue.py`, `commands.py`.
-- Migration: `apps/api/migrations/versions/20261009_0007_task_queue.py`.
+- Migrations: `apps/api/migrations/versions/20261009_0007_task_queue.py`, `apps/api/migrations/versions/20261011_0008_queue_leases.py`.
 - UI: `apps/web/src/App.tsx`, `apps/web/src/RuntimePanel.tsx`, `apps/web/src/RuntimePanel.css`.
-- Unit checks: `apps/api/tests/test_phase09_work_orders.py`.
+- Tests: `apps/api/tests/test_phase09_work_orders.py`, `apps/api/tests/test_phase09_queue_leases.py` (PostgreSQL disposable opt-in).

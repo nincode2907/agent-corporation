@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
 from sqlalchemy import text
@@ -16,6 +15,11 @@ from ..observability.scope import CompanyScope, set_company_scope
 
 class IdempotencyConflict(Exception):
     pass
+
+
+# Queue execution stays single-lease until an Owner-controlled concurrency
+# policy exists. This is separate from the Phase 06 inference grant limit.
+QUEUE_CONCURRENCY_LIMIT = 1
 
 
 def list_work_orders(factory: sessionmaker[Session], *, scope: CompanyScope,
@@ -34,7 +38,7 @@ def list_work_orders(factory: sessionmaker[Session], *, scope: CompanyScope,
     sql = f"""SELECT w.id AS task_id, w.created_at, s.status, s.revision, s.transition_version,
         r.goal, r.expected_outputs, r.acceptance_criteria, r.scope, r.deadline_at,
         r.budget_limits, r.stop_conditions, r.assignee_id, r.reviewer_id, r.autonomy,
-        q.priority, q.queue_status, q.ready_at,
+        q.priority, q.queue_status, q.ready_at, q.lease_until, q.claim_count,
         (SELECT count(*) FROM runs run WHERE run.environment_id=w.environment_id
           AND run.company_id=w.company_id AND run.task_id=w.id) AS run_count
         FROM work_orders w
@@ -145,26 +149,30 @@ def task_action(factory: sessionmaker[Session], *, scope: CompanyScope, task_id:
             event_type = "TASK_QUEUED"
         elif action == "pause":
             queue_status = "paused"
-            session.execute(text("""UPDATE task_queue_entries SET queue_status='paused',updated_at=CURRENT_TIMESTAMP
+            session.execute(text("""UPDATE task_queue_entries SET queue_status='paused',lease_owner=NULL,
+                lease_token=NULL,lease_until=NULL,updated_at=CURRENT_TIMESTAMP
                 WHERE environment_id=:environment_id AND company_id=:company_id AND task_id=:task_id"""),
                 {"environment_id":scope.environment_id,"company_id":scope.company_id,"task_id":task_id})
             event_type = "TASK_PAUSED"
         elif action == "resume":
             queue_status = "pending"
-            session.execute(text("""UPDATE task_queue_entries SET queue_status='pending',ready_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP
+            session.execute(text("""UPDATE task_queue_entries SET queue_status='pending',lease_owner=NULL,
+                lease_token=NULL,lease_until=NULL,ready_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP
                 WHERE environment_id=:environment_id AND company_id=:company_id AND task_id=:task_id"""),
                 {"environment_id":scope.environment_id,"company_id":scope.company_id,"task_id":task_id})
             event_type = "TASK_RESUMED"
         elif action == "cancel":
             queue_status = "cancelled" if queue else None
             if queue:
-                session.execute(text("""UPDATE task_queue_entries SET queue_status='cancelled',updated_at=CURRENT_TIMESTAMP
+                session.execute(text("""UPDATE task_queue_entries SET queue_status='cancelled',lease_owner=NULL,
+                    lease_token=NULL,lease_until=NULL,updated_at=CURRENT_TIMESTAMP
                     WHERE environment_id=:environment_id AND company_id=:company_id AND task_id=:task_id"""),
                     {"environment_id":scope.environment_id,"company_id":scope.company_id,"task_id":task_id})
             event_type = "TASK_CANCELLED"
         elif action == "accept":
             if queue:
-                session.execute(text("""UPDATE task_queue_entries SET queue_status='completed',updated_at=CURRENT_TIMESTAMP
+                session.execute(text("""UPDATE task_queue_entries SET queue_status='completed',lease_owner=NULL,
+                    lease_token=NULL,lease_until=NULL,updated_at=CURRENT_TIMESTAMP
                     WHERE environment_id=:environment_id AND company_id=:company_id AND task_id=:task_id"""),
                     {"environment_id":scope.environment_id,"company_id":scope.company_id,"task_id":task_id})
             event_type = "TASK_ACCEPTED"
@@ -184,6 +192,87 @@ def task_action(factory: sessionmaker[Session], *, scope: CompanyScope, task_id:
             {"environment_id":scope.environment_id,"company_id":scope.company_id,"key":idempotency_key,
              "task_id":task_id,"payload_hash":payload_hash,"response":json.dumps(response,ensure_ascii=False)})
         return response
+
+
+def claim_next(factory: sessionmaker[Session], *, scope: CompanyScope, worker_id: str,
+               lease_seconds: int = 30) -> dict | None:
+    """Atomically lease one queued task without creating a run or dispatching work.
+
+    A transaction-scoped advisory lock serializes claims without requiring
+    UPDATE permission on the company table. Task state is locked before its
+    queue row, matching Owner command lock order. Expired claims are safe to return to the
+    pending queue because this Phase 09 primitive never dispatches side effects.
+    """
+    if not isinstance(worker_id, str) or not worker_id.strip() or len(worker_id) > 120:
+        raise ValueError("worker_id phải dài 1–120 ký tự")
+    if type(lease_seconds) is not int or not 5 <= lease_seconds <= 300:
+        raise ValueError("lease_seconds phải nằm trong 5–300")
+    lease_token = uuid4()
+    with factory() as session, session.begin():
+        set_company_scope(session, scope)
+        company = session.execute(text("""SELECT id FROM companies
+            WHERE environment_id=:environment_id AND id=:company_id"""),
+            {"environment_id":scope.environment_id,"company_id":scope.company_id}).scalar_one_or_none()
+        if company is None:
+            raise CompanyScopeNotFound("company không tồn tại trong scope queue hiện tại")
+        session.execute(text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_key,0))"),
+            {"lock_key":f"queue:{scope.environment_id}:{scope.company_id}"})
+
+        # No dispatch exists behind these leases yet, so expiration is a known
+        # safe requeue. The claim token fences an old worker after reassignment.
+        session.execute(text("""UPDATE task_queue_entries
+            SET queue_status='pending',lease_owner=NULL,lease_token=NULL,lease_until=NULL,
+                ready_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP
+            WHERE environment_id=:environment_id AND company_id=:company_id
+              AND queue_status='leased' AND lease_until<=CURRENT_TIMESTAMP"""),
+            {"environment_id":scope.environment_id,"company_id":scope.company_id})
+        active = session.execute(text("""SELECT count(*) FROM task_queue_entries
+            WHERE environment_id=:environment_id AND company_id=:company_id
+              AND queue_status='leased' AND lease_until>CURRENT_TIMESTAMP"""),
+            {"environment_id":scope.environment_id,"company_id":scope.company_id}).scalar_one()
+        if active >= QUEUE_CONCURRENCY_LIMIT:
+            return None
+
+        candidate = session.execute(text("""SELECT q.task_id FROM task_execution_state s
+            JOIN task_queue_entries q ON q.environment_id=s.environment_id
+              AND q.company_id=s.company_id AND q.task_id=s.task_id
+            WHERE s.environment_id=:environment_id AND s.company_id=:company_id
+              AND s.status='queued' AND q.queue_status='pending' AND q.ready_at<=CURRENT_TIMESTAMP
+            ORDER BY q.priority DESC,q.ready_at ASC,q.created_at ASC,q.task_id ASC
+            LIMIT 1 FOR UPDATE OF s SKIP LOCKED"""),
+            {"environment_id":scope.environment_id,"company_id":scope.company_id}).scalar_one_or_none()
+        if candidate is None:
+            return None
+        row = session.execute(text("""UPDATE task_queue_entries SET queue_status='leased',
+            lease_owner=:worker_id,lease_token=:lease_token,
+            lease_until=CURRENT_TIMESTAMP + (:lease_seconds * interval '1 second'),
+            claim_count=claim_count+1,updated_at=CURRENT_TIMESTAMP
+            WHERE environment_id=:environment_id AND company_id=:company_id AND task_id=:task_id
+              AND queue_status='pending'
+            RETURNING task_id,priority,claim_count,lease_until"""),
+            {"worker_id":worker_id,"lease_token":lease_token,"lease_seconds":lease_seconds,
+             "environment_id":scope.environment_id,"company_id":scope.company_id,"task_id":candidate}).mappings().one_or_none()
+        if row is None:
+            return None
+        return {**dict(row),"worker_id":worker_id,"lease_token":lease_token}
+
+
+def heartbeat_claim(factory: sessionmaker[Session], *, scope: CompanyScope, task_id: UUID,
+                    worker_id: str, lease_token: UUID, lease_seconds: int = 30) -> bool:
+    if type(lease_seconds) is not int or not 5 <= lease_seconds <= 300:
+        raise ValueError("lease_seconds phải nằm trong 5–300")
+    with factory() as session, session.begin():
+        set_company_scope(session, scope)
+        renewed = session.execute(text("""UPDATE task_queue_entries
+            SET lease_until=CURRENT_TIMESTAMP + (:lease_seconds * interval '1 second'),
+                updated_at=CURRENT_TIMESTAMP
+            WHERE environment_id=:environment_id AND company_id=:company_id AND task_id=:task_id
+              AND queue_status='leased' AND lease_owner=:worker_id AND lease_token=:lease_token
+              AND lease_until>CURRENT_TIMESTAMP"""),
+            {"lease_seconds":lease_seconds,"environment_id":scope.environment_id,
+             "company_id":scope.company_id,"task_id":task_id,"worker_id":worker_id,
+             "lease_token":lease_token}).rowcount
+        return renewed == 1
 
 
 def list_assignees(factory: sessionmaker[Session], *, scope: CompanyScope) -> list[dict]:
