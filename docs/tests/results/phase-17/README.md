@@ -1,0 +1,7 @@
+# Kết quả kiểm định Phase 17
+
+| Vòng | Report test | Kết luận | Remake | Report retest | Trạng thái vòng |
+| --- | --- | --- | --- | --- | --- |
+| r001 | [20261015T100829+0700-r001-test/report.md](20261015T100829+0700-r001-test/report.md) | Local evaluator/summary/history defects; r002 confirms fixed; runtime integration remains open | [20261015T100829+0700-r001-remake/remake.md](../../../remakes/phase-17/20261015T100829+0700-r001-remake/remake.md) | [20261015T101533+0700-r002-test/report.md](20261015T101533+0700-r002-test/report.md) | fixed; later issue found |
+| r002 | [20261015T101533+0700-r002-test/report.md](20261015T101533+0700-r002-test/report.md) | Duplicate sample refs fixed and verified by r003; live tournament/isolation/KPI/dashboard/Owner integration remains blocked | [20261015T102032+0700-r002-remake/remake.md](../../../remakes/phase-17/20261015T102032+0700-r002-remake/remake.md) | [20261015T102032+0700-r003-test/report.md](20261015T102032+0700-r003-test/report.md) | local source issues fixed; integration blocked |
+| r003 | [20261015T102032+0700-r003-test/report.md](20261015T102032+0700-r003-test/report.md) | Duplicate sample/evidence refs now reject; required-case/evidence and roadmap/HTML regressions pass; live tournament/isolation/KPI/dashboard/Owner integration remains blocked | [20261015T102032+0700-r002-remake/remake.md](../../../remakes/phase-17/20261015T102032+0700-r002-remake/remake.md) | Chưa tạo | blocked |

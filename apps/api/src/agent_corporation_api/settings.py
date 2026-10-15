@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -13,6 +14,7 @@ class Settings(BaseSettings):
     app_database_password: str
     codex_server_base_url: str = "http://127.0.0.1:15600"
     codex_server_api_key: str | None = None
+    codex_server_transport: Literal["loopback", "docker-host"] = "loopback"
     owner_secret_path: Path = REPOSITORY_ROOT / ".local" / "owner-secret"
     owner_session_ttl_seconds: int = 3600
     runtime_gate_path: Path = REPOSITORY_ROOT / ".local" / "cg01-proof.json"

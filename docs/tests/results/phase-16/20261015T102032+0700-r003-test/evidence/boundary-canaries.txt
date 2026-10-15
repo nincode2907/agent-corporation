@@ -1,0 +1,10 @@
+Safe synthetic in-memory boundary canaries, exit 0:
+bad_call_ref rejected FinanceContractInvalid settlement_call_ref_must_be_opaque
+bool_revision rejected FinanceContractInvalid stale_reservation_revision
+float_amount rejected FinanceContractInvalid settlement_requires_amount_and_call
+release_dispatched rejected FinanceContractInvalid dispatched_reservation_cannot_be_released
+empty_period None unknown 0
+cross_company rejected FinanceContractInvalid aggregate_scope_mismatch
+cross_environment rejected FinanceContractInvalid aggregate_scope_mismatch
+
+The same focused suite passes usage dedup, pricing/basis/currency, lifetime-vs-period, chat exclusion and unknown/mixed cases. No DB/runtime/inference.

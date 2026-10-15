@@ -1,0 +1,17 @@
+Phase 16 r001 source/evidence manifest
+Captured: 2026-10-15T10:11:23+07:00 (Asia/Ho_Chi_Minh)
+Workspace: /Users/buivannin/Desktop/workspace/personal/agent-corporation
+Git state: dirty; no commit used as source identity. See git-status.txt.
+
+SHA-256
+ae662c20b7af748fef62952f5b2f1ffeb5bc6db1c7ab534afe32208a1907f53a  apps/api/src/agent_corporation_api/modules/finance/contracts.py
+6147ffcce22a23b16e30a9e65c52babf7e5c676b49a64ab59e736eb306fa5184  apps/api/tests/test_phase16_finance_contracts.py
+95d66b3b2bd50f0e0c803473b5b7701e6121712f63a696a63a5787772cee1ae8  apps/api/src/agent_corporation_api/modules/quality/contracts.py
+5d37fd3b28d6a62940871f1005cc63f54cf0e3917af66ee8dc00aff01a81045f  apps/api/tests/test_phase17_quality_contracts.py
+6632d7d9994b9ec0691596b1cb461c63e0f49b09bac39418cabd2ccf442aece2  docs/master-plan.md
+f5de19fb08b65449bc9aaef05e6889bd880e52dbec235cddfb88eaae26916d53  docs/master-plan.html
+d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f  docs/product-spec.md
+faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930  docs/decisions/0001-v1-foundation.md
+d234a36a249bbdd27703826ac0e80d25aece859577d7d4c9c0e65b1ff22f96ba  docs/tests/RULES.md
+d8fbffd5cf9970c6f5b42d180e20e920aa87f70ffd0866db399bfe2a5474399c  docs/tests/phases/phase-16.md
+09e6c95f6b714b8c3ae124afcadb7788d9b75cc5d0f40b92e5dfb741c2dff4a9  docs/tests/phases/phase-17.md

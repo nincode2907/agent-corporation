@@ -1,0 +1,10 @@
+Safe direct contract canaries (no DB/runtime/inference):
+
+Observed output:
+bool expected_revision accepted: settled 2
+noninteger settlement retained: 0.5 float
+empty period aggregate: 0 confirmed 0
+mixed-company period aggregate: 40 2
+same accepted_task_ref cross-company lifetime: 40 2
+
+Cases use synthetic values only. The exact implementation calls were in-memory calls to transition_reservation, aggregate_period, and aggregate_accepted_task_lifetime. These observations establish local contract defects, not database behavior.

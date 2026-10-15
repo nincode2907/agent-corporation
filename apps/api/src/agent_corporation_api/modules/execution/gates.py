@@ -18,7 +18,7 @@ def gateway_fingerprint(root: Path) -> str:
     return digest.hexdigest()
 
 
-def check_gate(path: Path, gateway_root: Path, now: datetime | None = None, base_url: str | None = None) -> dict:
+def check_gate(path: Path, gateway_root: Path, now: datetime | None = None, base_url: str | None = None, transport_mode: str = "loopback") -> dict:
     now = now or datetime.now(UTC)
     fingerprint = "unavailable"
     if not all(hasattr(os, name) for name in ("getuid", "O_NOFOLLOW", "O_NONBLOCK")):
@@ -37,6 +37,8 @@ def check_gate(path: Path, gateway_root: Path, now: datetime | None = None, base
             raise ValueError("invalid_metadata_type")
         if base_url is not None and proof.get("gateway_base_url") != base_url.rstrip("/"):
             raise ValueError("gateway_endpoint_mismatch")
+        if proof.get("gateway_transport", "loopback") != transport_mode:
+            raise ValueError("gateway_transport_mismatch")
         expiry = datetime.fromisoformat(proof["expires_at"])
         if expiry.tzinfo is None or expiry <= now:
             raise ValueError("expired_metadata")
@@ -48,7 +50,7 @@ def check_gate(path: Path, gateway_root: Path, now: datetime | None = None, base
             raise ValueError("capability_unverified")
         return {"allowed":True,"reason":"operator_evidence_verified","fingerprint":fingerprint}
     except (OSError,ValueError,TypeError,KeyError) as error:
-        safe_reasons={"untrusted_metadata","invalid_metadata_type","gateway_endpoint_mismatch","expired_metadata","fingerprint_mismatch","missing_evidence","capability_unverified"}
+        safe_reasons={"untrusted_metadata","invalid_metadata_type","gateway_endpoint_mismatch","gateway_transport_mismatch","expired_metadata","fingerprint_mismatch","missing_evidence","capability_unverified"}
         reason = str(error) if str(error) in safe_reasons else "missing_or_invalid_proof"
         return {"allowed":False,"reason":reason,"fingerprint":fingerprint}
 
@@ -62,9 +64,9 @@ def runtime_gate(settings, scope) -> dict:
         if scope != DEMO_SCOPE:
             return {"allowed": False, "reason": "demo_test_scope_required", "mode": "demo-test", "verified": False}
         try:
-            _validated_base_url(settings.codex_server_base_url)
+            _validated_base_url(settings.codex_server_base_url, transport_mode=getattr(settings, "codex_server_transport", "loopback"))
         except ValueError:
             return {"allowed": False, "reason": "invalid_local_gateway", "mode": "demo-test", "verified": False}
         return {"allowed": True, "reason": "owner_authorized_demo_test_override", "mode": "demo-test", "verified": False}
-    result = check_gate(settings.runtime_gate_path, settings.runtime_gateway_source_path, base_url=settings.codex_server_base_url)
+    result = check_gate(settings.runtime_gate_path, settings.runtime_gateway_source_path, base_url=settings.codex_server_base_url, transport_mode=getattr(settings, "codex_server_transport", "loopback"))
     return {**result, "mode": "strict", "verified": result["allowed"]}

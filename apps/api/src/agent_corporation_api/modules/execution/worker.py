@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import asyncio
+from functools import partial
 from uuid import UUID
 from sqlalchemy.exc import SQLAlchemyError
 from ...database import get_session_factory
@@ -66,7 +67,8 @@ async def work(scope,once=False):
             if not runtime_gate(settings, scope)["allowed"]:
                 await asyncio.to_thread(service.finish,factory,scope,run,CallOutcome("unknown","cg01_changed_after_reservation"))
                 return
-            await execute_reserved(factory,scope,run,settings.codex_server_base_url,settings.codex_server_api_key)
+            await execute_reserved(factory,scope,run,settings.codex_server_base_url,settings.codex_server_api_key,
+                                   transport=partial(post_text, transport_mode=getattr(settings, "codex_server_transport", "loopback")))
         if once:
             return
         await asyncio.sleep(0.5)

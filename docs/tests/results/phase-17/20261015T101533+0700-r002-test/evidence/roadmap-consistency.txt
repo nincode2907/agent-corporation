@@ -1,0 +1,6 @@
+Read-only comparison after the remake renderer ran:
+
+Phase 16: Markdown status `Đang triển khai`; one implementation journal. HTML status `Đang triển khai`; HTML history exactly matches the Markdown journal.
+Phase 17: Markdown status `Đang triển khai`; one implementation journal. HTML status `Đang triển khai`; HTML history exactly matches the Markdown journal. The duplicate “Chưa có triển khai” history is gone.
+
+No status/roadmap edits or render command were run by this tester.

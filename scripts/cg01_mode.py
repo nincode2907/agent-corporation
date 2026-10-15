@@ -32,7 +32,8 @@ def release_check(settings) -> tuple[bool, str]:
 
     if settings.runtime_cg01_demo_test_override:
         return False, "Ngoại lệ demo còn bật. Chuyển strict và dừng/restart worker trước Phase 23."
-    state = check_gate(settings.runtime_gate_path, settings.runtime_gateway_source_path, base_url=settings.codex_server_base_url)
+    state = check_gate(settings.runtime_gate_path, settings.runtime_gateway_source_path, base_url=settings.codex_server_base_url,
+                       transport_mode=getattr(settings, "codex_server_transport", "loopback"))
     return state["allowed"], state["reason"]
 
 

@@ -1,0 +1,5 @@
+Safe in-memory negative canaries, exit 0:
+duplicate_candidate_sample_ref rejected QualityContractInvalid duplicate_tournament_sample_ref
+duplicate_tournament_evidence_ref rejected QualityContractInvalid duplicate_tournament_evidence_ref
+
+Focused fixtures also reject duplicate sample refs within a candidate and duplicate sample refs across profiles. Evaluator required-case/evidence completeness and raw sample summary derivation regression passed. No DB/runtime/inference.

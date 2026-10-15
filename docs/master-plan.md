@@ -118,7 +118,7 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–15 đang triển khai; Phase 16–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Kiểm định lại Phase 06–09 ngày 14/10 vẫn ghi nhận CG01/grant, reconnect, live-run và worker/retry gaps; xem nhật ký từng phase bên dưới. Phase 10 chưa được nghiệm thu. Phase 11 mới có registry/reader foundation; r004 đạt redaction cục bộ nhưng 9 criteria còn blocked. Phase 12–15 mới có contract foundation, runtime/acceptance evidence còn thiếu. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–17 đang triển khai; Phase 18–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Kiểm định lại Phase 06–09 ngày 14/10 vẫn ghi nhận CG01/grant, reconnect, live-run và worker/retry gaps; xem nhật ký từng phase bên dưới. Phase 10 chưa được nghiệm thu. Phase 11 mới có registry/reader foundation; r004 đạt redaction cục bộ nhưng 9 criteria còn blocked. Phase 12–15 mới có contract foundation, runtime/acceptance evidence còn thiếu. Phase 16–17 mới có finance/evaluation contracts và fixture tests; runtime, dashboard, reservation concurrency và demo/tournament evidence chưa có. Inference grant = 0.
 
 Mỗi phase có tab **Kiểm thử** hiển thị pipeline AI và lịch sử `docs/tests/results/phase-NN/` + `docs/remakes/phase-NN/`. Chủ tịch chỉ theo dõi, không tự tick issue. AI triển khai bàn giao cho AI khác test; AI test note issue, AI remake ghi bản sửa hoặc phản biện, AI test độc lập xác minh lại, tiếp tục các vòng đến OK hoặc blocker thật. Dấu ✓ tự cập nhật từ files AI: đã sửa chờ retest, sửa được test lại xác nhận, hoặc phản biện được AI test chấp nhận. Phản biện chưa xác minh không đóng issue; retest vẫn lỗi thì mở lại và bỏ tick. Issue đóng vẫn giữ lịch sử và links; case biến mất khỏi report mới không tự coi là đã fix. Pipeline chỉ OK khi report mới kết luận đạt, gates đạt và không còn issue bắt buộc chưa xác minh. AI render HTML sau mỗi bước; refresh trang để xem tiến độ đã lưu. HTML là bảng theo dõi, không khởi chạy agent nền. Nghiệm thu chính thức vẫn theo Markdown/quyết định Chủ tịch.
 
@@ -240,6 +240,8 @@ Log khởi động, health responses, lệnh kiểm tra và registry diff.
 - [Bằng chứng Phase 01](evidence/phase-01.md)
 - [Kết quả remake/retest Phase 01](tests/results/phase-01/README.md)
 Runtime local sau khi khởi động: web `127.0.0.1:15500`, API `127.0.0.1:15501`.
+
+15/10/2026 — Theo phương án Docker được Chủ tịch duyệt riêng, runtime chuyển sang Compose web Nginx/API/PostgreSQL/migration/secret-init; Work Order worker bật tường minh. Giữ PG container và volume cũ, backup mode0600 và đối chiếu 28 bảng trước/sau không đổi count; migration head20261014_0009. Native và Linux-container regression99pass/1WindowsSkip; isolated fresh migration/auth/CSRF/SSE/restart/session/DB-down/API-recreate proxy checks pass. Gateway host giữ nguyên, container probe/catalog đạt qua exact docker-host endpoint, không inference; strict CG01 vẫn chưa có proof. Independent Docker r001→remake→r002 đóng hai findings local; Windows chưa verified. Giữ mọi trạng thái phase/acceptance. Xem [evidence Docker runtime](evidence/docker-runtime.md) và [report độc lập Docker r002](tests/results/docker/20261015-docker-r002/report.md).
 
 ### Phase 02 — Khung giao diện Chủ tịch
 
@@ -933,7 +935,7 @@ Context manifest, promotion/rollback/isolation tests.
 ### Phase 16 — Tài chính và ngân sách
 
 - Mốc: D
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 15; usage + limits có từ 06
 - Mục tiêu: Biết đã tiêu gì, cho ai và với độ chính xác nào.
 
@@ -974,12 +976,12 @@ Reconciliation report, pricing/budget race tests và unknown cases.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+15/10/2026 — Bổ sung finance value contracts: versioned cumulative usage snapshots, frozen pricing snapshot, tách cost basis/measurement/unknown, ledger subject với chat exclusion khỏi accepted-task cohort, revision-fenced reservation transition và aggregate period/lifetime. Independent r001/r002 tìm và remake các bool/float, empty-zero, cross-scope và malformed call-ref defects; r003 xác nhận các local boundaries pass. Focused regression 24/24 pass. Chưa chứng minh atomic DB reservation, finance persistence/dashboard, complete call drilldown, late correction ledger/report version hay IG16; report r003 không còn source failure nhưng integration cases vẫn blocked. Inference grant = 0. Xem [evidence Phase 16](evidence/phase-16.md) và [sổ results](tests/results/phase-16/README.md).
 
 ### Phase 17 — Benchmark và chất lượng
 
 - Mốc: D
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 16
 - Mục tiêu: So sánh nhân viên/model trên cùng bài kiểm tra.
 
@@ -1008,6 +1010,10 @@ So hai profile trên cùng suite; mở bài thất bại và đối chiếu đi�
 
 Benchmark harness, evaluator và quality dashboard.
 
+#### Nhật ký triển khai
+
+15/10/2026 — Bổ sung versioned benchmark suite/evaluator hash contracts, deterministic output comparison, sample denominator/unknown coverage, P50/P95/intervention rate và Wilson interval. Independent r001/r002 tìm và remake required-case omission, forged summary, duplicate sample refs và journal/HTML mismatch; r003 xác nhận local completeness, unique evidence refs và roadmap consistency. Focused regression 24/24 pass. Chưa có benchmark harness chạy profile thật, environment/artifact isolation, dashboard/CI regression hoặc model tournament được cấp grant; các tích hợp P17-02…06 còn blocked. Inference grant = 0. Xem [evidence Phase 17](evidence/phase-17.md) và [sổ results](tests/results/phase-17/README.md).
+
 #### Giới hạn
 
 Không đổi model tự động sau tournament.
@@ -1016,9 +1022,6 @@ Không đổi model tự động sau tournament.
 
 Suite manifest, run/evaluation artifacts và regression comparisons.
 
-#### Nhật ký triển khai
-
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
 
 ### Phase 18 — Đề xuất tối ưu có thử nghiệm
 

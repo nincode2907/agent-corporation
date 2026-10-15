@@ -13,4 +13,5 @@ def gateway_probe() -> dict[str, object]:
     return probe_gateway(ProbeSettings(
         base_url=settings.codex_server_base_url,
         api_key=settings.codex_server_api_key,
+        transport_mode=getattr(settings, "codex_server_transport", "loopback"),
     ))

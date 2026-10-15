@@ -54,8 +54,8 @@ def parse_response(code: int, headers: dict, body: bytes) -> CallOutcome:
         return CallOutcome("unknown", "invalid_response", gateway_call_id=call_id)
 
 
-async def post_text(base_url: str, api_key: str | None, payload: dict, timeout: int) -> CallOutcome:
-    parsed = urlsplit(_validated_base_url(base_url))
+async def post_text(base_url: str, api_key: str | None, payload: dict, timeout: int, *, transport_mode: str = "loopback") -> CallOutcome:
+    parsed = urlsplit(_validated_base_url(base_url, transport_mode=transport_mode))
     body = json.dumps(payload, ensure_ascii=False).encode()
     if len(body) > 64 * 1024:
         return CallOutcome("failed", "input_too_large")
@@ -63,7 +63,7 @@ async def post_text(base_url: str, api_key: str | None, payload: dict, timeout: 
     try:
         async with asyncio.timeout(timeout):
             reader, writer = await asyncio.open_connection(parsed.hostname, parsed.port, limit=16384)
-            host = parsed.netloc
+            host = "127.0.0.1:15600" if transport_mode == "docker-host" else parsed.netloc
             headers = ["POST /v1/chat/completions HTTP/1.1", f"Host: {host}", "Content-Type: application/json", "Accept: application/json", f"Content-Length: {len(body)}", "Connection: close"]
             if api_key:
                 if "\r" in api_key or "\n" in api_key:

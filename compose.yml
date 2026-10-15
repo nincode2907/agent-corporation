@@ -1,3 +1,42 @@
+name: agent-corporation
+
+x-api-environment: &api-environment
+  DATABASE_URL: postgresql+psycopg://${APP_DATABASE_USER:?Bootstrap trước}:${APP_DATABASE_PASSWORD:?Bootstrap trước}@postgres:5432/${POSTGRES_DB:?Bootstrap trước}
+  APP_DATABASE_USER: ${APP_DATABASE_USER}
+  APP_DATABASE_PASSWORD: ${APP_DATABASE_PASSWORD}
+  CODEX_SERVER_BASE_URL: http://host.docker.internal:15600
+  CODEX_SERVER_TRANSPORT: docker-host
+  CODEX_SERVER_API_KEY: ${CODEX_SERVER_API_KEY:-}
+  OWNER_SECRET_PATH: /runtime-secrets/owner-secret
+  RUNTIME_GATE_PATH: /runtime-secrets/cg01-proof.json
+  RUNTIME_GATEWAY_SOURCE_PATH: /gateway-source
+  RUNTIME_CG01_DEMO_TEST_OVERRIDE: ${RUNTIME_CG01_DEMO_TEST_OVERRIDE:-false}
+  PLAYGROUND_WORKER_ENABLED: ${PLAYGROUND_WORKER_ENABLED:-true}
+
+x-api-base: &api-base
+  image: agent-corporation-api:local
+  build:
+    context: .
+    dockerfile: apps/api/Dockerfile
+    target: runtime
+  environment: *api-environment
+  user: "1000:1000"
+  init: true
+  read_only: true
+  tmpfs:
+    - /tmp:rw,noexec,nosuid,size=64m
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  volumes:
+    - runtime_secrets:/runtime-secrets:ro
+    - artifacts:/app/storage
+    - ${GATEWAY_SOURCE_ROOT:-../codex-server}/package.json:/gateway-source/package.json:ro
+    - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/server.ts:/gateway-source/src/server.ts:ro
+    - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/schema.ts:/gateway-source/src/schema.ts:ro
+    - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/provider.ts:/gateway-source/src/provider.ts:ro
+    - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/config.ts:/gateway-source/src/config.ts:ro
+  restart: "no"
+
 services:
   postgres:
     image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
@@ -17,5 +56,92 @@ services:
       retries: 20
     restart: "no"
 
+  secrets-init:
+    image: agent-corporation-api:local
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: runtime
+    user: "0:0"
+    network_mode: none
+    read_only: true
+    volumes:
+      - ./.local:/host-secrets:ro
+      - runtime_secrets:/runtime-secrets
+    command: [python, scripts/docker_init_secrets.py]
+    restart: "no"
+
+  migrate:
+    <<: *api-base
+    environment:
+      <<: *api-environment
+      MIGRATION_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      PLAYGROUND_WORKER_ENABLED: "false"
+    volumes: []
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: [alembic, -c, apps/api/alembic.ini, upgrade, head]
+
+  api:
+    <<: *api-base
+    container_name: agent-corporation-api
+    ports:
+      - "127.0.0.1:15501:15501"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      secrets-init:
+        condition: service_completed_successfully
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:15501/api/v1/health/ready', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    stop_grace_period: 30s
+
+  web:
+    image: agent-corporation-web:local
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: agent-corporation-web
+    ports:
+      - "127.0.0.1:15500:15500"
+    depends_on:
+      api:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:15500/healthz]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+    restart: "no"
+
+  worker:
+    <<: *api-base
+    profiles: [worker]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      secrets-init:
+        condition: service_completed_successfully
+      migrate:
+        condition: service_completed_successfully
+    entrypoint: [python, -m, agent_corporation_api.modules.execution.worker]
+    command: []
+    stop_grace_period: 30s
+
 volumes:
   agent_corporation_postgres:
+    name: ${AGENT_CORPORATION_DB_VOLUME:-agent-corporation_agent_corporation_postgres}
+  runtime_secrets:
+  artifacts:

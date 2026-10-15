@@ -1,0 +1,14 @@
+Safe in-memory negative/boundary canaries:
+
+Reservation transition:
+settle_bad_ref accepted settled ../bad
+release_dispatched rejected FinanceContractInvalid dispatched_reservation_cannot_be_released
+
+Scope aggregation:
+period_cross_environment rejected aggregate_scope_mismatch
+lifetime_cross_environment rejected aggregate_scope_mismatch
+
+Quality raw-sample boundary run in the same focused retest:
+sample_duplicates 50 1 winner profile:a
+
+The malformed settlement ref remains a local contract failure. No DB/runtime/inference was used.

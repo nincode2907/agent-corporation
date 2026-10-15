@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+from functools import partial
 from datetime import UTC, datetime
 
 from ...database import get_session_factory
@@ -22,7 +23,8 @@ async def execute(factory, scope, turn, settings, transport=None):
     if await asyncio.to_thread(service.should_stop, factory, scope, turn):
         await asyncio.to_thread(service.finish, factory, scope, turn, CallOutcome('unknown', 'stop_before_http'))
         return
-    task = asyncio.create_task((transport or post_text)(settings.codex_server_base_url, settings.codex_server_api_key, payload, turn['timeout_seconds']))
+    sender = transport or partial(post_text, transport_mode=getattr(settings, "codex_server_transport", "loopback"))
+    task = asyncio.create_task(sender(settings.codex_server_base_url, settings.codex_server_api_key, payload, turn['timeout_seconds']))
     beat = asyncio.get_running_loop().time()
     try:
         while not task.done():

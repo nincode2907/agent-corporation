@@ -23,7 +23,7 @@ def gate(settings, scope):
     if scope != DEMO_SCOPE:
         raise RuntimeDenied('playground_demo_only')
     try:
-        _validated_base_url(settings.codex_server_base_url)
+        _validated_base_url(settings.codex_server_base_url, transport_mode=getattr(settings, "codex_server_transport", "loopback"))
     except ValueError:
         raise RuntimeDenied('playground_local_gateway_required') from None
     return dict(POLICY)

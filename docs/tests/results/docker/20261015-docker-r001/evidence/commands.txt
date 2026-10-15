@@ -1,0 +1,11 @@
+Commands run by independent reviewer (all through `rtk proxy`):
+1. `rtk proxy git status --short` — captured dirty state; Docker/task files plus unrelated Phase 16/17 work were dirty/untracked.
+2. `rtk proxy date +%Y%m%dT%H%M%S%z` — 20261015T114619+0700 for source snapshot.
+3. `rtk proxy docker compose config --quiet` — PASS, exit 0.
+4. `rtk proxy docker compose -f compose.bootstrap.yml config --quiet` — PASS on pre-UID-fix compose, exit 0; repeated after UID fix, PASS, exit 0.
+5. `rtk proxy uv run --project apps/api pytest apps/api/tests/test_docker_gateway.py apps/api/tests/test_codex_gateway.py apps/api/tests/test_phase06_runtime.py apps/api/tests/test_playground.py apps/api/tests/test_owner_auth.py -q` — 79 passed, 1 skipped, 1 Starlette/httpx deprecation warning, exit 0. Windows was not run.
+6. `rtk proxy docker --version` — Docker 20.10.23.
+7. `rtk proxy docker compose version` — Docker Compose 2.15.1.
+8. `rtk proxy sha256sum ...` — source hashes in source-manifest-r001.txt.
+
+Not run by independent reviewer: `scripts/test_docker_isolated.py` (root was executing it concurrently, as instructed); no production DB access, migration, restart, network dispatch or inference. Root separately reported isolated temporary-project pass: fresh PostgreSQL/migrations, UID1000/secret mode600, Owner auth/Host/Origin/CSRF/SSE, API restart/session survival and logout revocation, PostgreSQL-down liveness200/readiness503, cleanup limited to disposable Compose project. Root said final rebuilt-image rerun remained pending when this report was written.
