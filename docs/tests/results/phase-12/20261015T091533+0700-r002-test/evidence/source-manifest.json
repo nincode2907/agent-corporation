@@ -1,0 +1,22 @@
+{
+  "phase": "12",
+  "test_batch_id": "20261015T091533+0700-r002-test",
+  "captured_at": "2026-10-15T09:15:37+07:00",
+  "source_state": "dirty worktree after r001 remake; no commit identified",
+  "files": [
+    {"path": "apps/api/src/agent_corporation_api/modules/orchestration/contracts.py", "sha256": "7bde67176c3741b0d3507109c1a6d8f8cb27631c2f5a9164da1cc22da17b0a36"},
+    {"path": "apps/api/src/agent_corporation_api/modules/orchestration/__init__.py", "sha256": "4352f040dd2307fbfd418d75b1d418a9407b17c26b73a62ccae34b04533c1818"},
+    {"path": "apps/api/tests/test_phase12_orchestration_contracts.py", "sha256": "6e25f5e758163f76aeb5a8dc13c16d96ab9dbd8e6774b855067ec652f8466089"},
+    {"path": "docs/tests/phases/phase-12.md", "sha256": "4f60b529628a2ed0fd5b1969ac43e649964b4ad54ec17b0d3f84c0c34c488776"},
+    {"path": "docs/master-plan.md", "sha256": "fa1e206cc3cceba9eb98ea956c055b5b8b80273f8e5d88049ca8b819cc1c7e1f"},
+    {"path": "docs/product-spec.md", "sha256": "d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f"},
+    {"path": "docs/decisions/0001-v1-foundation.md", "sha256": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930"},
+    {"path": "docs/remakes/phase-12/20261015T091254+0700-r001-remake/remake.md", "sha256": "6bb5c2a891b35aca39b92945ec799683876109fb4e74622d397350d20377f904"}
+  ],
+  "limits": [
+    "No DB/runtime/dispatch/inference/gateway/network action; direct assertions instantiate pure Pydantic/dataclass contracts only.",
+    "Focused pytest suites passed 14 tests; synthetic direct matrix independently checks empty/malformed evidence refs and bool/float limits.",
+    "P12-03…07 and live portions remain blocked; Phase 11 is not accepted and IG12 grant is 0.",
+    "Current master-plan remains dirty and is not changed by this reviewer."
+  ]
+}

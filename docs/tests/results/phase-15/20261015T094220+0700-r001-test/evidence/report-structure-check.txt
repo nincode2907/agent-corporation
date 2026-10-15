@@ -1,0 +1,6 @@
+$ rtk proxy python3 -c 'import sys; sys.path.insert(0,"scripts"); import render_plan; [(lambda x: print(x["batch"],len(x["cases"]),[c["id"] for c in x["cases"]]))(render_plan.phase_test_report(p)) for p in ("14","15")]'
+20261015T094007+0700-r001-test 14 ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'P14-01', 'P14-02', 'P14-03', 'P14-04', 'P14-05', 'P14-06']
+20261015T094220+0700-r001-test 14 ['C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'P15-01', 'P15-02', 'P15-03', 'P15-04', 'P15-05', 'P15-06']
+
+$ local relative Markdown links check for both reports
+broken links: []

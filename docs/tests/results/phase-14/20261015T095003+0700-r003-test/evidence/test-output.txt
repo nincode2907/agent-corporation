@@ -1,0 +1,14 @@
+$ rtk proxy uv run --project apps/api pytest apps/api/tests/test_phase14_hr_contracts.py -q
+......                                                                   [100%]
+6 passed in 0.14s
+exit_code=0
+
+$ rtk proxy uv run --project apps/api python -c '<current expected/current revision bool and non-integer matrix>'
+rejected begin current bool
+rejected begin expected bool
+rejected begin current float
+rejected begin expected float
+rejected complete current bool
+rejected complete current float
+all boundary negative cases rejected: 6/6
+exit_code=0

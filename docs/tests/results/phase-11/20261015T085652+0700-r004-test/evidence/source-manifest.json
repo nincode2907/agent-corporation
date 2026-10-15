@@ -1,0 +1,38 @@
+{
+  "phase": "11",
+  "test_batch_id": "20261015T085652+0700-r004-test",
+  "captured_at": "2026-10-15T09:02:32+07:00",
+  "source_state": "dirty worktree after r003 remake; no commit identified",
+  "files": [
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/observability/redaction.py",
+      "sha256": "1a58871949b8a58a9ad97211c56e53a1282e7ce83e8b6f6bca1972c7fb446129"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/tools/__init__.py",
+      "sha256": "a3265637993d5b6a6dfc3026ad98e8119718db8e3bee795265be2bf655cb6e0c"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/tools/registry.py",
+      "sha256": "1c2f948adbfbff87811007fa0c3def92eb2ad73ccab539e8b89af2c158c14211"
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/tools/workspace.py",
+      "sha256": "0475064b31e5632f8a34f8b59a7f475d9619f5059cd42f91e160e09aeacd82a0"
+    },
+    {
+      "path": "apps/api/tests/test_phase11_tools.py",
+      "sha256": "08c7c29a839f1944906219d5d4405b14b1dcae49ce258120f88710df96b3f5d7"
+    },
+    {
+      "path": "apps/api/tests/test_sensitive_validation.py",
+      "sha256": "14acbee171eed620d1a3917f17426019601169427f16d9c10da214307d5d389d"
+    }
+  ],
+  "limits": [
+    "No database, runtime dispatch, inference, gateway, or external network action was performed.",
+    "All canaries are synthetic; probe uses TemporaryDirectory and local read-only adapter.",
+    "The adapter is not an OS sandbox and does not provide event/log/Inspector integration.",
+    "A later source change requires another independent test batch."
+  ]
+}

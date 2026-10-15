@@ -1,0 +1,21 @@
+{
+  "phase": "12",
+  "test_batch_id": "20261015T091102+0700-r001-test",
+  "captured_at": "2026-10-15T09:11:27+07:00",
+  "source_state": "dirty worktree; contract modules and tests are untracked; no commit recorded",
+  "files": [
+    {"path": "apps/api/src/agent_corporation_api/modules/orchestration/contracts.py", "sha256": "7e68d18afc9734035501b0ee66bc495ed73f8b38bd2513860545025024b5101b"},
+    {"path": "apps/api/src/agent_corporation_api/modules/orchestration/__init__.py", "sha256": "4352f040dd2307fbfd418d75b1d418a9407b17c26b73a62ccae34b04533c1818"},
+    {"path": "apps/api/tests/test_phase12_orchestration_contracts.py", "sha256": "e6c74f004e875202a974a27f8e789c7510f6b49bccbc96bf876955d5dbf28b8e"},
+    {"path": "docs/tests/phases/phase-12.md", "sha256": "4f60b529628a2ed0fd5b1969ac43e649964b4ad54ec17b0d3f84c0c34c488776"},
+    {"path": "docs/master-plan.md", "sha256": "f038e3878b683f90f9e07988ffd41a8143dd3eb0015afc1f34127cc27be7f278"},
+    {"path": "docs/product-spec.md", "sha256": "d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f"},
+    {"path": "docs/decisions/0001-v1-foundation.md", "sha256": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930"}
+  ],
+  "limits": [
+    "Only local source and documentation were inspected; no DB, app runtime, dispatch, inference, or gateway was used.",
+    "The requested focused pytest command is fixture/unit-only and passed 14 tests across Phase 12 and 13.",
+    "Phase 11 is not accepted; Phase 12 depends on it. Phase 09 and 10 runtime/approval work remains incomplete.",
+    "IG12 needs a separate grant and live end-to-end evidence; current inference grant is 0."
+  ]
+}

@@ -1,7 +1,7 @@
 # Kế hoạch Agent Corporation
 
 > Phiên bản kế hoạch: 1.0 · Ngày lập: 08/10/2026 · Ngôn ngữ: tiếng Việt.
-> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09–10 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Kiểm định lại 15/10: Phase 06 còn CG01 và evidence UI Playground; Phase 07 r005 đã sửa P07-02 reconnect, P07-03 còn thiếu browser network-drop evidence và các case runtime/live vẫn blocked; Phase 08 r004 ghi nhận 6 clean, 9 blocked, không fail; vẫn thiếu ACL/replay-side-effect/network-drop/live Office và IG08. Phase 09 thiếu lease/recovery/retry. Phase 10 đang được triển khai theo yêu cầu riêng, nhưng chưa tích hợp executor và phụ thuộc Phase 09 chưa đạt. Một lượt inference demo Phase 06 đã hoàn tất; grant đó đã dùng hết. Playground dùng Session Grant mới do Owner chủ động cấp.
+> Trạng thái: **Phase 00 Hoàn tất; Phase 01–05 Chờ nghiệm thu; Phase 06–08 Bị chặn; Phase 09–11 Đang triển khai; 1/24 phase hoàn tất**. Phase 02 còn thiếu UI/network evidence; Phase 03 retest kỹ thuật đạt, cả hai chưa có quyết định nghiệm thu mới của Chủ tịch. Kiểm định lại 15/10: Phase 06 còn CG01 và evidence UI Playground; Phase 07 r005 đã sửa P07-02 reconnect, P07-03 còn thiếu browser network-drop evidence và các case runtime/live vẫn blocked; Phase 08 r004 ghi nhận 6 clean, 9 blocked, không fail; vẫn thiếu ACL/replay-side-effect/network-drop/live Office và IG08. Phase 09 thiếu lease/recovery/retry. Phase 10 chưa tích hợp executor và phụ thuộc Phase 09 chưa đạt. Phase 11 mới có registry và reader read-only; r004 đạt redaction cục bộ nhưng 9 tiêu chí còn blocked do thiếu executor/sandbox/runtime, dependency Phase 09–10 và inference grant = 0. Một lượt inference demo Phase 06 đã hoàn tất; grant đó đã dùng hết. Playground dùng Session Grant mới do Owner chủ động cấp.
 
 ## 1. Hướng đi đã chọn
 
@@ -118,7 +118,7 @@ Stack/auth boundary/data/state/event/queue đã có baseline để nghiệm thu 
 
 Mở `master-plan.html` trực tiếp trong trình duyệt; không cần server/port. Mỗi phase có phần mới, dependency, phạm vi, demo, checklist và evidence. Search/lọc mốc để tìm phần cần xem; chọn phase rồi sao chép yêu cầu triển khai và gửi trong cuộc trò chuyện.
 
-Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–10 đang triển khai; Phase 11–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Kiểm định lại Phase 06–09 ngày 14/10 vẫn ghi nhận CG01/grant, reconnect, live-run và worker/retry gaps; xem nhật ký từng phase bên dưới. Phase 10 đang được code, chưa được nghiệm thu. Inference grant = 0.
+Trạng thái chính thức trong Markdown: **Chưa triển khai → Đang triển khai → Chờ nghiệm thu → Hoàn tất**; **Bị chặn** phải nêu blocker. HTML đọc trạng thái này, không tự chốt DONE. Phase 00 hoàn tất; Phase 01–05 chờ nghiệm thu; Phase 06–08 bị chặn tại gate/dependency; Phase 09–15 đang triển khai; Phase 16–23 chưa triển khai. Phase 02–03 đã retest độc lập sau remake: Phase 02 còn ba evidence gaps; Phase 03 đạt kỹ thuật và IG03 PASS. Cả hai vẫn Chờ nghiệm thu. Kiểm định lại Phase 06–09 ngày 14/10 vẫn ghi nhận CG01/grant, reconnect, live-run và worker/retry gaps; xem nhật ký từng phase bên dưới. Phase 10 chưa được nghiệm thu. Phase 11 mới có registry/reader foundation; r004 đạt redaction cục bộ nhưng 9 criteria còn blocked. Phase 12–15 mới có contract foundation, runtime/acceptance evidence còn thiếu. Inference grant = 0.
 
 Mỗi phase có tab **Kiểm thử** hiển thị pipeline AI và lịch sử `docs/tests/results/phase-NN/` + `docs/remakes/phase-NN/`. Chủ tịch chỉ theo dõi, không tự tick issue. AI triển khai bàn giao cho AI khác test; AI test note issue, AI remake ghi bản sửa hoặc phản biện, AI test độc lập xác minh lại, tiếp tục các vòng đến OK hoặc blocker thật. Dấu ✓ tự cập nhật từ files AI: đã sửa chờ retest, sửa được test lại xác nhận, hoặc phản biện được AI test chấp nhận. Phản biện chưa xác minh không đóng issue; retest vẫn lỗi thì mở lại và bỏ tick. Issue đóng vẫn giữ lịch sử và links; case biến mất khỏi report mới không tự coi là đã fix. Pipeline chỉ OK khi report mới kết luận đạt, gates đạt và không còn issue bắt buộc chưa xác minh. AI render HTML sau mỗi bước; refresh trang để xem tiến độ đã lưu. HTML là bảng theo dõi, không khởi chạy agent nền. Nghiệm thu chính thức vẫn theo Markdown/quyết định Chủ tịch.
 
@@ -706,7 +706,7 @@ Bypass/replay/stale tests và audit trail.
 ### Phase 11 — Hệ thống công cụ thực thi
 
 - Mốc: C
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 10
 - Mục tiêu: Agent có thể làm việc thật trong workspace đã cấp.
 
@@ -745,12 +745,12 @@ Tool receipts, diff/test log, negative tests về file/network.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+15/10/2026 — Theo yêu cầu code phase tiếp theo, đã thêm tool registry có schema/version và capability allowlist cùng reader text read-only giới hạn theo workspace root; chặn absolute/traversal/symlink/special file và giới hạn bytes. Không thêm dispatch API, file write, terminal/browser, network hay OS sandbox vì Phase 10 approval chưa nối executor và Phase 09 lease/retry/recovery chưa đạt. Rà soát độc lập phát hiện credential redaction leaks; ba vòng remake xử lý header/cookie/JSON/private-key, escaped quote/backslash. Retest r004: 6 clean, 9 blocked, không fail; ma trận redaction cục bộ đạt và hash/byte_count khớp output sau lọc. P11-01…05/P11-07 và phần end-to-end P11-06 còn thiếu executor, Inspector/persistence, sandbox/runtime evidence; grant inference = 0. Phase 11 tiếp tục Đang triển khai, chưa nghiệm thu. Xem [evidence Phase 11](evidence/phase-11.md), [test r001](tests/results/phase-11/20261015T084213+0700-r001-test/report.md), [remakes r001–r003](remakes/phase-11/), [retest r004](tests/results/phase-11/20261015T085652+0700-r004-test/report.md) và [sổ vòng](tests/results/phase-11/README.md).
 
 ### Phase 12 — Điều phối nhiều nhân viên
 
 - Mốc: C
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 11
 - Mục tiêu: Một mục tiêu đi qua người lập kế hoạch, thực hiện và kiểm tra.
 
@@ -789,12 +789,12 @@ Trace DAG, quality/rework evidence và cancellation/budget race tests.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+15/10/2026 — Đã thêm contract thuần cho routing deterministic, DAG subtask có giới hạn, handoff metadata và evidence refs có ràng buộc; validator từ chối limits không phải integer. Unit tests contract pass; chưa tích hợp executor, persistence, budget/cancel/rework hay giao diện. Phase 11 chưa nghiệm thu nên trace/runtime Phase 12 vẫn blocked; IG12 BLOCKED, inference grant = 0. Xem [evidence Phase 12](evidence/phase-12.md) và sổ vòng kiểm định.
 
 ### Phase 13 — Tổ chức và hồ sơ nhân viên
 
 - Mốc: C
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 12; target TDG-CG01 được Owner chốt trước chat backend; baseline 03/06/07/08/10 cho chat foundation.
 - Mục tiêu: Quản lý tập đoàn như một tổ chức có trách nhiệm.
 
@@ -836,12 +836,12 @@ Version comparison, run snapshots và org integrity tests.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+15/10/2026 — Đã thêm contract thuần cho department/reporting graph theo cùng environment/company và employee profile version append-only (role/persona/model/reasoning/tools/skills/context/policy refs). Unit tests contract pass; chưa có CRUD owner-only, schema migration, run snapshot, Inspector, workload UI hay Employee Chat. Dependency Phase 12 chưa nghiệm thu; target TDG-CG01 vẫn chờ quyết định Owner và baseline 03/06/07/08/10 chưa được nghiệm thu cho chat. Employee Chat/send và inference không được mở. Xem [evidence Phase 13](evidence/phase-13.md) và sổ vòng kiểm định.
 
 ### Phase 14 — Tuyển dụng và thử việc
 
 - Mốc: C
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 13
 - Mục tiêu: AI đề xuất nhân sự, Chủ tịch quyết định.
 
@@ -882,12 +882,12 @@ Proposal audit, probation evidence và offboard test.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+15/10/2026 — Đã thêm contract thuần cho HR proposal có nhu cầu/evidence, cost basis rõ confirmed/estimated/unknown, tiêu chí probation, Owner decision shape và kế hoạch drain/offboard có phân loại queued/running/unknown. Chặn bool/int revision bypass tại cả begin/complete. Unit tests 14/14 cùng Phase 15 pass; r002 xác nhận revision negative cases. Chưa có Owner API/auth, proposal/audit persistence, fixed probation suite, revoke/stop/drain execution hoặc race/idempotency runtime; Phase 13 chưa nghiệm thu. Không tạo/sa thải nhân viên hay cấp grant. Xem [evidence Phase 14](evidence/phase-14.md) và sổ vòng kiểm định.
 
 ### Phase 15 — Context và trí nhớ có kiểm chứng
 
 - Mốc: C
-- Trạng thái: Chưa triển khai
+- Trạng thái: Đang triển khai
 - Phụ thuộc: 14
 - Mục tiêu: Tổ chức tích lũy bài học đúng người, đúng phạm vi.
 
@@ -928,7 +928,7 @@ Context manifest, promotion/rollback/isolation tests.
 
 #### Nhật ký triển khai
 
-Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.
+15/10/2026 — Đã thêm contract context scope năm lớp, manifest giới hạn bytes/sources có hash provenance, ACL allowlist do caller tin cậy cấp; memory proposal giữ source/evidence refs, quyết định reviewer/Owner gắn digest payload, version frozen, CAS version và rollback append-only. Context content locator bắt buộc opaque-ref; r002 xác nhận traversal/path-shaped refs bị từ chối. Unit tests 14/14 cùng Phase 14 pass. Chưa có trusted ACL service, DB persistence/RLS, context builder/retrieval, promotion inbox/audit, run snapshot, redaction/retention/resume integration; Phase 14 chưa nghiệm thu. Inference grant = 0. Xem [evidence Phase 15](evidence/phase-15.md) và sổ vòng kiểm định.
 
 ### Phase 16 — Tài chính và ngân sách
 

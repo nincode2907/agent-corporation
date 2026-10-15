@@ -1,0 +1,8 @@
+$ rtk proxy uv run --project apps/api pytest apps/api/tests/test_phase14_hr_contracts.py apps/api/tests/test_phase15_memory_contracts.py -q
+..............                                                           [100%]
+14 passed in 0.81s
+exit_code=0
+
+$ rtk proxy uv run --project apps/api python -c 'import sys; sys.path.insert(0,"apps/api/src"); from datetime import datetime,timezone; from uuid import UUID; from agent_corporation_api.modules.memory.contracts import ContextScope,ContextSource; u=lambda n: UUID(int=n); value=ContextSource(ref="policy:base-v1",version_id=u(3),scope=ContextScope(environment_id=u(1),company_id=u(2),layer="corporate"),content_sha256="a"*64,byte_count=1,trust="reviewed",content_ref="../../outside"); print("accepted path-like ContextSource.content_ref:",value.content_ref)'
+accepted path-like ContextSource.content_ref: ../../outside
+exit_code=0

@@ -1,0 +1,15 @@
+$ rtk proxy uv run --project apps/api pytest apps/api/tests/test_phase15_memory_contracts.py -q
+........                                                                 [100%]
+8 passed in 0.08s
+exit_code=0
+
+$ rtk proxy uv run --project apps/api python -c '<synthetic locator matrix>'
+rejected '../../outside'
+rejected 'artifact:../../outside'
+rejected '/tmp/outside'
+rejected 'plain-identifier'
+accepted valid namespaced ref: artifact:ctx-1
+exit_code=0
+
+$ rtk git diff --check
+exit_code=0 (confirmed by remake record; not rerun in this batch)
