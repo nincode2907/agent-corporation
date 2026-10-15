@@ -61,6 +61,8 @@ Mỗi dòng là một test phải có record kết quả riêng. Các biến th�
 
 ## Lệnh và điều kiện chạy
 
+Checkpoint bắt buộc theo chỉ thị Chủ tịch 14/10/2026: tắt `RUNTIME_CG01_DEMO_TEST_OVERRIDE` bằng `rtk proxy python scripts/cg01_mode.py strict`, stop/revoke run test và restart API/worker. Chạy `rtk proxy uv run --project apps/api python scripts/cg01_mode.py release-check`; phải exit 0, CG01 strict có proof thật. Gắn evidence vào P23-03/P23-08/P23-09. Không dùng mode `demo-test` để PASS release gate; đây là điều kiện bổ sung cho checklist hiện tại, không tự bắt đầu Phase 23.
+
 Chưa có command runtime được xác minh cho phase này khi soạn. Khi phase được triển khai, đọc manifest/scripts/test source và README hiện tại, chọn lệnh tồn tại, ghi lệnh/exit code vào report; không tự bịa endpoint, cài tool/global hoặc scaffold để chạy checklist.
 
 ## Kết luận và lưu kết quả

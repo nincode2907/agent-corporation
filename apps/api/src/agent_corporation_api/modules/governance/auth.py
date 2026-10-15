@@ -14,6 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from ...database import get_session_factory
 from ...settings import get_settings
 from ..observability.scope import CompanyScope, set_company_scope
+from .windows_acl import windows_acl_matches
 
 COOKIE_NAME = "ac_owner_session"
 ALLOWED_ORIGINS = frozenset({"http://127.0.0.1:15500", "http://127.0.0.1:15501", "http://localhost:15500", "http://localhost:15501", "http://agent-corporation.localhost", "https://agent-corporation.localhost"})
@@ -45,10 +46,23 @@ def read_owner_secret() -> str:
     try:
         if path.parent.is_symlink():
             raise ValueError("invalid secret directory")
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+        if os.name == "nt":
+            if not windows_acl_matches(path.parent, directory=True):
+                raise ValueError("invalid secret directory")
+            if path.is_symlink() or not windows_acl_matches(path, directory=False):
+                raise ValueError("invalid secret ACL")
+            flags = os.O_RDONLY | getattr(os, "O_BINARY", 0)
+        else:
+            flags = os.O_RDONLY | os.O_NOFOLLOW
+        fd = os.open(path, flags)
         with os.fdopen(fd, "r") as stream:
             info = os.fstat(stream.fileno())
-            if not stat.S_ISREG(info.st_mode) or stat.S_IMODE(info.st_mode) != 0o600 or info.st_uid != os.getuid():
+            if not stat.S_ISREG(info.st_mode):
+                raise ValueError("invalid secret file")
+            if os.name == "nt":
+                if not windows_acl_matches(path, directory=False):
+                    raise ValueError("invalid secret ACL")
+            elif stat.S_IMODE(info.st_mode) != 0o600 or info.st_uid != os.getuid():
                 raise ValueError("invalid secret permissions")
             secret = stream.read(256).strip()
         if len(secret) < 40 or len(secret) > 128:

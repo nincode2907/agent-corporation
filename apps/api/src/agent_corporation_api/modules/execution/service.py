@@ -110,7 +110,7 @@ def revoke_grant(factory,scope,grant_id):
             stop_in_transaction(session,scope,run)
 
 
-def run_create(factory,scope,owner_id,spec):
+def run_create(factory,scope,owner_id,spec,gate_state=None):
     encoded=json.dumps({key:str(value) for key,value in spec.items() if key != "idempotency_key"},sort_keys=True).encode()
     request_hash=hashlib.sha256(encoded).hexdigest()
     with transaction(factory,scope) as session:
@@ -133,6 +133,7 @@ def run_create(factory,scope,owner_id,spec):
         session.execute(text("INSERT INTO run_execution_state(run_id,environment_id,company_id,status,current_step) VALUES(:id,:environment_id,:company_id,'queued',0)"),params(scope,id=run_id))
         history=[{"role":"system","content":"Chỉ phân tích văn bản được cấp. Không công cụ, không đọc file, không truy cập dữ liệu khác."},{"role":"user","content":spec["input_text"]}]
         policy={"tools":False,"max_turns":1,"timeout_seconds":grant["timeout_seconds"],"max_requeues":grant["max_requeues"],"cost_basis":"unknown","fallback":False}
+        policy["cg01_at_creation"] = gate_state or {"mode": "strict", "verified": False, "reason": "not_recorded"}
         session.execute(text("""INSERT INTO runtime_runs(environment_id,company_id,id,task_id,grant_id,phase,batch_id,purpose,model,effort,input_text,idempotency_key,request_hash,policy_snapshot,history)
           VALUES(:environment_id,:company_id,:id,:task_id,:grant_id,:phase,:batch_id,:purpose,:model,:effort,:input_text,:idempotency_key,:request_hash,CAST(:policy AS jsonb),CAST(:history AS jsonb))"""),params(scope,id=run_id,task_id=task_id,request_hash=request_hash,policy=json.dumps(policy),history=json.dumps(history,ensure_ascii=False),**spec))
         run={"id":run_id,"task_id":task_id}

@@ -1,3 +1,5 @@
+import asyncio
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Response, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -11,6 +13,20 @@ from .modules.governance.approval_router import router as approvals_router
 from .modules.observability.router import router as events_router
 from .modules.execution.router import router as runtime_router
 from .modules.work.router import router as work_orders_router
+from .modules.playground.router import router as playground_router
+from .modules.playground import worker as playground_worker
+from .settings import get_settings
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    task = asyncio.create_task(playground_worker.supervise()) if get_settings().playground_worker_enabled else None
+    try:
+        yield
+    finally:
+        if task:
+            task.cancel()
+            await asyncio.gather(task, return_exceptions=True)
 
 
 app = FastAPI(
@@ -19,6 +35,7 @@ app = FastAPI(
     version="0.1.0",
     docs_url=None,
     redoc_url=None,
+    lifespan=lifespan,
 )
 app.include_router(demo_router)
 app.include_router(codex_router)
@@ -27,12 +44,13 @@ app.include_router(approvals_router)
 app.include_router(events_router)
 app.include_router(runtime_router)
 app.include_router(work_orders_router)
+app.include_router(playground_router)
 
 
 @app.middleware("http")
 async def private_runtime_responses(request, call_next):
     response = await call_next(request)
-    if request.url.path.startswith(("/api/v1/owner", "/api/v1/runtime", "/api/v1/events", "/api/v1/work-orders", "/api/v1/approvals")):
+    if request.url.path.startswith(("/api/v1/owner", "/api/v1/runtime", "/api/v1/events", "/api/v1/work-orders", "/api/v1/approvals", "/api/v1/playground")):
         response.headers["Cache-Control"] = "no-store"
     return response
 

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from uuid import uuid4
+import os
 
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.engine import make_url
 
 from agent_corporation_api.main import app
 from agent_corporation_api.modules.demo.factory import (
@@ -20,6 +22,8 @@ from agent_corporation_api.settings import get_settings
 @pytest.fixture
 def databases():
     settings = get_settings()
+    if os.getenv('PLAYGROUND_TEST_ISOLATED') != '1' or not (make_url(settings.database_url).database or '').startswith('ac_pgtest_'):
+        pytest.skip('Demo reset fixture requires an explicitly disposable ac_pgtest_ database')
     app_engine = create_engine(settings.database_url, pool_pre_ping=True)
     admin_engine = create_engine(settings.migration_database_url or settings.database_url, pool_pre_ping=True)
     yield sessionmaker(app_engine, expire_on_commit=False), sessionmaker(admin_engine, expire_on_commit=False)

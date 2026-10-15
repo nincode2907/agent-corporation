@@ -1,0 +1,9 @@
+HEAD: 3cb08c1259cd52ce7094313159e3b53fb2880481
+
+Working tree: dirty; Phase 06/07/Playground work was concurrently present. These are working-tree blob hashes at review time.
+
+apps/web/src/RuntimePanel.tsx b1f91ac524d98df4872dab944090e62a3246462f
+apps/web/src/App.tsx ef0fc0448910c32ccb2b9f8d5472dcf6f13f87e0
+apps/api/src/agent_corporation_api/modules/observability/router.py af9bae70128a64698848196f5e9ad47301dcaf81
+apps/api/tests/test_phase07_feed.py b9684dfec7832b6074be24c3c706d4cac95e3050
+apps/api/tests/test_phase07_feed_persistence.py 2b626f943194bf6130a483893aee620ab3d098fa

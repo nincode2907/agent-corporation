@@ -1,6 +1,7 @@
 """Unit transport is explicit local fake; no inference or grant on shared runtime."""
 import asyncio
 import json
+import os
 from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 import pytest
@@ -35,6 +36,7 @@ def test_missing_and_concurrency_grant_deny():
         validate_grant(grant,grant,datetime.now(UTC),1)
 
 
+@pytest.mark.skipif(os.name == "nt", reason="Strict proof owner/mode enforcement requires POSIX; Windows fails closed.")
 def test_gate_missing_stale_world_readable_and_unverified(tmp_path):
     root=tmp_path/"gateway"
     for name in FILES:
@@ -145,7 +147,7 @@ def test_runtime_http_requires_owner_and_cg01_cannot_be_self_approved(monkeypatc
     assert client.get("/api/v1/runtime/status").status_code==401
     assert client.post("/api/v1/runtime/runs",json=body,headers={"origin":"http://127.0.0.1:15500"}).status_code==401
     app.dependency_overrides[require_owner_write]=lambda:OwnerPrincipal(CompanyScope(uuid4(),uuid4()),uuid4(),"fixture-owner")
-    monkeypatch.setattr(router,"gate",lambda:{"allowed":False,"reason":"fixture blocked"})
+    monkeypatch.setattr(router,"gate",lambda scope:{"allowed":False,"reason":"fixture blocked"})
     monkeypatch.setattr(router,"get_session_factory",lambda:(_ for _ in ()).throw(AssertionError("Must deny before DB or POST")))
     assert client.post("/api/v1/runtime/runs",json=body).status_code==409
     assert client.post("/api/v1/runtime/runs",json={**body,"cg01_approved":True}).status_code==422
@@ -153,6 +155,7 @@ def test_runtime_http_requires_owner_and_cg01_cannot_be_self_approved(monkeypatc
 
 
 @pytest.mark.parametrize("kind",["list","null","string","invalid_json","directory","fifo","symlink"])
+@pytest.mark.skipif(os.name == "nt", reason="POSIX fixture; Windows unsupported-platform behavior has a separate test.")
 def test_gate_malformed_and_nonregular_metadata_fails_closed(tmp_path,kind):
     import os
     root=tmp_path/"gateway"

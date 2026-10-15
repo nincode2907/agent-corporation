@@ -7,7 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from ...database import get_session_factory
 from ...settings import get_settings
 from ..governance.auth import OwnerPrincipal, require_owner, require_owner_write
-from .gates import check_gate
+from .gates import runtime_gate
 from . import service
 
 router=APIRouter(prefix="/api/v1/runtime",tags=["runtime"])
@@ -44,9 +44,9 @@ class RunInput(BaseModel):
     idempotency_key:UUID
 
 
-def gate():
+def gate(scope):
     settings=get_settings()
-    return check_gate(settings.runtime_gate_path,settings.runtime_gateway_source_path,base_url=settings.codex_server_base_url)
+    return runtime_gate(settings, scope)
 
 
 def invoke(call,*args):
@@ -58,7 +58,7 @@ def invoke(call,*args):
 @router.get("/status")
 def runtime_status(principal:OwnerPrincipal=Depends(require_owner)):
     grants=service.grants_list(get_session_factory(),principal.scope)
-    return {"cg01":gate(),"inference_grants":len([g for g in grants if not g["revoked"] and g["expires_at"] > datetime.now(UTC) and g["used_requests"] < g["max_requests"]]),"limits":{"max_turns":1,"tools":False,"cost_basis":"unknown"},"runs":service.runs_list(get_session_factory(),principal.scope)}
+    return {"cg01":gate(principal.scope),"inference_grants":len([g for g in grants if not g["revoked"] and g["expires_at"] > datetime.now(UTC) and g["used_requests"] < g["max_requests"]]),"limits":{"max_turns":1,"tools":False,"cost_basis":"unknown"},"runs":service.runs_list(get_session_factory(),principal.scope)}
 
 @router.get("/grants")
 def grants(principal:OwnerPrincipal=Depends(require_owner)):
@@ -76,9 +76,10 @@ def revoke(grant_id:UUID,principal:OwnerPrincipal=Depends(require_owner_write)):
 
 @router.post("/runs",status_code=201)
 def run_create(body:RunInput,principal:OwnerPrincipal=Depends(require_owner_write)):
-    if not gate()["allowed"]:
+    gate_state = gate(principal.scope)
+    if not gate_state["allowed"]:
         raise HTTPException(409,"CG01 chưa có bằng chứng capability/isolation/privacy/cancellation hợp lệ; chưa dispatch.")
-    run_id=invoke(service.run_create,get_session_factory(),principal.scope,principal.owner_id,body.model_dump())
+    run_id=invoke(service.run_create,get_session_factory(),principal.scope,principal.owner_id,body.model_dump(),gate_state)
     return invoke(service.run_get,get_session_factory(),principal.scope,run_id)
 
 @router.get("/runs/{run_id}")

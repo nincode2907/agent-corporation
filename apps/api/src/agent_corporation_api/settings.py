@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     owner_session_ttl_seconds: int = 3600
     runtime_gate_path: Path = REPOSITORY_ROOT / ".local" / "cg01-proof.json"
     runtime_gateway_source_path: Path = REPOSITORY_ROOT.parent / "codex-server"
+    runtime_cg01_demo_test_override: bool = False
+    playground_worker_enabled: bool = True
 
     model_config = SettingsConfigDict(
         env_file=REPOSITORY_ROOT / ".env",

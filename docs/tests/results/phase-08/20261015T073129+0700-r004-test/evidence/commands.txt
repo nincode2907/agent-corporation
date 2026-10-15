@@ -1,0 +1,27 @@
+# Commands run from F:\Workspace\dev\projects\agent-corporation, each prefixed with rtk per project RTK rules.
+
+rtk proxy git rev-parse HEAD
+# 3cb08c1259cd52ce7094313159e3b53fb2880481
+
+rtk proxy git status --short
+# Working tree was dirty from concurrent Phase 06/07/Playground work; no reviewer implementation edits.
+
+rtk proxy git hash-object apps/web/src/RuntimePanel.tsx apps/web/src/App.tsx apps/api/src/agent_corporation_api/modules/observability/router.py apps/api/tests/test_phase07_feed.py apps/api/tests/test_phase07_feed_persistence.py
+# b1f91ac524d98df4872dab944090e62a3246462f  apps/web/src/RuntimePanel.tsx
+# ef0fc0448910c32ccb2b9f8d5472dcf6f13f87e0  apps/web/src/App.tsx
+# af9bae70128a64698848196f5e9ad47301dcaf81  apps/api/src/agent_corporation_api/modules/observability/router.py
+# b9684dfec7832b6074be24c3c706d4cac95e3050  apps/api/tests/test_phase07_feed.py
+# 2b626f943194bf6130a483893aee620ab3d098fa  apps/api/tests/test_phase07_feed_persistence.py
+
+rtk proxy rg -n "Last-Event-ID" apps/api/src/agent_corporation_api/modules/observability/router.py
+# Source contains reconnect_cursor(query_cursor, last_event_id): last_event_id takes precedence over query_cursor.
+
+rtk proxy uv run --project apps/api python scripts/test_playground_isolated.py
+# Fresh disposable DB/role migrated; full API suite: 143 passed, 11 skipped, 1 warning in 18.37s.
+# Runner reported: Disposable Playground test database/role removed; runtime data unchanged.
+
+rtk proxy npm run --prefix apps/web lint
+# Exit 0; oxlint.
+
+rtk proxy npm run --prefix apps/web build
+# Exit 0; tsc -b and Vite production build.

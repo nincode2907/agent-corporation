@@ -43,11 +43,37 @@ def test_event_envelope_omits_raw_context_and_confidential_payloads():
 
 
 def test_sse_frame_has_opaque_cursor_and_single_json_data():
-    from agent_corporation_api.modules.observability.router import frame
+    from agent_corporation_api.modules.observability.router import frame, reconnect_cursor
     value = frame("domain", {"stream_seq": 2, "text": "line1\nline2"}, "opaque.cursor")
     assert value.startswith("id: opaque.cursor\nevent: domain\ndata: ")
     assert value.endswith("\n\n")
     assert value.count("\ndata:") == 1
+    initial_cursor = "cursor-at-first-connect"
+    advanced_cursor = "cursor-after-delivered-event"
+    assert reconnect_cursor(initial_cursor, advanced_cursor) == advanced_cursor
+    assert reconnect_cursor(initial_cursor, None) == initial_cursor
+
+
+def test_stream_uses_advanced_last_event_id_on_eventsource_reconnect(monkeypatch):
+    from starlette.requests import Request
+    from agent_corporation_api.modules.governance.auth import OwnerPrincipal
+    from agent_corporation_api.modules.observability.router import stream
+
+    initial_cursor = "signed-cursor-from-original-url"
+    advanced_cursor = "signed-cursor-from-last-event-id"
+    observed = []
+    monkeypatch.setattr("agent_corporation_api.modules.observability.router.page",
+                        lambda principal, cursor: observed.append(cursor) or
+                        {"events": [], "cursor": cursor, "latest_seq": 2, "server_time": "now"})
+    request = Request({"type": "http", "method": "GET", "path": "/api/v1/events/stream",
+                       "query_string": f"cursor={initial_cursor}".encode(),
+                       "headers": [(b"last-event-id", advanced_cursor.encode())]})
+    principal = OwnerPrincipal(scope=CompanyScope(uuid4(), uuid4()), session_id=uuid4(), owner_id="owner")
+
+    response = stream(request, initial_cursor, principal)
+
+    assert response.status_code == 200
+    assert observed == [advanced_cursor]
 
 
 def test_usage_redaction_preserves_only_valid_numeric_measurements():

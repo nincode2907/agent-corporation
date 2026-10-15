@@ -1,4 +1,5 @@
 from datetime import UTC, datetime, timedelta
+import os
 from types import SimpleNamespace
 from uuid import uuid4
 
@@ -21,11 +22,17 @@ def request(headers=None, cookie=None):
 def owner_secret(tmp_path,monkeypatch):
     path=tmp_path/"secret"
     path.write_text("a"*64+"\n")
-    path.chmod(0o600)
+    if os.name == "nt":
+        from agent_corporation_api.modules.governance.windows_acl import secure_windows_acl
+        secure_windows_acl(tmp_path, directory=True)
+        secure_windows_acl(path, directory=False)
+    else:
+        path.chmod(0o600)
     monkeypatch.setattr(auth,"get_settings",lambda:SimpleNamespace(owner_secret_path=path))
     return path
 
 
+@pytest.mark.skipif(os.name == "nt", reason="POSIX mode and symlink checks are exercised on POSIX")
 def test_owner_secret_default_deny_and_permission_symlink(owner_secret):
     assert auth.read_owner_secret()=="a"*64
     key=auth.cursor_signing_key()
@@ -38,6 +45,35 @@ def test_owner_secret_default_deny_and_permission_symlink(owner_secret):
     owner_secret.rename(link)
     owner_secret.symlink_to(link)
     with pytest.raises(HTTPException): auth.read_owner_secret()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows ACL contract")
+def test_windows_owner_secret_requires_private_acl(tmp_path, monkeypatch):
+    import subprocess
+    from pathlib import Path
+    from agent_corporation_api.modules.governance.windows_acl import secure_windows_acl
+
+    directory = tmp_path / "private"
+    directory.mkdir()
+    secure_windows_acl(directory, directory=True)
+    path = directory / "secret"
+    path.write_text("b" * 64 + "\n", encoding="utf-8")
+    secure_windows_acl(path, directory=False)
+    monkeypatch.setattr(auth, "get_settings", lambda: SimpleNamespace(owner_secret_path=path))
+    assert auth.read_owner_secret() == "b" * 64
+
+    system_root = Path(os.environ["SystemRoot"])
+    acl_tool = system_root / "System32" / "icacls.exe"
+    result = subprocess.run(
+        [str(acl_tool), str(path), "/grant", "*S-1-5-32-545:R"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0
+    with pytest.raises(HTTPException) as error:
+        auth.read_owner_secret()
+    assert error.value.status_code == 503
 
 @pytest.mark.parametrize("headers",[{"host":"evil.test"},{"origin":"https://evil.test"},{"sec-fetch-site":"cross-site"}])
 def test_host_origin_and_fetch_site_rejected(headers):

@@ -9,7 +9,7 @@ from ...settings import get_settings
 from ..observability.scope import CompanyScope
 from . import service
 from .gateway import post_text, CallOutcome
-from .gates import check_gate
+from .gates import runtime_gate
 
 
 async def execute_reserved(factory,scope,run,base_url,api_key,transport=post_text):
@@ -56,14 +56,14 @@ async def work(scope,once=False):
         recovered=await asyncio.to_thread(service.recover_expired,factory,scope)
         if recovered:
             print(f"Đã đối chiếu {recovered} call mất lease: unknown; không phát lại POST.",flush=True)
-        proof=check_gate(settings.runtime_gate_path,settings.runtime_gateway_source_path,base_url=settings.codex_server_base_url)
+        proof=runtime_gate(settings, scope)
         if not proof["allowed"]:
             print("CG01 blocked; không dispatch.",flush=True)
             return
         run=await asyncio.to_thread(service.reserve_next,factory,scope)
         if run:
             # Recheck trusted proof immediately before network; metadata may have changed since reservation.
-            if not check_gate(settings.runtime_gate_path,settings.runtime_gateway_source_path,base_url=settings.codex_server_base_url)["allowed"]:
+            if not runtime_gate(settings, scope)["allowed"]:
                 await asyncio.to_thread(service.finish,factory,scope,run,CallOutcome("unknown","cg01_changed_after_reservation"))
                 return
             await execute_reserved(factory,scope,run,settings.codex_server_base_url,settings.codex_server_api_key)

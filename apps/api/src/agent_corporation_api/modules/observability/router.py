@@ -38,6 +38,11 @@ def frame(event: str, data: dict, cursor: str | None = None) -> str:
     return (f"id: {cursor}\n" if cursor else "") + f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
 
 
+def reconnect_cursor(query_cursor: str | None, last_event_id: str | None) -> str | None:
+    """EventSource keeps its original URL while advancing Last-Event-ID on reconnect."""
+    return last_event_id or query_cursor
+
+
 async def event_frames(request: Request, principal: OwnerPrincipal, initial: dict):
     batch = initial
     elapsed = 0.0
@@ -71,8 +76,6 @@ async def event_frames(request: Request, principal: OwnerPrincipal, initial: dic
 def stream(request: Request, cursor: str | None = None,
            principal: OwnerPrincipal = Depends(require_owner)) -> StreamingResponse:
     header_cursor = request.headers.get("last-event-id")
-    if header_cursor and cursor and header_cursor != cursor:
-        raise HTTPException(400, detail="Cursor query và Last-Event-ID không khớp.")
-    initial = page(principal, header_cursor or cursor)
+    initial = page(principal, reconnect_cursor(cursor, header_cursor))
     return StreamingResponse(event_frames(request, principal, initial), media_type="text/event-stream",
                              headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})

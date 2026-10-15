@@ -1,0 +1,133 @@
+{
+  "phase": "06",
+  "round": "r005",
+  "test_batch_id": "20261014T211528+0700-r005-test",
+  "tester": "/root/cg01_demo_review",
+  "implementer": "/root",
+  "head": "3cb08c1259cd52ce7094313159e3b53fb2880481",
+  "dirty": true,
+  "observed_at": "2026-10-14T21:22:07.459251+07:00",
+  "config": "Windows; Settings fixture _env_file=None; no real env/secrets; fake transports only",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "985e34722db8a61966084b5e740d40690d8cb75f003e8ff13234a6a22577a9fd",
+      "bytes": 808
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "b2605c7b3ed0e934af5a89e2bab9a19a42725011acda963a2d2a7a9b08781cf8",
+      "bytes": 7127
+    },
+    {
+      "path": "README.md",
+      "sha256": "1ffdcbab0f163f83a44d39403b60eca1a4ecef65e3d3ea31dcc7953cbfb33f69",
+      "bytes": 10049
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/settings.py",
+      "sha256": "dced0f67a1f32a3a66956ef119d525373fa2d2c2387c8adec63f9e80c87fdbd9",
+      "bytes": 988
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/gates.py",
+      "sha256": "d6bf747ac3558c0a813e8897a82e7b5065ef6da28400f2a2b5d9fcbaa948afaa",
+      "bytes": 3883
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/router.py",
+      "sha256": "0d2444fe23bedbeab4fae919c08ec8d253cac97bac1cb2ceada1eb1bf067a158",
+      "bytes": 4243
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/service.py",
+      "sha256": "b727af3891fd1f50028cae5e71c747798931cade52af5d55656797fad26f2970",
+      "bytes": 31886
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/worker.py",
+      "sha256": "cb77279534d934d124361f19e2523c1036d2e9d1c88ed47b9abc877e4efb798e",
+      "bytes": 4308
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/execution/gateway.py",
+      "sha256": "f95f5714acc0c546fc8b1cd13b1779712f6217e8152898ba690562bd1013d394",
+      "bytes": 5515
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/governance/auth.py",
+      "sha256": "c3c339748257bd89569ed7703eb4eaf9dfdf53b1edda445edd59a5ee1a223732",
+      "bytes": 4777
+    },
+    {
+      "path": "apps/api/src/agent_corporation_api/modules/codex_gateway/adapter.py",
+      "sha256": "bd67aa7ece83adc387ba1fd503e922c73249799ac6c34b89ee3eecaf10b2f3aa",
+      "bytes": 6560
+    },
+    {
+      "path": "apps/api/tests/test_cg01_demo_mode.py",
+      "sha256": "b6af3fe8e399a8d73579e2673fc41078518a6b183da56be492c57e9b441aa7ca",
+      "bytes": 7332
+    },
+    {
+      "path": "apps/api/tests/test_phase06_runtime.py",
+      "sha256": "9dd00f9226b17cbc6246c97a8ae34142ebd78887bc564c927aa4a6cf240fccab",
+      "bytes": 10898
+    },
+    {
+      "path": "apps/api/tests/test_codex_gateway.py",
+      "sha256": "32a0658288f3f2f78f27c1eecdca2f920506d106f2221fe94ae0c3a7da9bc6e9",
+      "bytes": 6969
+    },
+    {
+      "path": "apps/web/src/RuntimePanel.tsx",
+      "sha256": "120bd9ec0a37019fe9f78fc376bfa5c4e051e232903253efb4065721351268a8",
+      "bytes": 56085
+    },
+    {
+      "path": "scripts/cg01_mode.py",
+      "sha256": "80037e809b7d9447864532b24db617dea009c110ff3c7410390ea5be7d892031",
+      "bytes": 2684
+    },
+    {
+      "path": "docs/master-plan.md",
+      "sha256": "4d7036f91f6b818849242b1efc91af7f8b322f94f608a1289acd0805c0215027",
+      "bytes": 97282
+    },
+    {
+      "path": "docs/master-plan.html",
+      "sha256": "1e8f276f65bb2327e0bcbaad2bdfad144af5e61dedeede032ed702f830a01d6e",
+      "bytes": 363894
+    },
+    {
+      "path": "docs/product-spec.md",
+      "sha256": "f3ddec37ebc07863f598463780deead892faa57c7d7d7fbc093324fb051f82a6",
+      "bytes": 75845
+    },
+    {
+      "path": "docs/product-spec.html",
+      "sha256": "cf77981773d4e60d9b72896533a89d4a995c952ee004c9cca1823908446c1ce2",
+      "bytes": 107869
+    },
+    {
+      "path": "docs/decisions/0001-v1-foundation.md",
+      "sha256": "1c38d06bdacf306d4ceac7f535702938a42b510fc24f4dabd6cc99a00739db2c",
+      "bytes": 8531
+    },
+    {
+      "path": "docs/tests/RULES.md",
+      "sha256": "bbf6e0b8494e2691b898bff719d83676438923da195e5b9f911f6e794dedc465",
+      "bytes": 23666
+    },
+    {
+      "path": "docs/tests/phases/phase-06.md",
+      "sha256": "2d745a74084e455839074e83334dab2c43acb559536c94bb3d64fe235fe781f5",
+      "bytes": 6848
+    },
+    {
+      "path": "docs/tests/phases/phase-23.md",
+      "sha256": "f62f542276fd1d5c44f8f4383f7ae17799530bf15aed4ed6c19d90a95835db9c",
+      "bytes": 7535
+    }
+  ]
+}

@@ -21,6 +21,8 @@
 - Model/policy/ngân sách/quyền do Chủ tịch quyết định. Agent chỉ đề xuất, backend kiểm tra quyền; prompt không phải permission engine.
 - Event store và execution state bền vững từ đầu; ghi bằng chứng, tóm tắt quyết định tường minh, không hứa hiển thị suy nghĩ nội bộ.
 - Grant inference cấp riêng cho đúng phase/test batch/mục đích/hạn mức/expiry; không kế thừa giữa phase/đợt test. Nghiệm thu Phase 00 không cấp grant/model access hoặc quyền bắt đầu Phase 01.
+- Development Playground demo Phase 06 theo ADR-0003 có Session Grant riêng do Owner tạo trong UI: quyền một lần cho nhiều tin nhắn trong limit/expiry/profile đã chốt; không hỏi lại từng message. Worker Playground tự chạy cùng API, chỉ dispatch queue Playground đã được cấp. Không tạo Work Order hay tự cấp/gia hạn grant. Policy Development Playground không phải CG01 verified/production acceptance; test mock không cấp inference thật.
+- Ngoại lệ Chủ tịch ngày 14/10/2026: cho phép tạm qua CG01 để test scope demo bằng `RUNTIME_CG01_DEMO_TEST_OVERRIDE=true`, theo [README](README.md#ngoại-lệ-kiểm-thử-demo-được-chủ-tịch-cho-phép-ngày-14102026). Không coi CG01 đã xác minh; giữ Owner/CSRF/grant/limits/stop/tools-off. Trước Phase 23 phải chuyển `strict`, stop/restart worker, chạy `rtk proxy uv run --project apps/api python scripts/cg01_mode.py release-check` đạt rồi mới kiểm định release; không giữ ngoại lệ cho nghiệm thu/vận hành thật.
 - Không đoán usage/giá; phân biệt xác nhận, ước tính, chưa biết. Giới hạn run và dừng khẩn cấp trước agent thật.
 - Không retry tool có side effect khi chưa biết kết quả; resume phải kiểm tra checkpoint và idempotency.
 - Tiếng Việt cho giao diện/tài liệu người dùng, `lang="vi"`, favicon, responsive và accessibility.
@@ -39,7 +41,7 @@
 - PostgreSQL chỉ bind `127.0.0.1:15510`; API `127.0.0.1:15501`; Vite `127.0.0.1:15500` và proxy `/api` cùng origin.
 - Dev Hub mapping ở registry trung tâm, block `15500–15599`; `agent-corporation.localhost` đi qua Caddy chỉ publish trên IPv4 loopback (Docker host từ chối bind IPv6 loopback).
 - Smoke/API: `uv run --project apps/api pytest apps/api/tests`; web: `npm run --prefix apps/web build`; migration: `uv run --project apps/api alembic -c apps/api/alembic.ini upgrade head`.
-- Health chỉ kiểm tra liveness/readiness. Phase 06–07 đã bổ sung Owner session/CSRF/profile, worker text-only có gate/grant và event feed/SSE; worker không tự chạy khi mở trang. Các phase vẫn chờ kiểm định/nghiệm thu phù hợp; grant thực tế hiện 0.
+- Health chỉ kiểm tra liveness/readiness. Phase 06–07 đã bổ sung Owner session/CSRF/profile, worker text-only có gate/grant và event feed/SSE; worker không tự chạy khi mở trang. Phase 06 đã có một grant test một request được dùng hết ngày 14/10/2026; không còn grant hợp lệ. Các phase vẫn chờ kiểm định/nghiệm thu phù hợp.
 
 ## Runtime tương lai
 - Trước quyết định host port đọc `/Users/buivannin/Desktop/workspace/personal/dev-hub/projects.yml`, kiểm tra toàn block và listener rồi reserve → verify → configure.

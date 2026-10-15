@@ -1,0 +1,18 @@
+{
+  "phase": "06",
+  "round": "r005",
+  "author": "/root",
+  "source_report": "20261014T211528+0700-r005-test",
+  "files": [
+    {
+      "path": "scripts/cg01_mode.py",
+      "before_sha256": "80037e809b7d9447864532b24db617dea009c110ff3c7410390ea5be7d892031",
+      "after_sha256": "feba332e22c32ba233f617929cb01e6903fbeaebb45cc69f534b3edb21602561"
+    },
+    {
+      "path": "apps/api/tests/test_cg01_demo_mode.py",
+      "before_sha256": "b6af3fe8e399a8d73579e2673fc41078518a6b183da56be492c57e9b441aa7ca",
+      "after_sha256": "0c655d74038e9fade8f9e52516368cd0862e350b7cfcf8a3cc0bc36c9b973274"
+    }
+  ]
+}

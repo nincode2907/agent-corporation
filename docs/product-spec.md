@@ -152,6 +152,8 @@ Cập nhật cấu hình local ngày 09/10/2026: gateway đã được dự án 
 
 ### CG01 — Contingency và decision gate cho gateway
 
+> Ngoại lệ kiểm thử do Chủ tịch chỉ thị 14/10/2026: cho phép mở tạm CG01 cho scope demo cố định và endpoint literal loopback bằng `RUNTIME_CG01_DEMO_TEST_OVERRIDE=true`. Phản hồi phải ghi `verified=false`; vẫn bắt buộc Owner/CSRF/grant/limits/stop, không tự inference hay tạo proof. Trước Phase 23 phải tắt ngoại lệ, stop/restart worker và chạy release-check đạt bằng CG01 thật. Ngoại lệ không chứng minh các capability dưới đây và không thay nghiệm thu. [Thao tác và giới hạn](../README.md#ngoại-lệ-kiểm-thử-demo-được-chủ-tịch-cho-phép-ngày-14102026).
+
 [TDG-CG01](designs/cg01-technical-decision.md) là checkpoint kỹ thuật OPEN trong 05–06: chốt capability/target trước inference đầu tiên và trước backend chat13. Kết quả KEEP-BLOCKED, CURRENT-TARGET-QUALIFIED hoặc ISOLATED-PROPOSAL-REQUIRED phải dựa trên evidence/Owner decision; không thay proof/grant hoặc cấp quyền thay gateway. Không trì hoãn lựa chọn target tới release23.
 
 Nếu probe/test chỉ ra codex-server không đáp ứng capability bắt buộc, inference isolation hoặc privacy/retention đã quy định, đánh dấu gate **FAIL/Bị chặn** trước inference hoặc trước khi cấp inputs tương ứng. Lưu capability matrix, version/source fingerprint, lỗi đã lọc và requirement/test bị ảnh hưởng; không gửi thêm prompt để thử vượt boundary. Không tự nới quyền, CORS/bind, auth, native tools, logging/retention hoặc sửa/restart gateway dùng chung.
@@ -167,6 +169,14 @@ Chủ tịch là người quyết định phương án tiếp theo sau khi nhậ
 Mặc định là giữ blocked, không tự chọn fallback provider/adapter/instance. HTTP gateway đã chọn vẫn là baseline; contingency không cấp quyền tạo instance khác. Sau phương án được Chủ tịch chọn, phải kiểm chứng lại capability/isolation/privacy và cấp **grant mới cho đợt test tiếp theo**, không tái dùng grant của đợt đã fail. Gate không đạt thì chưa nghiệm thu năng lực liên quan hoặc bước tích hợp phụ thuộc. Thiếu token streaming/max_tokens đã biết là giới hạn V1, không tự coi là lý do đổi kiến trúc; chỉ thiếu capability bắt buộc mới kích hoạt CG01.
 
 [Báo cáo kiểm định CG01 và quy trình V01–V07](reviews/cg01-20261014/report.md) ngày 14/10/2026: source/live GET đã kiểm; isolation/retention/cancellation thực tế chưa đủ bằng chứng. Gate vẫn BLOCKED. Proof là operator attestation; không dùng boolean hoặc source hash làm thay thế evidence. Qualification provider thật cần phương án cô lập và Owner authorization riêng, không proof tạm hoặc bypass worker.
+
+### Development Playground Mode — demo Phase 06
+
+Theo yêu cầu Chủ tịch 14/10/2026, [ADR-0003](decisions/0003-development-playground.md) bổ sung Playground riêng tại `#playground`. Owner đăng nhập một lần, chọn nhân viên demo/model/effort, rồi cấp Session Grant với request limit/thời hạn và chấp nhận chỉ gửi dữ liệu demo không nhạy cảm. Không xác nhận lại từng tin nhắn trong grant. App quản lý worker tự động; không cần chạy `worker --once`. Session/turn/history/profile version/usage/events được lưu riêng với RLS và không tạo Work Order.
+
+Playground luôn text-only, không tools/network tools/fallback hoặc quyền file/terminal/deploy/company mutation. API không nhận các field mở tools; grant không thể tăng/gia hạn tự động. Giới hạn 1–100 requests, 1–240 phút, concurrency 1, timeout tối đa 120 giây/request; count được reserve trước POST. Stop/expiry/crash sau dispatch giữ unknown và không replay; Owner phải đối chiếu gateway trước khi mở khóa unknown, không refund request. Usage thiếu hiện chưa biết, không chặn lượt kế chỉ vì usage unknown trong grant giới hạn request; chi phí chưa có pricing vẫn unknown. Context tối đa 10 lượt hoàn tất và dưới 48 KB, được snapshot từng call.
+
+Ngoại lệ Development Playground có policy/consent riêng, chỉ demo cố định + literal loopback; luôn `verified=false`, không thay CG01 proof hoặc entitlement. Checklist DPG riêng nghiệm thu UX/bounds/persistence của Playground. CG01 production, release checks, Phase 06 production và S15/IGCHAT không được đánh đạt nhờ Playground. Đợt test tự động không dùng inference; session grant thật chỉ được Owner chủ động tạo trong UI.
 
 ## 7. Mô hình dữ liệu logic và các bất biến
 

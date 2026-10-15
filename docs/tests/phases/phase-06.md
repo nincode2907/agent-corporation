@@ -59,8 +59,29 @@ Mỗi dòng là một test phải có record kết quả riêng. Các biến th�
 
 ## Lệnh và điều kiện chạy
 
+Ngoại lệ Chủ tịch 14/10/2026: test mode demo có thể cho qua CG01 theo cấu hình local; kiểm `mode=demo-test, verified=false`, scope demo/loopback, giữ Owner/CSRF/grant/limits/stop và không tự inference. Kiểm nhánh strict khóa lại khi tắt flag, cùng release-check từ chối flag bật. Đây là regression bổ sung `P06-09`…`P06-16`; không đánh P06-02 (isolation thật) hoặc run thật đạt nhờ ngoại lệ. Xem [README](../../../README.md).
+
 Chưa có command runtime được xác minh cho phase này khi soạn. Khi phase được triển khai, đọc manifest/scripts/test source và README hiện tại, chọn lệnh tồn tại, ghi lệnh/exit code vào report; không tự bịa endpoint, cài tool/global hoặc scaffold để chạy checklist.
 
 ## Kết luận và lưu kết quả
+
+### Checklist Development Playground riêng (ADR-0003)
+
+Các case này nghiệm thu Playground demo, không thay P06-02/CG01 production hoặc tự nghiệm thu Phase 06. Test transport giả phải ghi rõ; live chat chỉ sau Owner cấp Session Grant thật.
+
+| ID | Trọng tâm | Bằng chứng bắt buộc |
+| --- | --- | --- |
+| DPG01 | Owner/CSRF/consent/demo-only | Anonymous/CSRF/real scope deny; consent false deny; không tạo grant khi mở trang |
+| DPG02 | Nhiều lượt, nhân viên/model/profile | Hai lượt dùng history trước, snapshot version không đổi khi global profile thay; không tạo Work Order |
+| DPG03 | Worker app lifecycle | Startup/shutdown tự quản; queue hợp lệ được xử lý không CLI; Supervisor hồi phục lỗi |
+| DPG04 | Expiry/limits/concurrency | Expired trước send/dispatch và đang bay; limit exceeded; race reserve chỉ một call; không tăng/refund limit |
+| DPG05 | Duplicate send | Same key same content chỉ một turn/call; payload mismatch bị deny; race/double submit |
+| DPG06 | Stop | Queued cancel không POST; in-flight đóng transport và unknown; grant revoke/Owner logout cũng dừng |
+| DPG07 | Crash/restart | Tiến trình chết sau reservation; tiến trình mới lease recover unknown; không replay; fence late completion |
+| DPG08 | Unauthorized tools | API extra tools/network/fallback/file/terminal/deploy/config bị reject; payload cố định off; tool response không được thực thi |
+| DPG09 | Usage/events | Session/turn/call/profile version/event liên kết; thiếu usage là null/unknown, không bằng 0; scope/RLS fail closed |
+| DPG10 | UI và recovery | Login một lần, tạo grant một lần, chat/Stop/expiry/remaining; ambiguity giữ idempotency key; unknown reconcile không refund; desktop/mobile |
+
+Report phải ghi hai verdict riêng: Playground (phạm vi đã kiểm) và production Phase 06 (CG01/release/dependency còn thiếu). Không lấy blocked production để khóa UI Playground khi policy/Owner grant của Playground hợp lệ.
 
 Tạo `docs/tests/results/phase-06/<test_batch_id>/report.md` và `evidence/`. Ghi C01–C08 + P06-01…P06-08 + case bổ sung; mỗi test có đúng một tag `clean`, `need-change`, `suggestion`, result, expected/actual và evidence. Thống kê đầy đủ, kết luận kỹ thuật theo rule, quyết định Chủ tịch riêng. Tiếp tục remake/retest theo RULES.md khi còn need-change giải quyết được trong Phase 06; không tự chuyển phase. Nếu chỉ được giao test không sửa hoặc gặp blocker thật, lưu kết quả và điều kiện tiếp tục.

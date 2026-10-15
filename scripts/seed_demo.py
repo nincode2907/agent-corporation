@@ -16,6 +16,8 @@ from agent_corporation_api.settings import get_settings
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Khởi tạo fixture demo Phase 04 (không gọi inference).")
     parser.add_argument("--seed", action="store_true", help="Xác nhận chạy seed/reset trên database local đã cấu hình.")
     args = parser.parse_args()

@@ -1,0 +1,26 @@
+{
+  "phase": "06",
+  "round": "r007",
+  "test_batch_id": "20261014T230943+0700-r007-test",
+  "tester": "/root/phase06_independent_review",
+  "implementer": "/root",
+  "head": "3cb08c1259cd52ce7094313159e3b53fb2880481",
+  "dirty": true,
+  "observed_at": "2026-10-14T23:10:18+07:00",
+  "config": "Windows PowerShell; PostgreSQL runtime already migrated/seeded by parent; test DB opt-in disabled; no env/secret read; no inference",
+  "supersedes": "20261014T212618+0700-r006-test",
+  "remake": "Không có remake source cho r007",
+  "files": {
+    "apps/api/src/agent_corporation_api/modules/governance/auth.py": "afe49015e790b5e1b03f0bec5ddc8aa6183e1510c4df23c0730563e443e24366",
+    "apps/api/src/agent_corporation_api/modules/governance/windows_acl.py": "c1da26501d2da51dc1e2c9ee43daa31ab66b32ba7f5cac94308de4141c9609a0",
+    "apps/api/src/agent_corporation_api/modules/execution/gates.py": "d6bf747ac3558c0a813e8897a82e7b5065ef6da28400f2a2b5d9fcbaa948afaa",
+    "apps/api/src/agent_corporation_api/modules/execution/router.py": "0d2444fe23bedbeab4fae919c08ec8d253cac97bac1cb2ceada1eb1bf067a158",
+    "apps/api/src/agent_corporation_api/modules/execution/service.py": "b727af3891fd1f50028cae5e71c747798931cade52af5d55656797fad26f2970",
+    "apps/api/src/agent_corporation_api/modules/execution/worker.py": "cb77279534d934d124361f19e2523c1036d2e9d1c88ed47b9abc877e4efb798e",
+    "apps/api/tests/test_owner_auth.py": "3ac0b9ebd8e64f2519bb441028c1e4d27788ed2a28dce563492ac0d608a72b66",
+    "apps/api/tests/test_phase06_runtime.py": "9dd00f9226b17cbc6246c97a8ae34142ebd78887bc564c927aa4a6cf240fccab",
+    "apps/api/tests/test_phase06_runtime_persistence.py": "360ba2f7e4d5096067c26b2c25b199b8aff108131de54f2306d9939151b06479",
+    "apps/api/tests/test_cg01_demo_mode.py": "0c655d74038e9fade8f9e52516368cd0862e350b7cfcf8a3cc0bc36c9b973274",
+    "apps/web/src/RuntimePanel.tsx": "120bd9ec0a37019fe9f78fc376bfa5c4e051e232903253efb4065721351268a8"
+  }
+}

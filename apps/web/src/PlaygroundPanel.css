@@ -1,0 +1,31 @@
+.playground { margin-top: 0; }
+.playground-session-nav { display: flex; align-items: center; gap: 12px; margin: 22px 0; }
+.playground-session-nav label { white-space: nowrap; }
+.playground-session-nav select { flex: 1; min-width: 0; }
+.playground-session-nav button { flex-shrink: 0; }
+.playground-setup { padding: 22px 0; border-top: 1px solid #e3e8df; display: grid; gap: 16px; }
+.playground-fields { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.playground-fields label { display: grid; gap: 8px; }
+.playground-consent { display: flex; align-items: flex-start; gap: 10px; line-height: 1.7; }
+.playground .playground-consent input { width: 18px; min-height: 18px; margin-top: 3px; flex: 0 0 18px; }
+.playground-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.playground-grant { display: flex; gap: 20px; align-items: center; padding: 18px 0; border-block: 1px solid #e3e8df; }
+.playground-grant > div { display: grid; gap: 7px; flex: 1; }
+.playground-grant span { color: #68756a; }
+.playground-policy { font-size: 11px; }
+.playground-messages { max-height: 60vh; min-height: 280px; overflow: auto; padding: 16px 8px; overscroll-behavior: contain; }
+.playground-empty { margin: 70px auto; max-width: 460px; text-align: center; }
+.playground-turn { display: grid; gap: 18px; margin: 18px 0 30px; }
+.playground-user { margin-left: 15%; padding: 14px 18px; background: #eef3e9; border-radius: 5px; }
+.playground-assistant { padding: 14px 18px; border-left: 2px solid #98b399; }
+.playground-turn p { white-space: pre-wrap; overflow-wrap: anywhere; margin: 9px 0; font-size: 14px; }
+.playground-turn-state { display: block; font-size: 11px; color: #68756a; margin-top: 8px; }
+.playground-turn details { margin-top: 12px; font-size: 11px; }
+.playground-turn details p { font-size: 11px; }
+.playground-composer { display: grid; gap: 10px; padding: 20px 0 8px; border-top: 1px solid #e3e8df; }
+.playground-events { margin-top: 22px; }
+.playground-events ol { max-height: 220px; overflow: auto; padding: 14px 24px; line-height: 1.9; overflow-wrap: anywhere; }
+[data-theme='dark'] .playground-user { background: #26372b; }
+[data-theme='dark'] .playground :is(.playground-grant,.playground-composer,.playground-setup) { border-color: #344037; }
+[data-theme='dark'] .playground :is(.playground-grant span,.playground-turn-state) { color: #a5b3a5; }
+@media(max-width:760px) { .playground-fields { grid-template-columns: 1fr; } .playground-session-nav { flex-wrap: wrap; } .playground-session-nav select { flex-basis: 100%; } .playground-grant { flex-wrap: wrap; } .playground-grant > div { flex-basis: 100%; } .playground-user { margin-left: 5%; } .playground-messages { max-height: 55vh; padding-inline: 0; } }

@@ -1,4 +1,4 @@
-"""CG01 proof is trusted operator metadata, never a request-controlled override."""
+"""Strict CG01 verification and an explicit Owner-authorized local demo exception."""
 from __future__ import annotations
 import hashlib
 import json
@@ -21,6 +21,8 @@ def gateway_fingerprint(root: Path) -> str:
 def check_gate(path: Path, gateway_root: Path, now: datetime | None = None, base_url: str | None = None) -> dict:
     now = now or datetime.now(UTC)
     fingerprint = "unavailable"
+    if not all(hasattr(os, name) for name in ("getuid", "O_NOFOLLOW", "O_NONBLOCK")):
+        return {"allowed": False, "reason": "unsupported_platform", "fingerprint": fingerprint}
     try:
         fingerprint = gateway_fingerprint(gateway_root)
         if path.parent.is_symlink():
@@ -49,3 +51,20 @@ def check_gate(path: Path, gateway_root: Path, now: datetime | None = None, base
         safe_reasons={"untrusted_metadata","invalid_metadata_type","gateway_endpoint_mismatch","expired_metadata","fingerprint_mismatch","missing_evidence","capability_unverified"}
         reason = str(error) if str(error) in safe_reasons else "missing_or_invalid_proof"
         return {"allowed":False,"reason":reason,"fingerprint":fingerprint}
+
+
+def runtime_gate(settings, scope) -> dict:
+    """The exception comes only from operator config, never HTTP input or a grant."""
+    from ..codex_gateway.adapter import _validated_base_url
+    from ..demo.factory import DEMO_SCOPE
+
+    if getattr(settings, "runtime_cg01_demo_test_override", False) is True:
+        if scope != DEMO_SCOPE:
+            return {"allowed": False, "reason": "demo_test_scope_required", "mode": "demo-test", "verified": False}
+        try:
+            _validated_base_url(settings.codex_server_base_url)
+        except ValueError:
+            return {"allowed": False, "reason": "invalid_local_gateway", "mode": "demo-test", "verified": False}
+        return {"allowed": True, "reason": "owner_authorized_demo_test_override", "mode": "demo-test", "verified": False}
+    result = check_gate(settings.runtime_gate_path, settings.runtime_gateway_source_path, base_url=settings.codex_server_base_url)
+    return {**result, "mode": "strict", "verified": result["allowed"]}

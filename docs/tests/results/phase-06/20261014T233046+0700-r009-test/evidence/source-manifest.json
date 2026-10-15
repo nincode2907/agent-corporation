@@ -1,0 +1,12 @@
+{
+  "sha256": {
+    "apps/api/src/agent_corporation_api/modules/execution/worker.py": "cb77279534d934d124361f19e2523c1036d2e9d1c88ed47b9abc877e4efb798e",
+    "apps/web/src/RuntimePanel.tsx": "b25c73a472cb8db96e5483308f803824032fca8f8f7f9d8bf26041967938a348",
+    "README.md": "7791176ca4c09c5cc542828b2bd4d87e980605e25a4acee8a937b8580e8ba6d1",
+    "AGENTS.md": "0568491ffea2d1c1ff8e85fae9f626762a0d4fa06773174d94af764ecb03fc6c",
+    "docs/master-plan.md": "b00662bf065c94a55608b6652de2d2fd6621e4fd2b42ba2e7a158ef7f6a2eb12",
+    "docs/tests/results/phase-06/20261014T233046+0700-r009-test/report.md": "bf453d04dc3ea1fa819b0495e9d352c5cd2613b621e2979f39a5f49c520532b9",
+    "docs/tests/results/phase-06/20261014T233046+0700-r009-test/evidence/runtime-checks.md": "46cb03c19491a80eb3137b6b34f218bec92ba073476c3815ef23aa2f3d57e08c",
+    "docs/tests/results/phase-06/20261014T233046+0700-r009-test/evidence/commands.md": "8bc7359e8c26b41731074e320bff79ecbccd893cf8e09e2dd671851bebe5e01e"
+  }
+}

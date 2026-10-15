@@ -1,0 +1,30 @@
+{
+  "phase": "07",
+  "test_batch_id": "20261015T071306+0700-r005-test",
+  "snapshot_time_local": "2026-10-15T07:13:06+07:00",
+  "git_head": "3cb08c1259cd52ce7094313159e3b53fb2880481",
+  "worktree_dirty": true,
+  "tester_source_changes": [],
+  "inference": "not called",
+  "grant": "none",
+  "runtime_db_or_gateway": "not modified/accessed",
+  "files": {
+    "apps/api/src/agent_corporation_api/modules/observability/router.py": "5364f51415619bfecfe2b9c01d3c7d2672e9a654d042b0acd408e6aab00d1405",
+    "apps/api/src/agent_corporation_api/modules/observability/feed.py": "46d41097ecf5cacc9b42e9317c7f38c2ad0805a9df5c526b6881a302835689ae",
+    "apps/web/src/RuntimePanel.tsx": "16982d69479755f82250aa68f49e7cb598c15ef98d5c1eb4c7ac41a3868471a0",
+    "apps/web/src/RuntimePanel.css": "3e6c1051f176993775f1f5616f82c80f4fed621910d6e2f56d78e2d2846cfd89",
+    "apps/api/tests/test_phase07_feed.py": "678f4e2a8bd1929b3083e401d75b78fc656bc62a0365971fa51aea300df39b1c",
+    "apps/api/src/agent_corporation_api/modules/execution/service.py": "b727af3891fd1f50028cae5e71c747798931cade52af5d55656797fad26f2970",
+    "apps/api/src/agent_corporation_api/modules/execution/worker.py": "cb77279534d934d124361f19e2523c1036d2e9d1c88ed47b9abc877e4efb798e",
+    "apps/api/src/agent_corporation_api/modules/work/queue.py": "0fbbd9ddb8b60e01fb4c6113209cc00c1a54f2294ebdff7fe646d32e1171da70",
+    "apps/api/src/agent_corporation_api/modules/work/commands.py": "113f314b29c5de433ed6eb5f218eb30f8b4315f33a3e2611e2d1bc5c400be4f4",
+    "apps/api/src/agent_corporation_api/modules/work/router.py": "d0973b8d8d7cc3e7ecd01b2f4860c009a8bd3ed2debeed3684f56b76e69af232",
+    "apps/api/src/agent_corporation_api/modules/governance/auth.py": "afe49015e790b5e1b03f0bec5ddc8aa6183e1510c4df23c0730563e443e24366",
+    "apps/api/tests/test_playground_persistence.py": "24957fe08e8c28169c7b5aad72b5ff019d60d06d96968a75f78efea262c54d0",
+    "scripts/test_playground_isolated.py": "b96a3cd2ff1966adf9c43d85c8ebe45e7614cf05fbfc80441696a67a7727650e",
+    "docs/tests/phases/phase-07.md": "7382048eede8279657ef0e76e797f0d178633033928423fe00e205a108e8f675",
+    "docs/tests/RULES.md": "bbf6e0b8494e2691b898bff719d83676438923da195e5b9f911f6e794dedc465",
+    "docs/master-plan.md": "01ce4049431d57de8ddcaaf10aced247d6e72ccb84174b5a19887854cdd3e2ded",
+    "docs/product-spec.md": "bf27de1c00e78d487187f8fd5514818a3e304c332fae553090477194515b458c"
+  }
+}

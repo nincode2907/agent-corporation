@@ -1,0 +1,24 @@
+{
+  "batch_id": "20261015T000509+0700-r010-test",
+  "hash_algorithm": "SHA256",
+  "files": {
+    "apps/api/src/agent_corporation_api/modules/playground/service.py": "469f103e728bf0ab3b63d99d09f084f068770b1d6543e66e4e85231c069ef4b",
+    "apps/api/src/agent_corporation_api/modules/playground/router.py": "446d99cb7c5a048ddd2fb368c82a2e57e098155ae4eaec843e3f77c8fadc5706",
+    "apps/api/src/agent_corporation_api/modules/playground/worker.py": "bde8088194d0c366133edeb9710dc5c641f2dbf05e7c619d7d9108099bdce4e1",
+    "apps/api/src/agent_corporation_api/main.py": "f9b0d68a57935406ac10ff826fea26589bda81caf3efb9be21b80e07cba59a04",
+    "apps/api/src/agent_corporation_api/settings.py": "59ef3df93647da8dff8549394480ecb1dca8fa976b60e315c99349eea57459f4",
+    "apps/api/migrations/versions/20261014_0009_playground.py": "de1c73fb045115ad12660245d5d06d1d0fa33f5a82b3754805fe4c8e69663ce8",
+    "apps/api/tests/test_playground.py": "d7b9034198ba6799300d4f80da9549db0e836a794f2f52bcecf44aa3def84ec6",
+    "apps/api/tests/test_playground_persistence.py": "24957fe08e8c28169c7b5aad72b5ff019d60d06d96968a75f78efea262c54d0",
+    "scripts/test_playground_isolated.py": "b96a3cd2ff1966adf9c43d85c8ebe45e7614cf05fbfc80441696a67a7727650e",
+    "apps/web/src/PlaygroundPanel.tsx": "141329dfa361cbf27af7ee1f876e854fc3d262fc30029121ea3ef4d7056b5367",
+    "apps/web/src/PlaygroundPanel.css": "a7f456bcee676b0e68a59476f5b8fa863b11a32c366fbac9bb33f6d00234130b",
+    "apps/web/src/App.tsx": "5d3642897eb5bcd9f23df046dd251fd9e0ffc5afa07eb0e58d769457934882bc",
+    "docs/decisions/0003-development-playground.md": "affe1711b40cba97fd273af1cf642f305265fd6c4c400fa828748a24064bbf89",
+    "docs/tests/phases/phase-06.md": "8a06ad31f2fc536879f48b2f7043e5ebea1446c9e766a7fd8558e3c5b49dd722",
+    "docs/tests/RULES.md": "bbf6e0b8494e2691b898bff719d83676438923da195e5b9f911f6e794dedc465",
+    "docs/master-plan.md": "01ce4049431d57de8ddcaaf10aced247d6e72ccb84174b5a19887854cdd3e2ded",
+    "docs/master-plan.html": "2c25871eab3504b218de473d550bf32b5b632a3b30d38e763e0800b3b7c97b10",
+    "docs/product-spec.html": "58cb0018678376e8cf2e13c5f582d39ddd5508a924c2b81ad1d007cb10e5f6ad"
+  }
+}

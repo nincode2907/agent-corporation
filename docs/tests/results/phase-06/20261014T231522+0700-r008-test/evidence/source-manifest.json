@@ -1,0 +1,30 @@
+{
+  "phase": "06",
+  "round": "r008",
+  "test_batch_id": "20261014T231522+0700-r008-test",
+  "tester": "/root/phase06_independent_review",
+  "implementer": "/root",
+  "head": "3cb08c1259cd52ce7094313159e3b53fb2880481",
+  "dirty": true,
+  "observed_at": "2026-10-14T23:16:51+07:00",
+  "config": "Windows PowerShell; read-only runtime GET; fake API/service fixtures; no env/secret access; no DB opt-in; no inference",
+  "supersedes": "20261014T230943+0700-r007-test",
+  "remake": "../../../../../remakes/phase-06/20261014T231406+0700-r007-remake/remake.md",
+  "files": {
+    "apps/api/src/agent_corporation_api/modules/governance/auth.py": "afe49015e790b5e1b03f0bec5ddc8aa6183e1510c4df23c0730563e443e24366",
+    "apps/api/src/agent_corporation_api/modules/governance/windows_acl.py": "c1da26501d2da51dc1e2c9ee43daa31ab66b32ba7f5cac94308de4141c9609a0",
+    "apps/api/src/agent_corporation_api/modules/governance/profile.py": "e03f964ccf233037d2675fc9ea3a739ed8e1ef155def5a7d3e9b56c5a4981179",
+    "apps/api/src/agent_corporation_api/modules/execution/router.py": "0d2444fe23bedbeab4fae919c08ec8d253cac97bac1cb2ceada1eb1bf067a158",
+    "apps/api/src/agent_corporation_api/modules/execution/service.py": "b727af3891fd1f50028cae5e71c747798931cade52af5d55656797fad26f2970",
+    "scripts/bootstrap_owner.py": "92124a0fe2d6c4884341d496a7c0b382883b563f10d39c53e3c55df0f1be9502",
+    "apps/api/tests/test_owner_auth.py": "3ac0b9ebd8e64f2519bb441028c1e4d27788ed2a28dce563492ac0d608a72b66",
+    "apps/api/tests/test_phase06_runtime.py": "9dd00f9226b17cbc6246c97a8ae34142ebd78887bc564c927aa4a6cf240fccab",
+    "apps/api/tests/test_cg01_demo_mode.py": "0c655d74038e9fade8f9e52516368cd0862e350b7cfcf8a3cc0bc36c9b973274",
+    "apps/api/tests/test_codex_gateway.py": "32a0658288f3f2f78f27c1eecdca2f920506d106f2221fe94ae0c3a7da9bc6e9",
+    "apps/web/src/RuntimePanel.tsx": "b25c73a472cb8db96e5483308f803824032fca8f8f7f9d8bf26041967938a348",
+    "docs/tests/phases/phase-06.md": "2d745a74084e455839074e83334dab2c43acb559536c94bb3d64fe235fe781f5",
+    "docs/tests/RULES.md": "bbf6e0b8494e2691b898bff719d83676438923da195e5b9f911f6e794dedc465",
+    "docs/tests/results/phase-06/20261014T231522+0700-r008-test/evidence/grant-api-fixture.py": "cce4601d3482557f62d2fe0ab4a3318f9eb0b65270a99ceaff6ee36287b256d8",
+    "docs/tests/results/phase-06/20261014T231522+0700-r008-test/evidence/windows-bootstrap-fixture.py": "e2eb5ecdbd9b20741953717bbc14089414248a6170ec17f3311a75dad5177e7a"
+  }
+}

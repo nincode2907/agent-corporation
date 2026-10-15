@@ -96,14 +96,14 @@ def _insert_task(session: Session, key: str, goal: str, employee_id: UUID) -> UU
                     assignee_id, reviewer_id, autonomy, created_by, created_at
                 ) VALUES (
                     :task_id, :environment_id, :company_id, 1, :goal, '["Bản ghi fixture"]'::jsonb,
-                    '["fixture only"]'::jsonb, CAST(:scope AS jsonb),
+                    '[{"id":"FIXTURE","description":"fixture only","evidence_kind":"fixture"}]'::jsonb, CAST(:scope AS jsonb),
                     CAST(:budget_limits AS jsonb),
                     '{"inference":"disabled"}'::jsonb, :employee_id, :employee_id, 'strict',
                     CAST(:created_by AS jsonb), :created_at
                 )"""),
         {"task_id": task_id, "environment_id": DEMO_ENVIRONMENT_ID, "company_id": DEMO_COMPANY_ID,
          "goal": goal, "employee_id": employee_id,
-         "scope": json.dumps({"fixture": True}),
+          "scope": json.dumps({"fixture": True, "input_refs": [], "tool_capabilities": []}),
          "budget_limits": json.dumps({"cost_basis": "unknown", "max_model_requests": 0, "usd_limit_micros": None}),
          "created_by": json.dumps({"kind": "fixture", "id": SEED_NAME}), "created_at": FIXTURE_TIME},
     )

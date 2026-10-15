@@ -1,0 +1,8 @@
+{
+  "files": {
+    "apps/api/src/agent_corporation_api/modules/observability/router.py": "5364f51415619bfecfe2b9c01d3c7d2672e9a654d042b0acd408e6aab00d1405",
+    "apps/api/tests/test_phase07_feed.py": "678f4e2a8bd1929b3083e401d75b78fc656bc62a0365971fa51aea300df39b1c",
+    "apps/web/src/RuntimePanel.tsx": "16982d69479755f82250aa68f49e7cb598c15ef98d5c1eb4c7ac41a3868471a0"
+  },
+  "purpose": "Phase 07 r004 remake source snapshot"
+}\n
