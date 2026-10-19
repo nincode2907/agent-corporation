@@ -1,0 +1,21 @@
+{
+  "phase": "13",
+  "test_batch_id": "20261015T091820+0700-r002-test",
+  "captured_at": "2026-10-15T09:18:30+07:00",
+  "source_state": "dirty worktree; current Phase 13 contract/test are untracked; no commit identified",
+  "files": [
+    {"path": "apps/api/src/agent_corporation_api/modules/organization/contracts.py", "sha256": "aafdfb0a6e9201f031cf5f6c68595f7c6d8bf056aa4f7c47e41804af87354b31"},
+    {"path": "apps/api/src/agent_corporation_api/modules/organization/__init__.py", "sha256": "b3dcf8d58ed27789a0d634554e0a635ce6a38a4a3a4d120e1ca19eb999847e98"},
+    {"path": "apps/api/tests/test_phase13_organization_contracts.py", "sha256": "8d960acaafb8b5ca769db17f11139dda7392a82a5deb4e395b2d8f9594fd8334"},
+    {"path": "docs/tests/phases/phase-13.md", "sha256": "44780e5ee0db560b508e6df10bc2adc1d4112a88628c1c911ff39f6f69953267"},
+    {"path": "docs/master-plan.md", "sha256": "fa1e206cc3cceba9eb98ea956c055b5b8b80273f8e5d88049ca8b819cc1c7e1f"},
+    {"path": "docs/product-spec.md", "sha256": "d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f"},
+    {"path": "docs/decisions/0001-v1-foundation.md", "sha256": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930"}
+  ],
+  "limits": [
+    "No DB, runtime, inference, employee chat, or gateway action was performed.",
+    "Focused test suites passed 14 tests; the report is a canonical-format follow-up to r001, with the current frozen model/hash verified again.",
+    "Pure contract review cannot prove Owner-only writes, persistence/history, run snapshots, Inspector, idle dispatch behavior, or live chat gates.",
+    "Phase 12 is unaccepted; TDG-CG01 and chat foundation gates remain open; grant = 0."
+  ]
+}

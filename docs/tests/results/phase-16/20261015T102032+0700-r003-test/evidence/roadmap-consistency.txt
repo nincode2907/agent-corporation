@@ -1,0 +1,4 @@
+Read-only Markdown/HTML comparison after the remake render:
+Phase 16 Markdown status `Đang triển khai`, one journal; HTML status and history match exactly.
+Phase 17 Markdown status `Đang triển khai`, one journal; HTML status and history match exactly.
+No roadmap edit or render was performed by the tester.

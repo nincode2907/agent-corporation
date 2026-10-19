@@ -1,0 +1,12 @@
+{
+  "phase": "11",
+  "round": "r001",
+  "source_report": "docs/tests/results/phase-11/20261015T084213+0700-r001-test/report.md",
+  "files": [
+    {"path": "apps/api/src/agent_corporation_api/modules/observability/redaction.py", "sha256": "b99bb22f699a2704f9be006b6602aae2d60499003cc4eeaef0fce2fcfe8edb74"},
+    {"path": "apps/api/src/agent_corporation_api/modules/tools/__init__.py", "sha256": "a3265637993d5b6a6dfc3026ad98e8119718db8e3bee795265be2bf655cb6e0c"},
+    {"path": "apps/api/src/agent_corporation_api/modules/tools/registry.py", "sha256": "1c2f948adbfbff87811007fa0c3def92eb2ad73ccab539e8b89af2c158c14211"},
+    {"path": "apps/api/src/agent_corporation_api/modules/tools/workspace.py", "sha256": "0475064b31e5632f8a34f8b59a7f475d9619f5059cd42f91e160e09aeacd82a0"},
+    {"path": "apps/api/tests/test_phase11_tools.py", "sha256": "05f604aa72b217ddec531150ae18684e8852f4b796029712df31c98abcde15bb"}
+  ]
+}

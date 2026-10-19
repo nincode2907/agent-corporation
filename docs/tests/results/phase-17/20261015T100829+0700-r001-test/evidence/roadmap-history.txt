@@ -1,0 +1,5 @@
+Markdown observation: Phase 17 block in docs/master-plan.md contains an implementation journal describing contracts/fixtures, followed later by a second `#### Nhật ký triển khai` stating “Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.”
+
+HTML observation: extracted the Phase 17 object from docs/master-plan.html; status is `Đang triển khai`, but `history` is `Chưa có triển khai, kết quả kiểm thử hay quyết định nghiệm thu.`
+
+This is contradictory phase history in the source and the rendered tab; no renderer was run by the independent tester.

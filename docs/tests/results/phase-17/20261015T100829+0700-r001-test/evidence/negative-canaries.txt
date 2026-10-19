@@ -1,0 +1,7 @@
+Safe direct contract canaries (synthetic only; no DB/runtime/inference):
+
+Observed output:
+required cases in suite/results: 2 1 ['required:pass']
+forged 1-sample summaries propose: profile:a
+
+The partial evaluator case omits one required suite case but returns an evaluation. Forged CandidateSummary instances provide sample_size=1 and caller-supplied sufficient_sample/interval values; compare_candidates proposes a winner from the supplied values. This checks local contract boundaries only.

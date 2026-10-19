@@ -1,0 +1,19 @@
+Phase 16 r003 source/evidence manifest
+Captured: 2026-10-15T10:22:45+07:00 (Asia/Ho_Chi_Minh)
+Workspace: /Users/buivannin/Desktop/workspace/personal/agent-corporation
+Worktree dirty; no commit used as identity; see git-status.txt.
+Tracked master-plan Markdown/HTML diff SHA-256: 8ed987cd099d257438534be2f70e7b2468cfd461cf3caf4359442ac18fe1a02c
+
+SHA-256
+361fbe33c839d5bc1652aca2c9f8c3f80b34c570db81ebd53f39f76a21312f4b  apps/api/src/agent_corporation_api/modules/finance/contracts.py
+364c7ef038f419987ff2407d191f66c387569ce992df2179a127926146ae9624  apps/api/tests/test_phase16_finance_contracts.py
+0204374d513bcac747b22e27a756f8d06d4dc270c8a4e4c66c30f82f92acb278  apps/api/src/agent_corporation_api/modules/quality/contracts.py
+7939ba59b63bc81ea225c27010900689086f3b07a5117f7214c5cd703956c913  apps/api/tests/test_phase17_quality_contracts.py
+d51c8073d8b83f0797d975fc6b9e80bd723b7e5a8a4568256465c973770ec214  apps/api/tests/test_phase15_memory_contracts.py
+251c25a2177f8d0f594ad5465677bbed7d9dfdf713da1d280eed2e0c03e319e7  docs/master-plan.md
+72a6370e81bd6ed8b130830669777839ca188a06d75e3221eaa91969db83044c  docs/master-plan.html
+d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f  docs/product-spec.md
+faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930  docs/decisions/0001-v1-foundation.md
+d234a36a249bbdd27703826ac0e80d25aece859577d7d4c9c0e65b1ff22f96ba  docs/tests/RULES.md
+d8fbffd5cf9970c6f5b42d180e20e920aa87f70ffd0866db399bfe2a5474399c  docs/tests/phases/phase-16.md
+74d85c0aedca91e453c2c2c3fce15b5315b2c69b181fce2df1e65f0112b6eeb7  docs/remakes/phase-16/20261015T102032+0700-r002-remake/remake.md

@@ -1,0 +1,19 @@
+Phase 16 r002 source/evidence manifest
+Captured: 2026-10-15T10:17:19+07:00 (Asia/Ho_Chi_Minh)
+Workspace: /Users/buivannin/Desktop/workspace/personal/agent-corporation
+Git state: dirty; no commit used as source identity. See git-status.txt.
+Tracked roadmap/HTML diff SHA-256: 9350fe1cf77189ab8a4e82868da162f854ff920dae563523d964fecf59e60ffc
+
+SHA-256
+c4ab32239d6e6b5ceb9298b11e26651bbc6bfbc9a676d56190fafea19a759d40  apps/api/src/agent_corporation_api/modules/finance/contracts.py
+0a100d699d1b47511e45a1c9a35236136b050b18c18ec14e7b1068feb45a5eba  apps/api/tests/test_phase16_finance_contracts.py
+6c65fe002be7dff42a12df7fa2b5ed47e5dfe08ca193294f0a6dcebdd8221986  apps/api/src/agent_corporation_api/modules/quality/contracts.py
+2f3927fea78ae34224c87908b7bc591e3eff2eb8e0b20a6aa260923a4e0da1dd  apps/api/tests/test_phase17_quality_contracts.py
+d51c8073d8b83f0797d975fc6b9e80bd723b7e5a8a4568256465c973770ec214  apps/api/tests/test_phase15_memory_contracts.py
+2ec0222e7d24bea4ed85ccd793a97583aefa52715b35847b27d967b8f11fb2af  docs/master-plan.md
+a1731b518acd3730044e76ea9fc68b3c15f5a127564e5c15a22c734acddcdb06  docs/master-plan.html
+d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f  docs/product-spec.md
+faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930  docs/decisions/0001-v1-foundation.md
+d234a36a249bbdd27703826ac0e80d25aece859577d7d4c9c0e65b1ff22f96ba  docs/tests/RULES.md
+d8fbffd5cf9970c6f5b42d180e20e920aa87f70ffd0866db399bfe2a5474399c  docs/tests/phases/phase-16.md
+f9d0f1511ad504ab95ca7995bc94f026074785e20557761a145784368220d387  docs/remakes/phase-16/20261015T100829+0700-r001-remake/remake.md

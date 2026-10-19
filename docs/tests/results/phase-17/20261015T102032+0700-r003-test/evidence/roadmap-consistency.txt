@@ -1,0 +1,4 @@
+Read-only comparison of current Markdown and existing rendered HTML after remake render:
+Phase 16: Markdown status `Đang triển khai`; exactly one journal; HTML status/history match.
+Phase 17: Markdown status `Đang triển khai`; exactly one journal; HTML status/history match.
+Duplicate “Chưa có triển khai” journal is absent. Tester made no status changes and did not invoke renderer.

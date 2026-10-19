@@ -1,0 +1,9 @@
+$ rtk proxy uv run --project apps/api pytest apps/api/tests/test_phase14_hr_contracts.py apps/api/tests/test_phase15_memory_contracts.py -q
+..............                                                           [100%]
+14 passed in 0.09s
+exit_code=0
+
+$ rtk proxy uv run --project apps/api python -c 'import sys; sys.path.insert(0,"apps/api/src"); from uuid import UUID; from agent_corporation_api.modules.hr.contracts import begin_offboard, OffboardPlan, complete_offboard; eid=UUID(int=9); plan=begin_offboard(employee_id=eid,current_lifecycle="active",current_revision=1,expected_revision=True,actor_role="owner",active_runs=[]); print("begin_offboard accepted bool expected_revision:", plan.expected_revision, type(plan.expected_revision).__name__); p=OffboardPlan(employee_id=eid,expected_revision=1,next_lifecycle="draining",queued_run_ids_to_cancel=(),running_run_ids_to_stop=(),unknown_run_ids_to_reconcile=()); print("complete_offboard accepted bool current_revision:", complete_offboard(plan=p,current_revision=True,unresolved_run_ids=set()))'
+begin_offboard accepted bool expected_revision: 1 int
+complete_offboard accepted bool current_revision: 2
+exit_code=0

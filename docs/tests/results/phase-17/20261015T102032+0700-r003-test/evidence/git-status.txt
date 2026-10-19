@@ -1,0 +1,16 @@
+Command: rtk git status --short
+Exit code: 0
+ M docs/master-plan.html
+ M docs/master-plan.md
+?? apps/api/src/agent_corporation_api/modules/finance/contracts.py
+?? apps/api/src/agent_corporation_api/modules/quality/contracts.py
+?? apps/api/tests/test_phase16_finance_contracts.py
+?? apps/api/tests/test_phase17_quality_contracts.py
+?? docs/evidence/phase-16.md
+?? docs/evidence/phase-17.md
+?? docs/remakes/phase-16/
+?? docs/remakes/phase-17/
+?? docs/tests/results/phase-16/
+?? docs/tests/results/phase-17/
+
+Dirty worktree; no commit used for source identity.

@@ -16,6 +16,7 @@ MAX_RESPONSE_BYTES = 256 * 1024
 class ProbeSettings:
     base_url: str = "http://127.0.0.1:15600"
     api_key: str | None = None
+    transport_mode: str = "loopback"
 
 
 class _NoRedirect(HTTPRedirectHandler):
@@ -23,7 +24,13 @@ class _NoRedirect(HTTPRedirectHandler):
         return None
 
 
-def _validated_base_url(value: str) -> str:
+def _validated_base_url(value: str, *, transport_mode: str = "loopback") -> str:
+    if transport_mode == "docker-host":
+        if value not in {"http://host.docker.internal:15600", "http://host.docker.internal:15600/"}:
+            raise ValueError("Docker gateway must be exactly http://host.docker.internal:15600.")
+        return value.rstrip("/")
+    if transport_mode != "loopback":
+        raise ValueError("Unknown gateway transport mode.")
     try:
         parsed = urlsplit(value)
         address = ipaddress.ip_address(parsed.hostname or "")
@@ -46,6 +53,8 @@ def _validated_base_url(value: str) -> str:
 
 def _get_json(url: str, api_key: str | None) -> tuple[int, object | None]:
     headers = {"Accept": "application/json"}
+    if urlsplit(url).hostname == "host.docker.internal":
+        headers["Host"] = "127.0.0.1:15600"
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
     request = Request(url, headers=headers, method="GET")
@@ -86,7 +95,7 @@ def _models_shape(payload: object) -> list[str] | None:
 def profile_model_capabilities(settings: ProbeSettings) -> dict[str, list[str]] | None:
     """Read catalog capabilities for an explicit profile save; never infer entitlement."""
     try:
-        base_url = _validated_base_url(settings.base_url)
+        base_url = _validated_base_url(settings.base_url, transport_mode=settings.transport_mode)
     except ValueError:
         return None
     code, payload = _get_json(f"{base_url}/v1/models", settings.api_key)
@@ -113,7 +122,7 @@ def profile_model_capabilities(settings: ProbeSettings) -> dict[str, list[str]] 
 def probe_gateway(settings: ProbeSettings) -> dict[str, object]:
     """Read health and model catalog only. Never dispatch chat/session requests."""
     try:
-        base_url = _validated_base_url(settings.base_url)
+        base_url = _validated_base_url(settings.base_url, transport_mode=settings.transport_mode)
     except ValueError:
         return {
             "status": "configuration_error",
@@ -122,7 +131,7 @@ def probe_gateway(settings: ProbeSettings) -> dict[str, object]:
             "models": [],
             "auth_configured": bool(settings.api_key),
             "entitlement_verified": False,
-            "message": "Cấu hình gateway không hợp lệ; chỉ chấp nhận IP loopback literal.",
+            "message": "Cấu hình gateway không hợp lệ cho chế độ kết nối local đã chọn.",
         }
 
     health_code, health_payload = _get_json(f"{base_url}/health", settings.api_key)

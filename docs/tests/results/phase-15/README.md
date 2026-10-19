@@ -1,0 +1,7 @@
+# Kết quả kiểm định Phase 15
+
+| Vòng | Report test | Kết luận | Remake | Report retest | Trạng thái vòng |
+| --- | --- | --- | --- | --- | --- |
+| r001 | [20261015T094220+0700-r001-test/report.md](20261015T094220+0700-r001-test/report.md) | Cần sửa; C05/P15-01 phát hiện `ContextSource.content_ref` nhận path traversal shaped locator; các integration/runtime criteria còn blocked | [20261015T094458+0700-r001-remake/remake.md](../../../remakes/phase-15/20261015T094458+0700-r001-remake/remake.md) | Chưa tạo | needs-retest |
+| r002 | [20261015T094649+0700-r002-test/report.md](20261015T094649+0700-r002-test/report.md) | Locator finding verified fixed; required context/ACL/persistence/runtime evidence remains blocked | [20261015T094458+0700-r001-remake/remake.md](../../../remakes/phase-15/20261015T094458+0700-r001-remake/remake.md) | [20261015T094649+0700-r002-test/report.md](20261015T094649+0700-r002-test/report.md) | source finding closed; phase insufficient evidence |
+| r003 | [20261015T095157+0700-r003-test/report.md](20261015T095157+0700-r003-test/report.md) | HTML status/history matches current Markdown; locator guard holds; integration evidence remains blocked | [20261015T094458+0700-r001-remake/remake.md](../../../remakes/phase-15/20261015T094458+0700-r001-remake/remake.md) | [20261015T095157+0700-r003-test/report.md](20261015T095157+0700-r003-test/report.md) | source finding closed; phase insufficient evidence |

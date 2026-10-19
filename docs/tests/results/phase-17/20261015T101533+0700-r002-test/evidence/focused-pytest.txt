@@ -1,0 +1,16 @@
+Command:
+rtk proxy uv run --project apps/api pytest apps/api/tests/test_phase16_finance_contracts.py apps/api/tests/test_phase17_quality_contracts.py apps/api/tests/test_phase15_memory_contracts.py
+Exit code: 0
+Output:
+============================= test session starts ==============================
+platform darwin -- Python 3.14.8, pytest-9.0.2, pluggy-1.6.0
+rootdir: /Users/buivannin/Desktop/workspace/personal/agent-corporation/apps/api
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collected 23 items
+apps/api/tests/test_phase16_finance_contracts.py .........               [ 39%]
+apps/api/tests/test_phase17_quality_contracts.py ......                  [ 65%]
+apps/api/tests/test_phase15_memory_contracts.py ........                 [100%]
+============================== 23 passed in 0.13s ==============================
+
+The suite now covers required-case completeness and raw sample derivation, but not repeated sample_ref/evidence_ref uniqueness.

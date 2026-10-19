@@ -1,0 +1,21 @@
+{
+  "phase": "13",
+  "test_batch_id": "20261015T091314+0700-r001-test",
+  "captured_at": "2026-10-15T09:13:45+07:00",
+  "source_state": "dirty worktree; Phase 13 contracts/tests untracked; no commit identified",
+  "files": [
+    {"path": "apps/api/src/agent_corporation_api/modules/organization/contracts.py", "sha256": "aafdfb0a6e9201f031cf5f6c68595f7c6d8bf056aa4f7c47e41804af87354b31"},
+    {"path": "apps/api/src/agent_corporation_api/modules/organization/__init__.py", "sha256": "b3dcf8d58ed27789a0d634554e0a635ce6a38a4a3a4d120e1ca19eb999847e98"},
+    {"path": "apps/api/tests/test_phase13_organization_contracts.py", "sha256": "8d960acaafb8b5ca769db17f11139dda7392a82a5deb4e395b2d8f9594fd8334"},
+    {"path": "docs/tests/phases/phase-13.md", "sha256": "44780e5ee0db560b508e6df10bc2adc1d4112a88628c1c911ff39f6f69953267"},
+    {"path": "docs/master-plan.md", "sha256": "f038e3878b683f90f9e07988ffd41a8143dd3eb0015afc1f34127cc27be7f278"},
+    {"path": "docs/product-spec.md", "sha256": "d0a6e3958804fd6c571a869d73e5ec5408be11e06024d4c9ab8089908f882d1f"},
+    {"path": "docs/decisions/0001-v1-foundation.md", "sha256": "faf9f5a7252f06c5816ac08c9f8e97fa4826c444c88ab0011ae13f0511235930"}
+  ],
+  "limits": [
+    "Only local source and documentation were inspected; no DB, app runtime, inference, employee chat, or gateway was used.",
+    "The focused pytest command passed 14 tests across Phase 12 and 13 contract suites after the current frozen-profile source was present.",
+    "Organization contracts are not connected to persistence, Owner authorization, run snapshots, Inspector, or workload UI.",
+    "Phase 12 is not accepted; TDG-CG01 and chat foundation decisions/gates remain open. Inference grant is 0."
+  ]
+}

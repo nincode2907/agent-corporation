@@ -1,0 +1,21 @@
+$ rtk proxy uv run --project apps/api pytest apps/api/tests/test_phase14_hr_contracts.py -q
+......                                                                   [100%]
+6 passed in 0.07s
+exit_code=0
+
+$ rtk proxy uv run --project apps/api python -c '<synthetic boundary matrix: begin current/expected bool and non-int; complete current bool and non-int; strict OffboardPlan expected revision>'
+rejected begin current_revision bool
+rejected begin expected_revision bool
+rejected begin current_revision float
+rejected begin expected_revision float
+rejected begin expected_revision string
+rejected complete current_revision bool
+rejected complete current_revision float
+rejected complete current_revision string
+rejected plan expected_revision bool
+rejected plan expected_revision float
+negative_cases_rejected=10/10
+exit_code=0
+
+$ rtk git diff --check
+exit_code=0 (confirmed by remake record; not rerun in this batch)

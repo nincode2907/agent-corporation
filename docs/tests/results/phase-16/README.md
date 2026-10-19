@@ -1,0 +1,7 @@
+# Kết quả kiểm định Phase 16
+
+| Vòng | Report test | Kết luận | Remake | Report retest | Trạng thái vòng |
+| --- | --- | --- | --- | --- | --- |
+| r001 | [20261015T100829+0700-r001-test/report.md](20261015T100829+0700-r001-test/report.md) | Local validation/scope defects; r002 confirms fixed; runtime integration remains open | [20261015T100829+0700-r001-remake/remake.md](../../../remakes/phase-16/20261015T100829+0700-r001-remake/remake.md) | [20261015T101533+0700-r002-test/report.md](20261015T101533+0700-r002-test/report.md) | fixed; later issue found |
+| r002 | [20261015T101533+0700-r002-test/report.md](20261015T101533+0700-r002-test/report.md) | Malformed settlement ref fixed and verified by r003; finance persistence/dashboard/atomicity/late correction/IG16 remain blocked | [20261015T102032+0700-r002-remake/remake.md](../../../remakes/phase-16/20261015T102032+0700-r002-remake/remake.md) | [20261015T102032+0700-r003-test/report.md](20261015T102032+0700-r003-test/report.md) | local source issues fixed; integration blocked |
+| r003 | [20261015T102032+0700-r003-test/report.md](20261015T102032+0700-r003-test/report.md) | Malformed ref, strict revision/amount, dispatched release, empty unknown and mixed-scope boundaries pass; integration/atomicity/dashboard/IG16 remain blocked | [20261015T102032+0700-r002-remake/remake.md](../../../remakes/phase-16/20261015T102032+0700-r002-remake/remake.md) | Chưa tạo | blocked |

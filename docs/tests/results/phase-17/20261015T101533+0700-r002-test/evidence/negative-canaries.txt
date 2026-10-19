@@ -1,0 +1,8 @@
+Safe in-memory synthetic canary:
+Command: rtk proxy env PYTHONPATH=apps/api/src:apps/api/tests uv run --project apps/api python - (see report/test record)
+Observed:
+sample_duplicates 50 1 winner profile:a
+
+For profile:a, all 50 Sample tuple rows reused sample_ref `sample:one` and evidence_ref `artifact:one`; profile:b likewise reused one failure sample/evidence ref. `compare_candidates` reports sample_size 50 and proposes `profile:a` at minimum_sample_size 50 although there is one unique sample per profile.
+
+No DB/runtime/inference was used.

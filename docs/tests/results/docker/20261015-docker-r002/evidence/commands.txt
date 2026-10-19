@@ -1,0 +1,13 @@
+Independent retest commands (all shell commands through `rtk proxy`):
+
+- `rtk proxy uv run --project apps/api pytest apps/api/tests/test_docker_gateway.py apps/api/tests/test_codex_gateway.py apps/api/tests/test_phase06_runtime.py apps/api/tests/test_playground.py apps/api/tests/test_owner_auth.py apps/api/tests/test_cg01_demo_mode.py apps/api/tests/test_health.py -q` — 99 passed, 1 skipped, one Starlette/httpx deprecation warning, exit 0.
+- `rtk proxy docker compose config --quiet` — PASS.
+- `rtk proxy docker compose -f compose.bootstrap.yml config --quiet` — PASS.
+- After the test run, inspected current `docker/nginx.conf` and ran `rtk proxy docker compose config --quiet` again — PASS. The Nginx change uses the fixed internal Docker resolver and fixed `api:15501` upstream; root's API-recreate/proxy-recovery runner was still executing when this evidence note was updated.
+- `rtk proxy env BOOTSTRAP_UID=503 BOOTSTRAP_GID=20 docker compose -f compose.bootstrap.yml config --format json | rtk proxy python3 -c '<assert effective user>'` — PASS; effective bootstrap user 503:20. Host values from `id -u` / `id -g` were 503 / 20.
+- `rtk proxy docker run --rm --network none --user 503:20 --tmpfs /tmp:rw,noexec,nosuid,size=1m python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170 python -c '<create fixture-only file; assert uid/gid/modes>'` — PASS; process 503:20, directory 0700 and file 0600 owned by UID503. No secret data or host bind mount.
+- `rtk proxy docker compose ps` — API/web/PostgreSQL healthy; read-only status.
+- `rtk proxy python3 -c '<GET /api/v1/health/live and /ready>'` — both HTTP 200. Read-only health requests only.
+- `rtk proxy sha256sum ...` — hashes in `source-manifest-r002.txt`.
+
+No migration, DB write, restart, worker run, gateway dispatch or inference performed by this reviewer. Root reports the final isolated runner passed all cases, including API recreation followed by Nginx DNS resolution/proxy recovery, and cleaned only disposable project `ac-docker-test-e101adacd0`; reviewer did not run that script. Root also reports its in-image focused group at 99 passed/1 skipped. Windows was not run.
