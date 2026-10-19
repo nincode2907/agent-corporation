@@ -1,0 +1,1205 @@
+{
+  "baseUrl": "http://127.0.0.1:15500",
+  "browserVersion": "156.0.8078.4",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "auth": {
+    "attempted": true,
+    "succeeded": true,
+    "secretPrintedOrStored": false,
+    "loggedOut": true
+  },
+  "screenshots": [
+    {
+      "screen": "overview",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/overview/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Tổng quan"
+    },
+    {
+      "screen": "overview",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/overview/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Tổng quan"
+    },
+    {
+      "screen": "playground",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/playground/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Playground"
+    },
+    {
+      "screen": "playground",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/playground/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Playground"
+    },
+    {
+      "screen": "office",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/office/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Văn phòng trực tiếp"
+    },
+    {
+      "screen": "office",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/office/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Văn phòng trực tiếp"
+    },
+    {
+      "screen": "work",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/work/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Công việc"
+    },
+    {
+      "screen": "work",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/work/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Công việc"
+    },
+    {
+      "screen": "inspector",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/inspector/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Agent Inspector"
+    },
+    {
+      "screen": "inspector",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/inspector/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Agent Inspector"
+    },
+    {
+      "screen": "replay",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/replay/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Phát lại"
+    },
+    {
+      "screen": "replay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/replay/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Phát lại"
+    },
+    {
+      "screen": "organization",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/organization/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Tổ chức"
+    },
+    {
+      "screen": "organization",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/organization/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Tổ chức"
+    },
+    {
+      "screen": "approvals",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/approvals/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Chờ Chủ tịch duyệt"
+    },
+    {
+      "screen": "approvals",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/approvals/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Chờ Chủ tịch duyệt"
+    },
+    {
+      "screen": "settings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/settings/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Cấu hình & sức khỏe"
+    },
+    {
+      "screen": "settings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/settings/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "heading": "Cấu hình & sức khỏe"
+    },
+    {
+      "screen": "states/cursor-gap",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/states/cursor-gap/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Cấu hình & sức khỏe"
+    },
+    {
+      "screen": "states/offline",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/states/offline/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Cấu hình & sức khỏe"
+    },
+    {
+      "screen": "states/stale",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/states/stale/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "heading": "Cấu hình & sức khỏe"
+    }
+  ],
+  "flows": [
+    {
+      "id": "dashboard-office-inspector",
+      "routes": [
+        "overview",
+        "office",
+        "inspector"
+      ],
+      "actions": "authenticated navigation and read-only inspection"
+    },
+    {
+      "id": "dashboard-work-approval",
+      "routes": [
+        "overview",
+        "work",
+        "approvals"
+      ],
+      "actions": "authenticated navigation and read-only inspection"
+    },
+    {
+      "id": "playground-profile-grant-history",
+      "routes": [
+        "playground"
+      ],
+      "actions": "authenticated navigation and read-only inspection"
+    },
+    {
+      "id": "inspector-replay-source",
+      "routes": [
+        "inspector",
+        "replay"
+      ],
+      "actions": "authenticated navigation and read-only inspection"
+    },
+    {
+      "id": "organization-employee-list",
+      "routes": [
+        "organization"
+      ],
+      "actions": "authenticated navigation and read-only inspection"
+    },
+    {
+      "id": "replay-filter-seek-reload",
+      "routes": [
+        "replay"
+      ],
+      "runOptions": 2,
+      "sliderPresent": true,
+      "reloadRecovered": true,
+      "eventReadRequests": 2,
+      "businessWrites": []
+    }
+  ],
+  "stateChecks": [
+    {
+      "state": "cursor-gap-read-error",
+      "observed": true,
+      "injection": "HTTP 409 read-only endpoint interception",
+      "interceptedReads": 1,
+      "statusText": "Kết nối event store: Có khoảng trống dữ liệu · Cập nhật kết nối: 23:34:05 18/10/2026"
+    },
+    {
+      "state": "cursor-gap-reload-recovery",
+      "observed": true
+    },
+    {
+      "state": "browser-offline",
+      "observed": true,
+      "navigatorOnLine": false,
+      "statusText": "Kết nối event store: Mất kết nối · Cập nhật kết nối: 23:34:05 18/10/2026",
+      "method": "Chromium context.setOffline(true)"
+    },
+    {
+      "state": "offline-recovery",
+      "observed": true,
+      "method": "Chromium context.setOffline(false)"
+    },
+    {
+      "state": "stalled-heartbeat-stale",
+      "observed": true,
+      "statusText": "Kết nối event store: Dữ liệu đã cũ · Cập nhật kết nối: 23:34:06 18/10/2026",
+      "eventSourceRequestHeld": true,
+      "method": "hold SSE request and advance browser Date.now by 31 seconds"
+    },
+    {
+      "state": "stalled-heartbeat-recovery",
+      "observed": true
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/@vite/client",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/main.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/@react-refresh",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react-dom_client.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/index.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/App.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/vite/dist/client/env.mjs",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/rolldown-runtime-BvCyGRYZ.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/App.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/RuntimePanel.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/PlaygroundPanel.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/RuntimePanel.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/PlaygroundPanel.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react-dom.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/ready",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/owner/login",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions/70421a2b-52ca-41c2-a853-d8686f378e21",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions/70421a2b-52ca-41c2-a853-d8686f378e21",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/approvals",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/approvals",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions/70421a2b-52ca-41c2-a853-d8686f378e21",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/owner/logout",
+      "hasCursor": false,
+      "hasLastEventId": false
+    }
+  ]
+}

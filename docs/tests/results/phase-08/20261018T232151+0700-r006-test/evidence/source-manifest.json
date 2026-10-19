@@ -1,0 +1,27 @@
+{
+  "batch_id": "20261018T232151+0700-r006-test",
+  "commit": "39321b177a60a20ecf327cfccaa9e6b865fe4db0",
+  "branch": "main",
+  "worktree_dirty": true,
+  "runtime": {
+    "vite": "http://127.0.0.1:15500",
+    "api": "http://127.0.0.1:15501",
+    "postgres": "127.0.0.1:15510"
+  },
+  "tools": {
+    "python": "3.14.3",
+    "chromium": "156.0.8078.4"
+  },
+  "sha256": {
+    "apps/api/tests/test_stabilization02_observability.py": "20fd2ac4f670d16a73bb4eec1276988fa61380f1b73cd1d39d8d60e6ce0fdd5e",
+    "docs/reviews/stabilization-02/evidence/authenticated_review.mjs": "8d12ffa710b54c45dcd1f3580b2f74cdfde1639a59c54f857d07d57d49fa5bf8",
+    "docs/reviews/stabilization-02/evidence/read_only_db_snapshot.py": "00360416386a1f34118a2cd13cd2f7b402e7ddc62d8c6a78f08fce58e9859547",
+    "docs/reviews/stabilization-02/evidence/package_authenticated_review.py": "200ec79ce2163a8805ebdb2a729dc53e2314b957507ab695e5e67e600bdd6421",
+    "apps/web/src/App.tsx": "0274a0c2cd02c039854796590d2c1dd35a3026340803b6c9392dfba4d14d70e2",
+    "apps/web/src/PlaygroundPanel.css": "40d0b4c251af21a968cfdd9d1c5f7ff4d92e0fdb281c9d28f76c78f59ec225bf",
+    "apps/web/src/RuntimePanel.css": "cb93232498db33554292766a109dc7a307f107a3cd1f88a5df9e44c83a3e6019"
+  },
+  "grant_ref": "none",
+  "inference": "none",
+  "cleanup": "isolated DB/role removed by runner; browser Owner session logged out; read-only snapshots used"
+}

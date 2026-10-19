@@ -2,7 +2,7 @@
 .playground-session-nav { display: flex; align-items: center; gap: 12px; margin: 22px 0; }
 .playground-session-nav label { white-space: nowrap; }
 .playground-session-nav select { flex: 1; min-width: 0; }
-.playground-session-nav button { flex-shrink: 0; }
+.playground-session-nav button { flex-shrink: 0; width: auto; }
 .playground-setup { padding: 22px 0; border-top: 1px solid #e3e8df; display: grid; gap: 16px; }
 .playground-fields { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
 .playground-fields label { display: grid; gap: 8px; }

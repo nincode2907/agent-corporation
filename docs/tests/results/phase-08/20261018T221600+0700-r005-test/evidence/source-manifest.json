@@ -1,0 +1,12 @@
+{
+  "batch_id": "20261018T221600+0700-r005-test",
+  "commit": "39321b177a60a20ecf327cfccaa9e6b865fe4db0",
+  "branch": "main",
+  "worktree_dirty": true,
+  "source_manifest": "../../../../phase-07/20261018T221600+0700-r006-test/evidence/source-manifest.json",
+  "ui_lens_capture": "../../../../../artifacts/ui-review/2026-10-18T15-28-04-437Z_c80b5d46-9af9-4eb2-8155-e3d97c33cd0d/manifest.json",
+  "authenticated_browser": "../../../../../reviews/stabilization-01/evidence/authenticated/manifest.json",
+  "grant_ref": "none",
+  "inference": "none",
+  "phase08_gate": "BLOCKED"
+}

@@ -1,0 +1,231 @@
+{
+  "baseUrl": "http://127.0.0.1:15500",
+  "browserVersion": "156.0.8078.4",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "screens": [
+    {
+      "id": "overview",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1653,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        },
+        {
+          "tag": "SECTION",
+          "className": "welcome-panel",
+          "scrollWidth": 428,
+          "clientWidth": 360
+        }
+      ],
+      "heading": "Tổng quan"
+    },
+    {
+      "id": "playground",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1654,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Playground"
+    },
+    {
+      "id": "office",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1655,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Văn phòng trực tiếp"
+    },
+    {
+      "id": "work",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1653,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Công việc"
+    },
+    {
+      "id": "inspector",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1655,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Agent Inspector"
+    },
+    {
+      "id": "replay",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1654,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Phát lại"
+    },
+    {
+      "id": "organization",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1653,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Tổ chức"
+    },
+    {
+      "id": "approvals",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1655,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Chờ Chủ tịch duyệt"
+    },
+    {
+      "id": "settings",
+      "viewportWidth": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "pageHorizontalOverflow": false,
+      "horizontalScrollRegions": [
+        {
+          "className": "primary-nav",
+          "scrollWidth": 1653,
+          "clientWidth": 390
+        }
+      ],
+      "nonScrollingOverflowCandidates": [
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "scrollWidth": 53,
+          "clientWidth": 1
+        }
+      ],
+      "heading": "Cấu hình & sức khỏe"
+    }
+  ],
+  "keyboard": {
+    "firstFocus": {
+      "tag": "A",
+      "text": "Bỏ qua điều hướng",
+      "href": "#main-content"
+    },
+    "skipTargetFocused": false
+  }
+}

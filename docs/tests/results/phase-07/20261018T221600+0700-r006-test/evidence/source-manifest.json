@@ -1,0 +1,33 @@
+{
+  "batch_id": "20261018T221600+0700-r006-test",
+  "commit": "39321b177a60a20ecf327cfccaa9e6b865fe4db0",
+  "branch": "main",
+  "worktree_dirty": true,
+  "runtime": {
+    "vite": "http://127.0.0.1:15500",
+    "api": "http://127.0.0.1:15501",
+    "postgres": "127.0.0.1:15510"
+  },
+  "tools": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "python": "3.14.3",
+    "chromium": "156.0.8078.4",
+    "ui_lens": "0.1.0"
+  },
+  "sha256": {
+    ".ui-review.json": "c350ddf17baa373a30f36198b0d2de55226468569a9311f88b6b5d7b14ceafa4",
+    "apps/web/src/App.tsx": "0274a0c2cd02c039854796590d2c1dd35a3026340803b6c9392dfba4d14d70e2",
+    "apps/web/src/PlaygroundPanel.css": "40d0b4c251af21a968cfdd9d1c5f7ff4d92e0fdb281c9d28f76c78f59ec225bf",
+    "apps/web/src/RuntimePanel.css": "cb93232498db33554292766a109dc7a307f107a3cd1f88a5df9e44c83a3e6019",
+    "docs/reviews/stabilization-01/evidence/browser_audit.mjs": "e85002265a9f0e8db7b0a145be229b1705e79d288b8ef3470f82c488f2675adb",
+    "docs/reviews/stabilization-01/evidence/authenticated_review.mjs": "a3f3a6d7954be665e388ed0aca0e592e82c240f9e39bbe89ec82373c1276171d",
+    "apps/api/tests/test_phase07_feed.py": "678f4e2a8bd1929b3083e401d75b78fc656bc62a0365971fa51aea300df39b1c",
+    "apps/api/tests/test_phase07_feed_persistence.py": "3f86131f44eb51163ab568a5ddcf986d3b66e475c95ca0ae2f3eee7247c1aef8",
+    "apps/api/tests/test_playground.py": "d7b9034198ba6799300d4f80da9549db0e836a794f2f52bcecf44aa3def84ec6",
+    "apps/api/tests/test_playground_persistence.py": "24957fe08e8c28169c7b5aad72b5ff019d60d06d96968a75f78efea262c54d0a"
+  },
+  "grant_ref": "none",
+  "inference": "none",
+  "cleanup": "isolated DB/role removed by runner; temporary Owner browser session logged out"
+}

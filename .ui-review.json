@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "project": "Agent Corporation",
+  "baseUrl": "http://127.0.0.1:15500",
+  "outputDir": "artifacts/ui-review",
+  "viewports": {
+    "desktop": { "width": 1440, "height": 900 },
+    "mobile": { "width": 390, "height": 844 }
+  },
+  "targets": [
+    {
+      "id": "overview",
+      "name": "Tổng quan",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "settleMs": 1200,
+      "pdf": true
+    },
+    {
+      "id": "playground",
+      "name": "Development Playground",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#playground\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#playground\"].active" }
+      ],
+      "settleMs": 1200,
+      "pdf": true
+    },
+    {
+      "id": "office",
+      "name": "Văn phòng trực tiếp",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#office\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#office\"].active" }
+      ],
+      "settleMs": 1200
+    },
+    {
+      "id": "work",
+      "name": "Work Orders",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#work\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#work\"].active" }
+      ],
+      "settleMs": 1200
+    },
+    {
+      "id": "inspector",
+      "name": "Agent Inspector",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#inspector\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#inspector\"].active" }
+      ],
+      "settleMs": 1200
+    },
+    {
+      "id": "replay",
+      "name": "Phát lại",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#replay\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#replay\"].active" }
+      ],
+      "settleMs": 1200
+    },
+    {
+      "id": "organization",
+      "name": "Tổ chức demo",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#organization\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#organization\"].active" }
+      ],
+      "settleMs": 1200
+    },
+    {
+      "id": "approvals",
+      "name": "Approval Inbox",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#approvals\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#approvals\"].active" }
+      ],
+      "settleMs": 1200
+    },
+    {
+      "id": "settings",
+      "name": "Cấu hình và sức khỏe",
+      "route": "/",
+      "viewports": ["desktop", "mobile"],
+      "actions": [
+        { "type": "click", "selector": "a.nav-link[href=\"#settings\"]" },
+        { "type": "waitFor", "selector": "a.nav-link[href=\"#settings\"].active" }
+      ],
+      "settleMs": 1200
+    }
+  ],
+  "presets": {
+    "product-review": {
+      "targets": ["overview", "playground", "office", "work", "inspector", "replay", "organization", "approvals", "settings"],
+      "viewports": ["desktop", "mobile"]
+    }
+  }
+}

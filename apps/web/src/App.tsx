@@ -234,7 +234,7 @@ function App() {
         </div>
       </aside>
 
-      <main id="main-content" className="main-area">
+      <main id="main-content" className="main-area" tabIndex={-1}>
         <header className="topbar">
           <div className="breadcrumbs"><span>Không gian local</span><span className="crumb-sep">/</span><strong>{activeScreen.title}</strong></div>
           <div className="topbar-actions">

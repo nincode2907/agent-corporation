@@ -1,0 +1,1313 @@
+{
+  "baseUrl": "http://127.0.0.1:15500",
+  "browserVersion": "156.0.8078.4",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "auth": {
+    "attempted": true,
+    "succeeded": true,
+    "secretPrintedOrStored": false,
+    "loggedOut": true
+  },
+  "screens": [
+    {
+      "id": "overview",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Tổng quan",
+      "screenshot": "screenshots/overview/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nTổng quan\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS01 · PHASE 03–04\n\nTổng quan\n\nMột điểm vào để xem tình hình doanh nghiệp và đi tới công việc cần quyết định.\n\nDữ liệu demo\n\nFIXTURE CỐ ĐỊNH · SEED V1\n\nQuan sát quy trình trên dữ liệu demo.\n\nKhông tạo agent thật, không gọi model. Đây là môi trường demo tách biệt để nghiệm thu giao diện.\n\nXem các Work Order\n↗\nAC\n✳\n\nTÌNH HÌNH DEMO\n\nDemo Corporation\nManifest 925d7561935f\nDOANH NGHIỆP GIẢ LẬP\nDEMO\n3 hồ sơ nhân sự\n\n2 phòng ban · 6 Work Order · 40 event fixture.\n\nXem cấu trúc tổ chức\n→\nDỊCH VỤ LOCAL\nSẴN SÀNG\n↗\nAPI nội bộ\nFastAPI · health/live\nĐang hoạt động\n▤\nCơ sở dữ liệu\nPostgreSQL · readiness\nĐang hoạt động\nKiểm tra lại dịch vụ\n↻\nUSAGE VÀ CHI PHÍ\nUNKNOWN\nChưa xác định\n\nUsage chưa được đo; chi phí không phải 0. Không có inference request trong seed/reset.\n\nMở tài chính\n→\nGÓC NHÌN ĐANG DÙNG\n◉\nChủ tịch\n\nChế độ chỉ đổi cách trình bày; không đổi quyền API.\n\nGrant và usage thực tế xem trong Playground/runtime.\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "overview",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Tổng quan",
+      "screenshot": "screenshots/overview/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1653,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        },
+        {
+          "tag": "SECTION",
+          "className": "welcome-panel",
+          "left": 14,
+          "right": 376,
+          "clientWidth": 360,
+          "scrollWidth": 428,
+          "overflowX": "hidden",
+          "text": "FIXTURE CỐ ĐỊNH · SEED V1\n\nQuan sát quy trình trên dữ liệu demo.\n\nKhông tạo agen"
+        }
+      ],
+      "overflowingElements": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "welcome-ornament",
+          "left": 293,
+          "right": 443,
+          "width": 150,
+          "text": "AC\n✳"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "className": "orbit orbit-one",
+          "left": 309,
+          "right": 427,
+          "width": 118,
+          "text": ""
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "className": "orbit orbit-two",
+          "left": 332,
+          "right": 404,
+          "width": 72,
+          "text": ""
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "className": "orbit-core",
+          "left": 343,
+          "right": 393,
+          "width": 50,
+          "text": "AC"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "className": "orbit-star",
+          "left": 384,
+          "right": 401,
+          "width": 17,
+          "text": "✳"
+        }
+      ],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nTổng quan\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS01 · PHASE 03–04\n\nTổng quan\n\nMột điểm vào để xem tình hình doanh nghiệp và đi tới công việc cần quyết định.\n\nDữ liệu demo\n\nFIXTURE CỐ ĐỊNH · SEED V1\n\nQuan sát quy trình trên dữ liệu demo.\n\nKhông tạo agent thật, không gọi model. Đây là môi trường demo tách biệt để nghiệm thu giao diện.\n\nXem các Work Order\n↗\nAC\n✳\n\nTÌNH HÌNH DEMO\n\nDemo Corporation\nManifest 925d7561935f\nDOANH NGHIỆP GIẢ LẬP\nDEMO\n3 hồ sơ nhân sự\n\n2 phòng ban · 6 Work Order · 40 event fixture.\n\nXem cấu trúc tổ chức\n→\nDỊCH VỤ LOCAL\nSẴN SÀNG\n↗\nAPI nội bộ\nFastAPI · health/live\nĐang hoạt động\n▤\nCơ sở dữ liệu\nPostgreSQL · readiness\nĐang hoạt động\nKiểm tra lại dịch vụ\n↻\nUSAGE VÀ CHI PHÍ\nUNKNOWN\nChưa xác định\n\nUsage chưa được đo; chi phí không phải 0. Không có inference request trong seed/reset.\n\nMở tài chính\n→\nGÓC NHÌN ĐANG DÙNG\n◉\nChủ tịch\n\nChế độ chỉ đổi cách trình bày; không đổi quyền API.\n\nGrant và usage thực tế xem trong Playground/runtime.\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "playground",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Playground",
+      "screenshot": "screenshots/playground/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nPlayground\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nDEV · PHASE 06 · Development\n\nPlayground\n\nTrò chuyện với nhân viên demo trong Session Grant do Owner cấp.\n\nDữ liệu demo\nTrò chuyện thử với nhân viên demo\n\nText-only · không tools, file, terminal, deploy hoặc đổi công ty. Quyền nằm trong Session Grant.\n\nTạo phiên mới\nHội thoại đã lưu\nChọn phiên\nLinh Phạm · gpt-6-luna · 2/20 lượt · 07:04:58 15/10/2026\nTải lại phiên\nLinh Phạm\ngpt-6-luna · high · profile v2\nGrant đã hết hạn\nHết hạn 07:34:58 15/10/2026 · concurrency 1\nKết thúc grant\n\nDevelopment Playground · dữ liệu demo · CG01 chưa verified. Worker đang được app quản lý. Lịch sử gửi model gồm tối đa 10 lượt hoàn tất gần nhất.\n\nBạn\n\nbạn tên gì, làm gì\n\n\nLinh Phạm\nĐã trả lời\n\nMình là Linh Phạm, chuyên viên phân tích. Mình hỗ trợ phân tích thông tin và đưa ra nhận định dựa trên nội dung bạn cung cấp.\n\nUsage xác nhận: 10.495 tokens (10398 vào / 97 ra) · Chi phí: chưa biết\nDấu vết lượt gọi\nBạn\n\nví dụ xem nào\n\n\nLinh Phạm\nĐã trả lời\n\nVí dụ: bạn gửi mình số liệu doanh thu theo tháng, mình có thể tính mức tăng giảm, chỉ ra tháng cao/thấp nhất và nêu một vài nhận xét từ số liệu đó. Bạn có thể gửi thử một bảng số liệu nhé.\n\nUsage xác nhận: 10.522 tokens (10454 vào / 68 ra) · Chi phí: chưa biết\nDấu vết lượt gọi\nTin nhắn\nGửi tin nhắn\nGrant đã dừng nhận tin nhắn. Tạo phiên mới khi bạn muốn cấp hạn mức mới.\nEvents của phiên (7)\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "playground",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Playground",
+      "screenshot": "screenshots/playground/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1654,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nPlayground\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nDEV · PHASE 06 · Development\n\nPlayground\n\nTrò chuyện với nhân viên demo trong Session Grant do Owner cấp.\n\nDữ liệu demo\nTrò chuyện thử với nhân viên demo\n\nText-only · không tools, file, terminal, deploy hoặc đổi công ty. Quyền nằm trong Session Grant.\n\nTạo phiên mới\nHội thoại đã lưu\nChọn phiên\nLinh Phạm · gpt-6-luna · 2/20 lượt · 07:04:58 15/10/2026\nTải lại phiên\nLinh Phạm\ngpt-6-luna · high · profile v2\nGrant đã hết hạn\nHết hạn 07:34:58 15/10/2026 · concurrency 1\nKết thúc grant\n\nDevelopment Playground · dữ liệu demo · CG01 chưa verified. Worker đang được app quản lý. Lịch sử gửi model gồm tối đa 10 lượt hoàn tất gần nhất.\n\nBạn\n\nbạn tên gì, làm gì\n\n\nLinh Phạm\nĐã trả lời\n\nMình là Linh Phạm, chuyên viên phân tích. Mình hỗ trợ phân tích thông tin và đưa ra nhận định dựa trên nội dung bạn cung cấp.\n\nUsage xác nhận: 10.495 tokens (10398 vào / 97 ra) · Chi phí: chưa biết\nDấu vết lượt gọi\nBạn\n\nví dụ xem nào\n\n\nLinh Phạm\nĐã trả lời\n\nVí dụ: bạn gửi mình số liệu doanh thu theo tháng, mình có thể tính mức tăng giảm, chỉ ra tháng cao/thấp nhất và nêu một vài nhận xét từ số liệu đó. Bạn có thể gửi thử một bảng số liệu nhé.\n\nUsage xác nhận: 10.522 tokens (10454 vào / 68 ra) · Chi phí: chưa biết\nDấu vết lượt gọi\nTin nhắn\nGửi tin nhắn\nGrant đã dừng nhận tin nhắn. Tạo phiên mới khi bạn muốn cấp hạn mức mới.\nEvents của phiên (7)\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "office",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Văn phòng trực tiếp",
+      "screenshot": "screenshots/office/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nVăn phòng trực tiếp\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS02 · PHASE 08\n\nVăn phòng trực tiếp\n\nQuan sát run và sự kiện đã ghi nhận trong phạm vi Owner.\n\nCần session Owner\n\nLIVE OFFICE · INSPECTOR · REPLAY · PHASE 08\n\nHoạt động đã ghi nhận\n\nĐăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nĐang xử lý\n0\n\nChưa có lượt chạy\n\nĐang chờ\n0\n\nChưa có lượt chạy\n\nThất bại\n0\n\nChưa có lượt chạy\n\nChưa biết kết quả\n0\n\nChưa có lượt chạy\n\nTrạng thái lấy từ run đã lưu. Chưa có quan hệ run → nhân viên/phòng ban trong nguồn Phase 06–07 nên không gán hoạt động cho một agent. Heartbeat kết nối phía trên không phải heartbeat của worker. Mở Inspector\n\nCơ cấu phòng ban · demo fixture\nFIXTURE\n⌂\nNghiên cứu\nKhông có trạng thái agent được suy diễn từ fixture.\n⌂\nVận hành\nKhông có trạng thái agent được suy diễn từ fixture.\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "office",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Văn phòng trực tiếp",
+      "screenshot": "screenshots/office/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1655,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nVăn phòng trực tiếp\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS02 · PHASE 08\n\nVăn phòng trực tiếp\n\nQuan sát run và sự kiện đã ghi nhận trong phạm vi Owner.\n\nCần session Owner\n\nLIVE OFFICE · INSPECTOR · REPLAY · PHASE 08\n\nHoạt động đã ghi nhận\n\nĐăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nĐang xử lý\n0\n\nChưa có lượt chạy\n\nĐang chờ\n0\n\nChưa có lượt chạy\n\nThất bại\n0\n\nChưa có lượt chạy\n\nChưa biết kết quả\n0\n\nChưa có lượt chạy\n\nTrạng thái lấy từ run đã lưu. Chưa có quan hệ run → nhân viên/phòng ban trong nguồn Phase 06–07 nên không gán hoạt động cho một agent. Heartbeat kết nối phía trên không phải heartbeat của worker. Mở Inspector\n\nCơ cấu phòng ban · demo fixture\nFIXTURE\n⌂\nNghiên cứu\nKhông có trạng thái agent được suy diễn từ fixture.\n⌂\nVận hành\nKhông có trạng thái agent được suy diễn từ fixture.\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "work",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Công việc",
+      "screenshot": "screenshots/work/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nCông việc\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS05 · PHASE 03, 09\n\nCông việc\n\nTạo Work Order, xếp ưu tiên, pause/resume/hủy an toàn và theo dõi nghiệm thu.\n\nDữ liệu demo\n\nWORK ORDER · TASK QUEUE · PHASE 09\n\nBảng nhiệm vụ và hàng đợi\n\nĐăng nhập Chủ tịch để quản lý Work Order trong scope được backend cấp. Thao tác chỉ ghi trạng thái; chưa dispatch hoặc gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\n\nOWNER TASK BOARD\n\nWork Order và trạng thái đã lưu\n\nTạo task không gọi model. Budget request hiện khóa ở 0; task trong queue chưa có worker được bật để dispatch.\n\nTải lại bảng\nTạo Work Order\n\nMọi task bắt đầu ở bản nháp. Chọn “Đưa vào queue” riêng để ghi hàng đợi bền vững.\n\nMục tiêu\nĐầu ra mong đợi · mỗi dòng một mục\nTiêu chí nghiệm thu\nReference đầu vào đã cấp · mỗi dòng một ref\nThời hạn tối đa · giây\nSố vòng rework tối đa\nNgười nhận việc\nChưa giao\nAn Trần · Điều phối viên\nLinh Phạm · Chuyên viên phân tích\nMai Nguyễn · Chief of Staff\nNgười rà soát\nChưa chọn\nAn Trần · Điều phối viên\nLinh Phạm · Chuyên viên phân tích\nMai Nguyễn · Chief of Staff\n\nInference grant: 0 · Model requests: 0 · Cost basis: chưa biết. Chọn người nhận chỉ lưu assignment; không tự chạy worker.\n\nTạo bản nháp\nLọc trạng thái\nTất cả\nBản nháp\nTrong hàng đợi\nĐang lập kế hoạch\nChờ phê duyệt\nĐang thực hiện\nĐang rà soát\nCần làm lại\nChờ Chủ tịch nghiệm thu\nĐã nghiệm thu\nBị chặn\nĐã tạm dừng\nThất bại\nĐã hủy\nTìm mục tiêu\nƯu tiên khi đưa vào queue\n6 / 6 task\nBản nháp\n1\nBản nháp\nr1 · v1\n[DEMO] Mẫu công việc idle\n\nAn Trần · Có người rà soát\n\nHạn: Chưa có cập nhật\nQueue: chưa enqueue\n0 run liên"
+    },
+    {
+      "id": "work",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Công việc",
+      "screenshot": "screenshots/work/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1653,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nCông việc\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS05 · PHASE 03, 09\n\nCông việc\n\nTạo Work Order, xếp ưu tiên, pause/resume/hủy an toàn và theo dõi nghiệm thu.\n\nDữ liệu demo\n\nWORK ORDER · TASK QUEUE · PHASE 09\n\nBảng nhiệm vụ và hàng đợi\n\nĐăng nhập Chủ tịch để quản lý Work Order trong scope được backend cấp. Thao tác chỉ ghi trạng thái; chưa dispatch hoặc gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\n\nOWNER TASK BOARD\n\nWork Order và trạng thái đã lưu\n\nTạo task không gọi model. Budget request hiện khóa ở 0; task trong queue chưa có worker được bật để dispatch.\n\nTải lại bảng\nTạo Work Order\n\nMọi task bắt đầu ở bản nháp. Chọn “Đưa vào queue” riêng để ghi hàng đợi bền vững.\n\nMục tiêu\nĐầu ra mong đợi · mỗi dòng một mục\nTiêu chí nghiệm thu\nReference đầu vào đã cấp · mỗi dòng một ref\nThời hạn tối đa · giây\nSố vòng rework tối đa\nNgười nhận việc\nChưa giao\nAn Trần · Điều phối viên\nLinh Phạm · Chuyên viên phân tích\nMai Nguyễn · Chief of Staff\nNgười rà soát\nChưa chọn\nAn Trần · Điều phối viên\nLinh Phạm · Chuyên viên phân tích\nMai Nguyễn · Chief of Staff\n\nInference grant: 0 · Model requests: 0 · Cost basis: chưa biết. Chọn người nhận chỉ lưu assignment; không tự chạy worker.\n\nTạo bản nháp\nLọc trạng thái\nTất cả\nBản nháp\nTrong hàng đợi\nĐang lập kế hoạch\nChờ phê duyệt\nĐang thực hiện\nĐang rà soát\nCần làm lại\nChờ Chủ tịch nghiệm thu\nĐã nghiệm thu\nBị chặn\nĐã tạm dừng\nThất bại\nĐã hủy\nTìm mục tiêu\nƯu tiên khi đưa vào queue\n6 / 6 task\nBản nháp\n1\nBản nháp\nr1 · v1\n[DEMO] Mẫu công việc idle\n\nAn Trần · Có người rà soát\n\nHạn: Chưa có cập nhật\nQueue: chưa enqueue\n0 run liên"
+    },
+    {
+      "id": "inspector",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Agent Inspector",
+      "screenshot": "screenshots/inspector/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [
+        {
+          "tag": "SELECT",
+          "className": "",
+          "width": 1062,
+          "left": 315,
+          "computedWidth": "1062px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "observatory-controls",
+          "width": 1062,
+          "left": 315,
+          "computedWidth": "1062px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "flex",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "observatory-content",
+          "width": 1062,
+          "left": 315,
+          "computedWidth": "1062px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "grid",
+          "gridColumns": "1062px",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "SECTION",
+          "className": "runtime-panel observatory-panel",
+          "width": 1116,
+          "left": 288,
+          "computedWidth": "1116px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "content-wrap",
+          "width": 1116,
+          "left": 288,
+          "computedWidth": "1116px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "MAIN",
+          "className": "main-area",
+          "width": 1188,
+          "left": 252,
+          "computedWidth": "1188px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "app-shell",
+          "width": 1440,
+          "left": 0,
+          "computedWidth": "1440px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "width": 1440,
+          "left": 0,
+          "computedWidth": "1440px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        }
+      ],
+      "visibleText": "Không gian local\n/\nAgent Inspector\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS03 · PHASE 08\n\nAgent Inspector\n\nMở run đã lưu để xem trạng thái, model, usage và event liên quan.\n\nCần session Owner\n\nLIVE OFFICE · INSPECTOR · REPLAY · PHASE 08\n\nInspector lượt chạy\n\nĐăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nLượt chạy đã lưu\nRun có event mới nhất\n100bc3c8 · Hoàn tất\nĐọc lại từ event store\nTrạng thái\nHoàn tất\nModel · effort\ngpt-6-luna · medium\nUsage\n{\"total_tokens\":10435,\"prompt_tokens\":10354,\"completion_tokens\":81,\"prompt_tokens_details\":{\"cached_tokens\":0},\"completion_tokens_details\":{\"reasoning_tokens\":0}}\nOutcome\nfinal_response\n100bc3c8-3944-4bed-94aa-770364161b3c\nTask: 4c5c741e-ad43-45e2-b970-72b1625e0b6a · Tạo lúc 23:29:09 14/10/2026\nPlan và tóm tắt quyết định\n\nChưa có summary tường minh trong event projection hiện tại.\n\nTools, file diff và messages\n\nChưa có nguồn Phase 08 được phép hiển thị cho lượt này.\n\nLỗi, profile và metrics\n\nProfile snapshot chi tiết không được API projection cung cấp. Metrics/usage: {\"total_tokens\":10435,\"prompt_tokens\":10354,\"completion_tokens\":81,\"prompt_tokens_details\":{\"cached_tokens\":0},\"completion_tokens_details\":{\"reasoning_tokens\":0}}.\n\nSự kiện liên quan · 10\n#23 · RUN_CREATED\n23:29:09 14/10/2026 · app\n\nstatus: queued\n\nb4342d84-c938-45af-b389-65f7fe162437\n#24 · TASK_STATE_CHANGED\n23:29:55 14/10/2026 · app\n\nChưa có trường tóm tắt được phép hiển thị.\n\n78e64c19-4a09-485c-bfb4-9f304f88bb60\n#25 · TASK_STATE_CHANGED\n23:29:55 14/10/"
+    },
+    {
+      "id": "inspector",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Agent Inspector",
+      "screenshot": "screenshots/inspector/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1655,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [
+        {
+          "tag": "SELECT",
+          "className": "",
+          "width": 324,
+          "left": 33,
+          "computedWidth": "324px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "observatory-controls",
+          "width": 324,
+          "left": 33,
+          "computedWidth": "324px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "flex",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "observatory-content",
+          "width": 324,
+          "left": 33,
+          "computedWidth": "324px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "grid",
+          "gridColumns": "324px",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "SECTION",
+          "className": "runtime-panel observatory-panel",
+          "width": 362,
+          "left": 14,
+          "computedWidth": "362px",
+          "minWidth": "0px",
+          "maxWidth": "100%",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "content-wrap",
+          "width": 362,
+          "left": 14,
+          "computedWidth": "362px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "MAIN",
+          "className": "main-area",
+          "width": 390,
+          "left": 0,
+          "computedWidth": "390px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "app-shell",
+          "width": 390,
+          "left": 0,
+          "computedWidth": "390px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "width": 390,
+          "left": 0,
+          "computedWidth": "390px",
+          "minWidth": "0px",
+          "maxWidth": "none",
+          "display": "block",
+          "gridColumns": "none",
+          "flex": "0 1 auto"
+        }
+      ],
+      "visibleText": "Không gian local\n/\nAgent Inspector\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS03 · PHASE 08\n\nAgent Inspector\n\nMở run đã lưu để xem trạng thái, model, usage và event liên quan.\n\nCần session Owner\n\nLIVE OFFICE · INSPECTOR · REPLAY · PHASE 08\n\nInspector lượt chạy\n\nĐăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nLượt chạy đã lưu\nRun có event mới nhất\n100bc3c8 · Hoàn tất\nĐọc lại từ event store\nTrạng thái\nHoàn tất\nModel · effort\ngpt-6-luna · medium\nUsage\n{\"total_tokens\":10435,\"prompt_tokens\":10354,\"completion_tokens\":81,\"prompt_tokens_details\":{\"cached_tokens\":0},\"completion_tokens_details\":{\"reasoning_tokens\":0}}\nOutcome\nfinal_response\n100bc3c8-3944-4bed-94aa-770364161b3c\nTask: 4c5c741e-ad43-45e2-b970-72b1625e0b6a · Tạo lúc 23:29:09 14/10/2026\nPlan và tóm tắt quyết định\n\nChưa có summary tường minh trong event projection hiện tại.\n\nTools, file diff và messages\n\nChưa có nguồn Phase 08 được phép hiển thị cho lượt này.\n\nLỗi, profile và metrics\n\nProfile snapshot chi tiết không được API projection cung cấp. Metrics/usage: {\"total_tokens\":10435,\"prompt_tokens\":10354,\"completion_tokens\":81,\"prompt_tokens_details\":{\"cached_tokens\":0},\"completion_tokens_details\":{\"reasoning_tokens\":0}}.\n\nSự kiện liên quan · 10\n#23 · RUN_CREATED\n23:29:09 14/10/2026 · app\n\nstatus: queued\n\nb4342d84-c938-45af-b389-65f7fe162437\n#24 · TASK_STATE_CHANGED\n23:29:55 14/10/2026 · app\n\nChưa có trường tóm tắt được phép hiển thị.\n\n78e64c19-4a09-485c-bfb4-9f304f88bb60\n#25 · TASK_STATE_CHANGED\n23:29:55 14/10/"
+    },
+    {
+      "id": "replay",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Phát lại",
+      "screenshot": "screenshots/replay/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "DIV",
+          "className": "observatory-content",
+          "left": 315,
+          "right": 1377,
+          "clientWidth": 1062,
+          "scrollWidth": 1064,
+          "overflowX": "visible",
+          "text": "Đã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nLọc"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nPhát lại\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS04 · PHASE 08\n\nPhát lại\n\nDuyệt tuần tự event đã commit, lọc theo run và chọn mốc thời gian.\n\nCần session Owner\n\nLIVE OFFICE · INSPECTOR · REPLAY · PHASE 08\n\nPhát lại sự kiện đã lưu\n\nĐăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nLọc theo lượt chạy\nTất cả event trong cửa sổ đã tải\n100bc3c8 · Hoàn tất\nTải lại từ đầu\n\nReplay chỉ đọc dữ liệu đã commit. Đang hiển thị tối đa 200 event trong cửa sổ hiện tại; khoảng trống cần tải lại, không được nội suy.\n\nMốc 1 / 40\n#1\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#2\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#3\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#4\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#5\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#6\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#7\nAPPROVAL_REQUESTED\n23:09:04 14/10/2026\n\nstatus: pending\n\n#8\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#9\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#10\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#11\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#12\nTASK_FAILED\n23:"
+    },
+    {
+      "id": "replay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Phát lại",
+      "screenshot": "screenshots/replay/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1654,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        },
+        {
+          "tag": "DIV",
+          "className": "observatory-content",
+          "left": 33,
+          "right": 357,
+          "clientWidth": 324,
+          "scrollWidth": 326,
+          "overflowX": "visible",
+          "text": "Đã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nLọc"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nPhát lại\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS04 · PHASE 08\n\nPhát lại\n\nDuyệt tuần tự event đã commit, lọc theo run và chọn mốc thời gian.\n\nCần session Owner\n\nLIVE OFFICE · INSPECTOR · REPLAY · PHASE 08\n\nPhát lại sự kiện đã lưu\n\nĐăng nhập Chủ tịch để đọc dữ liệu đã lưu trong scope được backend cấp. Các màn hình này chỉ đọc và không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nĐã kết nối\nCập nhật kết nối: 22:30:49 18/10/2026\nScope: Chủ tịch đã xác thực\nLọc theo lượt chạy\nTất cả event trong cửa sổ đã tải\n100bc3c8 · Hoàn tất\nTải lại từ đầu\n\nReplay chỉ đọc dữ liệu đã commit. Đang hiển thị tối đa 200 event trong cửa sổ hiện tại; khoảng trống cần tải lại, không được nội suy.\n\nMốc 1 / 40\n#1\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#2\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#3\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#4\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#5\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#6\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#7\nAPPROVAL_REQUESTED\n23:09:04 14/10/2026\n\nstatus: pending\n\n#8\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#9\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#10\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#11\nTASK_STATE_CHANGED\n23:09:04 14/10/2026\n\nChưa có trường tóm tắt được phép hiển thị.\n\n#12\nTASK_FAILED\n23:"
+    },
+    {
+      "id": "organization",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Tổ chức",
+      "screenshot": "screenshots/organization/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nTổ chức\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS07 · PHASE 12, 14\n\nTổ chức\n\nCơ cấu phòng ban và hồ sơ nhân sự được version hóa.\n\nDữ liệu demo\n\nCƠ CẤU DEMO\n\nDemo Corporation\nDEMO FIXTURE\nDEMO\nNghiên cứu\n\n1 hồ sơ nhân sự\n\nL\nLinh Phạm\nChuyên viên phân tích · hồ sơ v1\nDEMO\nVận hành\n\n2 hồ sơ nhân sự\n\nA\nAn Trần\nĐiều phối viên · hồ sơ v1\nM\nMai Nguyễn\nChief of Staff · hồ sơ v1\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "organization",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Tổ chức",
+      "screenshot": "screenshots/organization/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1653,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nTổ chức\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS07 · PHASE 12, 14\n\nTổ chức\n\nCơ cấu phòng ban và hồ sơ nhân sự được version hóa.\n\nDữ liệu demo\n\nCƠ CẤU DEMO\n\nDemo Corporation\nDEMO FIXTURE\nDEMO\nNghiên cứu\n\n1 hồ sơ nhân sự\n\nL\nLinh Phạm\nChuyên viên phân tích · hồ sơ v1\nDEMO\nVận hành\n\n2 hồ sơ nhân sự\n\nA\nAn Trần\nĐiều phối viên · hồ sơ v1\nM\nMai Nguyễn\nChief of Staff · hồ sơ v1\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "approvals",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Chờ Chủ tịch duyệt",
+      "screenshot": "screenshots/approvals/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nChờ Chủ tịch duyệt\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS06 · PHASE 10\n\nChờ Chủ tịch duyệt\n\nXem payload, phạm vi, hạn và bằng chứng trước khi ghi quyết định.\n\nCần session Owner\n\nQUYỀN HẠN · HỘP PHÊ DUYỆT · PHASE 10\n\nYêu cầu cần Chủ tịch quyết định\n\nQuyết định được ghi audit theo payload cố định. Duyệt chỉ ghi nhận approval, không tự chạy công cụ hoặc thay cấu hình.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nHộp phê duyệt\n\n0 yêu cầu còn hiệu lực · payload và phạm vi được chốt bằng hash.\n\nTải lại inbox\n\nDuyệt/từ chối chỉ ghi quyết định vào audit. Chưa có executor được nối để thực hiện hành động sau duyệt.\n\nThiếu snapshot review\nFixture cần Chủ tịch duyệt\nf61f0a76\n\n[DEMO] Mẫu công việc approval · revision chưa ghi · run 1c2fb66f\n\nHành động\ntool_execution\nHạn\nChưa ghi\nPolicy\nChưa gắn policy\nNgân sách snapshot\n{\"cost_basis\":\"unknown\"}\nPayload, provenance và hash\n\nYêu cầu cũ/fixture thiếu expiry hoặc task revision; hệ thống khóa quyết định vì không đủ bằng chứng.\n\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "approvals",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Chờ Chủ tịch duyệt",
+      "screenshot": "screenshots/approvals/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1655,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nChờ Chủ tịch duyệt\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS06 · PHASE 10\n\nChờ Chủ tịch duyệt\n\nXem payload, phạm vi, hạn và bằng chứng trước khi ghi quyết định.\n\nCần session Owner\n\nQUYỀN HẠN · HỘP PHÊ DUYỆT · PHASE 10\n\nYêu cầu cần Chủ tịch quyết định\n\nQuyết định được ghi audit theo payload cố định. Duyệt chỉ ghi nhận approval, không tự chạy công cụ hoặc thay cấu hình.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nHộp phê duyệt\n\n0 yêu cầu còn hiệu lực · payload và phạm vi được chốt bằng hash.\n\nTải lại inbox\n\nDuyệt/từ chối chỉ ghi quyết định vào audit. Chưa có executor được nối để thực hiện hành động sau duyệt.\n\nThiếu snapshot review\nFixture cần Chủ tịch duyệt\nf61f0a76\n\n[DEMO] Mẫu công việc approval · revision chưa ghi · run 1c2fb66f\n\nHành động\ntool_execution\nHạn\nChưa ghi\nPolicy\nChưa gắn policy\nNgân sách snapshot\n{\"cost_basis\":\"unknown\"}\nPayload, provenance và hash\n\nYêu cầu cũ/fixture thiếu expiry hoặc task revision; hệ thống khóa quyết định vì không đủ bằng chứng.\n\nAgent Corporation · Không gian điều hành local\nInference chỉ theo grant riêng"
+    },
+    {
+      "id": "settings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "heading": "Cấu hình & sức khỏe",
+      "screenshot": "screenshots/settings/1440x900.png",
+      "documentWidth": 1440,
+      "viewportWidth": 1440,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nCấu hình & sức khỏe\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS13 · PHASE 05, 22\n\nCấu hình & sức khỏe\n\nCấu hình hiển thị và trạng thái các dịch vụ local đã kiểm tra.\n\nDữ liệu demo\n\nTRẠNG THÁI KẾT NỐI\n\nDịch vụ trên máy này\n\nHealth API/DB được tải khi mở ứng dụng. Gateway chỉ được gọi khi bạn bấm probe; thao tác này chỉ GET health và catalog, không gọi model.\n\n↗\nAPI nội bộ\nGET /api/v1/health/live\nĐang hoạt động\n▤\nPostgreSQL\nGET /api/v1/health/ready\nĐang hoạt động\nKiểm tra lại\n\nCODEX SERVER LOCAL\n\nGateway và model catalog\nProbe gateway\n\nBase URL do backend cấu hình. Không gửi prompt, không tạo session. Model trong catalog không đồng nghĩa account có entitlement.\n\nChưa chạy probe trong phiên này.\n\nModel profile / quyền Owner\nĐăng nhập Chủ tịch để cấu hình profile trong bảng runtime bên dưới. Entitlement chỉ được kiểm tra trong đợt run có grant riêng.\ni\nCapability và quyền\n\nProbe chỉ xác nhận contract GET health/models. Không kiểm tra streaming, max_tokens, session API, quyền tài khoản hoặc privacy/retention.\n\nGrant và usage thực tế xem trong Playground/runtime.\n\nTHỰC THI VÀ KẾT NỐI · PHASE 06–07\n\nRuntime demo có kiểm soát\n\nĐăng nhập Chủ tịch để đọc event và quản lý run trong scope được backend cấp. Mở trang không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nModel profile\n\nBackend kiểm tra quyền Owner và catalog khi lưu. Catalog và profile chưa xác nhận entitlement.\n\nModel ID\nReasoning effort\nminimal\nlow\nmedium\nhigh\nxhigh\nmax\nultra\npersistent\nFallback được phép (phân cách bằng dấu phẩy)\nDanh sách này chỉ là cấu hình. Runtime không tự retry hoặc đổi model khi kết quả chưa rõ.\nLưu profile · v2\nMột run phân tích văn bản\n\nCG01:"
+    },
+    {
+      "id": "settings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "heading": "Cấu hình & sức khỏe",
+      "screenshot": "screenshots/settings/390x844.png",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "horizontalOverflow": false,
+      "scrollWidthCandidates": [
+        {
+          "tag": "NAV",
+          "className": "primary-nav",
+          "left": 0,
+          "right": 390,
+          "clientWidth": 390,
+          "scrollWidth": 1653,
+          "overflowX": "auto",
+          "text": "DEV\nPlayground\nS01\nTổng quan\nS02\nVăn phòng trực tiếp\nS05\nCông việc\nS06\nChờ Chủ t"
+        },
+        {
+          "tag": "SPAN",
+          "className": "theme-label",
+          "left": 236,
+          "right": 237,
+          "clientWidth": 1,
+          "scrollWidth": 53,
+          "overflowX": "hidden",
+          "text": "Giao diện sáng"
+        }
+      ],
+      "overflowingElements": [],
+      "inspectorControlChain": [],
+      "visibleText": "Không gian local\n/\nCấu hình & sức khỏe\nLocal\n◐\nGiao diện sáng\nChủ tịch\nVận hành\nC\nDEMO\nDemo Corporation\nFixture v1 · số liệu demo fixture\nĐặt lại demo\n\nS13 · PHASE 05, 22\n\nCấu hình & sức khỏe\n\nCấu hình hiển thị và trạng thái các dịch vụ local đã kiểm tra.\n\nDữ liệu demo\n\nTRẠNG THÁI KẾT NỐI\n\nDịch vụ trên máy này\n\nHealth API/DB được tải khi mở ứng dụng. Gateway chỉ được gọi khi bạn bấm probe; thao tác này chỉ GET health và catalog, không gọi model.\n\n↗\nAPI nội bộ\nGET /api/v1/health/live\nĐang hoạt động\n▤\nPostgreSQL\nGET /api/v1/health/ready\nĐang hoạt động\nKiểm tra lại\n\nCODEX SERVER LOCAL\n\nGateway và model catalog\nProbe gateway\n\nBase URL do backend cấu hình. Không gửi prompt, không tạo session. Model trong catalog không đồng nghĩa account có entitlement.\n\nChưa chạy probe trong phiên này.\n\nModel profile / quyền Owner\nĐăng nhập Chủ tịch để cấu hình profile trong bảng runtime bên dưới. Entitlement chỉ được kiểm tra trong đợt run có grant riêng.\ni\nCapability và quyền\n\nProbe chỉ xác nhận contract GET health/models. Không kiểm tra streaming, max_tokens, session API, quyền tài khoản hoặc privacy/retention.\n\nGrant và usage thực tế xem trong Playground/runtime.\n\nTHỰC THI VÀ KẾT NỐI · PHASE 06–07\n\nRuntime demo có kiểm soát\n\nĐăng nhập Chủ tịch để đọc event và quản lý run trong scope được backend cấp. Mở trang không gọi model.\n\nĐăng xuất\n\nChủ tịch đã xác thực · Demo scope b4375333 · Session có thể hết hạn hoặc bị thu hồi.\n\nModel profile\n\nBackend kiểm tra quyền Owner và catalog khi lưu. Catalog và profile chưa xác nhận entitlement.\n\nModel ID\nReasoning effort\nminimal\nlow\nmedium\nhigh\nxhigh\nmax\nultra\npersistent\nFallback được phép (phân cách bằng dấu phẩy)\nDanh sách này chỉ là cấu hình. Runtime không tự retry hoặc đổi model khi kết quả chưa rõ.\nLưu profile · v2\nMột run phân tích văn bản\n\nCG01:"
+    }
+  ],
+  "networkInterruption": {
+    "attempted": true,
+    "eventIdsBefore": [
+      "f9144194-5d0b-52e6-a6ea-a3ec539cc825",
+      "d04a1bee-b16d-57e4-be23-7dafeb8c9a3f",
+      "9899950f-bcb4-5c5f-8476-1f1303b10e64",
+      "58dea6b0-8f9b-5f42-911b-4cfa22f8d53e",
+      "993329f1-0ff5-5194-8d65-7bdae1404a32",
+      "a232eec6-2b2b-58f7-bfab-68439c8e7098",
+      "e943c270-2438-5c83-b93d-82801b813ad3",
+      "ea8bf447-1e43-5e51-b9e6-f6f2ba289b32",
+      "e1e78d16-c2e3-55d8-96ba-30b8a4d68202",
+      "706dc098-bcce-5b0f-84a8-ace34d0b6457",
+      "3144e987-263e-538e-94d9-e9c09acdbde7",
+      "42ab70a0-1a26-5867-9872-71271e99fd66",
+      "3936c6a1-51c9-50ad-ab2b-37cb3972e17c",
+      "a81575bb-8853-5a35-965c-c62d6155f7cf",
+      "09555683-b9e6-5d98-9322-ba234346c8b4",
+      "a33d4bdf-9aa2-5a09-8b23-7b7205837fb9",
+      "21b91317-ecee-55c8-b797-e3a17b19f3d0",
+      "b416cc56-3553-5063-8a5f-ea2a6e4ae206",
+      "ca420def-5e37-536f-b811-ea7063eb498b",
+      "c55cc3ea-53ef-50c9-bcd7-f1e61226a378",
+      "5ac81c44-1085-4374-bc60-46c0875a5a3c",
+      "ec49b4df-45b6-45ff-b71e-6b789f91088b",
+      "b4342d84-c938-45af-b389-65f7fe162437",
+      "78e64c19-4a09-485c-bfb4-9f304f88bb60",
+      "301d9cb2-1a5e-4db3-8f05-5615ec037ba7",
+      "24f4acee-859a-4357-8d7a-3b49801781ed",
+      "504fc7b3-4f0f-4997-a288-42269653c206",
+      "233b94bc-051e-4446-a37e-e6a14074931b",
+      "9fef99cc-d5af-4132-808d-4a17ab44094a",
+      "8b68083b-ae53-40c5-9f9d-1e4699623c26",
+      "dc96e6c0-b247-4ca0-a02f-7076c900a21a",
+      "da7f7fb0-349d-4e3a-a7ea-0867d3916a28",
+      "3856e534-00a7-433e-b225-a244810850e2",
+      "88e1fb0c-0bd6-4f31-a220-e85325ba4798",
+      "d55038f5-88ae-4579-b465-454a33f3c375",
+      "ca6346ff-8622-43d1-abf3-bf9f0f31b390",
+      "879659a0-97d0-4b10-8979-5ca902c9e761",
+      "563a415a-9792-4340-bc52-d8ff6e76d84b",
+      "4b259b4a-6b38-4b66-8a7c-a4095198cf3b",
+      "1adb1a25-e8e1-4cf1-9e99-c0006f592386"
+    ],
+    "interruptedStateObserved": true,
+    "failedStreamAttempts": 4,
+    "eventIdsAfter": [
+      "f9144194-5d0b-52e6-a6ea-a3ec539cc825",
+      "d04a1bee-b16d-57e4-be23-7dafeb8c9a3f",
+      "9899950f-bcb4-5c5f-8476-1f1303b10e64",
+      "58dea6b0-8f9b-5f42-911b-4cfa22f8d53e",
+      "993329f1-0ff5-5194-8d65-7bdae1404a32",
+      "a232eec6-2b2b-58f7-bfab-68439c8e7098",
+      "e943c270-2438-5c83-b93d-82801b813ad3",
+      "ea8bf447-1e43-5e51-b9e6-f6f2ba289b32",
+      "e1e78d16-c2e3-55d8-96ba-30b8a4d68202",
+      "706dc098-bcce-5b0f-84a8-ace34d0b6457",
+      "3144e987-263e-538e-94d9-e9c09acdbde7",
+      "42ab70a0-1a26-5867-9872-71271e99fd66",
+      "3936c6a1-51c9-50ad-ab2b-37cb3972e17c",
+      "a81575bb-8853-5a35-965c-c62d6155f7cf",
+      "09555683-b9e6-5d98-9322-ba234346c8b4",
+      "a33d4bdf-9aa2-5a09-8b23-7b7205837fb9",
+      "21b91317-ecee-55c8-b797-e3a17b19f3d0",
+      "b416cc56-3553-5063-8a5f-ea2a6e4ae206",
+      "ca420def-5e37-536f-b811-ea7063eb498b",
+      "c55cc3ea-53ef-50c9-bcd7-f1e61226a378",
+      "5ac81c44-1085-4374-bc60-46c0875a5a3c",
+      "ec49b4df-45b6-45ff-b71e-6b789f91088b",
+      "b4342d84-c938-45af-b389-65f7fe162437",
+      "78e64c19-4a09-485c-bfb4-9f304f88bb60",
+      "301d9cb2-1a5e-4db3-8f05-5615ec037ba7",
+      "24f4acee-859a-4357-8d7a-3b49801781ed",
+      "504fc7b3-4f0f-4997-a288-42269653c206",
+      "233b94bc-051e-4446-a37e-e6a14074931b",
+      "9fef99cc-d5af-4132-808d-4a17ab44094a",
+      "8b68083b-ae53-40c5-9f9d-1e4699623c26",
+      "dc96e6c0-b247-4ca0-a02f-7076c900a21a",
+      "da7f7fb0-349d-4e3a-a7ea-0867d3916a28",
+      "3856e534-00a7-433e-b225-a244810850e2",
+      "88e1fb0c-0bd6-4f31-a220-e85325ba4798",
+      "d55038f5-88ae-4579-b465-454a33f3c375",
+      "ca6346ff-8622-43d1-abf3-bf9f0f31b390",
+      "879659a0-97d0-4b10-8979-5ca902c9e761",
+      "563a415a-9792-4340-bc52-d8ff6e76d84b",
+      "4b259b4a-6b38-4b66-8a7c-a4095198cf3b",
+      "1adb1a25-e8e1-4cf1-9e99-c0006f592386"
+    ],
+    "reconnected": true,
+    "sameOrderedEvents": true
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/@vite/client",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/main.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/@react-refresh",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react-dom_client.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/index.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/App.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react_jsx-dev-runtime.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/vite/dist/client/env.mjs",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/rolldown-runtime-BvCyGRYZ.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/App.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/RuntimePanel.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/PlaygroundPanel.tsx",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/RuntimePanel.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/src/PlaygroundPanel.css",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/node_modules/.vite/deps/react-dom.js",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/ready",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/owner/login",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions/70421a2b-52ca-41c2-a853-d8686f378e21",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions/70421a2b-52ca-41c2-a853-d8686f378e21",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/approvals",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions/70421a2b-52ca-41c2-a853-d8686f378e21",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders",
+      "hasCursor": false,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream",
+      "hasCursor": true,
+      "hasLastEventId": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/owner/logout",
+      "hasCursor": false,
+      "hasLastEventId": false
+    }
+  ]
+}
