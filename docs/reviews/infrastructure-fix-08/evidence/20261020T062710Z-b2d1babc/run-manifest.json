@@ -1,0 +1,24 @@
+{
+  "blocker": "Docker VM capacity is below the isolated test budget",
+  "cleanup": {
+    "status": "not_needed"
+  },
+  "commands": {},
+  "completed_at_utc": "2026-10-20T06:27:48.146741+00:00",
+  "compose_project": "ac-pgtest-c70cf90c8bbb",
+  "failure": {
+    "message": "Docker capacity preflight blocked the isolated test run",
+    "type": "RuntimeError"
+  },
+  "infrastructure_and_tests_complete": false,
+  "network_isolation_note": "Separate PostgreSQL container/project limits database coupling, not Docker VM-level failure risk.",
+  "resources": {},
+  "run_id": "20261020T062710Z-b2d1babc",
+  "started_at_utc": "2026-10-20T06:27:10.258013+00:00",
+  "status": "incomplete",
+  "test": {
+    "executed": false,
+    "exit_code": null,
+    "warnings": []
+  }
+}

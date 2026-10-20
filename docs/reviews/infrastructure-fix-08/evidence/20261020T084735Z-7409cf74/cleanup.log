@@ -1,0 +1,9 @@
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Stopping
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Stopping
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Stopped
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Removing
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Removed
+Volume ac-pgtest-504f54e21104_test_pgdata  Removing
+Volume ac-pgtest-504f54e21104_test_pgdata  Removed
+Network ac-pgtest-504f54e21104_isolated  Removing
+Network ac-pgtest-504f54e21104_isolated  Removed

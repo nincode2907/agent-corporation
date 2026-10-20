@@ -103,11 +103,8 @@ def initialize(operator: Path, runtime: Path, database: Path, postgres: Path) ->
             write_private(owner, source_owner)
         elif read_private(owner) is None:
             write_private(owner, (secrets.token_urlsafe(48) + "\n").encode())
-        proof = read_private(operator / ".local" / "cg01-proof.json")
-        if proof is not None:
-            write_private(runtime / "cg01-proof.json", proof)
-        else:
-            (runtime / "cg01-proof.json").unlink(missing_ok=True)
+        # CG01 proof files have a separate explicit operator lifecycle. Normal
+        # config/Owner bootstrap must neither install nor revoke a runtime proof.
     print("Cấu hình/Owner đã sẵn sàng; giữ credential đã có, không hiển thị secret.", flush=True)
 
 

@@ -1,0 +1,57 @@
+{
+  "cgroup_values": {
+    "interpretation": "64 MiB probe-container cgroup only; excluded from VM available-memory measurement",
+    "memory_current": null,
+    "memory_max": null
+  },
+  "cleanup_remaining_by_label": "",
+  "cleanup_rm_output": "ac-vm-mem-probe-93050feb63ac",
+  "completed_at_utc": "2026-10-20T08:41:37.175455+00:00",
+  "constraints": {
+    "capabilities_dropped": "ALL",
+    "cpus": 0.25,
+    "memory_limit_bytes": 67108864,
+    "memory_swap_limit_bytes": 67108864,
+    "mounts": [],
+    "network": "none",
+    "pids_limit": 16,
+    "read_only_rootfs": true,
+    "timeout_seconds": 8,
+    "user": "65534:65534"
+  },
+  "container_id": "91c5e2793d51bc7d289e7cc6385aa97c01c7b65134133e776001694f9aed31e9",
+  "container_name": "ac-vm-mem-probe-93050feb63ac",
+  "docker_engine": {
+    "cpus": 4,
+    "memory_total_bytes": 8337670144,
+    "observed_at_utc": "2026-10-20T08:41:35.368388+00:00",
+    "source": "Docker Engine info"
+  },
+  "image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+  "image_preexisting": true,
+  "meminfo_values": {
+    "MemAvailable_bytes": 6843047936,
+    "MemFree_bytes": 4816666624,
+    "MemTotal_bytes": 8337670144,
+    "SwapFree_bytes": 1073737728,
+    "SwapTotal_bytes": 1073737728
+  },
+  "observed_host_config": {
+    "Binds": null,
+    "Memory": 67108864,
+    "MemorySwap": 67108864,
+    "NanoCpus": 250000000,
+    "NetworkMode": "none",
+    "PidsLimit": 16,
+    "ReadonlyRootfs": true
+  },
+  "probe_elapsed_seconds": 0.829,
+  "probe_exit_status": "success",
+  "probe_id": "93050feb63ac",
+  "raw_probe_output_sanitized": "=== meminfo ===\nMemTotal:        8142256 kB\nMemFree:         4703776 kB\nMemAvailable:    6682664 kB\nBuffers:          202264 kB\nCached:          1973120 kB\nSwapCached:            0 kB\nActive:           423700 kB\nInactive:        2541684 kB\nActive(anon):      80520 kB\nInactive(anon):  1051864 kB\nActive(file):     343180 kB\nInactive(file):  1489820 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       1048572 kB\nSwapFree:        1048572 kB\nDirty:            104304 kB\nWriteback:            28 kB\nAnonPages:        788744 kB\nMapped:           297012 kB\nShmem:            342304 kB\nKReclaimable:     349004 kB\nSlab:             399912 kB\nSReclaimable:     349004 kB\nSUnreclaim:        50908 kB\nKernelStack:       10656 kB\nPageTables:         6732 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     5119700 kB\nCommitted_AS:    7649312 kB\nVmallocTotal:   133143592960 kB\nVmallocUsed:       15012 kB\nVmallocChunk:          0 kB\nPercpu:             1984 kB\nAnonHugePages:     14336 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\n=== pressure ===\n=== cgroup memory.max ===\n67108864\n=== cgroup memory.current ===\n2359296",
+  "started_at_utc": "2026-10-20T08:41:34.610410+00:00",
+  "vm_total_consistency": {
+    "delta_bytes": 0,
+    "proc_memtotal_matches_engine_within_5_percent": true
+  }
+}\n

@@ -5,7 +5,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
-from .database import database_is_ready
+from .database import DatabaseSchemaError, database_is_ready
 from .modules.demo.router import router as demo_router
 from .modules.codex_gateway.router import router as codex_router
 from .modules.governance.auth_router import router as owner_router
@@ -20,7 +20,8 @@ from .settings import get_settings
 
 @asynccontextmanager
 async def lifespan(_app):
-    task = asyncio.create_task(playground_worker.supervise()) if get_settings().playground_worker_enabled else None
+    settings = validate_runtime_startup()
+    task = asyncio.create_task(playground_worker.supervise()) if settings.playground_worker_enabled else None
     try:
         yield
     finally:
@@ -79,7 +80,28 @@ def live() -> dict[str, str]:
 def ready(response: Response) -> dict[str, object]:
     try:
         database_is_ready()
+    except DatabaseSchemaError:
+        response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+        return {"status": "degraded", "checks": {"database": "schema_incompatible"}}
     except SQLAlchemyError:
         response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
         return {"status": "degraded", "checks": {"database": "unavailable"}}
     return {"status": "ok", "checks": {"database": "ok"}}
+
+
+def validate_runtime_startup():
+    """Validate configuration and required schema without running migrations."""
+    try:
+        settings = get_settings()
+    except Exception:
+        raise RuntimeError("Agent Corporation API startup blocked: runtime configuration is missing or invalid.") from None
+    try:
+        database_is_ready()
+    except DatabaseSchemaError:
+        raise RuntimeError(
+            "Agent Corporation API startup blocked: required database schema is missing or incompatible; "
+            "run the documented explicit migration procedure."
+        ) from None
+    except SQLAlchemyError:
+        raise RuntimeError("Agent Corporation API startup blocked: PostgreSQL is unavailable.") from None
+    return settings

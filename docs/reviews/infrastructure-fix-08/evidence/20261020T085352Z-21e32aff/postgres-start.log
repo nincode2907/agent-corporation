@@ -1,0 +1,10 @@
+Network ac-pgtest-84c4c97503bf_isolated  Creating
+Network ac-pgtest-84c4c97503bf_isolated  Created
+Volume "ac-pgtest-84c4c97503bf_test_pgdata"  Creating
+Volume "ac-pgtest-84c4c97503bf_test_pgdata"  Created
+Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Creating
+Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Created
+Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Starting
+Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Started
+Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Waiting
+Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Healthy

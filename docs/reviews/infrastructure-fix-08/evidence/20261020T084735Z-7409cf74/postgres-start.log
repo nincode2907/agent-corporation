@@ -1,0 +1,10 @@
+Network ac-pgtest-504f54e21104_isolated  Creating
+Network ac-pgtest-504f54e21104_isolated  Created
+Volume "ac-pgtest-504f54e21104_test_pgdata"  Creating
+Volume "ac-pgtest-504f54e21104_test_pgdata"  Created
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Creating
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Created
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Starting
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Started
+Container ac-pgtest-504f54e21104-isolated-postgres-1  Waiting
+container for service "isolated-postgres" exited (1)

@@ -1,0 +1,45 @@
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.43kB done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 35B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170
+#3 DONE 0.0s
+
+#4 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 881.61kB 0.1s done
+#5 DONE 0.1s
+
+#6 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23
+#6 CACHED
+
+#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/
+#7 CACHED
+
+#8 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python
+#8 CACHED
+
+#9 [build 2/5] WORKDIR /app
+#9 CACHED
+
+#10 [test 1/3] RUN uv sync --project apps/api --locked --no-install-project --no-managed-python
+#10 CACHED
+
+#11 [test 2/3] COPY apps/api apps/api
+#11 DONE 0.1s
+
+#12 [test 3/3] COPY scripts scripts
+#12 DONE 0.0s
+
+#13 exporting to image
+#13 exporting layers 0.0s done
+#13 writing image sha256:5afd8f395295bd9948538b68f7b309d37d466df3aeaa149f3d30e3733d4f3728 done
+#13 naming to docker.io/library/ac-pgtest-b545952ea8fc-api-tests:isolated done
+#13 DONE 0.0s
+Disposable role/database created inside isolated network

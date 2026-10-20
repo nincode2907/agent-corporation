@@ -1,0 +1,9 @@
+Container ac-pgtest-f2e0e165ff75-isolated-postgres-1  Stopping
+Container ac-pgtest-f2e0e165ff75-isolated-postgres-1  Stopping
+Container ac-pgtest-f2e0e165ff75-isolated-postgres-1  Stopped
+Container ac-pgtest-f2e0e165ff75-isolated-postgres-1  Removing
+Container ac-pgtest-f2e0e165ff75-isolated-postgres-1  Removed
+Volume ac-pgtest-f2e0e165ff75_test_pgdata  Removing
+Network ac-pgtest-f2e0e165ff75_isolated  Removing
+Volume ac-pgtest-f2e0e165ff75_test_pgdata  Removed
+Network ac-pgtest-f2e0e165ff75_isolated  Removed

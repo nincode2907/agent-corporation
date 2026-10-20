@@ -1,0 +1,9 @@
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Stopping
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Stopping
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Stopped
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Removing
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Removed
+Volume ac-pgtest-a95071acf119_test_pgdata  Removing
+Volume ac-pgtest-a95071acf119_test_pgdata  Removed
+Network ac-pgtest-a95071acf119_isolated  Removing
+Network ac-pgtest-a95071acf119_isolated  Removed

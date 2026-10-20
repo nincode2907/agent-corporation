@@ -70,6 +70,8 @@ def test_managed_worker_starts_and_stops_with_api(monkeypatch):
         finally:
             observed.append('stop')
     monkeypatch.setenv('PLAYGROUND_WORKER_ENABLED', 'true')
+    # This test exercises lifespan supervision, not the database startup guard.
+    monkeypatch.setattr('agent_corporation_api.main.database_is_ready', lambda: None)
     monkeypatch.setattr(worker, 'supervise', fake)
     with TestClient(app) as client:
         assert client.get('/api/v1/health/live').status_code == 200

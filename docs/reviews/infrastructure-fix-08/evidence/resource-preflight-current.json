@@ -1,0 +1,29 @@
+{
+  "docker_engine": {
+    "memory_total_bytes": 5173080064,
+    "cpu_count": 4
+  },
+  "host_filesystem": {
+    "free_bytes": 80193847296,
+    "capacity_percent_used": 82
+  },
+  "docker_stats": {
+    "current_memory_samples": null,
+    "diagnostic_status": "timed_out",
+    "timeout_seconds": 40
+  },
+  "isolated_test_budget": {
+    "required_estimated_free_engine_memory_bytes": 2684354560,
+    "container_memory_budget_bytes": 2147483648,
+    "reserved_margin_bytes": 536870912,
+    "pg_volume_minimum_free_bytes": 1073741824
+  },
+  "first_runner_preflight": {
+    "run_manifest": "20261020T062710Z-b2d1babc/run-manifest.json",
+    "result": "blocked_before_compose_start",
+    "reason": "Docker VM capacity is below the isolated test budget",
+    "memory_samples_retained": false,
+    "compose_resources_created": false
+  },
+  "follow_up": "Read-only docker stats retry timed out; no capacity threshold was lowered and no test containers were started."
+}

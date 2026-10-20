@@ -1,0 +1,9 @@
+Container ac-pgtest-ebc897e71dbf-isolated-postgres-1  Stopping
+Container ac-pgtest-ebc897e71dbf-isolated-postgres-1  Stopping
+Container ac-pgtest-ebc897e71dbf-isolated-postgres-1  Stopped
+Container ac-pgtest-ebc897e71dbf-isolated-postgres-1  Removing
+Container ac-pgtest-ebc897e71dbf-isolated-postgres-1  Removed
+Volume ac-pgtest-ebc897e71dbf_test_pgdata  Removing
+Network ac-pgtest-ebc897e71dbf_isolated  Removing
+Volume ac-pgtest-ebc897e71dbf_test_pgdata  Removed
+Network ac-pgtest-ebc897e71dbf_isolated  Removed

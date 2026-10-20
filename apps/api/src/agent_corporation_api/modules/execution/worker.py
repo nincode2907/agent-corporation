@@ -8,7 +8,7 @@ from functools import partial
 from uuid import UUID
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import text
-from ...database import get_session_factory
+from ...database import DatabaseSchemaError, database_is_ready, get_session_factory
 from ...settings import get_settings
 from ..observability.scope import CompanyScope
 from . import service
@@ -137,6 +137,17 @@ def main():
     parser.add_argument("--once",action="store_true")
     args=parser.parse_args()
     try:
+        try:
+            get_settings()
+        except Exception:
+            parser.exit(1, "Cấu hình Runtime thiếu hoặc không hợp lệ; worker đã dừng.\n")
+        try:
+            database_is_ready()
+        except DatabaseSchemaError:
+            parser.exit(1, "Schema PostgreSQL thiếu hoặc không tương thích; chạy quy trình migration tường minh.\n")
+        except SQLAlchemyError:
+            parser.exit(1, "PostgreSQL không khả dụng; worker đã dừng, không dispatch.\n")
+
         async def run_supervised():
             stop_event=asyncio.Event()
             loop=asyncio.get_running_loop()

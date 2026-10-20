@@ -1,0 +1,9 @@
+Container ac-pgtest-513786c490c5-isolated-postgres-1  Stopping
+Container ac-pgtest-513786c490c5-isolated-postgres-1  Stopping
+Container ac-pgtest-513786c490c5-isolated-postgres-1  Stopped
+Container ac-pgtest-513786c490c5-isolated-postgres-1  Removing
+Container ac-pgtest-513786c490c5-isolated-postgres-1  Removed
+Volume ac-pgtest-513786c490c5_test_pgdata  Removing
+Network ac-pgtest-513786c490c5_isolated  Removing
+Volume ac-pgtest-513786c490c5_test_pgdata  Removed
+Network ac-pgtest-513786c490c5_isolated  Removed

@@ -36,6 +36,7 @@ x-api-base: &api-base
 
 services:
   bootstrap:
+    profiles: [setup]
     image: agent-corporation-api:local
     build:
       context: .
@@ -57,9 +58,6 @@ services:
     container_name: agent-corporation-postgres
     entrypoint: [/bin/sh, -ec, 'set -a; . /database-secrets/postgres.env; set +a; exec /usr/local/bin/docker-entrypoint.sh "$$@"', '--']
     command: [postgres]
-    depends_on:
-      bootstrap:
-        condition: service_completed_successfully
     ports:
       - "127.0.0.1:15510:5432"
     volumes:
@@ -73,6 +71,7 @@ services:
     restart: "no"
 
   migrate:
+    profiles: [setup]
     <<: *api-base
     environment:
       <<: *api-environment
@@ -93,10 +92,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      bootstrap:
-        condition: service_completed_successfully
-      migrate:
-        condition: service_completed_successfully
     healthcheck:
       test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:15501/api/v1/health/ready', timeout=2)"]
       interval: 5s
@@ -129,19 +124,46 @@ services:
     restart: "no"
 
   worker:
+    profiles: [runtime-worker]
     <<: *api-base
     container_name: agent-corporation-runtime-worker
     depends_on:
       postgres:
         condition: service_healthy
-      bootstrap:
-        condition: service_completed_successfully
-      migrate:
-        condition: service_completed_successfully
+      api:
+        condition: service_healthy
     entrypoint: [python, -m, agent_corporation_api.modules.execution.worker]
     command: [--environment, b93f752e-7b69-5e8b-8f74-1498a15a5609, --company, b4375333-b12b-5fca-b984-87864032d3a8]
     stop_grace_period: 30s
     restart: unless-stopped
+
+  proof-admin:
+    profiles: [operator]
+    image: agent-corporation-api:local
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: runtime
+    user: "1000:1000"
+    network_mode: none
+    read_only: true
+    environment:
+      CODEX_SERVER_BASE_URL: http://host.docker.internal:15600
+      CODEX_SERVER_TRANSPORT: docker-host
+      RUNTIME_GATE_PATH: /runtime-secrets/cg01-proof.json
+      RUNTIME_GATEWAY_SOURCE_PATH: /gateway-source
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - runtime_secrets:/runtime-secrets
+      - ${GATEWAY_SOURCE_ROOT:-../codex-server}/package.json:/gateway-source/package.json:ro
+      - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/server.ts:/gateway-source/src/server.ts:ro
+      - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/schema.ts:/gateway-source/src/schema.ts:ro
+      - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/provider.ts:/gateway-source/src/provider.ts:ro
+      - ${GATEWAY_SOURCE_ROOT:-../codex-server}/src/config.ts:/gateway-source/src/config.ts:ro
+    stdin_open: true
+    command: [python, scripts/manage_cg01_proof.py]
+    restart: "no"
 
 volumes:
   agent_corporation_postgres:

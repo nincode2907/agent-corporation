@@ -1,0 +1,48 @@
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 32B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 35B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170
+#3 DONE 0.0s
+
+#4 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 33.47kB 0.0s done
+#5 DONE 0.0s
+
+#6 [build 2/5] WORKDIR /app
+#6 CACHED
+
+#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/
+#7 CACHED
+
+#8 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23
+#8 CACHED
+
+#9 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python
+#9 CACHED
+
+#10 [test 1/4] RUN uv sync --project apps/api --locked --no-install-project --no-managed-python
+#10 CACHED
+
+#11 [test 2/4] COPY apps/api apps/api
+#11 DONE 0.0s
+
+#12 [test 3/4] COPY scripts scripts
+#12 DONE 0.4s
+
+#13 [test 4/4] COPY compose.test.yml compose.test.yml
+#13 DONE 0.0s
+
+#14 exporting to image
+#14 exporting layers 0.1s done
+#14 writing image sha256:3cff17e3002c4054ec483f5bc629433f26c6f996a2935de80dc9d027986a2359 done
+#14 naming to docker.io/library/ac-pgtest-a0f60903031d-api-tests:isolated done
+#14 DONE 0.1s
+Disposable role/database created inside isolated network

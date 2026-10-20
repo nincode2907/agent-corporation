@@ -1,0 +1,133 @@
+{
+  "cleanup": {
+    "command_exit_code": 0,
+    "isolated_image_remove_exit_code": 0,
+    "isolated_image_remove_tail": "not present",
+    "resources_after": {
+      "containers": [],
+      "images": [],
+      "networks": [],
+      "volumes": []
+    },
+    "resources_before": {
+      "containers": [
+        "b9b636553b4a"
+      ],
+      "images": [],
+      "networks": [
+        "e28c62d5b065"
+      ],
+      "volumes": [
+        "ac-pgtest-84c4c97503bf_test_pgdata"
+      ]
+    },
+    "status": "complete",
+    "tail": "Container ac-pgtest-84c4c97503bf-isolated-postgres-1  Stopping\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Stopping\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Stopped\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Removing\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Removed\nVolume ac-pgtest-84c4c97503bf_test_pgdata  Removing\nNetwork ac-pgtest-84c4c97503bf_isolated  Removing\nVolume ac-pgtest-84c4c97503bf_test_pgdata  Removed\nNetwork ac-pgtest-84c4c97503bf_isolated  Removed\n"
+  },
+  "commands": {
+    "postgres_start": {
+      "exit_code": 0,
+      "tail": "Network ac-pgtest-84c4c97503bf_isolated  Creating\nNetwork ac-pgtest-84c4c97503bf_isolated  Created\nVolume \"ac-pgtest-84c4c97503bf_test_pgdata\"  Creating\nVolume \"ac-pgtest-84c4c97503bf_test_pgdata\"  Created\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Creating\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Created\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Starting\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Started\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Waiting\nContainer ac-pgtest-84c4c97503bf-isolated-postgres-1  Healthy\n"
+    }
+  },
+  "completed_at_utc": "2026-10-20T08:53:59.880199+00:00",
+  "compose_project": "ac-pgtest-84c4c97503bf",
+  "failure": {
+    "message": "isolated PostgreSQL did not bind to an ephemeral IPv4 loopback port",
+    "type": "RuntimeError"
+  },
+  "infrastructure_and_tests_complete": false,
+  "network_isolation_note": "Separate PostgreSQL container/project limits database coupling, not Docker VM-level failure risk.",
+  "resources": {
+    "preflight": {
+      "budget_blockers": [],
+      "budget_passed": true,
+      "classification": "CAPACITY_CONFIRMED",
+      "diagnostics": {
+        "docker_vm_probe": {
+          "cgroup_memory_max_bytes": 67108864,
+          "cleanup_remaining_by_label": "",
+          "cleanup_verified": true,
+          "completed_at_utc": "2026-10-20T08:53:53.796331+00:00",
+          "constraints": {
+            "capabilities_dropped": "ALL",
+            "cpus": 0.25,
+            "memory_limit_bytes": 67108864,
+            "memory_swap_limit_bytes": 67108864,
+            "mounts": [],
+            "network": "none",
+            "pids_limit": 16,
+            "read_only_rootfs": true,
+            "timeout_seconds": 8,
+            "user": "65534:65534"
+          },
+          "container_id": "4945409ca5b808933d891ece09bf084f47ccdea2cbc0819cbe1488e3f43f1e6d",
+          "container_name": "ac-vm-mem-probe-039afb17536b",
+          "image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+          "image_preexisting": true,
+          "meminfo_values": {
+            "MemAvailable_bytes": 5309132800,
+            "MemFree_bytes": 1279475712,
+            "MemTotal_bytes": 8337670144,
+            "SwapFree_bytes": 1029615616,
+            "SwapTotal_bytes": 1073737728
+          },
+          "memory_pressure": "UNSUPPORTED",
+          "observed_at_utc": "2026-10-20T08:53:53.535281+00:00",
+          "observed_host_config": {
+            "Binds": null,
+            "Memory": 67108864,
+            "MemorySwap": 67108864,
+            "NanoCpus": 250000000,
+            "NetworkMode": "none",
+            "PidsLimit": 16,
+            "ReadonlyRootfs": true
+          },
+          "probe_elapsed_seconds": 0.652,
+          "probe_id": "039afb17536b",
+          "raw_probe_output": "VM_MEMINFO_BEGIN\nMemTotal:        8142256 kB\nMemFree:         1249488 kB\nMemAvailable:    5184700 kB\nBuffers:          194416 kB\nCached:          3791128 kB\nSwapCached:         2944 kB\nActive:          2927988 kB\nInactive:        3294104 kB\nActive(anon):      84112 kB\nInactive(anon):  2480908 kB\nActive(file):    2843876 kB\nInactive(file):   813196 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       1048572 kB\nSwapFree:        1005484 kB\nDirty:               104 kB\nWriteback:             0 kB\nAnonPages:       2232076 kB\nMapped:           453612 kB\nShmem:            328472 kB\nKReclaimable:     493544 kB\nSlab:             560920 kB\nSReclaimable:     493544 kB\nSUnreclaim:        67376 kB\nKernelStack:       13656 kB\nPageTables:        20168 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     5119700 kB\nCommitted_AS:   10028732 kB\nVmallocTotal:   133143592960 kB\nVmallocUsed:       18372 kB\nVmallocChunk:          0 kB\nPercpu:             2496 kB\nAnonHugePages:     10240 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nVM_PRESSURE_BEGIN\nUNSUPPORTED\nCGROUP_MEMORY_MAX_BEGIN\n67108864",
+          "started_at_utc": "2026-10-20T08:53:52.624003+00:00",
+          "vm_total_consistency": {
+            "delta_bytes": 0,
+            "meminfo_scope_proven_outside_probe_cgroup": true,
+            "proc_memtotal_matches_engine_within_5_percent": true
+          }
+        }
+      },
+      "measurements": {
+        "docker_engine_cpus": 4,
+        "docker_engine_memory_total_bytes": 8337670144,
+        "docker_engine_observed_at_utc": "2026-10-20T08:53:52.072673+00:00",
+        "docker_engine_source": "Docker Engine info (VM capacity, not available memory)",
+        "docker_vm_memory_available": {
+          "available_bytes": 5309132800,
+          "observed_at_utc": "2026-10-20T08:53:53.535281+00:00",
+          "scope": "docker-desktop-vm",
+          "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+          "verified": true
+        },
+        "host_filesystem_free_bytes": 94595338240,
+        "host_filesystem_observed_at_utc": "2026-10-20T08:53:52.072673+00:00",
+        "host_filesystem_source": "shutil.disk_usage on test runner filesystem"
+      },
+      "memory_available_bytes": 5309132800,
+      "memory_measurements": [
+        {
+          "available_bytes": 5309132800,
+          "observed_at_utc": "2026-10-20T08:53:53.535281+00:00",
+          "scope": "docker-desktop-vm",
+          "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+          "verified": true
+        }
+      ]
+    }
+  },
+  "run_id": "20261020T085352Z-21e32aff",
+  "started_at_utc": "2026-10-20T08:53:52.070565+00:00",
+  "status": "incomplete",
+  "test": {
+    "executed": false,
+    "exit_code": null,
+    "warnings": []
+  }
+}

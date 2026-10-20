@@ -1,0 +1,1 @@
+["docker-entrypoint.sh"]|["postgres","-c","max_connections=24","-c","shared_buffers=64MB","-c","work_mem=4MB"]|""|docker-entrypoint.sh|["postgres","-c","max_connections=24","-c","shared_buffers=64MB","-c","work_mem=4MB"]

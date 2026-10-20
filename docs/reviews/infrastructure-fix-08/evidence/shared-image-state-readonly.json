@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-10-20",
+  "source": "read-only docker inspect and docker image inspect",
+  "services": {
+    "agent-corporation-api": {
+      "container_image_id": "sha256:284d0aa93e378c76ebf176d154ef3722d958ba5e01992ee5c178ae5588d510b9",
+      "configured_image": "agent-corporation-api:local",
+      "local_tag_image_id": "sha256:4430971cf6a69fd745c55bb5cf7623b1d82bf569e01408d1b32dfa674f202875",
+      "state": "running",
+      "health": "unhealthy"
+    },
+    "agent-corporation-web": {
+      "container_image_id": "sha256:e8bb4264a40e5177541498959f37bd887c93ab287896591214af2811f1db8f29",
+      "configured_image": "agent-corporation-web:local",
+      "local_tag_image_id": "sha256:70a7ccd83dd4cb80ae4e3cadc90873507aff94aced331cb97d4ccaf690eb9921",
+      "state": "running",
+      "health": "healthy"
+    },
+    "agent-corporation-postgres": {
+      "container_image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+      "configured_image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "note": "No shared services or images were rebuilt or modified during this task."
+}

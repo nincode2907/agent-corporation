@@ -1,0 +1,10 @@
+Network ac-pgtest-f1e73edf1086_isolated  Creating
+Network ac-pgtest-f1e73edf1086_isolated  Created
+Volume "ac-pgtest-f1e73edf1086_test_pgdata"  Creating
+Volume "ac-pgtest-f1e73edf1086_test_pgdata"  Created
+Container ac-pgtest-f1e73edf1086-isolated-postgres-1  Creating
+Container ac-pgtest-f1e73edf1086-isolated-postgres-1  Created
+Container ac-pgtest-f1e73edf1086-isolated-postgres-1  Starting
+Container ac-pgtest-f1e73edf1086-isolated-postgres-1  Started
+Container ac-pgtest-f1e73edf1086-isolated-postgres-1  Waiting
+Container ac-pgtest-f1e73edf1086-isolated-postgres-1  Healthy

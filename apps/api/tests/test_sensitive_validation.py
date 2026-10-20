@@ -48,6 +48,8 @@ def test_worker_database_failure_halts_without_sensitive_traceback(monkeypatch, 
     async def fail(*_args, **_kwargs):
         raise StatementError("database failure", "INSERT private_history", {"input": canary}, Exception(canary))
     monkeypatch.setattr(worker, "work", fail)
+    # Isolate the post-start database error path from the independent schema guard.
+    monkeypatch.setattr(worker, "database_is_ready", lambda: None)
     monkeypatch.setattr(sys, "argv", ["worker", "--environment", "00000000-0000-0000-0000-000000000001", "--company", "00000000-0000-0000-0000-000000000002", "--once"])
     with pytest.raises(SystemExit) as error:
         worker.main()

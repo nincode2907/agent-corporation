@@ -1,0 +1,50 @@
+{
+  "observed_at_utc": "2026-10-20T07:38:01Z",
+  "docker_engine": {
+    "context": "desktop-linux",
+    "server_version": "20.10.23",
+    "responsive": true,
+    "memory_total_bytes": 5173080064,
+    "cpus": 4,
+    "host_os": "macOS 15.7.7 arm64"
+  },
+  "stats_comparison": {
+    "rtk_proxy": {"status": "success", "elapsed_seconds": 2.705, "samples": 8},
+    "direct_docker_cli": {"status": "success", "elapsed_seconds": 2.13, "samples": 8},
+    "sample_scope": "per-container usage and limits; not Docker VM available memory",
+    "vm_available_memory_bytes": null
+  },
+  "host_filesystem": {
+    "free_bytes": 91754942464,
+    "minimum_required_bytes": 2147483648,
+    "scope_note": "Host disk measurement is valid for runner filesystem; it says nothing about Docker VM memory."
+  },
+  "selected_other_container_memory_samples": {
+    "memoryos-web-1": "about 1.06 GiB",
+    "memoryos-mysql-1": "about 396 MiB",
+    "mysql-local": "about 543 MiB",
+    "scope_note": "Concurrent container samples show contention context only; they do not establish VM free memory."
+  },
+  "agent_corporation_services": {
+    "api": {"state": "exited", "exit_code": 143, "oom_killed": false, "finished_at_utc": "2026-10-20T06:37:57.575661094Z", "image_id": "sha256:284d0aa93e378c76ebf176d154ef3722d958ba5e01992ee5c178ae5588d510b9", "health_status_at_exit": "unhealthy", "failing_streak": 102},
+    "postgres": {"state": "exited", "exit_code": 0, "oom_killed": false, "finished_at_utc": "2026-10-20T06:37:46.500037463Z", "health_status_at_exit": "healthy"},
+    "web": {"state": "exited", "exit_code": 0, "oom_killed": false, "finished_at_utc": "2026-10-20T06:37:44.902224671Z", "health_status_at_exit": "healthy"},
+    "runtime_worker": {"state": "exited", "exit_code": 1, "running": false}
+  },
+  "health_history": {
+    "api": "Last five checks at 06:35:58–06:36:53Z all exceeded the 3-second healthcheck timeout.",
+    "postgres": "Last five checks at 06:36:10–06:36:53Z all exceeded the 3-second healthcheck timeout.",
+    "web": "Last two checks at 06:36:34Z and 06:36:51Z exceeded the 3-second healthcheck timeout; preceding checks passed."
+  },
+  "api_logs": {
+    "last_observed_readiness_success_utc": "2026-10-20T06:19:38Z",
+    "shutdown_started_utc": "2026-10-20T06:37:50.484790090Z",
+    "shutdown_completed_utc": "2026-10-20T06:37:53.918441967Z",
+    "note": "No application exception or database error was identified in the sanitized captured tail."
+  },
+  "endpoint_checks": {
+    "api_live": "connection refused; API container stopped",
+    "api_ready": "connection refused; API container stopped"
+  },
+  "resource_creation": "None during Fix 08.1 diagnostics; isolated Compose was not started."
+}

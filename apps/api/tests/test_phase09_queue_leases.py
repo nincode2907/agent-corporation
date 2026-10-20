@@ -94,7 +94,7 @@ def test_claim_race_enforces_company_concurrency_and_priority(queue_db):
 
 
 def test_pause_fences_worker_and_expired_lease_is_reclaimed(queue_db):
-    factory, scope, _admin = queue_db
+    factory, scope, admin = queue_db
     enqueued = enqueue(factory, scope, goal="safe requeue")
     task_id = enqueued["task_id"]
     lease = claim_next(factory, scope=scope, worker_id="old-worker", lease_seconds=5)

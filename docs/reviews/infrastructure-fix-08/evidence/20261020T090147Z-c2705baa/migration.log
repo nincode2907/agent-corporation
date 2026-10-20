@@ -1,0 +1,61 @@
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 32B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 35B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170
+#3 DONE 0.0s
+
+#4 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 10.39kB 0.0s done
+#5 DONE 0.0s
+
+#6 [test 2/4] COPY apps/api apps/api
+#6 CACHED
+
+#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/
+#7 CACHED
+
+#8 [build 2/5] WORKDIR /app
+#8 CACHED
+
+#9 [test 3/4] COPY scripts scripts
+#9 CACHED
+
+#10 [test 1/4] RUN uv sync --project apps/api --locked --no-install-project --no-managed-python
+#10 CACHED
+
+#11 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python
+#11 CACHED
+
+#12 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23
+#12 CACHED
+
+#13 [test 4/4] COPY compose.test.yml compose.test.yml
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers done
+#14 writing image sha256:5edfa333e966c534bde427fb375b486c7852e4d3573dea1dea51fcfbc00e2a4a
+#14 writing image sha256:5edfa333e966c534bde427fb375b486c7852e4d3573dea1dea51fcfbc00e2a4a done
+#14 naming to docker.io/library/ac-pgtest-f1e73edf1086-api-tests:isolated done
+#14 DONE 0.0s
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261008_0001, Establish the empty Phase 01 schema baseline.
+INFO  [alembic.runtime.migration] Running upgrade 20261008_0001 -> 20261008_0002, Create scoped business, execution-state, event and outbox schema.
+INFO  [alembic.runtime.migration] Running upgrade 20261008_0002 -> 20261008_0003, Allow app role to reset only the fixed, release-locked demo scope.
+INFO  [alembic.runtime.migration] Running upgrade 20261008_0003 -> 20261009_0004, Durable local Owner session and immutable audit-backed model profile baseline.
+INFO  [alembic.runtime.migration] Running upgrade 20261009_0004 -> 20261009_0005, Durable bounded runtime, scoped grants and model call ledger.
+INFO  [alembic.runtime.migration] Running upgrade 20261009_0005 -> 20261009_0006, Immutable adapter-sourced late usage; does not reactivate grants or unknown calls.
+INFO  [alembic.runtime.migration] Running upgrade 20261009_0006 -> 20261009_0007, Add scoped persistent task queue and immutable command receipts.
+INFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261014_0008, Add reviewable, scoped approval payloads and one-time decision receipts.
+INFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261011_0008, Add fenced leases to the durable Work Order queue.
+INFO  [alembic.runtime.migration] Running upgrade 20261011_0008, 20261014_0008 -> 20261014_0009, Development Playground; isolated from Work Orders. Merge existing migration heads.
+INFO  [alembic.runtime.migration] Running upgrade 20261014_0009 -> 20261020_0010, Append-only Owner reconciliation notes for uncertain Runtime calls.

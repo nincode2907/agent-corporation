@@ -1,0 +1,244 @@
+{
+  "cleanup": {
+    "compose_down_exit_code": 0,
+    "compose_down_tail": "Container ac-docker-test-e091554578-web-1  Stopping\nContainer ac-docker-test-e091554578-web-1  Stopping\nContainer ac-docker-test-e091554578-web-1  Stopped\nContainer ac-docker-test-e091554578-web-1  Removing\nContainer ac-docker-test-e091554578-web-1  Removed\nContainer ac-docker-test-e091554578-api-1  Stopping\nContainer ac-docker-test-e091554578-api-1  Stopping\nContainer ac-docker-test-e091554578-api-1  Stopped\nContainer ac-docker-test-e091554578-api-1  Removing\nContainer ac-docker-test-e091554578-api-1  Removed\nContainer ac-docker-test-e091554578-postgres-1  Stopping\nContainer ac-docker-test-e091554578-postgres-1  Stopping\nContainer ac-docker-test-e091554578-postgres-1  Stopped\nContainer ac-docker-test-e091554578-postgres-1  Removing\nContainer ac-docker-test-e091554578-postgres-1  Removed\nVolume ac-docker-test-e091554578_runtime_secrets  Removing\nVolume ac-docker-test-e091554578_agent_corporation_postgres  Removing\nVolume ac-docker-test-e091554578_database_secrets  Removing\nVolume ac-docker-test-e091554578_artifacts  Removing\nNetwork ac-docker-test-e091554578_default  Removing\nVolume ac-docker-test-e091554578_agent_corporation_postgres  Removed\nVolume ac-docker-test-e091554578_database_secrets  Removed\nVolume ac-docker-test-e091554578_runtime_secrets  Removed\nVolume ac-docker-test-e091554578_artifacts  Removed\nNetwork ac-docker-test-e091554578_default  Removed\n",
+    "remaining_labeled_containers": [],
+    "removed_images": [
+      {
+        "exit_code": 0,
+        "result": "Untagged: ac-docker-test-e091554578-api:isolated\nDeleted: sha256:4ea805ce7a206dbf0bba30f93ad51f967b2932733a5fbf999162b1502e4ff27f",
+        "tag": "ac-docker-test-e091554578-api:isolated"
+      },
+      {
+        "exit_code": 0,
+        "result": "Untagged: ac-docker-test-e091554578-web:isolated\nDeleted: sha256:6c9af5bbcb82cc1452e66a8a4ac8d19cf6c2a9c15debadfa288d6c0fba8e30bb",
+        "tag": "ac-docker-test-e091554578-web:isolated"
+      }
+    ],
+    "status": "complete"
+  },
+  "commands": [
+    {
+      "args": [
+        "build",
+        "bootstrap",
+        "migrate",
+        "api",
+        "web"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:09:41.260865+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 6953
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "C\u1ea5u h\u00ecnh/Owner \u0111\u00e3 s\u1eb5n s\u00e0ng; gi\u1eef credential \u0111\u00e3 c\u00f3, kh\u00f4ng hi\u1ec3n th\u1ecb secret.\nNetwork ac-docker-test-e091554578_default  Creating\nNetwork ac-docker-test-e091554578_default  Created\nVolume \"ac-docker-test-e091554578_agent_corporation_postgres\"  Creating\nVolume \"ac-docker-test-e091554578_agent_corporation_postgres\"  Created\nVolume \"ac-docker-test-e091554578_database_secrets\"  Creating\nVolume \"ac-docker-test-e091554578_database_secrets\"  Created\nVolume \"ac-docker-test-e091554578_runtime_secrets\"  Creating\nVolume \"ac-docker-test-e091554578_runtime_secrets\"  Created\nVolume \"ac-docker-test-e091554578_artifacts\"  Creating\nVolume \"ac-docker-test-e091554578_artifacts\"  Created\n",
+      "started_at_utc": "2026-10-20T09:09:42.632225+00:00",
+      "stderr_chars": 599,
+      "stdout_chars": 73
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap",
+        "python",
+        "-c",
+        "import json,os; from pathlib import Path; from agent_corporation_api.modules.execution.gates import FILES,gateway_fingerprint; root=Path('/runtime-secrets/test-gateway'); root.mkdir(exist_ok=True); [(root/name).parent.mkdir(parents=True,exist_ok=True) for name in FILES]; [(root/name).write_text('synthetic gateway fixture') for name in FILES]; proof={'gateway_base_url':'http://host.docker.internal:15600','gateway_transport':'docker-host','expires_at':'2000-01-01T00:00:00+00:00','gateway_fingerprint':gateway_fingerprint(root),'evidence_refs':['synthetic-expired-fixture'],'isolation_verified':True,'privacy_retention_verified':True,'cancellation_verified':True}; p=Path('/runtime-secrets/cg01-proof.json'); p.write_text(json.dumps(proof)); p.chmod(0o600); os.chown(p,1000,1000)"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "",
+      "started_at_utc": "2026-10-20T09:09:43.645233+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "C\u1ea5u h\u00ecnh/Owner \u0111\u00e3 s\u1eb5n s\u00e0ng; gi\u1eef credential \u0111\u00e3 c\u00f3, kh\u00f4ng hi\u1ec3n th\u1ecb secret.\n",
+      "started_at_utc": "2026-10-20T09:09:44.550508+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 73
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "api",
+        "python",
+        "-c",
+        "from pathlib import Path; from agent_corporation_api.modules.execution.gates import check_gate; p=Path('/runtime-secrets/cg01-proof.json'); assert p.exists(); print(check_gate(p,Path('/runtime-secrets/test-gateway'),base_url='http://host.docker.internal:15600',transport_mode='docker-host')['reason'])"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "expired_metadata\n",
+      "started_at_utc": "2026-10-20T09:09:45.620025+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 17
+    },
+    {
+      "args": [
+        "up",
+        "-d",
+        "--wait",
+        "postgres"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:09:46.530943+00:00",
+      "stderr_chars": 338,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "migrate"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.migration] Running upgrade  -> 20261008_0001, Establish the empty Phase 01 schema baseline.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0001 -> 20261008_0002, Create scoped business, execution-state, event and outbox schema.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0002 -> 20261008_0003, Allow app role to reset only the fixed, release-locked demo scope.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0003 -> 20261009_0004, Durable local Owner session and immutable audit-backed model profile baseline.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0004 -> 20261009_0005, Durable bounded runtime, scoped grants and model call ledger.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0005 -> 20261009_0006, Immutable adapter-sourced late usage; does not reactivate grants or unknown calls.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0006 -> 20261009_0007, Add scoped persistent task queue and immutable command receipts.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261014_0008, Add reviewable, scoped approval payloads and one-time decision receipts.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261011_0008, Add fenced leases to the durable Work Order queue.\nINFO  [alembic.runtime.migration] Running upgrade 20261011_0008, 20261014_0008 -> 20261014_0009, Development Playground; isolated from Work Orders. Merge existing migration heads.\nINFO  [alembic.runtime.migration] Running upgrade 20261014_0009 -> 20261020_0010, Append-only Owner reconciliation notes for uncertain Runtime calls.\n",
+      "started_at_utc": "2026-10-20T09:09:50.826436+00:00",
+      "stderr_chars": 1775,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "api",
+        "python",
+        "-c",
+        "from agent_corporation_api.database import missing_schema_elements,REQUIRED_SCHEMA_COLUMNS\nfrom agent_corporation_api.settings import get_settings\nfrom sqlalchemy import create_engine,text\ns=get_settings(); e=create_engine(s.database_url); c=e.connect()\nprint('database='+c.execute(text('select current_database()')).scalar_one())\nprint('role='+c.execute(text('select current_user')).scalar_one())\nquery=\"select relation.relname,attribute.attname from pg_catalog.pg_class relation join pg_catalog.pg_namespace schema on schema.oid=relation.relnamespace join pg_catalog.pg_attribute attribute on attribute.attrelid=relation.oid where schema.nspname='public' and relation.relkind in ('r','p') and attribute.attnum>0 and not attribute.attisdropped and relation.relname=any(:tables)\"\nrows=c.execute(text(query),{'tables':list(REQUIRED_SCHEMA_COLUMNS)}).all()\nactual={}\nfor table,column in rows: actual.setdefault(table,set()).add(column)\nprint('missing='+str(missing_schema_elements(actual)))\nc.close(); e.dispose()"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "database=agent_corporation\nrole=agent_corporation_app\nmissing=['column:runtime_runs.employee_version_id']\n",
+      "started_at_utc": "2026-10-20T09:09:52.864311+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 106
+    },
+    {
+      "args": [
+        "up",
+        "-d",
+        "--wait",
+        "api",
+        "web"
+      ],
+      "exit_code": 1,
+      "started_at_utc": "2026-10-20T09:09:55.283279+00:00",
+      "stderr_chars": 644,
+      "stdout_chars": 0
+    }
+  ],
+  "completed_at_utc": "2026-10-20T09:10:00.204666+00:00",
+  "failure": {
+    "command": [
+      "up",
+      "-d",
+      "--wait",
+      "api",
+      "web"
+    ],
+    "exit_code": 1
+  },
+  "preflight": {
+    "budget_blockers": [],
+    "budget_passed": true,
+    "classification": "CAPACITY_CONFIRMED",
+    "diagnostics": {
+      "docker_vm_probe": {
+        "cgroup_memory_max_bytes": 67108864,
+        "cleanup_remaining_by_label": "",
+        "cleanup_verified": true,
+        "completed_at_utc": "2026-10-20T09:09:41.052276+00:00",
+        "constraints": {
+          "capabilities_dropped": "ALL",
+          "cpus": 0.25,
+          "memory_limit_bytes": 67108864,
+          "memory_swap_limit_bytes": 67108864,
+          "mounts": [],
+          "network": "none",
+          "pids_limit": 16,
+          "read_only_rootfs": true,
+          "timeout_seconds": 8,
+          "user": "65534:65534"
+        },
+        "container_id": "7529c31876cd064fbff937803e74c348dc81337ddc04c495f9d8b23856b89d44",
+        "container_name": "ac-vm-mem-probe-8a81f274fa7f",
+        "image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+        "image_preexisting": true,
+        "meminfo_values": {
+          "MemAvailable_bytes": 5277704192,
+          "MemFree_bytes": 1053880320,
+          "MemTotal_bytes": 8337670144,
+          "SwapFree_bytes": 1029615616,
+          "SwapTotal_bytes": 1073737728
+        },
+        "memory_pressure": "UNSUPPORTED",
+        "observed_at_utc": "2026-10-20T09:09:40.910732+00:00",
+        "observed_host_config": {
+          "Binds": null,
+          "Memory": 67108864,
+          "MemorySwap": 67108864,
+          "NanoCpus": 250000000,
+          "NetworkMode": "none",
+          "PidsLimit": 16,
+          "ReadonlyRootfs": true
+        },
+        "probe_elapsed_seconds": 0.605,
+        "probe_id": "8a81f274fa7f",
+        "raw_probe_output": "VM_MEMINFO_BEGIN\nMemTotal:        8142256 kB\nMemFree:         1029180 kB\nMemAvailable:    5154008 kB\nBuffers:          247272 kB\nCached:          3928704 kB\nSwapCached:         2944 kB\nActive:          3173184 kB\nInactive:        3255044 kB\nActive(anon):      91852 kB\nInactive(anon):  2497996 kB\nActive(file):    3081332 kB\nInactive(file):   757048 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       1048572 kB\nSwapFree:        1005484 kB\nDirty:               180 kB\nWriteback:             0 kB\nAnonPages:       2247536 kB\nMapped:           464972 kB\nShmem:            337596 kB\nKReclaimable:     501852 kB\nSlab:             572200 kB\nSReclaimable:     501852 kB\nSUnreclaim:        70348 kB\nKernelStack:       13948 kB\nPageTables:        20728 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     5119700 kB\nCommitted_AS:    9998516 kB\nVmallocTotal:   133143592960 kB\nVmallocUsed:       18876 kB\nVmallocChunk:          0 kB\nPercpu:             2832 kB\nAnonHugePages:     10240 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nVM_PRESSURE_BEGIN\nUNSUPPORTED\nCGROUP_MEMORY_MAX_BEGIN\n67108864",
+        "started_at_utc": "2026-10-20T09:09:40.037774+00:00",
+        "vm_total_consistency": {
+          "delta_bytes": 0,
+          "meminfo_scope_proven_outside_probe_cgroup": true,
+          "proc_memtotal_matches_engine_within_5_percent": true
+        }
+      }
+    },
+    "measurements": {
+      "docker_engine_cpus": 4,
+      "docker_engine_memory_total_bytes": 8337670144,
+      "docker_engine_observed_at_utc": "2026-10-20T09:09:39.377625+00:00",
+      "docker_engine_source": "Docker Engine info (VM capacity, not available memory)",
+      "docker_vm_memory_available": {
+        "available_bytes": 5277704192,
+        "observed_at_utc": "2026-10-20T09:09:40.910732+00:00",
+        "scope": "docker-desktop-vm",
+        "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+        "verified": true
+      },
+      "host_filesystem_free_bytes": 93421924352,
+      "host_filesystem_observed_at_utc": "2026-10-20T09:09:39.377625+00:00",
+      "host_filesystem_source": "shutil.disk_usage on test runner filesystem"
+    },
+    "memory_available_bytes": 5277704192,
+    "memory_measurements": [
+      {
+        "available_bytes": 5277704192,
+        "observed_at_utc": "2026-10-20T09:09:40.910732+00:00",
+        "scope": "docker-desktop-vm",
+        "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+        "verified": true
+      }
+    ]
+  },
+  "project": "ac-docker-test-e091554578",
+  "smoke_checks": "pending",
+  "started_at_utc": "2026-10-20T09:09:39.377506+00:00",
+  "status": "incomplete"
+}

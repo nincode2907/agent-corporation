@@ -1,0 +1,10 @@
+Network ac-pgtest-a95071acf119_isolated  Creating
+Network ac-pgtest-a95071acf119_isolated  Created
+Volume "ac-pgtest-a95071acf119_test_pgdata"  Creating
+Volume "ac-pgtest-a95071acf119_test_pgdata"  Created
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Creating
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Created
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Starting
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Started
+Container ac-pgtest-a95071acf119-isolated-postgres-1  Waiting
+container for service "isolated-postgres" exited (1)

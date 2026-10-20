@@ -74,6 +74,19 @@ def test_existing_database_without_its_credentials_is_blocked(initializer):
     assert not (paths[2] / "state.json").exists()
 
 
+def test_initialize_never_installs_or_removes_runtime_cg01_proof(initializer):
+    module, paths = initializer
+    operator, runtime, _, _ = paths
+    proof = runtime / "cg01-proof.json"
+    original = b'{"expires_at":"2000-01-01T00:00:00+00:00","fixture":"stale"}'
+    proof.write_bytes(original)
+    proof.chmod(0o600)
+    module.initialize(*paths)
+    assert proof.read_bytes() == original
+    assert proof.stat().st_mode & 0o777 == 0o600
+    assert not (operator / ".local" / "cg01-proof.json").exists()
+
+
 def test_docker_settings_reads_private_json_and_environment_overrides(monkeypatch, tmp_path):
     config = tmp_path / "app.json"
     config.write_text(json.dumps({"database_url": "postgresql+psycopg://fixture@postgres/db", "app_database_password": "fixture"}))

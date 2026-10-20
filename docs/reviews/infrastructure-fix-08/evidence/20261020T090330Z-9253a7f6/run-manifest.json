@@ -1,0 +1,197 @@
+{
+  "cleanup": {
+    "command_exit_code": 0,
+    "isolated_image_remove_exit_code": 0,
+    "isolated_image_remove_tail": "Untagged: ac-pgtest-a0f60903031d-api-tests:isolated\nDeleted: sha256:3cff17e3002c4054ec483f5bc629433f26c6f996a2935de80dc9d027986a2359\n",
+    "resources_after": {
+      "containers": [],
+      "images": [],
+      "networks": [],
+      "volumes": []
+    },
+    "resources_before": {
+      "containers": [
+        "df0851e318d9"
+      ],
+      "images": [
+        "3cff17e3002c"
+      ],
+      "networks": [
+        "1a30f8d02769"
+      ],
+      "volumes": [
+        "ac-pgtest-a0f60903031d_test_pgdata"
+      ]
+    },
+    "status": "complete",
+    "tail": "Container ac-pgtest-a0f60903031d-isolated-postgres-1  Stopping\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Stopping\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Stopped\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Removing\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Removed\nVolume ac-pgtest-a0f60903031d_test_pgdata  Removing\nNetwork ac-pgtest-a0f60903031d_isolated  Removing\nNetwork ac-pgtest-a0f60903031d_isolated  Removed\nVolume ac-pgtest-a0f60903031d_test_pgdata  Removed\n"
+  },
+  "commands": {
+    "database_probe": {
+      "exit_code": 0,
+      "tail": "database=ac_pgtest_b33532d7fe5842b2 role=ac_pgtest_b33532d7fe5842b2 employee_versions_select=True\n"
+    },
+    "database_provision": {
+      "exit_code": 0,
+      "tail": "#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 32B done\n#1 DONE 0.0s\n\n#2 [internal] load .dockerignore\n#2 transferring context: 35B done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#3 DONE 0.0s\n\n#4 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#4 DONE 0.0s\n\n#5 [internal] load build context\n#5 transferring context: 33.47kB 0.0s done\n#5 DONE 0.0s\n\n#6 [build 2/5] WORKDIR /app\n#6 CACHED\n\n#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/\n#7 CACHED\n\n#8 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23\n#8 CACHED\n\n#9 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python\n#9 CACHED\n\n#10 [test 1/4] RUN uv sync --project apps/api --locked --no-install-project --no-managed-python\n#10 CACHED\n\n#11 [test 2/4] COPY apps/api apps/api\n#11 DONE 0.0s\n\n#12 [test 3/4] COPY scripts scripts\n#12 DONE 0.4s\n\n#13 [test 4/4] COPY compose.test.yml compose.test.yml\n#13 DONE 0.0s\n\n#14 exporting to image\n#14 exporting layers 0.1s done\n#14 writing image sha256:3cff17e3002c4054ec483f5bc629433f26c6f996a2935de80dc9d027986a2359 done\n#14 naming to docker.io/library/ac-pgtest-a0f60903031d-api-tests:isolated done\n#14 DONE 0.1s\nDisposable role/database created inside isolated network\n"
+    },
+    "migration": {
+      "exit_code": 0,
+      "tail": "#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 32B done\n#1 DONE 0.0s\n\n#2 [internal] load .dockerignore\n#2 transferring context: 35B done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#3 DONE 0.0s\n\n#4 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#4 DONE 0.0s\n\n#5 [internal] load build context\n#5 transferring context: 10.39kB done\n#5 DONE 0.0s\n\n#6 [build 2/5] WORKDIR /app\n#6 CACHED\n\n#7 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python\n#7 CACHED\n\n#8 [test 3/4] COPY scripts scripts\n#8 CACHED\n\n#9 [test 1/4] RUN uv sync --project apps/api --locked --no-install-project --no-managed-python\n#9 CACHED\n\n#10 [test 2/4] COPY apps/api apps/api\n#10 CACHED\n\n#11 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23\n#11 CACHED\n\n#12 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/\n#12 CACHED\n\n#13 [test 4/4] COPY compose.test.yml compose.test.yml\n#13 CACHED\n\n#14 exporting to image\n#14 exporting layers done\n#14 writing image sha256:3cff17e3002c4054ec483f5bc629433f26c6f996a2935de80dc9d027986a2359 done\n#14 naming to docker.io/library/ac-pgtest-a0f60903031d-api-tests:isolated done\n#14 DONE 0.0s\nINFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.migration] Running upgrade  -> 20261008_0001, Establish the empty Phase 01 schema baseline.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0001 -> 20261008_0002, Create scoped business, execution-state, event and outbox schema.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0002 -> 20261008_0003, Allow app role to reset only the fixed, release-locked demo scope.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0003 -> 20261009_0004, Durable local Owner session and immutable audit-backed model profile baseline.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0004 -> 20261009_0005, Durable bounded runtime, scoped grants and model call ledger.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0005 -> 20261009_0006, Immutable adapter-sourced late usage; does not reactivate grants or unknown calls.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0006 -> 20261009_0007, Add scoped persistent task queue and immutable command receipts.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261014_0008, Add reviewable, scoped approval payloads and one-time decision receipts.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261011_0008, Add fenced leases to the durable Work Order queue.\nINFO  [alembic.runtime.migration] Running upgrade 20261011_0008, 20261014_0008 -> 20261014_0009, Development Playground; isolated from Work Orders. Merge existing migration heads.\nINFO  [alembic.runtime.migration] Running upgrade 20261014_0009 -> 20261020_0010, Append-only Owner reconciliation notes for uncertain Runtime calls.\n"
+    },
+    "postgres_start": {
+      "exit_code": 0,
+      "tail": "Network ac-pgtest-a0f60903031d_isolated  Creating\nNetwork ac-pgtest-a0f60903031d_isolated  Created\nVolume \"ac-pgtest-a0f60903031d_test_pgdata\"  Creating\nVolume \"ac-pgtest-a0f60903031d_test_pgdata\"  Created\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Creating\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Created\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Starting\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Started\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Waiting\nContainer ac-pgtest-a0f60903031d-isolated-postgres-1  Healthy\n"
+    }
+  },
+  "completed_at_utc": "2026-10-20T09:04:19.469565+00:00",
+  "compose_project": "ac-pgtest-a0f60903031d",
+  "database_probe": {
+    "connection_scope": "isolated Compose network only",
+    "database": "ac_pgtest_b33532d7fe5842b2",
+    "employee_versions_select": true,
+    "role": "ac_pgtest_b33532d7fe5842b2"
+  },
+  "infrastructure_and_tests_complete": true,
+  "network_isolation_note": "Separate PostgreSQL container/project limits database coupling, not Docker VM-level failure risk.",
+  "resources": {
+    "postgres_volume_before_tests": {
+      "available_bytes": 34057564160,
+      "df_line": "/dev/vda1             76580740  39398816  33259340  54% /etc/resolv.conf",
+      "limits": {
+        "cpus": 0.75,
+        "memory": "512m",
+        "memory_plus_swap": "768m",
+        "pids": 96
+      }
+    },
+    "preflight": {
+      "budget_blockers": [],
+      "budget_passed": true,
+      "classification": "CAPACITY_CONFIRMED",
+      "diagnostics": {
+        "docker_vm_probe": {
+          "cgroup_memory_max_bytes": 67108864,
+          "cleanup_remaining_by_label": "",
+          "cleanup_verified": true,
+          "completed_at_utc": "2026-10-20T09:03:31.718854+00:00",
+          "constraints": {
+            "capabilities_dropped": "ALL",
+            "cpus": 0.25,
+            "memory_limit_bytes": 67108864,
+            "memory_swap_limit_bytes": 67108864,
+            "mounts": [],
+            "network": "none",
+            "pids_limit": 16,
+            "read_only_rootfs": true,
+            "timeout_seconds": 8,
+            "user": "65534:65534"
+          },
+          "container_id": "704671dcc91b8e35e9dbed33dbfdb187b859f00532a7753cb9fe593e1212e25f",
+          "container_name": "ac-vm-mem-probe-b2513040bdb4",
+          "image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+          "image_preexisting": true,
+          "meminfo_values": {
+            "MemAvailable_bytes": 5273440256,
+            "MemFree_bytes": 1131937792,
+            "MemTotal_bytes": 8337670144,
+            "SwapFree_bytes": 1029615616,
+            "SwapTotal_bytes": 1073737728
+          },
+          "memory_pressure": "UNSUPPORTED",
+          "observed_at_utc": "2026-10-20T09:03:31.511605+00:00",
+          "observed_host_config": {
+            "Binds": null,
+            "Memory": 67108864,
+            "MemorySwap": 67108864,
+            "NanoCpus": 250000000,
+            "NetworkMode": "none",
+            "PidsLimit": 16,
+            "ReadonlyRootfs": true
+          },
+          "probe_elapsed_seconds": 0.523,
+          "probe_id": "b2513040bdb4",
+          "raw_probe_output": "VM_MEMINFO_BEGIN\nMemTotal:        8142256 kB\nMemFree:         1105408 kB\nMemAvailable:    5149844 kB\nBuffers:          222408 kB\nCached:          3874396 kB\nSwapCached:         2944 kB\nActive:          3028128 kB\nInactive:        3330480 kB\nActive(anon):      89188 kB\nInactive(anon):  2506368 kB\nActive(file):    2938940 kB\nInactive(file):   824112 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       1048572 kB\nSwapFree:        1005484 kB\nDirty:               108 kB\nWriteback:             0 kB\nAnonPages:       2257220 kB\nMapped:           480464 kB\nShmem:            333752 kB\nKReclaimable:     496788 kB\nSlab:             565764 kB\nSReclaimable:     496788 kB\nSUnreclaim:        68976 kB\nKernelStack:       14040 kB\nPageTables:        20980 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     5119700 kB\nCommitted_AS:   10173932 kB\nVmallocTotal:   133143592960 kB\nVmallocUsed:       18724 kB\nVmallocChunk:          0 kB\nPercpu:             2688 kB\nAnonHugePages:     10240 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nVM_PRESSURE_BEGIN\nUNSUPPORTED\nCGROUP_MEMORY_MAX_BEGIN\n67108864",
+          "started_at_utc": "2026-10-20T09:03:30.696050+00:00",
+          "vm_total_consistency": {
+            "delta_bytes": 0,
+            "meminfo_scope_proven_outside_probe_cgroup": true,
+            "proc_memtotal_matches_engine_within_5_percent": true
+          }
+        }
+      },
+      "measurements": {
+        "docker_engine_cpus": 4,
+        "docker_engine_memory_total_bytes": 8337670144,
+        "docker_engine_observed_at_utc": "2026-10-20T09:03:30.010153+00:00",
+        "docker_engine_source": "Docker Engine info (VM capacity, not available memory)",
+        "docker_vm_memory_available": {
+          "available_bytes": 5273440256,
+          "observed_at_utc": "2026-10-20T09:03:31.511605+00:00",
+          "scope": "docker-desktop-vm",
+          "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+          "verified": true
+        },
+        "host_filesystem_free_bytes": 94514614272,
+        "host_filesystem_observed_at_utc": "2026-10-20T09:03:30.010153+00:00",
+        "host_filesystem_source": "shutil.disk_usage on test runner filesystem"
+      },
+      "memory_available_bytes": 5273440256,
+      "memory_measurements": [
+        {
+          "available_bytes": 5273440256,
+          "observed_at_utc": "2026-10-20T09:03:31.511605+00:00",
+          "scope": "docker-desktop-vm",
+          "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+          "verified": true
+        }
+      ]
+    },
+    "project_inventory_before_tests": {
+      "containers": [
+        "df0851e318d9"
+      ],
+      "images": [
+        "3cff17e3002c"
+      ],
+      "networks": [
+        "1a30f8d02769"
+      ],
+      "volumes": [
+        "ac-pgtest-a0f60903031d_test_pgdata"
+      ]
+    }
+  },
+  "run_id": "20261020T090330Z-9253a7f6",
+  "started_at_utc": "2026-10-20T09:03:30.007709+00:00",
+  "status": "passed",
+  "test": {
+    "executed": true,
+    "exit_code": 0,
+    "summary": {
+      "errors": 0,
+      "failed": 0,
+      "passed": 278,
+      "skipped": 1,
+      "summary_line": "278 passed, 1 skipped, 1 warning in 24.82s",
+      "warnings": 1
+    },
+    "tail": "........................................................................ [ 25%]\n...s.................................................................... [ 51%]\n........................................................................ [ 77%]\n...............................................................          [100%]\n=============================== warnings summary ===============================\napps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1\n  /app/apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] apps/api/tests/test_owner_auth.py:50: Windows ACL contract\n278 passed, 1 skipped, 1 warning in 24.82s\n",
+    "warning_lines": [
+      "=============================== warnings summary ===============================",
+      "/app/apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.",
+      "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+      "278 passed, 1 skipped, 1 warning in 24.82s"
+    ],
+    "warnings": 1
+  },
+  "test_target": {
+    "admin_user": "ac_admin_c9b16da9",
+    "database": "ac_pgtest_b33532d7fe5842b2",
+    "host": "isolated-postgres",
+    "host_port_published": false,
+    "passwords_recorded": false,
+    "port": 5432,
+    "role": "ac_pgtest_b33532d7fe5842b2"
+  }
+}

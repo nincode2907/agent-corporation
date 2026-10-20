@@ -1,0 +1,212 @@
+......................................................................F. [ 25%]
+...s.................................................................... [ 51%]
+..............ss........................................................ [ 77%]
+......................................F.................F......          [100%]
+=================================== FAILURES ===================================
+______ test_postgres18_test_volume_mount_matches_versioned_pgdata_parent _______
+
+    def test_postgres18_test_volume_mount_matches_versioned_pgdata_parent():
+>       compose = (Path(__file__).resolve().parents[3] / "compose.test.yml").read_text()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps/api/tests/test_isolated_runner_guards.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.14/pathlib/__init__.py:787: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/app/compose.test.yml'), mode = 'r', buffering = -1
+encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/app/compose.test.yml'
+
+/usr/local/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError
+________________ test_managed_worker_starts_and_stops_with_api _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xffff99625630>
+
+    def test_managed_worker_starts_and_stops_with_api(monkeypatch):
+        observed = []
+        async def fake():
+            observed.append('start')
+            try:
+                await asyncio.Event().wait()
+            finally:
+                observed.append('stop')
+        monkeypatch.setenv('PLAYGROUND_WORKER_ENABLED', 'true')
+        monkeypatch.setattr(worker, 'supervise', fake)
+>       with TestClient(app) as client:
+             ^^^^^^^^^^^^^^^
+
+apps/api/tests/test_playground.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+apps/api/.venv/lib/python3.14/site-packages/starlette/testclient.py:517: in __enter__
+    portal.call(self.wait_startup)
+apps/api/.venv/lib/python3.14/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/concurrent/futures/_base.py:454: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/concurrent/futures/_base.py:396: in __get_result
+    raise self._exception
+apps/api/.venv/lib/python3.14/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/starlette/testclient.py:552: in wait_startup
+    await receive()
+apps/api/.venv/lib/python3.14/site-packages/starlette/testclient.py:543: in receive
+    self.task.result()
+/usr/local/lib/python3.14/concurrent/futures/_base.py:447: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/concurrent/futures/_base.py:396: in __get_result
+    raise self._exception
+apps/api/.venv/lib/python3.14/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/starlette/testclient.py:533: in lifespan
+    await self.app(scope, self.stream_receive.receive, self.stream_send.send)
+apps/api/.venv/lib/python3.14/site-packages/fastapi/applications.py:1202: in __call__
+    await lifespan(
+apps/api/.venv/lib/python3.14/site-packages/fastapi/telemetry/_runtime.py:238: in lifespan
+    await app(scope, wrapped_receive, wrapped_send)
+apps/api/.venv/lib/python3.14/site-packages/starlette/applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py:151: in __call__
+    await self.app(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/starlette/middleware/base.py:103: in __call__
+    await self.app(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py:49: in __call__
+    await self.app(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/starlette/routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:2773: in app
+    await self.lifespan(scope, receive, send)
+apps/api/.venv/lib/python3.14/site-packages/starlette/routing.py:654: in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/.venv/lib/python3.14/site-packages/fastapi/routing.py:247: in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+               ^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.14/contextlib.py:214: in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+apps/api/src/agent_corporation_api/main.py:23: in lifespan
+    settings = validate_runtime_startup()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def validate_runtime_startup():
+        """Validate configuration and required schema without running migrations."""
+        try:
+            settings = get_settings()
+        except Exception:
+            raise RuntimeError("Agent Corporation API startup blocked: runtime configuration is missing or invalid.") from None
+        try:
+            database_is_ready()
+        except DatabaseSchemaError:
+>           raise RuntimeError(
+                "Agent Corporation API startup blocked: required database schema is missing or incompatible; "
+                "run the documented explicit migration procedure."
+            ) from None
+E           RuntimeError: Agent Corporation API startup blocked: required database schema is missing or incompatible; run the documented explicit migration procedure.
+
+apps/api/src/agent_corporation_api/main.py:101: RuntimeError
+________ test_worker_database_failure_halts_without_sensitive_traceback ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xffff93f411d0>
+capsys = <_pytest.capture.CaptureFixture object at 0xffff92735d30>
+
+    def test_worker_database_failure_halts_without_sensitive_traceback(monkeypatch, capsys):
+        import sys
+        import pytest
+        from sqlalchemy.exc import StatementError
+        from agent_corporation_api.modules.execution import worker
+    
+        canary = "PRIVATE-WORKER-DB-CANARY"
+        async def fail(*_args, **_kwargs):
+            raise StatementError("database failure", "INSERT private_history", {"input": canary}, Exception(canary))
+        monkeypatch.setattr(worker, "work", fail)
+        monkeypatch.setattr(sys, "argv", ["worker", "--environment", "00000000-0000-0000-0000-000000000001", "--company", "00000000-0000-0000-0000-000000000002", "--once"])
+        with pytest.raises(SystemExit) as error:
+            worker.main()
+        assert error.value.code == 1
+        captured = capsys.readouterr()
+        assert canary not in captured.err + captured.out
+>       assert "không phát lại call" in captured.err
+E       AssertionError: assert 'không phát lại call' in 'Schema PostgreSQL thiếu hoặc không tương thích; chạy quy trình migration tường minh.\n'
+E        +  where 'Schema PostgreSQL thiếu hoặc không tương thích; chạy quy trình migration tường minh.\n' = CaptureResult(out='', err='Schema PostgreSQL thiếu hoặc không tương thích; chạy quy trình migration tường minh.\n').err
+
+apps/api/tests/test_sensitive_validation.py:57: AssertionError
+=============================== warnings summary ===============================
+apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /app/apps/api/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED apps/api/tests/test_isolated_runner_guards.py::test_postgres18_test_volume_mount_matches_versioned_pgdata_parent
+FAILED apps/api/tests/test_playground.py::test_managed_worker_starts_and_stops_with_api
+FAILED apps/api/tests/test_sensitive_validation.py::test_worker_database_failure_halts_without_sensitive_traceback
+3 failed, 273 passed, 3 skipped, 1 warning in 25.65s

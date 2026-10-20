@@ -1,0 +1,213 @@
+{
+  "cleanup": {
+    "compose_down_exit_code": 0,
+    "compose_down_tail": "Container ac-docker-test-cbca60a208-web-1  Stopping\nContainer ac-docker-test-cbca60a208-web-1  Stopping\nContainer ac-docker-test-cbca60a208-web-1  Stopped\nContainer ac-docker-test-cbca60a208-web-1  Removing\nContainer ac-docker-test-cbca60a208-web-1  Removed\nContainer ac-docker-test-cbca60a208-api-1  Stopping\nContainer ac-docker-test-cbca60a208-api-1  Stopping\nContainer ac-docker-test-cbca60a208-api-1  Stopped\nContainer ac-docker-test-cbca60a208-api-1  Removing\nContainer ac-docker-test-cbca60a208-api-1  Removed\nContainer ac-docker-test-cbca60a208-postgres-1  Stopping\nContainer ac-docker-test-cbca60a208-postgres-1  Stopping\nContainer ac-docker-test-cbca60a208-postgres-1  Stopped\nContainer ac-docker-test-cbca60a208-postgres-1  Removing\nContainer ac-docker-test-cbca60a208-postgres-1  Removed\nVolume ac-docker-test-cbca60a208_agent_corporation_postgres  Removing\nVolume ac-docker-test-cbca60a208_runtime_secrets  Removing\nVolume ac-docker-test-cbca60a208_artifacts  Removing\nVolume ac-docker-test-cbca60a208_database_secrets  Removing\nNetwork ac-docker-test-cbca60a208_default  Removing\nVolume ac-docker-test-cbca60a208_database_secrets  Removed\nVolume ac-docker-test-cbca60a208_runtime_secrets  Removed\nVolume ac-docker-test-cbca60a208_agent_corporation_postgres  Removed\nVolume ac-docker-test-cbca60a208_artifacts  Removed\nNetwork ac-docker-test-cbca60a208_default  Removed\n",
+    "remaining_labeled_containers": [],
+    "removed_images": [
+      {
+        "exit_code": 0,
+        "result": "Untagged: ac-docker-test-cbca60a208-api:isolated\nDeleted: sha256:f1d1a8b62d9152fbe493c4549003d2ae036edfb1462c8b8732b34af150a55913",
+        "tag": "ac-docker-test-cbca60a208-api:isolated"
+      },
+      {
+        "exit_code": 0,
+        "result": "Untagged: ac-docker-test-cbca60a208-web:isolated\nDeleted: sha256:bd6c6a1b30d4a5c13331e20572ab2f04caff6d149c458f0bf8c81d95d4e6130b",
+        "tag": "ac-docker-test-cbca60a208-web:isolated"
+      }
+    ],
+    "status": "complete"
+  },
+  "commands": [
+    {
+      "args": [
+        "build",
+        "bootstrap",
+        "migrate",
+        "api",
+        "web"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:19.569795+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 6967
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:21.073722+00:00",
+      "stderr_chars": 599,
+      "stdout_chars": 73
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap",
+        "python",
+        "-c",
+        "import json,os; from pathlib import Path; from agent_corporation_api.modules.execution.gates import FILES,gateway_fingerprint; root=Path('/runtime-secrets/test-gateway'); root.mkdir(exist_ok=True); [(root/name).parent.mkdir(parents=True,exist_ok=True) for name in FILES]; [(root/name).write_text('synthetic gateway fixture') for name in FILES]; proof={'gateway_base_url':'http://host.docker.internal:15600','gateway_transport':'docker-host','expires_at':'2000-01-01T00:00:00+00:00','gateway_fingerprint':gateway_fingerprint(root),'evidence_refs':['synthetic-expired-fixture'],'isolation_verified':True,'privacy_retention_verified':True,'cancellation_verified':True}; p=Path('/runtime-secrets/cg01-proof.json'); p.write_text(json.dumps(proof)); p.chmod(0o600); os.chown(p,1000,1000)"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:22.697716+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:24.397896+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 73
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "api",
+        "python",
+        "-c",
+        "from pathlib import Path; from agent_corporation_api.modules.execution.gates import check_gate; p=Path('/runtime-secrets/cg01-proof.json'); assert p.exists(); print(check_gate(p,Path('/runtime-secrets/test-gateway'),base_url='http://host.docker.internal:15600',transport_mode='docker-host')['reason'])"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:27.546259+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 17
+    },
+    {
+      "args": [
+        "up",
+        "-d",
+        "--wait",
+        "postgres"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:28.714406+00:00",
+      "stderr_chars": 338,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "migrate"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:06:33.748345+00:00",
+      "stderr_chars": 1775,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "up",
+        "-d",
+        "--wait",
+        "api",
+        "web"
+      ],
+      "exit_code": 1,
+      "started_at_utc": "2026-10-20T09:06:36.246888+00:00",
+      "stderr_chars": 644,
+      "stdout_chars": 0
+    }
+  ],
+  "completed_at_utc": "2026-10-20T09:06:43.116937+00:00",
+  "preflight": {
+    "budget_blockers": [],
+    "budget_passed": true,
+    "classification": "CAPACITY_CONFIRMED",
+    "diagnostics": {
+      "docker_vm_probe": {
+        "cgroup_memory_max_bytes": 67108864,
+        "cleanup_remaining_by_label": "",
+        "cleanup_verified": true,
+        "completed_at_utc": "2026-10-20T09:06:19.157877+00:00",
+        "constraints": {
+          "capabilities_dropped": "ALL",
+          "cpus": 0.25,
+          "memory_limit_bytes": 67108864,
+          "memory_swap_limit_bytes": 67108864,
+          "mounts": [],
+          "network": "none",
+          "pids_limit": 16,
+          "read_only_rootfs": true,
+          "timeout_seconds": 8,
+          "user": "65534:65534"
+        },
+        "container_id": "2191c65c947dd56920d94779d5ad9909b4f2fb28133e638ac23f1ac80f31c6d1",
+        "container_name": "ac-vm-mem-probe-45b881744e4e",
+        "image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+        "image_preexisting": true,
+        "meminfo_values": {
+          "MemAvailable_bytes": 5281374208,
+          "MemFree_bytes": 1074712576,
+          "MemTotal_bytes": 8337670144,
+          "SwapFree_bytes": 1029615616,
+          "SwapTotal_bytes": 1073737728
+        },
+        "memory_pressure": "UNSUPPORTED",
+        "observed_at_utc": "2026-10-20T09:06:18.985819+00:00",
+        "observed_host_config": {
+          "Binds": null,
+          "Memory": 67108864,
+          "MemorySwap": 67108864,
+          "NanoCpus": 250000000,
+          "NetworkMode": "none",
+          "PidsLimit": 16,
+          "ReadonlyRootfs": true
+        },
+        "probe_elapsed_seconds": 0.455,
+        "probe_id": "45b881744e4e",
+        "raw_probe_output": "VM_MEMINFO_BEGIN\nMemTotal:        8142256 kB\nMemFree:         1049524 kB\nMemAvailable:    5157592 kB\nBuffers:          234080 kB\nCached:          3924908 kB\nSwapCached:         2944 kB\nActive:          3148028 kB\nInactive:        3259160 kB\nActive(anon):      91424 kB\nInactive(anon):  2492884 kB\nActive(file):    3056604 kB\nInactive(file):   766276 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       1048572 kB\nSwapFree:        1005484 kB\nDirty:               132 kB\nWriteback:            20 kB\nAnonPages:       2243248 kB\nMapped:           464556 kB\nShmem:            336108 kB\nKReclaimable:     500592 kB\nSlab:             571052 kB\nSReclaimable:     500592 kB\nSUnreclaim:        70460 kB\nKernelStack:       13880 kB\nPageTables:        20532 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     5119700 kB\nCommitted_AS:    9990364 kB\nVmallocTotal:   133143592960 kB\nVmallocUsed:       18580 kB\nVmallocChunk:          0 kB\nPercpu:             2784 kB\nAnonHugePages:     10240 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nVM_PRESSURE_BEGIN\nUNSUPPORTED\nCGROUP_MEMORY_MAX_BEGIN\n67108864",
+        "started_at_utc": "2026-10-20T09:06:18.072866+00:00",
+        "vm_total_consistency": {
+          "delta_bytes": 0,
+          "meminfo_scope_proven_outside_probe_cgroup": true,
+          "proc_memtotal_matches_engine_within_5_percent": true
+        }
+      }
+    },
+    "measurements": {
+      "docker_engine_cpus": 4,
+      "docker_engine_memory_total_bytes": 8337670144,
+      "docker_engine_observed_at_utc": "2026-10-20T09:06:17.563148+00:00",
+      "docker_engine_source": "Docker Engine info (VM capacity, not available memory)",
+      "docker_vm_memory_available": {
+        "available_bytes": 5281374208,
+        "observed_at_utc": "2026-10-20T09:06:18.985819+00:00",
+        "scope": "docker-desktop-vm",
+        "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+        "verified": true
+      },
+      "host_filesystem_free_bytes": 93436616704,
+      "host_filesystem_observed_at_utc": "2026-10-20T09:06:17.563148+00:00",
+      "host_filesystem_source": "shutil.disk_usage on test runner filesystem"
+    },
+    "memory_available_bytes": 5281374208,
+    "memory_measurements": [
+      {
+        "available_bytes": 5281374208,
+        "observed_at_utc": "2026-10-20T09:06:18.985819+00:00",
+        "scope": "docker-desktop-vm",
+        "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+        "verified": true
+      }
+    ]
+  },
+  "project": "ac-docker-test-cbca60a208",
+  "smoke_checks": "pending",
+  "started_at_utc": "2026-10-20T09:06:17.563033+00:00",
+  "status": "incomplete"
+}

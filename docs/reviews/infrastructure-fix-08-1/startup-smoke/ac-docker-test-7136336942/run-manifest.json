@@ -1,0 +1,230 @@
+{
+  "cleanup": {
+    "compose_down_exit_code": 0,
+    "compose_down_tail": "Container ac-docker-test-7136336942-postgres-1  Stopping\nContainer ac-docker-test-7136336942-postgres-1  Stopping\nContainer ac-docker-test-7136336942-postgres-1  Stopped\nContainer ac-docker-test-7136336942-postgres-1  Removing\nContainer ac-docker-test-7136336942-postgres-1  Removed\nVolume ac-docker-test-7136336942_database_secrets  Removing\nVolume ac-docker-test-7136336942_runtime_secrets  Removing\nVolume ac-docker-test-7136336942_artifacts  Removing\nVolume ac-docker-test-7136336942_agent_corporation_postgres  Removing\nVolume ac-docker-test-7136336942_database_secrets  Removed\nNetwork ac-docker-test-7136336942_default  Removing\nVolume ac-docker-test-7136336942_artifacts  Removed\nNetwork ac-docker-test-7136336942_default  Removed\nVolume ac-docker-test-7136336942_agent_corporation_postgres  Removed\nVolume ac-docker-test-7136336942_runtime_secrets  Removed\n",
+    "remaining_labeled_containers": [],
+    "removed_images": [
+      {
+        "exit_code": 0,
+        "result": "Untagged: ac-docker-test-7136336942-api:isolated\nDeleted: sha256:77251f92827f44ade73fadf7d91fd9777bbdf21abaf2a0e373894101b52a788f",
+        "tag": "ac-docker-test-7136336942-api:isolated"
+      },
+      {
+        "exit_code": 0,
+        "result": "Untagged: ac-docker-test-7136336942-web:isolated\nDeleted: sha256:b8c9233705aac281614a83dabf1779e33501d5f06b16135be6cd944ebcc34f98",
+        "tag": "ac-docker-test-7136336942-web:isolated"
+      }
+    ],
+    "status": "complete"
+  },
+  "commands": [
+    {
+      "args": [
+        "build",
+        "bootstrap",
+        "migrate",
+        "api",
+        "web"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "ED\n\n#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/\n#7 CACHED\n\n#8 [runtime  8/10] COPY scripts/cg01_mode.py scripts/cg01_mode.py\n#8 CACHED\n\n#9 [runtime  9/10] COPY scripts/manage_cg01_proof.py scripts/manage_cg01_proof.py\n#9 CACHED\n\n#10 [runtime  4/10] COPY apps/api/src apps/api/src\n#10 CACHED\n\n#11 [runtime  2/10] WORKDIR /app\n#11 CACHED\n\n#12 [runtime  6/10] COPY apps/api/alembic.ini apps/api/alembic.ini\n#12 CACHED\n\n#13 [runtime  7/10] COPY scripts/docker_initialize.py scripts/docker_initialize.py\n#13 CACHED\n\n#14 [runtime  3/10] COPY --from=build /app/apps/api/.venv apps/api/.venv\n#14 CACHED\n\n#15 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python\n#15 CACHED\n\n#16 [runtime  5/10] COPY apps/api/migrations apps/api/migrations\n#16 CACHED\n\n#17 [runtime 10/10] RUN mkdir -p /app/storage && chown 1000:1000 /app/storage\n#17 CACHED\n\n#18 exporting to image\n#18 exporting layers done\n#18 writing image sha256:7627a50f8cc2c70a302cffd3634c285f8ceaf626ef40a64e33999316c5933e1f done\n#18 naming to docker.io/library/ac-docker-test-7136336942-api:isolated done\n#18 DONE 0.0s\n\n#2 [internal] load .dockerignore\n#2 transferring context: 35B done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n\n#2 [internal] load .dockerignore\n#2 transferring context: 35B done\n#2 DONE 0.0s\n#3 DONE 0.0s\n\n#4 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#4 DONE 0.0s\n\n#5 [internal] load build context\n#5 transferring context: 7.49kB 0.0s done\n#5 DONE 0.0s\n\n#6 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23\n#6 CACHED\n\n#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/\n#7 CACHED\n\n#8 [runtime  4/10] COPY apps/api/src apps/api/src\n#8 CACHED\n\n#9 [runtime  5/10] COPY apps/api/migrations apps/api/migrations\n#9 CACHED\n\n#10 [build 2/5] WORKDIR /app\n#10 CACHED\n\n#11 [runtime  6/10] COPY apps/api/alembic.ini apps/api/alembic.ini\n#11 CACHED\n\n#12 [runtime  8/10] COPY scripts/cg01_mode.py scripts/cg01_mode.py\n#12 CACHED\n\n#13 [runtime  7/10] COPY scripts/docker_initialize.py scripts/docker_initialize.py\n#13 CACHED\n\n#14 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python\n#14 CACHED\n\n#15 [runtime  9/10] COPY scripts/manage_cg01_proof.py scripts/manage_cg01_proof.py\n#15 CACHED\n\n#16 [runtime  3/10] COPY --from=build /app/apps/api/.venv apps/api/.venv\n#16 CACHED\n\n#17 [runtime 10/10] RUN mkdir -p /app/storage && chown 1000:1000 /app/storage\n#17 CACHED\n\n#18 exporting to image\n#18 exporting layers done\n#18 writing image sha256:cbe20da0d62cd75b1aca69996274aca3deaa82c51c44f815bf2d5666626d25bb done\n#18 naming to docker.io/library/ac-docker-test-7136336942-api:isolated done\n#18 DONE 0.0s\n\n#3 [build 1/5] FROM docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#3 DONE 0.0s\n\n#4 [internal] load metadata for docker.io/library/python:3.14.8-slim@sha256:a2b82f3c48559aa0a8446d9af49826b6e2b2016f4cd2afabfe6013ec53729170\n#4 DONE 0.0s\n\n#5 [internal] load build context\n#5 transferring context: 7.49kB 0.0s done\n#5 DONE 0.0s\n\n#6 [runtime  5/10] COPY apps/api/migrations apps/api/migrations\n#6 CACHED\n\n#7 [build 4/5] COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/\n#7 CACHED\n\n#8 [runtime  6/10] COPY apps/api/alembic.ini apps/api/alembic.ini\n#8 CACHED\n\n#9 [runtime  4/10] COPY apps/api/src apps/api/src\n#9 CACHED\n\n#10 [build 2/5] WORKDIR /app\n#10 CACHED\n\n#11 [build 3/5] RUN pip install --no-cache-dir uv==0.12.23\n#11 CACHED\n\n#12 [runtime  8/10] COPY scripts/cg01_mode.py scripts/cg01_mode.py\n#12 CACHED\n\n#13 [runtime  3/10] COPY --from=build /app/apps/api/.venv apps/api/.venv\n#13 CACHED\n\n#14 [runtime  7/10] COPY scripts/docker_initialize.py scripts/docker_initialize.py\n#14 CACHED\n\n#15 [runtime  9/10] COPY scripts/manage_cg01_proof.py scripts/manage_cg01_proof.py\n#15 CACHED\n\n#16 [build 5/5] RUN uv sync --project apps/api --locked --no-dev --no-install-project --no-managed-python\n#16 CACHED\n\n#17 [runtime 10/10] RUN mkdir -p /app/storage && chown 1000:1000 /app/storage\n#17 CACHED\n\n#18 exporting to image\n#18 exporting layers done\n#18 writing image sha256:77251f92827f44ade73fadf7d91fd9777bbdf21abaf2a0e373894101b52a788f done\n#18 naming to docker.io/library/ac-docker-test-7136336942-api:isolated done\n#18 DONE 0.0s\n#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 526B done\n#1 DONE 0.0s\n\n#2 [internal] load .dockerignore\n#2 transferring context: 35B done\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/library/node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1\n#3 DONE 0.0s\n\n#4 [internal] load metadata for docker.io/library/nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea\n#4 DONE 0.0s\n\n#5 [build 1/6] FROM docker.io/library/node:24.21.0-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1\n#5 DONE 0.0s\n\n#6 [runtime 1/3] FROM docker.io/library/nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea\n#6 DONE 0.0s\n\n#7 [internal] load build context\n#7 transferring context: 259.65kB done\n#7 DONE 0.0s\n\n#8 [runtime 2/3] COPY docker/nginx.conf /etc/nginx/nginx.conf\n#8 CACHED\n\n#9 [build 4/6] RUN npm ci\n#9 CACHED\n\n#10 [build 5/6] COPY apps/web ./\n#10 CACHED\n\n#11 [build 6/6] RUN npm run build\n#11 CACHED\n\n#12 [build 3/6] COPY apps/web/package.json apps/web/package-lock.json ./\n#12 CACHED\n\n#13 [build 2/6] WORKDIR /web\n#13 CACHED\n\n#14 [runtime 3/3] COPY --from=build /web/dist /usr/share/nginx/html\n#14 CACHED\n\n#15 exporting to image\n#15 exporting layers done\n#15 writing image sha256:b8c9233705aac281614a83dabf1779e33501d5f06b16135be6cd944ebcc34f98 done\n#15 naming to docker.io/library/ac-docker-test-7136336942-web:isolated done\n#15 DONE 0.0s\n",
+      "started_at_utc": "2026-10-20T09:08:30.486576+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 6854
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:08:32.631839+00:00",
+      "stderr_chars": 599,
+      "stdout_chars": 73
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap",
+        "python",
+        "-c",
+        "import json,os; from pathlib import Path; from agent_corporation_api.modules.execution.gates import FILES,gateway_fingerprint; root=Path('/runtime-secrets/test-gateway'); root.mkdir(exist_ok=True); [(root/name).parent.mkdir(parents=True,exist_ok=True) for name in FILES]; [(root/name).write_text('synthetic gateway fixture') for name in FILES]; proof={'gateway_base_url':'http://host.docker.internal:15600','gateway_transport':'docker-host','expires_at':'2000-01-01T00:00:00+00:00','gateway_fingerprint':gateway_fingerprint(root),'evidence_refs':['synthetic-expired-fixture'],'isolation_verified':True,'privacy_retention_verified':True,'cancellation_verified':True}; p=Path('/runtime-secrets/cg01-proof.json'); p.write_text(json.dumps(proof)); p.chmod(0o600); os.chown(p,1000,1000)"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:08:34.318956+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "bootstrap"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:08:38.327340+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 73
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "api",
+        "python",
+        "-c",
+        "from pathlib import Path; from agent_corporation_api.modules.execution.gates import check_gate; p=Path('/runtime-secrets/cg01-proof.json'); assert p.exists(); print(check_gate(p,Path('/runtime-secrets/test-gateway'),base_url='http://host.docker.internal:15600',transport_mode='docker-host')['reason'])"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:08:41.591885+00:00",
+      "stderr_chars": 0,
+      "stdout_chars": 17
+    },
+    {
+      "args": [
+        "up",
+        "-d",
+        "--wait",
+        "postgres"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T09:08:43.735547+00:00",
+      "stderr_chars": 338,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "migrate"
+      ],
+      "exit_code": 0,
+      "sanitized_output_tail": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.migration] Running upgrade  -> 20261008_0001, Establish the empty Phase 01 schema baseline.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0001 -> 20261008_0002, Create scoped business, execution-state, event and outbox schema.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0002 -> 20261008_0003, Allow app role to reset only the fixed, release-locked demo scope.\nINFO  [alembic.runtime.migration] Running upgrade 20261008_0003 -> 20261009_0004, Durable local Owner session and immutable audit-backed model profile baseline.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0004 -> 20261009_0005, Durable bounded runtime, scoped grants and model call ledger.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0005 -> 20261009_0006, Immutable adapter-sourced late usage; does not reactivate grants or unknown calls.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0006 -> 20261009_0007, Add scoped persistent task queue and immutable command receipts.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261014_0008, Add reviewable, scoped approval payloads and one-time decision receipts.\nINFO  [alembic.runtime.migration] Running upgrade 20261009_0007 -> 20261011_0008, Add fenced leases to the durable Work Order queue.\nINFO  [alembic.runtime.migration] Running upgrade 20261011_0008, 20261014_0008 -> 20261014_0009, Development Playground; isolated from Work Orders. Merge existing migration heads.\nINFO  [alembic.runtime.migration] Running upgrade 20261014_0009 -> 20261020_0010, Append-only Owner reconciliation notes for uncertain Runtime calls.\n",
+      "started_at_utc": "2026-10-20T09:08:48.945752+00:00",
+      "stderr_chars": 1775,
+      "stdout_chars": 0
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "api",
+        "python",
+        "-c",
+        "from agent_corporation_api.database import missing_schema_elements,REQUIRED_SCHEMA_COLUMNS\nfrom agent_corporation_api.settings import get_settings\nfrom sqlalchemy import create_engine,text\ns=get_settings(); e=create_engine(s.database_url); c=e.connect()\nprint('database='+c.execute(text('select current_database()')).scalar_one())\nprint('role='+c.execute(text('select current_user')).scalar_one())\nprint('alembic='+str(c.execute(text('select version_num from alembic_version')).all()))\nquery=\"select relation.relname,attribute.attname from pg_catalog.pg_class relation join pg_catalog.pg_namespace schema on schema.oid=relation.relnamespace join pg_catalog.pg_attribute attribute on attribute.attrelid=relation.oid where schema.nspname='public' and relation.relkind in ('r','p') and attribute.attnum>0 and not attribute.attisdropped and relation.relname=any(:tables)\"\nrows=c.execute(text(query),{'tables':list(REQUIRED_SCHEMA_COLUMNS)}).all()\nactual={}\nfor table,column in rows: actual.setdefault(table,set()).add(column)\nprint('missing='+str(missing_schema_elements(actual)))\nc.close(); e.dispose()"
+      ],
+      "exit_code": 1,
+      "sanitized_output_tail": "database=agent_corporation\nrole=agent_corporation_app\nTraceback (most recent call last):\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 1946, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py\", line 1192, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/psycopg/cursor.py\", line 117, in execute\n    raise ex.with_traceback(None)\npsycopg.errors.InsufficientPrivilege: permission denied for table alembic_version\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"<string>\", line 7, in <module>\n    print('alembic='+str(c.execute(text('select version_num from alembic_version')).all()))\n                         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 1451, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py\", line 533, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 1671, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<9 lines>...\n        param_dict=param_dict,\n    )\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 1825, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 1965, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 2335, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py\", line 1946, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py\", line 1192, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/apps/api/.venv/lib/python3.14/site-packages/psycopg/cursor.py\", line 117, in execute\n    raise ex.with_traceback(None)\nsqlalchemy.exc.ProgrammingError: (psycopg.errors.InsufficientPrivilege) permission denied for table alembic_version\n[SQL: select version_num from alembic_version]\n(Background on this error at: https://sqlalche.me/e/21/f405)\n",
+      "started_at_utc": "2026-10-20T09:08:51.459533+00:00",
+      "stderr_chars": 3531,
+      "stdout_chars": 54
+    }
+  ],
+  "completed_at_utc": "2026-10-20T09:08:55.905256+00:00",
+  "failure": {
+    "command": [
+      "run",
+      "--rm",
+      "--no-deps",
+      "api",
+      "python",
+      "-c",
+      "from agent_corporation_api.database import missing_schema_elements,REQUIRED_SCHEMA_COLUMNS\nfrom agent_corporation_api.settings import get_settings\nfrom sqlalchemy import create_engine,text\ns=get_settings(); e=create_engine(s.database_url); c=e.connect()\nprint('database='+c.execute(text('select current_database()')).scalar_one())\nprint('role='+c.execute(text('select current_user')).scalar_one())\nprint('alembic='+str(c.execute(text('select version_num from alembic_version')).all()))\nquery=\"select relation.relname,attribute.attname from pg_catalog.pg_class relation join pg_catalog.pg_namespace schema on schema.oid=relation.relnamespace join pg_catalog.pg_attribute attribute on attribute.attrelid=relation.oid where schema.nspname='public' and relation.relkind in ('r','p') and attribute.attnum>0 and not attribute.attisdropped and relation.relname=any(:tables)\"\nrows=c.execute(text(query),{'tables':list(REQUIRED_SCHEMA_COLUMNS)}).all()\nactual={}\nfor table,column in rows: actual.setdefault(table,set()).add(column)\nprint('missing='+str(missing_schema_elements(actual)))\nc.close(); e.dispose()"
+    ],
+    "exit_code": 1
+  },
+  "preflight": {
+    "budget_blockers": [],
+    "budget_passed": true,
+    "classification": "CAPACITY_CONFIRMED",
+    "diagnostics": {
+      "docker_vm_probe": {
+        "cgroup_memory_max_bytes": 67108864,
+        "cleanup_remaining_by_label": "",
+        "cleanup_verified": true,
+        "completed_at_utc": "2026-10-20T09:08:29.960801+00:00",
+        "constraints": {
+          "capabilities_dropped": "ALL",
+          "cpus": 0.25,
+          "memory_limit_bytes": 67108864,
+          "memory_swap_limit_bytes": 67108864,
+          "mounts": [],
+          "network": "none",
+          "pids_limit": 16,
+          "read_only_rootfs": true,
+          "timeout_seconds": 8,
+          "user": "65534:65534"
+        },
+        "container_id": "70b56e8f28945d9e8d139355adc31d4fa942e5e303d6bf2868ddf30c69e631c3",
+        "container_name": "ac-vm-mem-probe-98409ebc2229",
+        "image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+        "image_preexisting": true,
+        "meminfo_values": {
+          "MemAvailable_bytes": 5259493376,
+          "MemFree_bytes": 1042980864,
+          "MemTotal_bytes": 8337670144,
+          "SwapFree_bytes": 1029615616,
+          "SwapTotal_bytes": 1073737728
+        },
+        "memory_pressure": "UNSUPPORTED",
+        "observed_at_utc": "2026-10-20T09:08:29.755999+00:00",
+        "observed_host_config": {
+          "Binds": null,
+          "Memory": 67108864,
+          "MemorySwap": 67108864,
+          "NanoCpus": 250000000,
+          "NetworkMode": "none",
+          "PidsLimit": 16,
+          "ReadonlyRootfs": true
+        },
+        "probe_elapsed_seconds": 0.797,
+        "probe_id": "98409ebc2229",
+        "raw_probe_output": "VM_MEMINFO_BEGIN\nMemTotal:        8142256 kB\nMemFree:         1018536 kB\nMemAvailable:    5136224 kB\nBuffers:          241704 kB\nCached:          3927920 kB\nSwapCached:         2944 kB\nActive:          3167560 kB\nInactive:        3273516 kB\nActive(anon):      92052 kB\nInactive(anon):  2516648 kB\nActive(file):    3075508 kB\nInactive(file):   756868 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       1048572 kB\nSwapFree:        1005484 kB\nDirty:               156 kB\nWriteback:             0 kB\nAnonPages:       2266684 kB\nMapped:           464780 kB\nShmem:            337248 kB\nKReclaimable:     500716 kB\nSlab:             570228 kB\nSReclaimable:     500716 kB\nSUnreclaim:        69512 kB\nKernelStack:       13888 kB\nPageTables:        20612 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     5119700 kB\nCommitted_AS:    9997940 kB\nVmallocTotal:   133143592960 kB\nVmallocUsed:       18844 kB\nVmallocChunk:          0 kB\nPercpu:             2832 kB\nAnonHugePages:     10240 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nVM_PRESSURE_BEGIN\nUNSUPPORTED\nCGROUP_MEMORY_MAX_BEGIN\n67108864",
+        "started_at_utc": "2026-10-20T09:08:28.567356+00:00",
+        "vm_total_consistency": {
+          "delta_bytes": 0,
+          "meminfo_scope_proven_outside_probe_cgroup": true,
+          "proc_memtotal_matches_engine_within_5_percent": true
+        }
+      }
+    },
+    "measurements": {
+      "docker_engine_cpus": 4,
+      "docker_engine_memory_total_bytes": 8337670144,
+      "docker_engine_observed_at_utc": "2026-10-20T09:08:27.857387+00:00",
+      "docker_engine_source": "Docker Engine info (VM capacity, not available memory)",
+      "docker_vm_memory_available": {
+        "available_bytes": 5259493376,
+        "observed_at_utc": "2026-10-20T09:08:29.755999+00:00",
+        "scope": "docker-desktop-vm",
+        "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+        "verified": true
+      },
+      "host_filesystem_free_bytes": 93428092928,
+      "host_filesystem_observed_at_utc": "2026-10-20T09:08:27.857387+00:00",
+      "host_filesystem_source": "shutil.disk_usage on test runner filesystem"
+    },
+    "memory_available_bytes": 5259493376,
+    "memory_measurements": [
+      {
+        "available_bytes": 5259493376,
+        "observed_at_utc": "2026-10-20T09:08:29.755999+00:00",
+        "scope": "docker-desktop-vm",
+        "source": "Docker Desktop Linux VM /proc/meminfo MemAvailable",
+        "verified": true
+      }
+    ]
+  },
+  "project": "ac-docker-test-7136336942",
+  "smoke_checks": "pending",
+  "started_at_utc": "2026-10-20T09:08:27.857258+00:00",
+  "status": "incomplete"
+}

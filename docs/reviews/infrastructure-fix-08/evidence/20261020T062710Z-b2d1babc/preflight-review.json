@@ -1,0 +1,9 @@
+{
+  "original_manifest_preserved": true,
+  "original_runner_status": "incomplete",
+  "runner_preflight_message": "Docker VM capacity is below the isolated test budget",
+  "compose_attempted": false,
+  "cleanup_status": "not_needed",
+  "follow_up_measurement": "../resource-preflight-current.json",
+  "interpretation": "Preflight blocked before creating any Compose resources. The initial implementation did not retain the capacity sample in its manifest; the follow-up docker stats query timed out, so the current memory sample remains unknown."
+}

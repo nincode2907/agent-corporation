@@ -1,0 +1,9 @@
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Stopping
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Stopping
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Stopped
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Removing
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Removed
+Volume ac-pgtest-deb3dc370fb5_test_pgdata  Removing
+Network ac-pgtest-deb3dc370fb5_isolated  Removing
+Volume ac-pgtest-deb3dc370fb5_test_pgdata  Removed
+Network ac-pgtest-deb3dc370fb5_isolated  Removed

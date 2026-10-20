@@ -1,0 +1,9 @@
+Container ac-pgtest-e95784c481d4-isolated-postgres-1  Stopping
+Container ac-pgtest-e95784c481d4-isolated-postgres-1  Stopping
+Container ac-pgtest-e95784c481d4-isolated-postgres-1  Stopped
+Container ac-pgtest-e95784c481d4-isolated-postgres-1  Removing
+Container ac-pgtest-e95784c481d4-isolated-postgres-1  Removed
+Volume ac-pgtest-e95784c481d4_test_pgdata  Removing
+Network ac-pgtest-e95784c481d4_isolated  Removing
+Volume ac-pgtest-e95784c481d4_test_pgdata  Removed
+Network ac-pgtest-e95784c481d4_isolated  Removed

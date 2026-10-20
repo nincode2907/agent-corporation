@@ -1,0 +1,96 @@
+{
+  "title": "Final bounded Docker VM memory probes",
+  "captured_at_utc": "2026-10-20T09:11:11.720971+00:00",
+  "readings": [
+    {
+      "run": "api-suite",
+      "observed_at_utc": "2026-10-20T09:10:33.313804+00:00",
+      "source": "Docker Desktop Linux VM /proc/meminfo",
+      "scope": "docker-desktop-vm",
+      "engine_total_bytes": 8337670144,
+      "memtotal_bytes": 8337670144,
+      "memavailable_bytes": 5269766144,
+      "available_threshold_bytes": 2684354560,
+      "cpus": 4,
+      "host_disk_free_bytes": 93423759360,
+      "pressure_metrics": "UNSUPPORTED",
+      "probe_image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+      "probe_image_preexisting": true,
+      "constraints": {
+        "capabilities_dropped": "ALL",
+        "cpus": 0.25,
+        "memory_limit_bytes": 67108864,
+        "memory_swap_limit_bytes": 67108864,
+        "mounts": [],
+        "network": "none",
+        "pids_limit": 16,
+        "read_only_rootfs": true,
+        "timeout_seconds": 8,
+        "user": "65534:65534"
+      },
+      "observed_host_config": {
+        "Binds": null,
+        "Memory": 67108864,
+        "MemorySwap": 67108864,
+        "NanoCpus": 250000000,
+        "NetworkMode": "none",
+        "PidsLimit": 16,
+        "ReadonlyRootfs": true
+      },
+      "cgroup_memory_max_bytes": 67108864,
+      "vm_total_consistency": {
+        "delta_bytes": 0,
+        "meminfo_scope_proven_outside_probe_cgroup": true,
+        "proc_memtotal_matches_engine_within_5_percent": true
+      },
+      "elapsed_seconds": 0.505,
+      "cleanup_verified": true,
+      "cleanup_remaining_by_label": ""
+    },
+    {
+      "run": "startup-smoke",
+      "observed_at_utc": "2026-10-20T09:13:17.922160+00:00",
+      "source": "Docker Desktop Linux VM /proc/meminfo",
+      "scope": "docker-desktop-vm",
+      "engine_total_bytes": 8337670144,
+      "memtotal_bytes": 8337670144,
+      "memavailable_bytes": 5286170624,
+      "available_threshold_bytes": 2684354560,
+      "cpus": 4,
+      "host_disk_free_bytes": 93412581376,
+      "pressure_metrics": "UNSUPPORTED",
+      "probe_image_id": "sha256:d7a8005067f55a2f8ea369e767545fd467b1943a4f0f1a48b7dc44f06c366109",
+      "probe_image_preexisting": true,
+      "constraints": {
+        "capabilities_dropped": "ALL",
+        "cpus": 0.25,
+        "memory_limit_bytes": 67108864,
+        "memory_swap_limit_bytes": 67108864,
+        "mounts": [],
+        "network": "none",
+        "pids_limit": 16,
+        "read_only_rootfs": true,
+        "timeout_seconds": 8,
+        "user": "65534:65534"
+      },
+      "observed_host_config": {
+        "Binds": null,
+        "Memory": 67108864,
+        "MemorySwap": 67108864,
+        "NanoCpus": 250000000,
+        "NetworkMode": "none",
+        "PidsLimit": 16,
+        "ReadonlyRootfs": true
+      },
+      "cgroup_memory_max_bytes": 67108864,
+      "vm_total_consistency": {
+        "delta_bytes": 0,
+        "meminfo_scope_proven_outside_probe_cgroup": true,
+        "proc_memtotal_matches_engine_within_5_percent": true
+      },
+      "elapsed_seconds": 0.55,
+      "cleanup_verified": true,
+      "cleanup_remaining_by_label": ""
+    }
+  ]
+}

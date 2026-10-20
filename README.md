@@ -34,19 +34,22 @@ Kiểm thử tự động trên DB tạm, transport giả (không gọi AI):
 rtk proxy uv run --project apps/api python -X utf8 scripts/test_playground_isolated.py
 ```
 
-Runner tạo database/role có tên riêng, migrate và chạy grant/expiry/duplicate/Stop/process crash/restart/RLS cùng regression Work Order, rồi dọn đúng tài nguyên đó. Không reset database runtime.
+Runner tạo Compose project/PostgreSQL/volume/network riêng, sinh database/role trong server dùng một lần, migrate và chạy grant/expiry/duplicate/Stop/process crash/restart/RLS cùng regression Work Order, rồi dọn đúng tài nguyên theo project label. Không kết nối hay reset PostgreSQL runtime.
 
 ## Chạy bằng một file Compose
 
-Chỉ cần Docker Desktop đang chạy. Từ thư mục gốc:
+Chỉ cần Docker Desktop đang chạy. Lần cài mới hoặc nâng cấp có migration, chạy các bước tường minh sau từ thư mục gốc:
 
 ```sh
-docker compose up --build
+rtk proxy docker compose --profile setup run --build --rm --no-deps bootstrap
+rtk proxy docker compose up -d --wait postgres
+rtk proxy docker compose --profile setup run --build --rm --no-deps migrate
+rtk proxy docker compose up --build -d api web
 ```
 
-Những lần sau dùng `docker compose up`; thêm `-d` nếu muốn chạy nền. Không cần `run.sh`, `run.bat`, Python/Node trên host, bước bootstrap riêng hoặc tạo `.env` trước.
+Bootstrap tạo credential ngẫu nhiên một lần trong các volume bền vững. Nếu có `.env` và `.local/owner-secret` từ bản cũ, bootstrap đọc chúng chỉ để giữ credential/Owner hiện tại. Credential DB thay đổi ngoài ý muốn hoặc DB cũ mất cấu hình sẽ bị chặn thay vì tự đặt mật khẩu mới. Migration là thao tác riêng, chỉ chạy khi Operator yêu cầu; API không gọi bootstrap hay Alembic lúc khởi động.
 
-Compose tự chạy theo thứ tự **bootstrap → PostgreSQL → migration → API → web**. Bootstrap tạo credential ngẫu nhiên một lần trong các volume bền vững; những lần chạy lại giữ nguyên. Nếu có `.env` và `.local/owner-secret` từ bản cũ, bootstrap đọc chúng chỉ để giữ credential/Owner hiện tại. Credential DB thay đổi ngoài ý muốn hoặc DB cũ mất cấu hình sẽ bị chặn thay vì tự đặt mật khẩu mới.
+Những lần chạy thường ngày dùng `rtk proxy docker compose up -d api web` hoặc `rtk proxy docker compose start api web`; hai lệnh này không khởi chạy service setup. API readiness kiểm tra cấu hình và các cột schema bắt buộc, gồm marker reconciliation của migration `20261020_0010`; thiếu schema thì API báo không sẵn sàng để Operator xử lý, không tự migrate, downgrade, reset hoặc seed. Không cần `run.sh`, `run.bat`, Python/Node trên host hoặc tạo `.env` trước.
 
 Mở `http://agent-corporation.localhost` hoặc `http://127.0.0.1:15500`. API readiness ở `http://127.0.0.1:15501/api/v1/health/ready`. Nginx proxy `/api` cùng origin, không buffer SSE và resolve lại API sau recreate. Host ports15500/15501/15510 chỉ publish trên IPv4 loopback, giữ registry Dev Hub hiện tại.
 
@@ -54,15 +57,15 @@ Dừng bằng Ctrl+C hoặc `docker compose stop`. `docker compose down` giữ c
 
 Owner secret cũ vẫn mở từ `.local/owner-secret` nếu đã có. Với lần cài mới, tự xem secret tại máy bằng `docker compose exec api cat /runtime-secrets/owner-secret` để đăng nhập; không gửi giá trị qua chat. Bootstrap và logs không in secret.
 
-Gateway `codex-server` tiếp tục chạy trên host như trước. API dùng exact `http://host.docker.internal:15600` với mode `docker-host`, HTTP Host `127.0.0.1:15600`; chỉ probe/catalog hoặc call đã có quyền. Model/grant/Stop/CSRF và CG01 giữ cơ chế hiện tại. Strict proof Docker cần endpoint đúng và `gateway_transport: "docker-host"`; năm source files gateway mount read-only để fingerprint, không mount native auth/session.
+Gateway `codex-server` tiếp tục chạy trên host như trước. API dùng exact `http://host.docker.internal:15600` với mode `docker-host`, HTTP Host `127.0.0.1:15600`; chỉ probe/catalog hoặc call đã có quyền. Model/grant/Stop/CSRF và CG01 giữ cơ chế hiện tại. Strict proof Docker cần endpoint đúng và `gateway_transport: "docker-host"`; năm source files gateway mount read-only để fingerprint, không mount native auth/session. Bootstrap không đồng bộ, cài hoặc xóa CG01 proof. Operator kiểm tra bằng `docker compose --profile operator run --rm proof-admin python scripts/manage_cg01_proof.py status`; cài proof đã được kiểm chứng bằng `docker compose --profile operator run --rm -T proof-admin python scripts/manage_cg01_proof.py install --confirm install-cg01-proof < .local/cg01-proof.json`; thu hồi bằng lệnh `revoke --confirm revoke-cg01-proof`. Các thao tác ghi yêu cầu cờ xác nhận riêng và ghi audit chỉ gồm metadata/hash; thiếu proof host không tự xóa proof runtime. Proof được giữ lại vẫn bị strict gate kiểm tra expiry, endpoint, transport, fingerprint và evidence ở mỗi quyết định.
 
-`.env` là tùy chọn để nhập cấu hình cũ hoặc đặt gateway key/demo override; không đưa secret vào Git. Muốn đồng bộ config/proof sau sửa, chạy lại `docker compose up`. Worker Work Order chỉ chạy khi gọi tường minh; Playground worker chạy cùng API như trước.
+`.env` là tùy chọn để nhập cấu hình cũ hoặc đặt gateway key/demo override; không đưa secret vào Git. Thay đổi config yêu cầu chạy bootstrap tường minh trong profile `setup`; việc đó không cài/xóa proof. Worker Work Order chỉ chạy khi gọi riêng qua profile `runtime-worker` sau khi API/PostgreSQL khỏe; Playground worker chạy cùng API như trước.
 
-Kiểm định stack tạm bằng `rtk proxy python3 scripts/test_docker_isolated.py`: project/volumes riêng, không host ports, không inference; gồm cài mới không `.env`, chạy lại không đổi credential, migration/auth/CSRF/SSE/restart/recreate/DB-down. Đây là QA tùy chọn, không phải bước khởi động app. Docker Desktop Windows chưa được kiểm trên phần cứng Windows.
+Kiểm định stack tạm bằng `rtk proxy python3 scripts/test_docker_isolated.py`: project/volumes riêng, không host ports, không inference; gồm cài mới, migration tường minh, restart API/web không chạy setup, auth/CSRF/SSE/recreate/DB-down. Bộ regression API dùng `rtk proxy uv run --project apps/api python scripts/test_playground_isolated.py`, tạo PostgreSQL/volume/network riêng theo project, giới hạn tài nguyên và lưu sanitized logs. Cả hai là QA tùy chọn, không phải bước khởi động app. Docker Desktop Windows chưa được kiểm trên phần cứng Windows.
 
 ## Runtime Phase 06–07
 
-Compose tự bootstrap config/Owner và chạy migration trước API; giữ secret đã tồn tại. Khi cập nhật code/migration, kiểm trên stack tạm trước rồi chạy `docker compose up --build` để cập nhật runtime.
+Compose không tự chạy bootstrap/migration cùng API. Khi cập nhật code, kiểm trên stack tạm trước rồi chạy lệnh build/up API và web. Khi có migration mới, dừng ở thao tác migration tường minh sau khi backup và kế hoạch triển khai đã được xác nhận.
 
 Mở **Quản trị** hoặc **Văn phòng trực tiếp** để đăng nhập bằng file `.local/owner-secret` (0600; mở local, không gửi qua chat). Session bền vững có expiry/revocation, cookie HttpOnly/SameSite, scope demo do backend xác minh và CSRF cho thao tác ghi. Model profile version hóa; profile/catalog không cấp entitlement hoặc grant. Reset demo từ UI cũng cần session và không thể xóa run đang có liên kết runtime; nếu bị từ chối, giao dịch rollback và giữ dữ liệu.
 
@@ -74,9 +77,9 @@ Theo chỉ thị “tạm thời mở gateway để test, khi nào đến phase 
 
 ```sh
 # Chỉ áp dụng ngoại lệ demo đã được cho phép; không tự cấp grant:
-RUNTIME_CG01_DEMO_TEST_OVERRIDE=true docker compose up --build
+rtk proxy env RUNTIME_CG01_DEMO_TEST_OVERRIDE=true docker compose up --build
 # Khóa strict (mặc định) và kiểm tra release:
-RUNTIME_CG01_DEMO_TEST_OVERRIDE=false docker compose up --build
+rtk proxy env RUNTIME_CG01_DEMO_TEST_OVERRIDE=false docker compose up --build
 rtk proxy docker compose exec api python scripts/cg01_mode.py release-check
 ```
 
@@ -93,7 +96,7 @@ Trước kiểm định/nghiệm thu Phase 23: chuyển strict, stop/restart wor
 Worker Work Order runtime chỉ chạy bằng lệnh tường minh, không từ startup/health/seed hoặc mở trang. Worker Development Playground được app quản lý riêng, xem bên dưới:
 
 ```sh
-rtk proxy docker compose run --rm worker --environment <UUID_SCOPE_ĐÃ_CẤP> --company <UUID_SCOPE_ĐÃ_CẤP> --once
+rtk proxy docker compose --profile runtime-worker run --rm worker --environment <UUID_SCOPE_ĐÃ_CẤP> --company <UUID_SCOPE_ĐÃ_CẤP> --once
 ```
 
 Lệnh worker có thể gọi model nếu gate và grant đều hợp lệ; chưa được chạy trong đợt triển khai này. Mỗi run tối đa một turn text-only, tools/fallback tắt. PG guard giới hạn một call toàn app; 429 requeue có giới hạn theo grant (backoff1/3s), timeout/disconnect/crash/stop giữ unknown và không retry. Thiếu usage giữ unresolved; giá/cost vẫn chưa biết. Run completed không tự nghiệm thu task.

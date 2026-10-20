@@ -1,0 +1,10 @@
+Network ac-pgtest-deb3dc370fb5_isolated  Creating
+Network ac-pgtest-deb3dc370fb5_isolated  Created
+Volume "ac-pgtest-deb3dc370fb5_test_pgdata"  Creating
+Volume "ac-pgtest-deb3dc370fb5_test_pgdata"  Created
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Creating
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Created
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Starting
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Started
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Waiting
+Container ac-pgtest-deb3dc370fb5-isolated-postgres-1  Healthy

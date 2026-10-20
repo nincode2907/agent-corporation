@@ -9,6 +9,7 @@ FROM build AS test
 RUN uv sync --project apps/api --locked --no-install-project --no-managed-python
 COPY apps/api apps/api
 COPY scripts scripts
+COPY compose.test.yml compose.test.yml
 ENV PYTHONPATH=/app/apps/api/src
 CMD ["uv", "run", "--project", "apps/api", "pytest"]
 
@@ -22,6 +23,7 @@ COPY apps/api/migrations apps/api/migrations
 COPY apps/api/alembic.ini apps/api/alembic.ini
 COPY scripts/docker_initialize.py scripts/docker_initialize.py
 COPY scripts/cg01_mode.py scripts/cg01_mode.py
+COPY scripts/manage_cg01_proof.py scripts/manage_cg01_proof.py
 RUN mkdir -p /app/storage && chown 1000:1000 /app/storage
 USER 1000:1000
 EXPOSE 15501
