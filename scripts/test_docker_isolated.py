@@ -23,16 +23,16 @@ def main():
     config.pop("networks", None)
     config["services"].pop("worker", None)
     fixture_env = {
-        "DATABASE_URL": "postgresql+psycopg://docker_test_app:fixture_app_password@postgres:5432/docker_test",
-        "APP_DATABASE_USER": "docker_test_app", "APP_DATABASE_PASSWORD": "fixture_app_password",
         "CODEX_SERVER_BASE_URL": "http://host.docker.internal:15600", "CODEX_SERVER_TRANSPORT": "docker-host",
         "CODEX_SERVER_API_KEY": "", "OWNER_SECRET_PATH": "/runtime-secrets/owner-secret",
         "RUNTIME_GATE_PATH": "/runtime-secrets/cg01-proof.json", "RUNTIME_GATEWAY_SOURCE_PATH": "/gateway-source",
         "RUNTIME_CG01_DEMO_TEST_OVERRIDE": "false", "PLAYGROUND_WORKER_ENABLED": "false",
+        "APP_CONFIG_FILE": "/runtime-secrets/app.json",
     }
     with tempfile.TemporaryDirectory(prefix=project) as temporary:
         directory = Path(temporary)
-        owner = directory / "owner-secret"
+        (directory / ".local").mkdir()
+        owner = directory / ".local" / "owner-secret"
         owner.write_text("synthetic-owner-secret-" + "a" * 48)
         owner.chmod(0o600)
         for service_name, service in config["services"].items():
@@ -45,12 +45,10 @@ def main():
             if service_name in {"api", "migrate"}:
                 service["environment"] = dict(fixture_env)
             if service_name == "migrate":
-                service["environment"]["MIGRATION_DATABASE_URL"] = "postgresql+psycopg://docker_test_admin:fixture_admin_password@postgres:5432/docker_test"
-            if service_name == "postgres":
-                service["environment"] = {"POSTGRES_USER": "docker_test_admin", "POSTGRES_PASSWORD": "fixture_admin_password", "POSTGRES_DB": "docker_test"}
-            if service_name == "secrets-init":
+                service["environment"]["APP_CONFIG_FILE"] = "/database-secrets/migration.json"
+            if service_name == "bootstrap":
                 for mount in service["volumes"]:
-                    if mount["target"] == "/host-secrets":
+                    if mount["target"] == "/operator":
                         mount["source"] = str(directory)
         for key in config.get("volumes", {}):
             config["volumes"][key] = {"name": project + "_" + key}
@@ -66,7 +64,13 @@ def main():
             return result.stdout
         try:
             run("up", "--wait")
-            print("PASS isolated startup: fresh PostgreSQL + migrations + secret init + API + Nginx")
+            print("PASS one-file startup with no .env: generated config + PostgreSQL + migration + API + Nginx")
+            # A second up must reuse generated credentials, not reset PostgreSQL or Owner.
+            fingerprint = "import hashlib,pathlib; print(hashlib.sha256(pathlib.Path('/runtime-secrets/owner-secret').read_bytes()+pathlib.Path('/runtime-secrets/app.json').read_bytes()).hexdigest())"
+            before = run("exec", "-T", "api", "python", "-c", fingerprint)
+            run("up", "--wait")
+            assert before == run("exec", "-T", "api", "python", "-c", fingerprint)
+            print("PASS repeated compose up preserves generated credentials and Owner")
             run("run", "--rm", "-T", "migrate", "python", "-c", "from sqlalchemy import create_engine; from sqlalchemy.orm import sessionmaker; from agent_corporation_api.settings import get_settings; from agent_corporation_api.database import get_session_factory; from agent_corporation_api.modules.demo.factory import ensure_demo_scope,reset_demo_dataset; s=get_settings(); ensure_demo_scope(sessionmaker(create_engine(s.migration_database_url))); reset_demo_dataset(get_session_factory()); print('Synthetic demo scope ready')")
             output = run("exec", "-T", "api", "python", "-", code=ISOLATED_HTTP_CHECKS)
             print(output.strip())

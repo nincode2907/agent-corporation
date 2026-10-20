@@ -384,7 +384,7 @@ Schema registry tồn tại từ Phase 03, nhưng không giả lập activity th
 
 ### Persistence, live và replay
 
-SSE `/api/v1/events?after_seq=…` là backend → frontend; scope từ session, không proxy raw gateway/CLI logs. Khi reconnect, replay các event `seq > cursor`; UI dedup theo event_id. Heartbeat không là domain event. Cursor vượt retention thì trả reset/gap response rõ và snapshot + valid cursor; không silently skip. Live views là projections từ dữ liệu đã commit, rebuild được từ events/snapshots và không thay execution state. Replay đọc event/checkpoint/artifact đã authorized; không dispatch model/tool.
+SSE `/api/v1/events?after_seq=…` là backend → frontend; scope từ session, không proxy raw gateway/CLI logs. Khi reconnect, replay các event `seq > cursor`; UI dedup theo event_id. Heartbeat không là domain event. Cursor vượt retention thì trả reset/gap response rõ và snapshot + valid cursor; không silently skip. Snapshot dùng transaction read-only nhất quán, bounded và gắn watermark vào cursor có scope/session. Xem [ADR-0004](decisions/0004-scoped-observability-snapshot.md). Live views là projections từ dữ liệu đã commit, rebuild được từ events/snapshots và không thay execution state. Replay đọc event/checkpoint/artifact đã authorized; không dispatch model/tool.
 
 ## 10. Quyền, auth và inference gates
 

@@ -1,4 +1,6 @@
 from pathlib import Path
+import json
+import os
 from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -30,4 +32,16 @@ class Settings(BaseSettings):
 
 
 def get_settings() -> Settings:
+    config_path = os.getenv("APP_CONFIG_FILE")
+    if config_path:
+        try:
+            data = json.loads(Path(config_path).read_text())
+            if not isinstance(data, dict) or set(data) - set(Settings.model_fields):
+                raise ValueError("Invalid runtime config")
+            for field in Settings.model_fields:
+                if field.upper() in os.environ:
+                    data[field] = os.environ[field.upper()]
+            return Settings(_env_file=None, **data)
+        except Exception:
+            raise RuntimeError("Không đọc được cấu hình runtime Docker hợp lệ.") from None
     return Settings()

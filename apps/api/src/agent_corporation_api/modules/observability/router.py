@@ -9,7 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from ...database import get_session_factory
 from ..governance.auth import OwnerPrincipal, cursor_signing_key, require_owner
-from .feed import CursorError, EventGap, read_event_page
+from .feed import CursorError, EventGap, SnapshotTooLarge, read_event_page, read_snapshot
 
 router = APIRouter(prefix="/api/v1/events", tags=["events"])
 POLL_SECONDS = 1.0
@@ -32,6 +32,17 @@ def page(principal: OwnerPrincipal, cursor: str | None, limit: int = 100) -> dic
 def events(cursor: str | None = None, limit: int = Query(100, ge=1, le=200),
            principal: OwnerPrincipal = Depends(require_owner)) -> dict:
     return page(principal, cursor, limit)
+
+
+@router.get("/snapshot-v1")
+def snapshot(principal: OwnerPrincipal = Depends(require_owner)) -> dict:
+    try:
+        return read_snapshot(get_session_factory(), scope=principal.scope,
+                             session_id=str(principal.session_id), key=cursor_signing_key())
+    except SnapshotTooLarge as error:
+        raise HTTPException(413, detail={"code": "snapshot_too_large", "message": str(error)}) from error
+    except SQLAlchemyError as error:
+        raise HTTPException(503, detail="Không đọc được snapshot event đã lưu.") from error
 
 
 def frame(event: str, data: dict, cursor: str | None = None) -> str:

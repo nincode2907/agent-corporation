@@ -143,7 +143,7 @@ def test_runtime_http_requires_owner_and_cg01_cannot_be_self_approved(monkeypatc
     app=FastAPI()
     app.include_router(router.router)
     client=TestClient(app,base_url="http://127.0.0.1:15501")
-    body={"grant_id":str(uuid4()),"phase":"06","batch_id":"fake","purpose":"fixture-test","model":"fixture-model","effort":"low","input_text":"fixture-text","idempotency_key":str(uuid4())}
+    body={"grant_id":str(uuid4()),"employee_id":str(uuid4()),"employee_version_id":str(uuid4()),"phase":"06","batch_id":"fake","purpose":"fixture-test","model":"fixture-model","effort":"low","input_text":"fixture-text","idempotency_key":str(uuid4())}
     assert client.get("/api/v1/runtime/status").status_code==401
     assert client.post("/api/v1/runtime/runs",json=body,headers={"origin":"http://127.0.0.1:15500"}).status_code==401
     app.dependency_overrides[require_owner_write]=lambda:OwnerPrincipal(CompanyScope(uuid4(),uuid4()),uuid4(),"fixture-owner")
@@ -152,6 +152,32 @@ def test_runtime_http_requires_owner_and_cg01_cannot_be_self_approved(monkeypatc
     assert client.post("/api/v1/runtime/runs",json=body).status_code==409
     assert client.post("/api/v1/runtime/runs",json={**body,"cg01_approved":True}).status_code==422
     assert client.post("/api/v1/runtime/runs",json={**body,"company_id":str(uuid4())}).status_code==422
+
+
+def test_runtime_reconciliation_http_requires_owner_and_idempotency(monkeypatch):
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+    from agent_corporation_api.modules.execution import router
+    from agent_corporation_api.modules.governance.auth import OwnerPrincipal, require_owner_write
+    from agent_corporation_api.modules.observability.scope import CompanyScope
+    app=FastAPI()
+    app.include_router(router.router)
+    client=TestClient(app,base_url="http://127.0.0.1:15501")
+    run_id=uuid4()
+    assert client.get(f"/api/v1/runtime/runs/{run_id}/reconciliation").status_code==401
+    body={"decision":"unresolved_retained","reason":"Gateway outcome remains unknown."}
+    headers={"Origin":"http://127.0.0.1:15500","X-CSRF-Token":"fixture"}
+    assert client.post(f"/api/v1/runtime/runs/{run_id}/reconciliation",json=body,headers=headers).status_code==401
+    app.dependency_overrides[require_owner_write]=lambda:OwnerPrincipal(CompanyScope(uuid4(),uuid4()),uuid4(),"fixture-owner")
+    monkeypatch.setattr(router,"get_session_factory",lambda:None)
+    seen=[]
+    monkeypatch.setattr(router.service,"record_unresolved_reconciliation",lambda *args:seen.append(args) or {"decision":"unresolved_retained","guard_released":False})
+    assert client.post(f"/api/v1/runtime/runs/{run_id}/reconciliation",json=body,headers=headers).status_code==422
+    key=uuid4()
+    response=client.post(f"/api/v1/runtime/runs/{run_id}/reconciliation",json=body,headers={**headers,"Idempotency-Key":str(key)})
+    assert response.status_code==200 and response.json()["guard_released"] is False
+    assert seen and seen[0][-2]==key
+    assert client.post(f"/api/v1/runtime/runs/{run_id}/reconciliation",json={**body,"decision":"force_unlock"},headers={**headers,"Idempotency-Key":str(uuid4())}).status_code==422
 
 
 @pytest.mark.parametrize("kind",["list","null","string","invalid_json","directory","fifo","symlink"])

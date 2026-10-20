@@ -1,0 +1,102 @@
+{
+  "classification": "synthetic_test_data",
+  "environment": {
+    "compose_project": "ac-integration05-647955b1d4",
+    "database": "dedicated disposable PostgreSQL volume",
+    "browser_origin": "http://127.0.0.1:15502",
+    "owner_session": "synthetic disposable Owner credential",
+    "runtime_cg01_demo_test_override_environment": false,
+    "gate": "test-only API/worker adapter; demo-test, verified=false; not CG01 evidence",
+    "profile_catalog": "test-only synthetic.fake-transport catalog; no gateway probe"
+  },
+  "transport": {
+    "kind": "supervised Runtime worker with injected deterministic coroutine",
+    "network_calls": 0,
+    "model_inference": false,
+    "tools": false,
+    "fallback_or_retry": false,
+    "delay_seconds": 35,
+    "fake_response": "Báo cáo tổng hợp từ fake transport.",
+    "usage": {
+      "prompt_tokens": 7,
+      "completion_tokens": 5,
+      "total_tokens": 12
+    }
+  },
+  "employee": {
+    "id": "0f387713-6673-54dc-9746-f6d2974a7a37",
+    "version_id": "62f75782-c91c-5805-83d4-9ae0ebb9b3bd",
+    "version": 1,
+    "display_name": "An Trần",
+    "role": "Điều phối viên"
+  },
+  "runs": [
+    {
+      "id": "1fc702ba-bcc7-45bf-a974-7d03ef6dfc91",
+      "task_id": "35c70f6e-faff-45e1-8890-9c83983cc9b7",
+      "status": "completed",
+      "model": "synthetic.fake-transport",
+      "effort": "low",
+      "correlated_runtime_events": 10,
+      "model_calls": 1
+    },
+    {
+      "id": "217cfc06-e2d6-46ef-9ccb-45d82897a260",
+      "task_id": "0a166073-7aa3-48ac-9b93-f07a630273af",
+      "status": "completed",
+      "model": "synthetic.fake-transport",
+      "effort": "low",
+      "correlated_runtime_events": 10,
+      "model_calls": 1
+    },
+    {
+      "id": "8993845d-e4d2-4464-a21a-374489de077e",
+      "task_id": "202e3ce3-ac23-42a7-bac2-2c1bd5e6934f",
+      "status": "completed",
+      "model": "synthetic.fake-transport",
+      "effort": "low",
+      "correlated_runtime_events": 10,
+      "model_calls": 1
+    }
+  ],
+  "run_projection": {
+    "employee_version_is_immutable_and_snapshotted": true,
+    "task_and_run_ids_match_across_office_inspector_replay": true,
+    "usage_provenance": "gateway_final_response adapter shape from fake response",
+    "cost_basis": "unknown",
+    "historical_no_employee_label": "Chưa phân công nhân viên"
+  },
+  "replay_read_only_snapshot": {
+    "before": {
+      "runtime_runs": 3,
+      "model_calls": 3,
+      "events": 54,
+      "work_orders": 8,
+      "artifacts": 4,
+      "checkpoints": 9,
+      "grant_requests": 3
+    },
+    "after_seek_and_reload": {
+      "runtime_runs": 3,
+      "model_calls": 3,
+      "events": 54,
+      "work_orders": 8,
+      "artifacts": 4,
+      "checkpoints": 9,
+      "grant_requests": 3
+    },
+    "unchanged": true
+  },
+  "screenshots": [
+    "P05-02-office-desktop-1440x900.png",
+    "P05-03-inspector-desktop-1440x900.png",
+    "P05-04-replay-desktop-1440x900.png",
+    "P05-05-office-waiting-desktop-1440x900.png",
+    "P05-06-inspector-waiting-desktop-1440x900.png",
+    "P05-07-replay-waiting-desktop-1440x900.png",
+    "P05-08-office-mobile-390x844.png",
+    "P05-09-inspector-mobile-390x844.png",
+    "P05-10-replay-mobile-390x844.png"
+  ],
+  "mobile_horizontal_overflow": false
+}

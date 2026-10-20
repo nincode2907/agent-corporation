@@ -1,0 +1,7 @@
+Snapshot: 2026-10-19 09:15 Asia/Ho_Chi_Minh. Worktree dirty; see report for scope. SHA-256:
+984bdb2972ff94e01c3fe60e7d60d3d0e03bc3adbacc3c984cece71edc26e95b  compose.yml
+02841cdb1a8f9c3d30ea17ca899eb0eebc5e7413c175f8a39a8e3033d2625c45  scripts/docker_initialize.py
+6016503427c3a88830a604805f4a9b377a3b7459c568111b4e563ffd757d9821  apps/api/src/agent_corporation_api/settings.py
+0a8782a84452b1a5c6f0664ef1e24e1db9ca41ee07a2ec4a3961f863d4c7e29f  apps/api/tests/test_compose_initialize.py
+a9d202108dd5974d4130f03d235b72131ac5f089cbafd8f986afd8269a4caab6  scripts/test_docker_isolated.py
+ef5d225c58f4aa4d29fa13993efe6ace45e2806e33056b7a2b0ccb32cc238d65  apps/api/Dockerfile

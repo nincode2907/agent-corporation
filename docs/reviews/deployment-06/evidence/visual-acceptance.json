@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-20T02:04:54.648Z",
+  "base": "http://agent-corporation.localhost/",
+  "viewports": {
+    "desktop:office": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "screenshot": "screenshots/office-desktop-1440x900.png"
+    },
+    "desktop:inspector": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "screenshot": "screenshots/inspector-desktop-1440x900.png"
+    },
+    "desktop:replay": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "screenshot": "screenshots/replay-desktop-1440x900.png"
+    },
+    "desktop:settings-runtime": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "screenshot": "screenshots/runtime-blocked-desktop-1440x900.png"
+    },
+    "mobile:overview": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/overview-mobile-390x844.png"
+    },
+    "mobile:office": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/office-mobile-390x844.png"
+    },
+    "mobile:inspector": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/inspector-mobile-390x844.png"
+    },
+    "mobile:replay": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/replay-mobile-390x844.png"
+    },
+    "mobile:settings": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/runtime-blocked-mobile-390x844.png"
+    },
+    "mobile:playground": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/playground-mobile-390x844.png"
+    }
+  },
+  "assertions": {
+    "dashboardDemo": true,
+    "ownerGate": true,
+    "demoEmployeeOptions": 3,
+    "employeeVersionSelectable": true,
+    "strictGateMessage": true,
+    "noEligibleGrantMessage": true,
+    "startDisabled": true,
+    "playgroundRoute": true,
+    "mobileNoHorizontalOverflow": true
+  },
+  "pageErrors": 0,
+  "consoleErrors": 1,
+  "logout": true
+}

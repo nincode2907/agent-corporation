@@ -257,7 +257,8 @@ def test_work_order_runtime_and_playground_share_capacity_without_dispatching_ea
     from agent_corporation_api.modules.execution import service as runtime
     spec = {'phase': '06', 'batch_id': 'fixture-cross-lane', 'purpose': 'fixture only', 'model': 'fixture-model', 'effort': 'medium', 'max_requests': 1, 'max_concurrency': 1, 'timeout_seconds': 1, 'max_requeues': 0, 'expires_at': datetime.now(UTC)+timedelta(minutes=5)}
     grant = runtime.grant_create(pg[0], DEMO_SCOPE, 'owner-local', spec)
-    run_id = runtime.run_create(pg[0], DEMO_SCOPE, 'owner-local', {**{k: spec[k] for k in ('phase', 'batch_id', 'purpose', 'model', 'effort')}, 'grant_id': grant['id'], 'input_text': 'fixture work order', 'idempotency_key': uuid4()})
+    employee = runtime.demo_employees(pg[0], DEMO_SCOPE)[0]
+    run_id = runtime.run_create(pg[0], DEMO_SCOPE, 'owner-local', {**{k: spec[k] for k in ('phase', 'batch_id', 'purpose', 'model', 'effort')}, 'grant_id': grant['id'], 'employee_id': employee['employee_id'], 'employee_version_id': employee['employee_version_id'], 'input_text': 'fixture work order', 'idempotency_key': uuid4()}, synthetic_test_data=True)
     session = create(pg)
     send(pg, session)
     turn = service.reserve(pg[0], DEMO_SCOPE)

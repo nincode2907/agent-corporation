@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-20T02:18:49.674Z",
+  "target": "separate disposable Integration 05 stack; synthetic Owner; fake gate/worker transport; no gateway/model",
+  "viewport": {
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "screenshot": "screenshots/reconciliation-unknown-desktop-1440x900.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "screenshot": "screenshots/reconciliation-unknown-mobile-390x844.png"
+    }
+  },
+  "assertions": {
+    "fakeTransportDispatched": true,
+    "syntheticLeaseExpiredAndRecovered": true,
+    "unknownFenced": true,
+    "unresolvedVisible": true,
+    "usageAndCostUnknown": true,
+    "noForceUnlock": true,
+    "mobileNoHorizontalOverflow": true
+  },
+  "workerStopped": true,
+  "logout": true,
+  "cleanup": true
+}

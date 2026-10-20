@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-20T03:08:10.923Z",
+  "target": "isolated disposable Integration 05 stack; synthetic Owner, fake gate and transport; no gateway/model inference",
+  "viewports": {
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390
+    },
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440
+    }
+  },
+  "assertions": {
+    "threeEmployeesNoRuns": true,
+    "departmentGroupsAreReal": true,
+    "desktopNoOverflow": true,
+    "runtimeLinkHasImmutableAssignment": true,
+    "runtimeFormKeepsSelectedVersion": true,
+    "noGrantDirectPostDenied": true,
+    "noGrantDeniedWithoutRunCreation": true,
+    "cg01AndGrantBlockStart": true,
+    "firstRunReachedPersistedActiveState": true,
+    "oneFakeTransportDispatch": true,
+    "runCarriesSelectedVersion": true,
+    "inspectorKeepsSameRunId": true,
+    "replayKeepsSameRunId": true,
+    "noDuplicateDispatchFromReadNavigation": true,
+    "fakeTransportCompleted": true,
+    "completedRunRemainsHistorical": true,
+    "noDuplicateDispatchAfterCompletionNavigation": true,
+    "oldVersionRunDoesNotSetCurrentActive": true,
+    "staleEmployeeVersionLinkNeverSubstitutes": true,
+    "sseDisconnectDoesNotImplyIdle": true,
+    "isolatedUnknownGrantCreated": true,
+    "unknownRunDispatchedToFakeTransport": true,
+    "syntheticLeaseRecovered": true,
+    "unknownOutcomePersisted": true,
+    "reconciliationEntryAndUnknownWarning": true,
+    "readsDidNotRedispatchUnknownRun": true,
+    "mobileNoOverflow": true,
+    "keyboardFocusVisible": true,
+    "noPageErrors": true
+  },
+  "modelCallCounts": {
+    "afterInitialDispatch": 1,
+    "afterReadNavigation": 1,
+    "afterCompletedReadNavigation": 1,
+    "beforeUnknownWorkerStop": 2,
+    "final": 2
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Failed to load resource: the server responded with a status of 409 (Conflict)",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "pageErrors": [],
+  "cleanup": true,
+  "fakeCompletion": {
+    "runId": "af410797-e8b9-42df-a7e0-6f1801770deb",
+    "status": "completed",
+    "output": "Báo cáo tổng hợp từ fake transport.",
+    "outcome": "synthetic_final_response"
+  },
+  "workerStoppedForUnknown": true
+}

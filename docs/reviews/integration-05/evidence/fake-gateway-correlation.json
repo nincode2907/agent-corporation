@@ -1,0 +1,118 @@
+{
+  "classification": "synthetic_test_data",
+  "database": "unique disposable PostgreSQL database/role",
+  "transport": "injected deterministic fake coroutine; no network or model inference",
+  "supervised_worker": "PostgreSQL advisory-lock supervise loop",
+  "fake_transport_entries": 1,
+  "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+  "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+  "employee": {
+    "id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+    "version_id": "7014763f-bab3-488b-b457-fb8d72e4857e",
+    "version": 1,
+    "name": "Fixture employee",
+    "role": "Analyst"
+  },
+  "run_status": "completed",
+  "output": "Synthetic report",
+  "usage": {
+    "total_tokens": 5,
+    "prompt_tokens": 2,
+    "completion_tokens": 3
+  },
+  "usage_provenance": "gateway_final_response",
+  "cost_basis": "unknown",
+  "events": [
+    {
+      "event_id": "c497165f-7d70-4544-ae81-a1f5959c6cbe",
+      "event_type": "RUN_CREATED",
+      "stream_seq": 2,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "763cec85-5fed-488e-8995-c7248914d222",
+      "event_type": "TASK_STATE_CHANGED",
+      "stream_seq": 3,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "4a358d10-192c-4b9d-9d3a-9cbe2d7e0078",
+      "event_type": "TASK_STATE_CHANGED",
+      "stream_seq": 4,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "e0647699-bc7c-490a-88ba-3080f1ade827",
+      "event_type": "TASK_STARTED",
+      "stream_seq": 5,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "48f99773-b4ce-4d16-9cb8-99e6ba4a16c1",
+      "event_type": "RUN_STATE_CHANGED",
+      "stream_seq": 6,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "980b8820-8da5-47d9-a33f-03200ababd98",
+      "event_type": "LLM_CALL_STARTED",
+      "stream_seq": 7,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "441c6eba-44f1-48a4-b7c6-b1b2b0d3e9e9",
+      "event_type": "TOKEN_USAGE_RECORDED",
+      "stream_seq": 8,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "aba77101-b88c-4504-8260-aa0705fd6c3f",
+      "event_type": "RUN_STATE_CHANGED",
+      "stream_seq": 9,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "64f3c93b-7071-4bf4-8548-00d7fae38641",
+      "event_type": "TASK_STATE_CHANGED",
+      "stream_seq": 10,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    },
+    {
+      "event_id": "622c5ff8-f5c1-46be-a97f-11038eff7f4f",
+      "event_type": "LLM_CALL_COMPLETED",
+      "stream_seq": 11,
+      "run_id": "3bf13c87-a9e4-4356-a1e6-7edf7564fb5d",
+      "task_id": "f9f27cf0-812f-4adc-b5ea-d6b9a5665399",
+      "agent_id": "85e48222-b0ee-4a78-ad57-adf7ec2aee2c",
+      "employee_version_id": "7014763f-bab3-488b-b457-fb8d72e4857e"
+    }
+  ],
+  "identity_correlation_verified": true
+}

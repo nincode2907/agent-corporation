@@ -71,7 +71,7 @@ def test_api_status_override_does_not_create_grants_or_accept_body_override(tmp_
     status = client.get("/api/v1/runtime/status").json()
     assert status["cg01"]["allowed"] is True and status["cg01"]["verified"] is False
     assert status["inference_grants"] == 0
-    body = {"grant_id": str(uuid4()), "phase": "06", "batch_id": "fixture", "purpose": "fixture", "model": "fixture", "effort": "low", "input_text": "fixture", "idempotency_key": str(uuid4())}
+    body = {"grant_id": str(uuid4()), "employee_id": str(uuid4()), "employee_version_id": str(uuid4()), "phase": "06", "batch_id": "fixture", "purpose": "fixture", "model": "fixture", "effort": "low", "input_text": "fixture", "idempotency_key": str(uuid4())}
     seen = []
     def denied(*args):
         seen.append(args[-1])

@@ -20,6 +20,9 @@ def main():
     assert re.fullmatch(r'ac_pgtest_[a-f0-9]{16}', database) and role == database
     admin = create_engine(source, isolation_level='AUTOCOMMIT')
     env = os.environ.copy()
+    # A host/Docker app config can silently pin Settings back to the shared runtime.
+    # This process already has explicit disposable URLs and must not inherit it.
+    env.pop('APP_CONFIG_FILE', None)
     env.update(DATABASE_URL=source.set(database=database, username=role, password=password).render_as_string(hide_password=False),
                MIGRATION_DATABASE_URL=source.set(database=database).render_as_string(hide_password=False),
                APP_DATABASE_USER=role, APP_DATABASE_PASSWORD=password, PLAYGROUND_TEST_ISOLATED='1',
@@ -30,8 +33,8 @@ def main():
             db.exec_driver_sql(f'CREATE DATABASE "{database}"')
             created = True
         commands = [
-            ['rtk', 'proxy', sys.executable, '-m', 'alembic', '-c', 'apps/api/alembic.ini', 'upgrade', 'head'],
-            ['rtk', 'proxy', sys.executable, '-m', 'pytest', 'apps/api/tests', '-q'],
+            [sys.executable, '-m', 'alembic', '-c', 'apps/api/alembic.ini', 'upgrade', 'head'],
+            [sys.executable, '-m', 'pytest', 'apps/api/tests', '-q'],
         ]
         for command in commands:
             result = subprocess.run(command, env=env, capture_output=True, text=True, encoding='utf-8', errors='replace')
@@ -42,6 +45,14 @@ def main():
             print(output, flush=True)
             if result.returncode:
                 return result.returncode
+            if command[1:3] == ['-m', 'alembic']:
+                from sqlalchemy import text
+                probe_url = make_url(env['DATABASE_URL'])
+                probe = create_engine(probe_url)
+                with probe.connect() as connection:
+                    identity = connection.execute(text("SELECT current_database() AS database, current_user AS role, has_table_privilege(current_user,'public.employee_versions','SELECT') AS can_read_employee_versions")).mappings().one()
+                    print(f"Disposable DB privilege probe: database={identity['database']} role={identity['role']} employee_versions_select={identity['can_read_employee_versions']}", flush=True)
+                probe.dispose()
         return 0
     finally:
         with admin.connect() as db:

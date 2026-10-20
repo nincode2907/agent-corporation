@@ -53,6 +53,8 @@ def append_event(
     dedup_key: str,
     event_id: UUID | None = None,
     occurred_at: datetime | None = None,
+    agent_id: UUID | None = None,
+    employee_version_id: UUID | None = None,
 ) -> EventRecord:
     lock_event_stream(session, scope)
     seq = session.execute(
@@ -75,7 +77,7 @@ def append_event(
                 evidence_refs, dedup_key
             ) VALUES (
                 :event_id, :environment_id, :company_id, 1, :event_type, :stream_seq,
-                :occurred_at, CURRENT_TIMESTAMP, :task_id, :run_id, NULL, NULL,
+                :occurred_at, CURRENT_TIMESTAMP, :task_id, :run_id, :agent_id, :employee_version_id,
                 :correlation_id, :parent_event_id, :source, CAST(:actor AS jsonb), :sensitivity,
                 CAST(:payload AS jsonb), CAST(:evidence_refs AS jsonb), :dedup_key
             )"""
@@ -89,6 +91,8 @@ def append_event(
             "occurred_at": occurred_at,
             "task_id": task_id,
             "run_id": run_id,
+            "agent_id": agent_id,
+            "employee_version_id": employee_version_id,
             "correlation_id": correlation_id,
             "parent_event_id": parent_event_id,
             "source": source,

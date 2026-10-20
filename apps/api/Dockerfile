@@ -20,7 +20,7 @@ COPY --from=build /app/apps/api/.venv apps/api/.venv
 COPY apps/api/src apps/api/src
 COPY apps/api/migrations apps/api/migrations
 COPY apps/api/alembic.ini apps/api/alembic.ini
-COPY scripts/docker_init_secrets.py scripts/docker_init_secrets.py
+COPY scripts/docker_initialize.py scripts/docker_initialize.py
 COPY scripts/cg01_mode.py scripts/cg01_mode.py
 RUN mkdir -p /app/storage && chown 1000:1000 /app/storage
 USER 1000:1000

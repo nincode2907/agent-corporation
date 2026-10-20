@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from typing import Literal
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from ...database import get_session_factory
 from ...settings import get_settings
@@ -35,6 +35,8 @@ class GrantInput(BaseModel):
 class RunInput(BaseModel):
     model_config=ConfigDict(extra="forbid")
     grant_id:UUID
+    employee_id:UUID
+    employee_version_id:UUID
     phase:Literal["06","07"]
     batch_id:str=Field(min_length=1,max_length=120)
     purpose:str=Field(min_length=1,max_length=240)
@@ -42,6 +44,11 @@ class RunInput(BaseModel):
     effort:Effort
     input_text:str=Field(min_length=1,max_length=16000)
     idempotency_key:UUID
+
+class ReconciliationInput(BaseModel):
+    model_config=ConfigDict(extra="forbid")
+    decision:Literal["unresolved_retained"]
+    reason:str=Field(min_length=1,max_length=500)
 
 
 def gate(scope):
@@ -64,6 +71,10 @@ def runtime_status(principal:OwnerPrincipal=Depends(require_owner)):
 def grants(principal:OwnerPrincipal=Depends(require_owner)):
     return {"grants":service.grants_list(get_session_factory(),principal.scope)}
 
+@router.get("/employees")
+def employees(principal:OwnerPrincipal=Depends(require_owner)):
+    return {"employees":service.demo_employees(get_session_factory(),principal.scope)}
+
 @router.post("/grants",status_code=201)
 def grant_create(body:GrantInput,principal:OwnerPrincipal=Depends(require_owner_write)):
     # Explicitly creating a grant never changes CG01; current user test grant stays zero.
@@ -85,6 +96,19 @@ def run_create(body:RunInput,principal:OwnerPrincipal=Depends(require_owner_writ
 @router.get("/runs/{run_id}")
 def run_get(run_id:UUID,principal:OwnerPrincipal=Depends(require_owner)):
     return invoke(service.run_get,get_session_factory(),principal.scope,run_id)
+
+@router.get("/runs/{run_id}/reconciliation")
+def reconciliation_get(run_id:UUID,principal:OwnerPrincipal=Depends(require_owner)):
+    return invoke(service.reconciliation_get,get_session_factory(),principal.scope,run_id)
+
+@router.post("/runs/{run_id}/reconciliation")
+def reconciliation_record(run_id:UUID,body:ReconciliationInput,
+        idempotency_key:UUID=Header(alias="Idempotency-Key"),
+        principal:OwnerPrincipal=Depends(require_owner_write)):
+    if body.decision!="unresolved_retained":
+        raise HTTPException(422,"Chỉ có thể ghi nhận outcome chưa rõ và giữ nguyên dispatch guard.")
+    return invoke(service.record_unresolved_reconciliation,get_session_factory(),principal.scope,
+        run_id,principal.owner_id,idempotency_key,body.reason)
 
 @router.post("/runs/{run_id}/stop")
 def run_stop(run_id:UUID,principal:OwnerPrincipal=Depends(require_owner_write)):

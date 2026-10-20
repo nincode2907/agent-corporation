@@ -45,7 +45,7 @@ def test_worker_database_failure_halts_without_sensitive_traceback(monkeypatch, 
     from agent_corporation_api.modules.execution import worker
 
     canary = "PRIVATE-WORKER-DB-CANARY"
-    async def fail(*_args):
+    async def fail(*_args, **_kwargs):
         raise StatementError("database failure", "INSERT private_history", {"input": canary}, Exception(canary))
     monkeypatch.setattr(worker, "work", fail)
     monkeypatch.setattr(sys, "argv", ["worker", "--environment", "00000000-0000-0000-0000-000000000001", "--company", "00000000-0000-0000-0000-000000000002", "--once"])

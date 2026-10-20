@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "enabled": true,
+  "entries": [
+    {
+      "project": "Agent Corporation",
+      "target": "overview",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:34.076Z",
+      "data": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": []
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "overview",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:35.898Z",
+      "data": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": []
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "playground",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:37.317Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "playground",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:38.866Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "office",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:40.382Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "office",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:41.897Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "work",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:43.364Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "work",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:44.946Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "inspector",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:46.441Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "inspector",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:48.174Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "replay",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:49.669Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "replay",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:51.160Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "organization",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:52.680Z",
+      "data": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": []
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "organization",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:54.157Z",
+      "data": {
+        "consoleErrors": [],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": []
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "approvals",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:55.640Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "approvals",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:07:57.126Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "settings",
+      "viewport": "desktop",
+      "timestamp": "2026-10-19T03:07:58.739Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    },
+    {
+      "project": "Agent Corporation",
+      "target": "settings",
+      "viewport": "mobile",
+      "timestamp": "2026-10-19T03:08:00.236Z",
+      "data": {
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "consoleWarnings": [],
+        "pageErrors": [],
+        "failedRequests": [],
+        "httpErrors": [
+          {
+            "url": "http://agent-corporation.localhost/api/v1/owner/session",
+            "status": 401
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-20T02:33:56.823Z",
+  "target": "shared deployment; Owner-authenticated read-only route inspection",
+  "captures": {
+    "immediate": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "bodyTextLength": 800,
+      "playgroundHeadingPresent": true,
+      "playgroundPanelPresent": true
+    },
+    "ready": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "bodyTextLength": 1482,
+      "playgroundHeadingPresent": true,
+      "loginFormPresent": false,
+      "noGrantStatePresent": false
+    }
+  },
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    }
+  ],
+  "pageErrors": [],
+  "httpErrors": [
+    {
+      "status": 401,
+      "method": "GET",
+      "path": "/api/v1/owner/session"
+    }
+  ],
+  "loggedOut": true
+}

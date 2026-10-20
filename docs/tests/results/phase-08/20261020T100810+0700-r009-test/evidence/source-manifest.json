@@ -1,0 +1,17 @@
+{
+  "phase": "08",
+  "round": "r009",
+  "test_batch_id": "20261020T100810+0700-r009-test",
+  "source_commit": "6c7f7bd09a4e6985d8ece72c2c9e6bde327ab081",
+  "worktree": "dirty; pre-existing staged and unstaged changes retained",
+  "tested_changes": [
+    { "path": "apps/web/src/App.tsx", "sha256": "3c080ebd893d8419dc78402e2fa2b5e85867b0a8659bfae7f3b8f281e7cb7c42" },
+    { "path": "apps/web/src/RuntimePanel.tsx", "sha256": "98b5b24c1554516bd9ff45f57af4919b75b9b460584c7eafabb28d946efaf1a4" },
+    { "path": "apps/web/src/RuntimePanel.css", "sha256": "f44749a44402269de985a3775c57a4a0ffffb5bae9b2fa488aadef5a8a68c359" },
+    { "path": "scripts/test_integration05_stack.py", "sha256": "c816e892f55f388c249eda73b01d4c661bfcc3e807d1a0d9fc1d8f97e36e84e2" },
+    { "path": "scripts/ui_fix07_fake_worker.py", "sha256": "99fba68ccbfceaf8a064159edb585ac1e18b376368f8ef1734a2dbcd6e08be6c" },
+    { "path": "docs/reviews/ui-fix-07/evidence/ui-regression.mjs", "sha256": "2aa64fca82ba2abe4827e3ec658d614824e3f2480469affa88d297597b6e79ec" },
+    { "path": "docs/reviews/ui-fix-07/evidence/ui-regression.json", "sha256": "e263381212d1c99f9e65ba10a878c2d3ffb8b25bcc658e61ebfde871ac7dca55" }
+  ],
+  "scope_note": "Hashes identify the exact code and browser result inspected in this batch; the repository-wide dirty tree is not represented by the source commit alone. No secrets are included."
+}

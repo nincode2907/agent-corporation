@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-20",
+  "compose_project": "agent-corporation",
+  "deployment_command": "rtk proxy docker compose up --build",
+  "pre_deploy": {
+    "database_revision": "20261014_0009",
+    "demo_company_count": 1,
+    "demo_employee_count": 3,
+    "runtime_runs": 0,
+    "model_calls": 0,
+    "eligible_unexhausted_grants": 0,
+    "dispatch_guard_held": false,
+    "cg01_mode": "strict",
+    "cg01_allowed": false,
+    "cg01_reason": "missing_or_invalid_proof",
+    "old_api_image_id": "sha256:4556a4c1bca29f9ca55cd547b8f1dd03ecd50cf0ce116825e3304f28b55dd88a",
+    "old_web_image_id": "sha256:d436b84e81e14e3f4c7c4167c37a715ec57b48c5d4292640a51edce59723db3a"
+  },
+  "backup": {
+    "path": "/Users/buivannin/.local/share/agent-corporation/backups/deployment-06-20261020/agent-corporation-postgres.dump",
+    "directory_mode": "0700",
+    "file_mode": "0600",
+    "bytes": 135681,
+    "sha256": "25c6bcd8a8fd1765282a6ce4ddae99a63574978dff23ff2c15a8cab8188b851d",
+    "restore_list_entries": 238,
+    "full_disposable_restore": "passed",
+    "migration_on_restored_copy": "20261014_0009 -> 20261020_0010 passed"
+  },
+  "post_deploy": {
+    "database_revision": "20261020_0010",
+    "demo_company_count": 1,
+    "demo_employee_count": 3,
+    "runtime_runs": 0,
+    "model_calls": 0,
+    "eligible_unexhausted_grants": 0,
+    "dispatch_guard_held": false,
+    "playground_sessions": 0,
+    "playground_turns": 0,
+    "api_readiness": "ok",
+    "web_health": "ok",
+    "postgres_health": "healthy",
+    "api_health": "healthy",
+    "web_container_health": "healthy",
+    "runtime_worker_count": 1,
+    "worker_lock_held": true,
+    "second_worker_lock_probe_acquired": false,
+    "cg01_mode": "strict",
+    "cg01_allowed": false,
+    "cg01_reason": "missing_or_invalid_proof",
+    "gateway_restart": false,
+    "owner_credential_written_to_artifacts": false
+  },
+  "persistent_volumes_preserved": [
+    "agent-corporation_agent_corporation_postgres",
+    "agent-corporation_database_secrets",
+    "agent-corporation_runtime_secrets",
+    "agent-corporation_artifacts"
+  ],
+  "rollback_image_tags": {
+    "api": "agent-corporation-api:deployment06-rollback",
+    "web": "agent-corporation-web:deployment06-rollback"
+  }
+}

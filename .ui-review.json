@@ -1,7 +1,8 @@
 {
   "version": 1,
   "project": "Agent Corporation",
-  "baseUrl": "http://127.0.0.1:15500",
+  "baseUrl": "http://agent-corporation.localhost/",
+  "matchOrigins": ["http://127.0.0.1:15500"],
   "outputDir": "artifacts/ui-review",
   "viewports": {
     "desktop": { "width": 1440, "height": 900 },

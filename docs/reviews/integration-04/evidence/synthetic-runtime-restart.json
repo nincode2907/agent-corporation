@@ -1,0 +1,89 @@
+{
+  "classification": "synthetic_test_data",
+  "infrastructure": "unique disposable PostgreSQL database/role; user runtime unchanged",
+  "transport": "injected fake coroutine; no network or inference",
+  "run_id": "faa02419-5f45-497a-95a2-282d30d40b35",
+  "task_id": "e799edb4-cf28-4823-b663-4839b3d9ddfc",
+  "request_span_id": "dc3e8625-00c6-41e9-ad36-ee94199933dc",
+  "worker_process_returncode": -9,
+  "restart_process_returncode": 0,
+  "fake_transport_entries": 1,
+  "model_call_count": 1,
+  "model_call_status": "unknown",
+  "usage": null,
+  "run_status": "interrupted",
+  "run_outcome": "worker_lease_expired",
+  "events": [
+    {
+      "event_id": "d65028c3-4adc-49a1-9780-888385e7a2aa",
+      "event_type": "RUN_CREATED",
+      "stream_seq": 2,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "67912907-0490-4b63-acc7-40f85714c46b",
+      "event_type": "TASK_STATE_CHANGED",
+      "stream_seq": 3,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "dbcb1a79-3417-4617-adc9-902a791beaa2",
+      "event_type": "TASK_STATE_CHANGED",
+      "stream_seq": 4,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "49a01e30-ba43-40d5-a5ba-29b2e5227c1f",
+      "event_type": "TASK_STARTED",
+      "stream_seq": 5,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "5b71ffe5-973e-42d7-8b36-b693ebbdaef5",
+      "event_type": "RUN_STATE_CHANGED",
+      "stream_seq": 6,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "ef07e711-7898-45c1-b69f-fc1b072f8f63",
+      "event_type": "LLM_CALL_STARTED",
+      "stream_seq": 7,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "eb7d3dea-4e8c-47b6-89b5-2f884a81c448",
+      "event_type": "RUN_STATE_CHANGED",
+      "stream_seq": 8,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "4aa98afc-3f35-4f5b-a5c8-ee865ff68042",
+      "event_type": "TASK_STATE_CHANGED",
+      "stream_seq": 9,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    },
+    {
+      "event_id": "f6fa612d-0280-47ef-8ce8-c870bc4a02ef",
+      "event_type": "LLM_CALL_FAILED",
+      "stream_seq": 10,
+      "correlation_id": "faa02419-5f45-497a-95a2-282d30d40b35"
+    }
+  ],
+  "checkpoints": [
+    {
+      "sequence": 1,
+      "boundary": "before_dispatch"
+    },
+    {
+      "sequence": 2,
+      "boundary": "dispatch_reserved"
+    },
+    {
+      "sequence": 3,
+      "boundary": "interrupted_unknown"
+    }
+  ],
+  "event_stream_sequence_contiguous": true,
+  "event_type_order_verified": true,
+  "recovered_run_was_not_reserved_again": true
+}

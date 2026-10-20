@@ -1,12 +1,9 @@
 name: agent-corporation
 
 x-api-environment: &api-environment
-  DATABASE_URL: postgresql+psycopg://${APP_DATABASE_USER:?Bootstrap trước}:${APP_DATABASE_PASSWORD:?Bootstrap trước}@postgres:5432/${POSTGRES_DB:?Bootstrap trước}
-  APP_DATABASE_USER: ${APP_DATABASE_USER}
-  APP_DATABASE_PASSWORD: ${APP_DATABASE_PASSWORD}
+  APP_CONFIG_FILE: /runtime-secrets/app.json
   CODEX_SERVER_BASE_URL: http://host.docker.internal:15600
   CODEX_SERVER_TRANSPORT: docker-host
-  CODEX_SERVER_API_KEY: ${CODEX_SERVER_API_KEY:-}
   OWNER_SECRET_PATH: /runtime-secrets/owner-secret
   RUNTIME_GATE_PATH: /runtime-secrets/cg01-proof.json
   RUNTIME_GATEWAY_SOURCE_PATH: /gateway-source
@@ -38,25 +35,7 @@ x-api-base: &api-base
   restart: "no"
 
 services:
-  postgres:
-    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
-    container_name: agent-corporation-postgres
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:?Chạy scripts/bootstrap_local.py trước}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Chạy scripts/bootstrap_local.py trước}
-      POSTGRES_DB: ${POSTGRES_DB:?Chạy scripts/bootstrap_local.py trước}
-    ports:
-      - "127.0.0.1:15510:5432"
-    volumes:
-      - agent_corporation_postgres:/var/lib/postgresql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 3s
-      timeout: 3s
-      retries: 20
-    restart: "no"
-
-  secrets-init:
+  bootstrap:
     image: agent-corporation-api:local
     build:
       context: .
@@ -66,18 +45,41 @@ services:
     network_mode: none
     read_only: true
     volumes:
-      - ./.local:/host-secrets:ro
+      - .:/operator:ro
       - runtime_secrets:/runtime-secrets
-    command: [python, scripts/docker_init_secrets.py]
+      - database_secrets:/database-secrets
+      - agent_corporation_postgres:/postgres-state:ro
+    command: [python, scripts/docker_initialize.py]
+    restart: "no"
+
+  postgres:
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    container_name: agent-corporation-postgres
+    entrypoint: [/bin/sh, -ec, 'set -a; . /database-secrets/postgres.env; set +a; exec /usr/local/bin/docker-entrypoint.sh "$$@"', '--']
+    command: [postgres]
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:15510:5432"
+    volumes:
+      - agent_corporation_postgres:/var/lib/postgresql
+      - database_secrets:/database-secrets:ro
+    healthcheck:
+      test: ["CMD-SHELL", ". /database-secrets/postgres.env; pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 3s
+      timeout: 3s
+      retries: 20
     restart: "no"
 
   migrate:
     <<: *api-base
     environment:
       <<: *api-environment
-      MIGRATION_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      APP_CONFIG_FILE: /database-secrets/migration.json
       PLAYGROUND_WORKER_ENABLED: "false"
-    volumes: []
+    volumes:
+      - database_secrets:/database-secrets:ro
     depends_on:
       postgres:
         condition: service_healthy
@@ -91,7 +93,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      secrets-init:
+      bootstrap:
         condition: service_completed_successfully
       migrate:
         condition: service_completed_successfully
@@ -128,20 +130,22 @@ services:
 
   worker:
     <<: *api-base
-    profiles: [worker]
+    container_name: agent-corporation-runtime-worker
     depends_on:
       postgres:
         condition: service_healthy
-      secrets-init:
+      bootstrap:
         condition: service_completed_successfully
       migrate:
         condition: service_completed_successfully
     entrypoint: [python, -m, agent_corporation_api.modules.execution.worker]
-    command: []
+    command: [--environment, b93f752e-7b69-5e8b-8f74-1498a15a5609, --company, b4375333-b12b-5fca-b984-87864032d3a8]
     stop_grace_period: 30s
+    restart: unless-stopped
 
 volumes:
   agent_corporation_postgres:
     name: ${AGENT_CORPORATION_DB_VOLUME:-agent-corporation_agent_corporation_postgres}
   runtime_secrets:
+  database_secrets:
   artifacts:

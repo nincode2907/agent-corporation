@@ -56,7 +56,7 @@ type Screen = {
 const screens: Screen[] = [
   { id: 'playground', code: 'DEV', title: 'Playground', group: 'Điều hành', description: 'Trò chuyện với nhân viên demo trong Session Grant do Owner cấp.', next: 'Playground là môi trường thử nghiệm riêng; không thay nghiệm thu production runtime.', phase: '06 · Development' },
   { id: 'overview', code: 'S01', title: 'Tổng quan', group: 'Điều hành', description: 'Một điểm vào để xem tình hình doanh nghiệp và đi tới công việc cần quyết định.', next: 'Phase 03 đã bổ sung nền dữ liệu và event; Phase 04 mới tạo công ty demo để hiển thị dữ liệu.', phase: '03–04' },
-  { id: 'office', code: 'S02', title: 'Văn phòng trực tiếp', group: 'Điều hành', description: 'Quan sát run và sự kiện đã ghi nhận trong phạm vi Owner.', next: 'Nguồn run thật phụ thuộc Phase 06–07, grant và gate CG01.', phase: '08' },
+  { id: 'office', code: 'S02', title: 'Văn phòng trực tiếp', group: 'Điều hành', description: 'Xem nhân viên, phiên bản hồ sơ và lượt chạy đã ghi nhận trong phạm vi Owner.', next: 'Trạng thái hoạt động chỉ đến từ Runtime Run đã lưu; không có Run nghĩa là chưa có lượt thực thi.', phase: '08' },
   { id: 'work', code: 'S05', title: 'Công việc', group: 'Điều hành', description: 'Tạo Work Order, xếp ưu tiên, pause/resume/hủy an toàn và theo dõi nghiệm thu.', next: 'Bảng đã nối API Owner và queue bền vững; worker lease/dispatch vẫn chưa có.', phase: '03, 09' },
   { id: 'approvals', code: 'S06', title: 'Chờ Chủ tịch duyệt', group: 'Điều hành', description: 'Xem payload, phạm vi, hạn và bằng chứng trước khi ghi quyết định.', next: 'Phase 10 lưu decision audit theo payload hash; chưa dispatch hành động sau khi duyệt.', phase: '10' },
   { id: 'inspector', code: 'S03', title: 'Agent Inspector', group: 'Quan sát', description: 'Mở run đã lưu để xem trạng thái, model, usage và event liên quan.', next: 'Thông tin chưa có nguồn được đánh dấu rõ; không suy diễn prompt, tool hoặc file diff.', phase: '08' },
@@ -74,7 +74,7 @@ const screens: Screen[] = [
 const groups = ['Điều hành', 'Quan sát', 'Quản trị']
 
 function getScreenFromHash() {
-  const id = window.location.hash.replace(/^#\/?/, '') || 'overview'
+  const id = (window.location.hash.replace(/^#\/?/, '').split('?')[0] || 'overview')
   return screens.find((screen) => screen.id === id)?.id ?? 'overview'
 }
 
@@ -260,7 +260,7 @@ function App() {
           {demoError && <p className="demo-error" role="status">{demoError}</p>}
           <div className="page-heading">
             <div><p className="eyebrow">{activeScreen.code} <span>·</span> PHASE {activeScreen.phase}</p><h1>{activeScreen.title}</h1><p className="page-description">{activeScreen.description}</p></div>
-            <span className={`page-state${activeId === 'onboarding' ? ' locked' : ''}`}>{activeId === 'onboarding' ? 'Đang khóa' : ['office', 'inspector', 'replay', 'approvals'].includes(activeId) ? 'Cần session Owner' : demo?.available ? 'Dữ liệu demo' : 'Chưa có dữ liệu'}</span>
+            <span className={`page-state${activeId === 'onboarding' ? ' locked' : ''}`}>{activeId === 'onboarding' ? 'Đang khóa' : ['office', 'inspector', 'replay', 'approvals'].includes(activeId) ? 'Yêu cầu quyền Owner' : demo?.available ? 'Dữ liệu demo' : 'Chưa có dữ liệu'}</span>
           </div>
 
           {activeId === 'playground' ? (
@@ -289,7 +289,7 @@ function App() {
           ) : activeId === 'onboarding' ? (
             <section className="locked-panel"><span className="locked-icon" aria-hidden="true">⌑</span><p className="eyebrow">MỞ SAU KHI PHÁT HÀNH V1</p><h2>Chưa thể thành lập công ty thật</h2><p>Phase 04 chỉ tạo fixture trong scope demo cố định. Wizard này không tạo company thật, cấp quyền, chọn model hay khởi tạo agent.</p><span className="lock-caption">S14 · phase 21, 23</span></section>
           ) : ['office', 'inspector', 'replay'].includes(activeId) ? (
-            <RuntimePanel view={activeId as 'office' | 'inspector' | 'replay'} departments={(demo?.departments ?? []).map((department) => department.name)} />
+            <RuntimePanel view={activeId as 'office' | 'inspector' | 'replay'} />
           ) : (
             <section className="screen-panel preview-layout"><div className="preview-main"><div className="preview-toolbar"><span className="preview-dot" /><span>MÔI TRƯỜNG DEMO</span><span className="preview-separator">·</span><span>CHƯA CÓ FIXTURE</span></div><div className="empty-illustration" aria-hidden="true"><span className="empty-ring ring-a" /><span className="empty-ring ring-b" /><span className="empty-glyph">{activeScreen.code.slice(1)}</span></div><p className="empty-title">Chưa có dữ liệu demo</p><p className="empty-copy">{demo?.message || demoError || activeScreen.next}</p><button className="primary-button" type="button" onClick={() => setDemoReload((value) => value + 1)}>Tải lại dữ liệu demo</button></div><aside className="preview-aside"><p className="eyebrow">ĐƯỢC XÂY Ở PHASE</p><strong>{activeScreen.phase}</strong><p>Seed là thao tác tường minh. Mở trang và health check không gọi model.</p><a href="#overview" className="panel-link">Quay lại tổng quan <span>→</span></a></aside></section>
           )}

@@ -15,6 +15,9 @@ from .redaction import redact_structure
 from .scope import CompanyScope, set_company_scope
 
 CURSOR_TTL_SECONDS = 86400
+SNAPSHOT_MAX_EVENTS = 200
+SNAPSHOT_MAX_RUNS = 20
+SNAPSHOT_MAX_BYTES = 512 * 1024
 
 
 class CursorError(ValueError):
@@ -22,6 +25,10 @@ class CursorError(ValueError):
 
 
 class EventGap(CursorError):
+    pass
+
+
+class SnapshotTooLarge(ValueError):
     pass
 
 
@@ -115,3 +122,49 @@ def read_event_page(session_factory, *, scope: CompanyScope, session_id: str, ke
             raise EventGap("Counter và lịch sử event không khớp.")
         return {"events": events, "cursor": encode_cursor(key, scope, session_id, after, anchor),
                 "latest_seq": latest, "server_time": datetime.now(UTC).isoformat()}
+
+
+def read_snapshot(session_factory, *, scope: CompanyScope, session_id: str, key: bytes) -> dict:
+    """Read the current observability projection and its event watermark atomically."""
+    from ..execution.service import RUN_SELECT, _project_run
+
+    with session_factory() as session, session.begin():
+        session.execute(text("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY"))
+        set_company_scope(session, scope)
+        params = {"environment_id": scope.environment_id, "company_id": scope.company_id}
+        counter = session.execute(text("""SELECT last_seq FROM event_stream_counters
+            WHERE environment_id=:environment_id AND company_id=:company_id"""), params).scalar_one_or_none()
+        watermark = counter or 0
+        retained = session.execute(text("""SELECT event_id,stream_seq FROM events
+            WHERE environment_id=:environment_id AND company_id=:company_id
+            ORDER BY stream_seq LIMIT 1"""), params).mappings().first()
+        retained_count = session.execute(text("""SELECT count(*) FROM events
+            WHERE environment_id=:environment_id AND company_id=:company_id"""), params).scalar_one()
+        rows = session.execute(text("""SELECT * FROM events
+            WHERE environment_id=:environment_id AND company_id=:company_id
+            ORDER BY stream_seq DESC LIMIT :limit"""),
+            {**params, "limit": SNAPSHOT_MAX_EVENTS}).mappings().all()
+        rows = list(reversed(rows))
+        events = [public_event(dict(row)) for row in rows]
+        first_retained = retained["stream_seq"] if retained else None
+        runs = session.execute(text(RUN_SELECT + " ORDER BY r.created_at DESC LIMIT :limit"),
+            {**params, "limit": SNAPSHOT_MAX_RUNS}).mappings().all()
+        run_projection = [_project_run(row) for row in runs]
+        first_event_id = str(retained["event_id"]) if retained else None
+        history_gap = (watermark > 0 and (first_retained is None or first_retained > 1
+                                         or retained_count != watermark - first_retained + 1))
+        snapshot = {
+            "version": 1,
+            "events": events,
+            "runs": run_projection,
+            "watermark_seq": watermark,
+            "first_retained_seq": first_retained,
+            "history_gap": history_gap,
+            "replay_window_start_seq": rows[0]["stream_seq"] if rows else None,
+            "cursor": encode_cursor(key, scope, session_id, watermark, first_event_id),
+            "server_time": datetime.now(UTC).isoformat(),
+        }
+        encoded = json.dumps(snapshot, ensure_ascii=False, default=str, separators=(",", ":")).encode()
+        if len(encoded) > SNAPSHOT_MAX_BYTES:
+            raise SnapshotTooLarge("Snapshot vượt giới hạn 512 KiB; cần hạ số bản ghi được giữ hoặc giới hạn field.")
+        return snapshot

@@ -1,0 +1,434 @@
+{
+  "baseUrl": "http://agent-corporation.localhost/",
+  "viewport": {
+    "desktop": [
+      1440,
+      900
+    ],
+    "mobile": [
+      390,
+      844
+    ]
+  },
+  "ownerAuth": {
+    "attempted": true,
+    "succeeded": true,
+    "secretRecorded": false,
+    "logout": true
+  },
+  "navigation": [
+    {
+      "id": "overview",
+      "passwordFormVisible": false
+    },
+    {
+      "id": "playground",
+      "passwordFormVisible": false
+    },
+    {
+      "id": "office",
+      "passwordFormVisible": false
+    },
+    {
+      "id": "work",
+      "passwordFormVisible": false
+    },
+    {
+      "id": "inspector",
+      "passwordFormVisible": false
+    },
+    {
+      "id": "replay",
+      "passwordFormVisible": false
+    },
+    {
+      "id": "approvals",
+      "passwordFormVisible": false
+    }
+  ],
+  "screenshots": [
+    "screenshots/office-before-1440x900.png",
+    "screenshots/office-before-390x844.png",
+    "screenshots/inspector-before-1440x900.png",
+    "screenshots/inspector-before-390x844.png",
+    "screenshots/replay-before-1440x900.png",
+    "screenshots/replay-before-390x844.png",
+    "screenshots/replay-after-recovery-1440x900.png",
+    "screenshots/replay-after-recovery-390x844.png",
+    "screenshots/replay-offline-1440x900.png",
+    "screenshots/replay-offline-390x844.png",
+    "screenshots/replay-stale-1440x900.png",
+    "screenshots/replay-stale-390x844.png",
+    "screenshots/replay-heartbeat-recovered-1440x900.png",
+    "screenshots/replay-heartbeat-recovered-390x844.png"
+  ],
+  "snapshotRecovery": {
+    "status": "recovered",
+    "snapshots": 2,
+    "watermarkAfterConcurrentCommit": 41,
+    "concurrentEventReceived": true,
+    "duplicateEventCount": 1,
+    "outOfOrderTriggeredRecovery": true,
+    "replayShowsHistoricalGap": true
+  },
+  "interceptions": [
+    {
+      "path": "/api/v1/events",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/events/snapshot-v1",
+      "status": 200,
+      "snapshot": 1
+    },
+    {
+      "path": "/api/v1/events/stream",
+      "status": 200,
+      "stream": 1
+    },
+    {
+      "path": "/api/v1/events/snapshot-v1",
+      "status": 200,
+      "snapshot": 2
+    },
+    {
+      "path": "/api/v1/events/stream",
+      "status": 200,
+      "stream": 2
+    },
+    {
+      "path": "/api/v1/events",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/events/stream",
+      "status": 200,
+      "stream": 3,
+      "held": true
+    },
+    {
+      "path": "/api/v1/events/stream",
+      "status": 200,
+      "stream": 4,
+      "held": true
+    }
+  ],
+  "pageErrors": [],
+  "observedRequests": [
+    {
+      "method": "GET",
+      "path": "//"
+    },
+    {
+      "method": "GET",
+      "path": "/assets/index-CQD8Rdal.js"
+    },
+    {
+      "method": "GET",
+      "path": "/assets/index-D8T-qo5t.css"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/ready"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/demo/dashboard"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/owner/login"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/playground/sessions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/session"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/approvals"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/snapshot-v1"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/snapshot-v1"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/snapshot-v1"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/owner/profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/status"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runtime/grants"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/work-orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/snapshot-v1"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.svg"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/owner/logout"
+    }
+  ],
+  "connectionChecks": {
+    "liveBeforeOffline": true,
+    "offlineObserved": true,
+    "offlineRecovered": true,
+    "staleObserved": true,
+    "heartbeatRecovered": true
+  }
+}

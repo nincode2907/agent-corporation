@@ -37,7 +37,7 @@
 
 ## Runtime Phase 01
 - Stack và dependency pins: `apps/web/package-lock.json`, `apps/api/uv.lock`, `compose.yml`; setup từ [README.md](README.md).
-- Mặc định dùng `./run.sh`/`run.bat`: bootstrap bằng container, Compose migrate/secret-init/API/web; không cần Python/Node trên host. `.env` chứa secret, Git ignore, mode `0600`; không in nội dung. API/worker UID1000, Owner secret + CG01 metadata copy giữ nội dung sang volume riêng mode0600; mount read-only. Native Linux bootstrap dùng UID/GID host do run.sh export.
+- Chỉ dùng `docker compose up --build` (sau đó `docker compose up`): một compose.yml tự bootstrap config/Owner → PG → migration → API/web; không cần wrapper, `.env` trước hoặc Python/Node trên host. `.env` cũ chỉ nhập readonly nếu có, credential mới tạo một lần trong volumes. API/worker UID1000, Owner/config mode0600; API không mount volume credential admin. Không in secret; không dùng `down --volumes` trên runtime. Operator tự xem Owner secret bằng `docker compose exec api cat /runtime-secrets/owner-secret` tại máy khi cần đăng nhập.
 - PostgreSQL chỉ bind `127.0.0.1:15510`; API `127.0.0.1:15501`; Nginx web `127.0.0.1:15500` proxy `/api` cùng origin, SSE không buffer. Vite chỉ dùng khi phát triển native và đã dừng Docker web/API.
 - Giữ volume `agent-corporation_agent_corporation_postgres`; không dùng `down --volumes` trên runtime. Migration credential chỉ có trong service migrate, không đưa vào API. Không mount native Codex auth/session; chỉ năm source files phục vụ fingerprint. Strict proof phải gắn endpoint + `gateway_transport: docker-host` cho Docker.
 - Dev Hub mapping ở registry trung tâm, block `15500–15599`; `agent-corporation.localhost` đi qua Caddy chỉ publish trên IPv4 loopback (Docker host từ chối bind IPv6 loopback).

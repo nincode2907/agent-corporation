@@ -1,0 +1,9 @@
+Commands run through `rtk proxy`:
+
+- `rtk proxy uv run --project apps/api pytest apps/api/tests/test_compose_initialize.py apps/api/tests/test_docker_gateway.py -q` — 17 passed, exit 0.
+- `rtk proxy docker compose config --quiet` — PASS, exit 0.
+- `rtk proxy docker compose config --format json | rtk proxy python3 -c '<assert service boundaries>'` — PASS: API reads `/runtime-secrets/app.json`, has no migration env or `/database-secrets` mount; migrate reads `/database-secrets/migration.json`; bootstrap has `network_mode: none`.
+- `rtk proxy git status --short` — dirty worktree. In-scope state: `compose.yml`, `settings.py`, Dockerfile, isolated runner modified; new `docker_initialize.py` and `test_compose_initialize.py`; old launchers/bootstrap overlay removed.
+- `rtk proxy sha256sum ...` — hashes in source-manifest.txt.
+
+Not run: isolated Docker runner (root is running it independently), database access/mutation, migration, restart, gateway dispatch or inference. No production services were touched.
